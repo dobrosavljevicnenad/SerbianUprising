@@ -2,6 +2,8 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QGraphicsView> //*
+#include "gui/mapscene.h" //*
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -17,7 +19,12 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void highlightLayer(MapLayer *layer);
+
+
 private:
     Ui::MainWindow *ui;
+    MapScene *scene; //*
+    QGraphicsView *view; //*
 };
 #endif // MAINWINDOW_H

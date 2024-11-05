@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>resources/test 1.1.png</file>
+        <file>resources/gornji.png</file>
+        <file>resources/donji_l.png</file>
+        <file>resources/donji_d.png</file>
+        <file>resources/ceo.png</file>
+    </qresource>
+</RCC>
