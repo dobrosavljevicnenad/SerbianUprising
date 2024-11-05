@@ -1,11 +1,6 @@
-#include "Army.h"
-#include "Battle.h"
-#include "Strength.h"
+#include "testBattle.h"
 
-// Compile with g++ -o battle testBattle.cpp Army.cpp Battle.cpp Strength.cpp -std=c++11
-// Run: ./battle
-
-int main() {
+void test_Battle() {
     Strength::instance().setBoost(ArmyType::PATRIOT, 25);
     Strength::instance().setBoost(ArmyType::JANISSARY, 0);
 
@@ -15,6 +10,4 @@ int main() {
     Battle battle(patriotArmy, janissaryArmy);
     battle.setTerrainAdvantage(10, -10);
     battle.start();
-
-    return 0;
 }

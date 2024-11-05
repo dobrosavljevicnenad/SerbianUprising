@@ -23,12 +23,24 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Ustanak
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        base/testBattle.cpp
+        base/Army.cpp
+        base/Battle.cpp
+        base/Strength.cpp
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Ustanak APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
 #                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
 # For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
 else()
+    add_executable(Ustanak
+        ${PROJECT_SOURCES}
+        base/testBattle.cpp
+        base/Army.cpp
+        base/Battle.cpp
+        base/Strength.cpp
+    )
     if(ANDROID)
         add_library(Ustanak SHARED
             ${PROJECT_SOURCES}
