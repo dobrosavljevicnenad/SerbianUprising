@@ -4,7 +4,7 @@
 #include "Strength.h"
 
 enum class ArmyType : int {
-    PATRIOT,
+    HAJDUK,
     JANISSARY
 };
 

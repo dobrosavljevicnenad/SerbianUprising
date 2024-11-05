@@ -27,6 +27,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         base/Army.cpp
         base/Battle.cpp
         base/Strength.cpp
+        base/Territory.cpp
+        base/Territory.h
 
     )
 # Define target properties for Android with Qt 6 as:
