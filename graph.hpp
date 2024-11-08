@@ -20,6 +20,7 @@ public:
   bool insert_edge(const Vertex &from, const Vertex &to, double weight = 1.0);
   bool remove_vertex(const Vertex &vertex);
   bool remove_edge(const Vertex &from, const Vertex &to);
+  std::vector<Vertex> neighbors(const Vertex &vertex) const;
 
   void print_graph() const;
 

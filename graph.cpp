@@ -76,6 +76,20 @@ bool Graph::remove_edge(const Vertex &from, const Vertex &to) {
   return true;
 }
 
+std::vector<Vertex> Graph::neighbors(const Vertex &vertex) const {
+  std::vector<Vertex> neighbors;
+
+  auto it = m_adj_list.find(vertex);
+  if (it != m_adj_list.end()) {
+    for (const Edge &edge : it->second) {
+      int neighbor_id = (edge.from() == vertex.id()) ? edge.to() : edge.from();
+      neighbors.push_back(m_nodes.at(neighbor_id));
+    }
+  }
+
+  return neighbors;
+}
+
 void Graph::print_graph() const {
   std::cout << "Nodes:\n";
   for (const auto &[id, vertex] : m_nodes) {
