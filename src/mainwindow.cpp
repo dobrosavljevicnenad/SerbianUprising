@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include "gui/maplayer.h"
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,10 +16,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     MapLayer *baseLayer = new MapLayer(":/resources/ceo.png",false);
     scene->addLayer(baseLayer);
+    graph::Graph g;
+    MapLayer *territoryGornji = new MapLayer(":/resources/gornji.png",true);//ubaci
+    g.insert_vertex(territoryGornji->troopText->pos(), "Gornji_layer",territoryGornji);
 
-    MapLayer *territoryGornji = new MapLayer(":/resources/gornji.png",true);
-    MapLayer *territoryDonjiLevi = new MapLayer(":/resources/donji_l.png",true);
-    MapLayer *territoryDonjiDesni = new MapLayer(":/resources/donji_d.png",true);
+    MapLayer *territoryDonjiLevi = new MapLayer(":/resources/donji_l.png",true);//ubaci
+    g.insert_vertex(territoryDonjiLevi->troopText->pos(), "DonjiLevi",territoryDonjiLevi);
+
+    MapLayer *territoryDonjiDesni = new MapLayer(":/resources/donji_d.png",true);//ubaci
+    g.insert_vertex(territoryDonjiDesni->troopText->pos(), "DonjiDesni",territoryDonjiDesni);
+
+    std::cout << g.vertex_to_layer[2]->troopText->pos().y() << std::endl;
 
     territoryGornji->setPos(baseLayer->pos());
     territoryDonjiLevi->setPos(baseLayer->x()+8, baseLayer->y() + territoryGornji->boundingRect().height()-10);

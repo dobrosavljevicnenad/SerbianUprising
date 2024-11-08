@@ -18,13 +18,14 @@ public:
 
     void setColor(const QColor &newColor);
 
+    QGraphicsTextItem *troopText;
+
 protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
 
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
 
-private:
-    QGraphicsTextItem *troopText;
+
 };
 
 #endif // MAPLAYER_H

@@ -1,19 +1,20 @@
 #pragma once
 
 #include <string>
+#include<QPointF>
 namespace graph {
 
-using position_t = std::pair<unsigned, unsigned>;
+//using position_t = std::pair<unsigned, unsigned>;
 using nodeID_t = unsigned;
 
 class Vertex {
 public:
-  Vertex(position_t position, std::string label);
+  Vertex(QPointF position, std::string label);
 
   ~Vertex();
 
   unsigned id() const;
-  position_t position() const;
+  QPointF position() const;
   std::string label() const;
 
   bool operator==(const Vertex &other) const { return id() == other.id(); }
@@ -22,7 +23,7 @@ private:
   static unsigned m_index;
   unsigned m_id;
 
-  position_t m_position;
+  QPointF m_position;
   std::string m_label;
 };
 
