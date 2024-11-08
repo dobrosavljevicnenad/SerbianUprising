@@ -22,9 +22,12 @@ MainWindow::MainWindow(QWidget *parent)
     MapLayer *territoryDonjiDesni = new MapLayer(":/resources/donji_d.png",true);
 
     territoryGornji->setPos(baseLayer->pos());
-    territoryDonjiLevi->setPos(baseLayer->x(), baseLayer->y() + territoryGornji->boundingRect().height());
-    territoryDonjiDesni->setPos(baseLayer->x() + territoryDonjiLevi->boundingRect().width(), baseLayer->y() + territoryGornji->boundingRect().height());
+    territoryDonjiLevi->setPos(baseLayer->x()+8, baseLayer->y() + territoryGornji->boundingRect().height()-10);
+    territoryDonjiDesni->setPos(baseLayer->x() + territoryDonjiLevi->boundingRect().width()+7, baseLayer->y() + territoryGornji->boundingRect().height());
 
+    territoryGornji->setTroopCount(50);
+    territoryDonjiLevi->setTroopCount(30);
+    territoryDonjiDesni->setTroopCount(20);
 
     scene->addLayer(territoryGornji);
     scene->addLayer(territoryDonjiLevi);

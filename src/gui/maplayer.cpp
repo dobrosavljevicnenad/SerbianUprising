@@ -1,9 +1,19 @@
 #include "maplayer.h"
 
 MapLayer::MapLayer(const QString &imagePath,bool enableHover = true, QGraphicsItem *parent)
-    : QGraphicsPixmapItem(QPixmap(imagePath), parent) {
+    : QGraphicsPixmapItem(QPixmap(imagePath), parent), troopText(new QGraphicsTextItem(this)) {
     if(enableHover)
         setAcceptHoverEvents(true);
+
+    troopText->setDefaultTextColor(Qt::black);
+    troopText->setFont(QFont("Arial", 12, QFont::Bold));
+    troopText->setPos(boundingRect().width() / 2 - troopText->boundingRect().width() / 2,
+                      boundingRect().height() / 2 - troopText->boundingRect().height() / 2);
+    troopText->setZValue(1);
+}
+
+void MapLayer::setTroopCount(int count) {
+    troopText->setPlainText(QString::number(count));
 }
 
 void MapLayer::setColor(const QColor &newColor) {
