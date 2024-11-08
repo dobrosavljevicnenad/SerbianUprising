@@ -10,20 +10,13 @@ namespace graph {
 Graph::Graph() = default;
 Graph::~Graph() = default;
 
-bool Graph::insert_vertex(QPointF position, const std::string &label, MapLayer* map_layer) {
-  Vertex vertex(position, label);
-  //if (m_nodes.find(vertex.id()) != m_nodes.end()) {
-  //   std::cerr << "Node with ID: " << vertex.id() << " already exists\n";
-  //  return;
-  //}
-  // trazi nadje 1 map(vertex, maplayer) .... 2 map (vertex2, maplayer2) .... 3 .....
+Vertex Graph::insert_vertex(QPointF position, const std::string &label, MapLayer* map_layer) {
+  Vertex vertex(position, label, map_layer);
+
   m_nodes.emplace(vertex.id(), vertex);
   m_adj_list[vertex] = std::vector<Edge>();
 
-  vertex_to_layer[vertex.id()] = map_layer;
-
-  // std::unordered_map<int, MapLayer *> vertex_to_layer;
-  return true;
+  return vertex;
 }
 
 bool Graph::insert_edge(const Vertex &from, const Vertex &to, double weight) {
@@ -95,10 +88,7 @@ std::vector<Vertex> Graph::neighbors(const Vertex &vertex) const {
   return neighbors;
 }
 
-MapLayer *Graph::get_layer_for_vertex(const Vertex &vertex) const {
-  auto it = vertex_to_layer.find(vertex.id());
-  return (it != vertex_to_layer.end()) ? it->second : nullptr;
-}
+
 
 void Graph::print_graph() const {
   std::cout << "Nodes:\n";

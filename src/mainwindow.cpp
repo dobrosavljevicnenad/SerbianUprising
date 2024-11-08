@@ -18,15 +18,21 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addLayer(baseLayer);
     graph::Graph g;
     MapLayer *territoryGornji = new MapLayer(":/resources/gornji.png",true);//ubaci
-    g.insert_vertex(territoryGornji->troopText->pos(), "Gornji_layer",territoryGornji);
+    graph::Vertex v1 = g.insert_vertex(territoryGornji->troopText->pos(), "Gornji_layer",territoryGornji);
 
     MapLayer *territoryDonjiLevi = new MapLayer(":/resources/donji_l.png",true);//ubaci
-    g.insert_vertex(territoryDonjiLevi->troopText->pos(), "DonjiLevi",territoryDonjiLevi);
+    graph::Vertex v2 = g.insert_vertex(territoryDonjiLevi->troopText->pos(), "DonjiLevi",territoryDonjiLevi);
 
     MapLayer *territoryDonjiDesni = new MapLayer(":/resources/donji_d.png",true);//ubaci
-    g.insert_vertex(territoryDonjiDesni->troopText->pos(), "DonjiDesni",territoryDonjiDesni);
+    graph::Vertex v3 = g.insert_vertex(territoryDonjiDesni->troopText->pos(), "DonjiDesni",territoryDonjiDesni);
 
-    std::cout << g.vertex_to_layer[2]->troopText->pos().y() << std::endl;
+    g.insert_edge(v1,v2,1.0);
+    g.insert_edge(v1,v3,1.0);
+    g.insert_edge(v2,v3,1.0);
+
+    print_connections(g, v1);
+    print_connections(g, v2);
+    print_connections(g, v3);
 
     territoryGornji->setPos(baseLayer->pos());
     territoryDonjiLevi->setPos(baseLayer->x()+8, baseLayer->y() + territoryGornji->boundingRect().height()-10);
@@ -52,4 +58,13 @@ MainWindow::~MainWindow()
 
 void MainWindow::highlightLayer(MapLayer *layer) {
     layer->setColor(QColor(0, 255, 0)); // Set the layer to green to highlight it
+}
+
+void MainWindow::print_connections(const graph::Graph &g, const graph::Vertex &vertex) {
+    auto neighbors = g.neighbors(vertex);  // Assuming neighbors() returns a vector of vertices connected by edges.
+    std::cout << "Vertex " << vertex.id() << " is connected to: ";
+    for (const auto &neighbor : neighbors) {
+        std::cout << neighbor.id() << " ";
+    }
+    std::cout << std::endl;
 }

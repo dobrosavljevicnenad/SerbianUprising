@@ -2,6 +2,7 @@
 
 #include <string>
 #include<QPointF>
+#include "../gui/maplayer.h"
 namespace graph {
 
 //using position_t = std::pair<unsigned, unsigned>;
@@ -9,7 +10,7 @@ using nodeID_t = unsigned;
 
 class Vertex {
 public:
-  Vertex(QPointF position, std::string label);
+  Vertex(QPointF position, std::string label,MapLayer* map_layer);
 
   ~Vertex();
 
