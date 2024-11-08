@@ -1,5 +1,6 @@
 #pragma once
 
+#include "../gui/maplayer.h"
 #include "edge.hpp"
 #include "vertex.hpp"
 #include <string>
@@ -16,7 +17,8 @@ public:
 
   ~Graph();
 
-  bool insert_vertex(position_t position, const std::string &label);
+  bool insert_vertex(position_t position, const std::string &label,
+                     MapLayer *map_layer);
   bool insert_edge(const Vertex &from, const Vertex &to, double weight = 1.0);
   bool remove_vertex(const Vertex &vertex);
   bool remove_edge(const Vertex &from, const Vertex &to);
@@ -26,6 +28,7 @@ public:
 
 public:
   std::unordered_map<nodeID_t, Vertex> m_nodes;
+  std::unordered_map<int, MapLayer *> vertex_to_layer;
 
 private:
   adj_list_t m_adj_list;

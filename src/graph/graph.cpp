@@ -10,7 +10,7 @@ namespace graph {
 Graph::Graph() = default;
 Graph::~Graph() = default;
 
-bool Graph::insert_vertex(position_t position, const std::string &label) {
+bool Graph::insert_vertex(position_t position, const std::string &label, MapLayer* map_layer) {
   Vertex vertex(position, label);
   if (m_nodes.find(vertex.id()) != m_nodes.end()) {
     std::cerr << "Node with ID: " << vertex.id() << " already exists\n";
@@ -18,6 +18,9 @@ bool Graph::insert_vertex(position_t position, const std::string &label) {
   }
   m_nodes.emplace(vertex.id(), vertex);
   m_adj_list[vertex] = std::vector<Edge>();
+
+  // std::unordered_map<int, MapLayer *> vertex_to_layer;
+  get_layer_for_vertex(vertex.id(), map_layer);
   return true;
 }
 
@@ -88,6 +91,11 @@ std::vector<Vertex> Graph::neighbors(const Vertex &vertex) const {
   }
 
   return neighbors;
+}
+
+MapLayer *Graph::get_layer_for_vertex(const Vertex &vertex) const {
+  auto it = vertex_to_layer.find(vertex.id());
+  return (it != vertex_to_layer.end()) ? it->second : nullptr;
 }
 
 void Graph::print_graph() const {
