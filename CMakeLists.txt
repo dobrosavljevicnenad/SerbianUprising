@@ -27,16 +27,24 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Ustanak
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        src/base/testBattle.h
         src/base/testBattle.cpp
         src/base/Army.cpp
         src/base/Battle.cpp
         src/base/Strength.cpp
+        src/base/Territory.cpp
+        src/base/Territory.h
+        src/base/player.cpp
+        src/base/player.h
+        src/base/mergeArmies.cpp
+        src/base/mergeArmies.h
         src/gui/maplayer.h src/gui/maplayer.cpp
         src/gui/mapscene.h src/gui/mapscene.cpp
         src/graph/edge.hpp src/graph/edge.cpp
         src/graph/graph.hpp src/graph/graph.cpp
         src/graph/vertex.hpp src/graph/vertex.cpp
         resources.qrc
+
 
     )
 # Define target properties for Android with Qt 6 as:

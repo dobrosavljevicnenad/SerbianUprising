@@ -8,17 +8,17 @@
 class Battle
 {
 public:
-    Battle(Army& army1, Army& army2);
-    void start();
+    Battle(Army& defender, Army& attacker);
+    Army start();
 
-    void setTerrainAdvantage(int advantage1, int advantage2);
+    void setTerrainAdvantage(int defenderAdvantage, int attackerAdvantage);
 
 private:
-    Army& m_army1;
-    Army& m_army2;
+    Army& m_defender;
+    Army& m_attacker;
 
-    int m_terrainAdvantage1 = 0;
-    int m_terrainAdvantage2 = 0;
+    int m_defenderAdvantage = 0;
+    int m_attackerAdvantage = 0;
 
     int calculateHit(int strength, int terrainAdvantage, int soldiers);
 };

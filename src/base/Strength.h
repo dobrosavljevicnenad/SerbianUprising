@@ -17,7 +17,7 @@ public:
 private:
     Strength() = default;
 
-    int m_boostPatriot;
+    int m_boostHajduk;
     int m_boostJanissary;
     static const int s_baseMorale = 0;   // Base morale, consistent across all instances
     static const int s_baseStrength = 30; // Base strength, consistent across all instances

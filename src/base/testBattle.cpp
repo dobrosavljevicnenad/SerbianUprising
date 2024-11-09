@@ -1,13 +1,16 @@
 #include "testBattle.h"
 
 void test_Battle() {
-    Strength::instance().setBoost(ArmyType::PATRIOT, 25);
+    Strength::instance().setBoost(ArmyType::HAJDUK, 25);
     Strength::instance().setBoost(ArmyType::JANISSARY, 0);
 
-    Army patriotArmy(40, ArmyType::PATRIOT);
+    Army hajdukArmy(40, ArmyType::HAJDUK);
     Army janissaryArmy(70, ArmyType::JANISSARY);
 
-    Battle battle(patriotArmy, janissaryArmy);
-    battle.setTerrainAdvantage(10, -10);
+    Territory mountainTerrain(TerrainType::MOUNTAIN);
+
+    Battle battle(hajdukArmy, janissaryArmy);
+    battle.setTerrainAdvantage(mountainTerrain.getDefenderAdvantage(),
+                               mountainTerrain.getAttackerAdvantage());
     battle.start();
 }
