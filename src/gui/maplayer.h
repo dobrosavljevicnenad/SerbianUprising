@@ -9,6 +9,7 @@
 #include <QFont>
 
 
+
 class MapLayer : public QObject, public QGraphicsPixmapItem {
     Q_OBJECT
 public:
@@ -25,6 +26,8 @@ protected:
 
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
 
+private:
+    QPixmap m_originalPixmap;
 
 };
 

@@ -1,7 +1,7 @@
 #include "maplayer.h"
 
 MapLayer::MapLayer(const QString &imagePath,bool enableHover = true, QGraphicsItem *parent)
-    : QGraphicsPixmapItem(QPixmap(imagePath), parent), troopText(new QGraphicsTextItem(this)) {
+    : QGraphicsPixmapItem(QPixmap(imagePath), parent), troopText(new QGraphicsTextItem(this)), m_originalPixmap(QPixmap(imagePath)) {
     if(enableHover)
         setAcceptHoverEvents(true);
 
@@ -37,6 +37,8 @@ void MapLayer::hoverEnterEvent(QGraphicsSceneHoverEvent *event)  {
 }
 
 void MapLayer::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
-    setColor(QColor(235,180,90,255));
+    setPixmap(m_originalPixmap);
     QGraphicsPixmapItem::hoverLeaveEvent(event);
 }
+
+
