@@ -1,11 +1,17 @@
 #pragma once
 
-#include "../gui/maplayer.h"
 #include "edge.hpp"
 #include "vertex.hpp"
 #include <string>
 #include <unordered_map>
 #include <vector>
+/*#include "../gui/maplayer.h"
+#include "../base/Army.h"
+#include "../base/Battle.h"
+#include "../base/Strength.h"
+#include "../base/mergeArmies.h"
+#include "../base/player.h"
+#include "../base/Territory.h"*/
 
 namespace graph {
 
@@ -18,7 +24,8 @@ public:
   ~Graph();
 
   Vertex insert_vertex(QPointF position, const std::string &label,
-                     MapLayer *map_layer);
+                       MapLayer *map_layer, Territory territory, Army army,
+                       Player player);
   bool insert_edge(const Vertex &from, const Vertex &to, double weight = 1.0);
   bool remove_vertex(const Vertex &vertex);
   bool remove_edge(const Vertex &from, const Vertex &to);

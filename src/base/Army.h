@@ -1,4 +1,4 @@
-#ifndef ARMY_H
+    #ifndef ARMY_H
 #define ARMY_H
 
 #include "Strength.h"

@@ -3,6 +3,14 @@
 #include <string>
 #include<QPointF>
 #include "../gui/maplayer.h"
+#include "../gui/maplayer.h"
+#include "../base/Army.h"
+#include "../base/Battle.h"
+#include "../base/Strength.h"
+#include "../base/mergeArmies.h"
+#include "../base/player.h"
+#include "../base/Territory.h"
+
 namespace graph {
 
 //using position_t = std::pair<unsigned, unsigned>;
@@ -10,7 +18,9 @@ using nodeID_t = unsigned;
 
 class Vertex {
 public:
-  Vertex(QPointF position, std::string label,MapLayer* map_layer);
+  Vertex(QPointF position, const std::string &label,
+           MapLayer *map_layer, Territory territory, Army army,
+           Player player);
 
   ~Vertex();
 
@@ -20,12 +30,18 @@ public:
 
   bool operator==(const Vertex &other) const { return id() == other.id(); }
 
+public:
+  Territory territory;
+  Army army;
+  Player player;
+
 private:
   static unsigned m_index;
   unsigned m_id;
 
   QPointF m_position;
   std::string m_label;
+  MapLayer* map_layer;
 };
 
 } // namespace graph
