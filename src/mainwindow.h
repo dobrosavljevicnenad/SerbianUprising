@@ -26,10 +26,12 @@ public:
 
     void print_connections(const graph::Graph &g, const graph::Vertex &vertex);
 
-
+private slots:
+    void onLayerClicked(MapLayer *layer);
 private:
     Ui::MainWindow *ui;
     MapScene *scene; //*
     QGraphicsView *view; //*
+    MapLayer *selectedLayer = nullptr;
 };
 #endif // MAINWINDOW_H

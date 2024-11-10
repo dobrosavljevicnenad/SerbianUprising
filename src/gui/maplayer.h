@@ -6,6 +6,7 @@
 #include <QColor>
 #include <QObject>
 #include <QGraphicsSceneHoverEvent>
+#include <QGraphicsSceneMouseEvent>
 #include <QFont>
 
 
@@ -20,11 +21,22 @@ public:
 
     QGraphicsTextItem *troopText;
 
+    int getTroopCount() const;
+
+
+
+signals:
+    void layerClicked(MapLayer *layer);
+
 protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
 
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
 
+    void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+
+private:
+    int troopCount;
 
 };
 

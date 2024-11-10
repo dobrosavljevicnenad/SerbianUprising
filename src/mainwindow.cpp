@@ -1,11 +1,13 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-
+#include <QInputDialog>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
     , scene(new MapScene(this))
+    , selectedLayer(nullptr)
 {
     ui->setupUi(this);
 
@@ -57,6 +59,11 @@ MainWindow::MainWindow(QWidget *parent)
     scene->addItem(territoryGornji);
     scene->addItem(territoryDonjiLevi);
     scene->addItem(territoryDonjiDesni);
+
+    connect(territoryGornji, &MapLayer::layerClicked, this, &MainWindow::onLayerClicked);
+    connect(territoryDonjiLevi, &MapLayer::layerClicked, this, &MainWindow::onLayerClicked);
+    connect(territoryDonjiDesni, &MapLayer::layerClicked, this, &MainWindow::onLayerClicked);
+
 }
 
 MainWindow::~MainWindow()
@@ -75,4 +82,33 @@ void MainWindow::print_connections(const graph::Graph &g, const graph::Vertex &v
         std::cout << neighbor.id() << " ";
     }
     std::cout << std::endl;
+}
+
+void MainWindow::onLayerClicked(MapLayer *layer) {
+    if (selectedLayer == nullptr) {
+        selectedLayer = layer;
+        //QMessageBox::information(this, tr("Selected layer"), tr("The first layer is selected."));
+    } else {
+        if(selectedLayer == layer) {
+            QMessageBox::warning(this, tr("Error"), tr("You selected the same layer. Select another layer."));
+            selectedLayer = nullptr;
+            return ;
+        }
+
+        bool ok;
+        int maxTroops = selectedLayer->getTroopCount();
+        int troopsToTransfer = QInputDialog::getInt(this, tr("Transfer Troops"), tr("Enter the number of soldiers to transfer:"), 0, 0, maxTroops, 1, &ok);
+        if (ok) {
+            if(troopsToTransfer > selectedLayer->getTroopCount()) {
+                QMessageBox::warning(this, tr("Error"), tr("You don`t have enough troops to transfer."));
+            } else {
+                selectedLayer->setTroopCount(selectedLayer->getTroopCount() - troopsToTransfer);
+                layer->setTroopCount(layer->getTroopCount() + troopsToTransfer);
+
+                //QMessageBox::information(this, tr("Tranfer successful."), tr("%1 soldiers were transferred."));
+            }
+        }
+
+        selectedLayer = nullptr;
+    }
 }
