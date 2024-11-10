@@ -34,7 +34,7 @@ public:
   void print_graph() const;
 
 public:
-  std::unordered_map<nodeID_t, Vertex> m_nodes;
+  std::unordered_map<nodeID_t, Vertex> vertices;
 
 private:
   adj_list_t m_adj_list;

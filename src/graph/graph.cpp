@@ -15,15 +15,15 @@ Vertex Graph::insert_vertex(QPointF position, const std::string &label,
                             Player player) {
   Vertex vertex(position, label, map_layer, territory, army, player);
 
-  m_nodes.emplace(vertex.id(), vertex);
+  vertices.emplace(vertex.id(), vertex);
   m_adj_list[vertex] = std::vector<Edge>();
 
   return vertex;
 }
 
 bool Graph::insert_edge(const Vertex &from, const Vertex &to, double weight) {
-  if (m_nodes.find(from.id()) == m_nodes.end() ||
-      m_nodes.find(to.id()) == m_nodes.end()) {
+  if (vertices.find(from.id()) == vertices.end() ||
+      vertices.find(to.id()) == vertices.end()) {
     std::cerr << "Node doesn't exist";
     return false;
   }
@@ -37,13 +37,13 @@ bool Graph::insert_edge(const Vertex &from, const Vertex &to, double weight) {
 
 bool Graph::remove_vertex(const Vertex &vertex) {
 
-  auto it = m_nodes.find(vertex.id());
-  if (it == m_nodes.end()) {
+  auto it = vertices.find(vertex.id());
+  if (it == vertices.end()) {
     std::cerr << "Vertex doesn't exist\n";
     return false;
   }
 
-  m_nodes.erase(it);
+  vertices.erase(it);
   m_adj_list.erase(vertex);
   for (auto &[node, edges] : m_adj_list) {
     edges.erase(std::remove_if(edges.begin(), edges.end(),
@@ -83,7 +83,7 @@ std::vector<Vertex> Graph::neighbors(const Vertex &vertex) const {
   if (it != m_adj_list.end()) {
     for (const Edge &edge : it->second) {
       int neighbor_id = (edge.from() == vertex.id()) ? edge.to() : edge.from();
-      neighbors.push_back(m_nodes.at(neighbor_id));
+      neighbors.push_back(vertices.at(neighbor_id));
     }
   }
 
@@ -92,21 +92,29 @@ std::vector<Vertex> Graph::neighbors(const Vertex &vertex) const {
 
 
 
-void Graph::print_graph() const {
-  std::cout << "Nodes:\n";
-  for (const auto &[id, vertex] : m_nodes) {
-    auto position = vertex.position();
-    std::cout << "ID: " << vertex.id() << ", Label: " << vertex.label()
-              << ", Position: (" << position.x() << ", " << position.y()
-              << ")\n";
-  }
+// void Graph::print_graph() const {
+//   std::cout << "Nodes:\n";
+//   for (const auto &[id, vertex] : vertices) {
+//     auto position = vertex.position();
+//     std::cout << "ID: " << vertex.id() << ", Label: " << vertex.label()
+//               << ", Position: (" << position.x() << ", " << position.y()
+//               << ")\n";
+//   }
 
-  std::cout << "\nGrane u grafu:\n";
-  for (const auto &[id, edges] : m_adj_list) {
-    for (const auto &edge : edges) {
-      std::cout << "From: " << edge.from() << " ->  To: " << edge.to() << '\n';
+//   std::cout << "\nGrane u grafu:\n";
+//   for (const auto &[id, edges] : m_adj_list) {
+//     for (const auto &edge : edges) {
+//       std::cout << "From: " << edge.from() << " ->  To: " << edge.to() << '\n';
+//     }
+//   }
+// }
+
+void Graph::print_graph() const{
+    for(const auto &[id, vertex] : vertices){
+        std::cout << "[Vertex ID]: " << vertex.id() << "\n[Label]: " << vertex.label()
+                  << "\n[Army type]: " << vertex.army.to_string(vertex.army.armyType()) << "\n[Soldiers]: " << vertex.army.getSoldiers()
+                  << "\n[Terrain]: " << vertex.territory.to_string(vertex.territory.getTerrain())
+                  << "\n----------------------" << std::endl;;
     }
-  }
 }
-
-} // namespace graph
+}

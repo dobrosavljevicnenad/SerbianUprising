@@ -19,10 +19,9 @@ MainWindow::MainWindow(QWidget *parent)
     graph::Graph g;
     MapLayer *territoryGornji = new MapLayer(":/resources/gornji.png",true);//ubaci
 
+    // test graph
     Army army(40, ArmyType::HAJDUK);
-
     Territory territory(TerrainType::MOUNTAIN);
-
     Player player(1, ArmyType::HAJDUK);
 
     graph::Vertex v1 = g.insert_vertex(territoryGornji->troopText->pos(), "Gornji_layer",territoryGornji, territory, army, player);
@@ -36,6 +35,8 @@ MainWindow::MainWindow(QWidget *parent)
     g.insert_edge(v1,v2,1.0);
     g.insert_edge(v1,v3,1.0);
     g.insert_edge(v2,v3,1.0);
+
+    g.print_graph();
 
     print_connections(g, v1);
     print_connections(g, v2);

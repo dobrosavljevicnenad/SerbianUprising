@@ -41,3 +41,22 @@ int Territory::getAttackerAdvantage() const {
 int Territory::getDefenderAdvantage() const {
     return m_defenderAdvantage;
 }
+
+std::string Territory::to_string(TerrainType type) const{
+    switch(type){
+    case TerrainType::FIELD:
+        return "field";
+        break;
+    case TerrainType::FOREST:
+        return "forest";
+        break;
+    case TerrainType::HILL:
+        return "hill";
+        break;
+    case TerrainType::MOUNTAIN:
+        return "mountain";
+        break;
+    default:
+        return "";
+    }
+}

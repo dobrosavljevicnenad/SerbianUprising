@@ -1,6 +1,8 @@
 #ifndef TERRITORY_H
 #define TERRITORY_H
 
+#include <string>
+
 enum class TerrainType {
     FIELD,
     MOUNTAIN,
@@ -19,6 +21,8 @@ public:
 
     void setAttackerAdvantage(int advantage);
     void setDefenderAdvantage(int advantage);
+
+    std::string to_string(TerrainType type) const;
 
 private:
     TerrainType m_terrain;
