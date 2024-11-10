@@ -13,7 +13,12 @@ MapLayer::MapLayer(const QString &imagePath,bool enableHover = true, QGraphicsIt
 }
 
 void MapLayer::setTroopCount(int count) {
+    troopCount = count;
     troopText->setPlainText(QString::number(count));
+}
+
+int MapLayer::getTroopCount() const {
+    return troopCount;
 }
 
 void MapLayer::setColor(const QColor &newColor) {
@@ -39,4 +44,11 @@ void MapLayer::hoverEnterEvent(QGraphicsSceneHoverEvent *event)  {
 void MapLayer::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
     setColor(QColor(235,180,90,255));
     QGraphicsPixmapItem::hoverLeaveEvent(event);
+}
+
+void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+    if (event->button() == Qt::LeftButton) {
+        emit layerClicked(this);
+    }
+    QGraphicsPixmapItem::mousePressEvent(event);
 }
