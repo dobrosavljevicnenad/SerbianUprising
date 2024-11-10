@@ -30,8 +30,9 @@ public:
   bool remove_vertex(const Vertex &vertex);
   bool remove_edge(const Vertex &from, const Vertex &to);
   std::vector<Vertex> neighbors(const Vertex &vertex) const;
+  bool is_neighbor(const Vertex &vertex1, const Vertex &vertex2) const;
   MapLayer *get_layer_for_vertex(const Vertex &vertex) const;
-  void print_graph() const;
+  void print_graph() const; 
 
 public:
   std::unordered_map<nodeID_t, Vertex> vertices;

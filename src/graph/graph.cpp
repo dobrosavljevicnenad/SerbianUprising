@@ -90,24 +90,14 @@ std::vector<Vertex> Graph::neighbors(const Vertex &vertex) const {
   return neighbors;
 }
 
-
-
-// void Graph::print_graph() const {
-//   std::cout << "Nodes:\n";
-//   for (const auto &[id, vertex] : vertices) {
-//     auto position = vertex.position();
-//     std::cout << "ID: " << vertex.id() << ", Label: " << vertex.label()
-//               << ", Position: (" << position.x() << ", " << position.y()
-//               << ")\n";
-//   }
-
-//   std::cout << "\nGrane u grafu:\n";
-//   for (const auto &[id, edges] : m_adj_list) {
-//     for (const auto &edge : edges) {
-//       std::cout << "From: " << edge.from() << " ->  To: " << edge.to() << '\n';
-//     }
-//   }
-// }
+bool Graph::is_neighbor(const Vertex &vertex1, const Vertex &vertex2) const {
+    auto it = m_adj_list.find(vertex1);
+    for (const Edge &edge : it->second){
+        if (edge.to() == vertex2.id() || edge.from() == vertex2.id())
+            return true;
+    }
+    return false;
+}
 
 void Graph::print_graph() const{
     for(const auto &[id, vertex] : vertices){
