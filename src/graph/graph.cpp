@@ -11,7 +11,7 @@ Graph::Graph() = default;
 Graph::~Graph() = default;
 
 Vertex Graph::insert_vertex(QPointF position, const std::string &label,
-                            MapLayer *map_layer, Territory territory, Army army,
+                            MapLayer *map_layer, Terrain territory, Army army,
                             Player player) {
   Vertex vertex(position, label, map_layer, territory, army, player);
 

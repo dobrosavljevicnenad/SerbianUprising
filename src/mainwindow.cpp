@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     Army army(40, ArmyType::HAJDUK);
 
-    Territory territory(TerrainType::MOUNTAIN);
+    Terrain territory(TerrainType::MOUNTAIN);
 
     Player player(1, ArmyType::HAJDUK);
 

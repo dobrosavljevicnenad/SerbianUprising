@@ -1,11 +1,11 @@
-#include "Territory.h"
+#include "Terrain.h"
 
-Territory::Territory(TerrainType terrain) : m_terrain(terrain) {
+Terrain::Terrain(TerrainType terrain) : m_terrain(terrain) {
     setDefaultAdvantages(terrain);
 }
 
 // Function to set default advantages for each TerrainType
-void Territory::setDefaultAdvantages(TerrainType terrain) {
+void Terrain::setDefaultAdvantages(TerrainType terrain) {
     switch (terrain) {
     case TerrainType::FIELD:
         m_attackerAdvantage = 0;
@@ -30,14 +30,14 @@ void Territory::setDefaultAdvantages(TerrainType terrain) {
     }
 }
 
-TerrainType Territory::getTerrain() const {
+TerrainType Terrain::getTerrain() const {
     return m_terrain;
 }
 
-int Territory::getAttackerAdvantage() const {
+int Terrain::getAttackerAdvantage() const {
     return m_attackerAdvantage;
 }
 
-int Territory::getDefenderAdvantage() const {
+int Terrain::getDefenderAdvantage() const {
     return m_defenderAdvantage;
 }

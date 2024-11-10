@@ -9,7 +9,7 @@
 #include "../base/Strength.h"
 #include "../base/mergeArmies.h"
 #include "../base/player.h"
-#include "../base/Territory.h"
+#include "../base/Terrain.h"
 
 namespace graph {
 
@@ -19,7 +19,7 @@ using nodeID_t = unsigned;
 class Vertex {
 public:
   Vertex(QPointF position, const std::string &label,
-           MapLayer *map_layer, Territory territory, Army army,
+           MapLayer *map_layer, Terrain territory, Army army,
            Player player);
 
   ~Vertex();
@@ -31,7 +31,7 @@ public:
   bool operator==(const Vertex &other) const { return id() == other.id(); }
 
 public:
-  Territory territory;
+  Terrain territory;
   Army army;
   Player player;
 
