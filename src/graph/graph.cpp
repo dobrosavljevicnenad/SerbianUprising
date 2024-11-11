@@ -21,14 +21,15 @@ Vertex Graph::insert_vertex(QPointF position, const std::string &label,
   return vertex;
 }
 
-bool Graph::insert_edge(const Vertex &from, const Vertex &to, double weight) {
+bool Graph::insert_edge(const Vertex &from, const Vertex &to, double weight, EdgeType type) {
   if (vertices.find(from.id()) == vertices.end() ||
       vertices.find(to.id()) == vertices.end()) {
     std::cerr << "Node doesn't exist";
     return false;
   }
 
-  Edge edge(from.id(), to.id(), weight);
+  weight = (type == EdgeType::River ? (weight - 10) : weight);
+  Edge edge(from, to, weight, type);
   m_adj_list[from].push_back(edge);
   m_adj_list[to].push_back(edge);
 
@@ -97,6 +98,10 @@ bool Graph::is_neighbor(const Vertex &vertex1, const Vertex &vertex2) const {
             return true;
     }
     return false;
+}
+
+std::unordered_map<Vertex, std::vector<Edge>> Graph::adj_list() const{
+    return m_adj_list;
 }
 
 void Graph::print_graph() const{
