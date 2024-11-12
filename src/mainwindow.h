@@ -2,11 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <iostream>
 #include <QGraphicsView> //*
 #include "gui/mapscene.h" //*
 #include "graph/graph.hpp"
 #include "gui/maplayer.h"
+#include "gui/gamemanager.h"
+#include <QInputDialog>
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

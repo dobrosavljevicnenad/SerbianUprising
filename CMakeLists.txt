@@ -44,6 +44,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/graph/graph.hpp src/graph/graph.cpp
         src/graph/vertex.hpp src/graph/vertex.cpp
         resources.qrc
+        src/gui/gamemanager.h src/gui/gamemanager.cpp
 
 
     )
