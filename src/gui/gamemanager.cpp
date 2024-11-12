@@ -4,11 +4,6 @@ GameManager::GameManager(QGraphicsScene* scene) : scene(scene)  {}
 
 void GameManager::initializeMap(){
     /*
-    print_connections(g, v1);
-    print_connections(g, v2);
-    print_connections(g, v3);
-
-
     auto neigh = g.neighbors(v1);
     for(auto n : neigh){
         std::cout << n->army.getSoldiers() << std::endl;
@@ -19,22 +14,6 @@ void GameManager::initializeMap(){
     for(auto n : neigh){
         std::cout << n->army.getSoldiers() << std::endl;
     }
-
-    territoryGornji->setTroopCount(50);
-    territoryDonjiLevi->setTroopCount(30);
-    territoryDonjiDesni->setTroopCount(20);
-
-    scene->addLayer(territoryGornji);
-    scene->addLayer(territoryDonjiLevi);
-    scene->addLayer(territoryDonjiDesni);
-
-    scene->addItem(territoryGornji);
-    scene->addItem(territoryDonjiLevi);
-    scene->addItem(territoryDonjiDesni);
-
-    connect(territoryGornji, &MapLayer::layerClicked, this, &MainWindow::onLayerClicked);
-    connect(territoryDonjiLevi, &MapLayer::layerClicked, this, &MainWindow::onLayerClicked);
-    connect(territoryDonjiDesni, &MapLayer::layerClicked, this, &MainWindow::onLayerClicked);
     */
     MapLayer *baseLayer = new MapLayer(":/resources/base.png", false);
     scene->addItem(baseLayer);
@@ -65,15 +44,30 @@ void GameManager::initializeMap(){
                                        "Layer7", "Layer8", "Layer9","Layer10", "Layer11", "Layer12",
                                        "Layer13", "Layer14" };
 
+    std::vector<Army> armies;
+    std::vector<Player> players;
     Territory defaultTerritory(TerrainType::MOUNTAIN);
-    Army defaultArmy(50, ArmyType::HAJDUK);
-    Player defaultPlayer(1, ArmyType::HAJDUK);
 
+    int numLayers = layers.size();
+    for (int i = 0; i < numLayers; ++i) {
+        int soldiers = 10 + std::rand() % 91;
+
+        ArmyType type = (std::rand() % 2 == 0 ) ? ArmyType::HAJDUK : ArmyType::JANISSARY;
+
+        armies.emplace_back(soldiers,type);
+
+        players.emplace_back((type==ArmyType::HAJDUK) ? 1 : 2, type);
+    }
 
     for (size_t i = 0; i < layers.size(); ++i) {
-        addLayer(layers[i], labels[i], defaultTerritory, defaultArmy, defaultPlayer);
+        addLayer(layers[i], labels[i], defaultTerritory, armies[i], players[i]);
         layers[i]->setPos(baseLayer->pos().x() + positions[i].first,
-                          baseLayer->pos().y() + positions[i].second); // Example positioning
+                          baseLayer->pos().y() + positions[i].second);
+
+        connect(layers[i], &MapLayer::layerClicked, this, [this, layers, i]() {
+            emit layerClicked(layers[i]);
+        });
+        layers[i]->setTroopCount(layerToVertex[layers[i]]->army.getSoldiers());
     }
 
 
@@ -120,6 +114,7 @@ void GameManager::transferTroops(MapLayer* from, MapLayer* to, int troops) {
     }
 }
 
+//print_connections(g, cvor);
 void GameManager::printConnections(graph::Vertex* vertex) {
     auto neighbors = g.neighbors(vertex);
     std::cout << "Vertex " << vertex->id() << " is connected to: ";

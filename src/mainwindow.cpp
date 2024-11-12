@@ -1,7 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 
-
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -15,21 +14,17 @@ MainWindow::MainWindow(QWidget *parent)
     view = new QGraphicsView(scene, this);
     setCentralWidget(view);
 
-    //GameManager *gameManager = new GameManager(scene);
-    //gameManager->initializeMap();
 
+    GameManager *gameManager = new GameManager(scene);
+    gameManager->initializeMap();
+
+    connect(gameManager, &GameManager::layerClicked, this, &MainWindow::onLayerClicked);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
 }
-
-void MainWindow::highlightLayer(MapLayer *layer) {
-    layer->setColor(QColor(0, 255, 0)); // Set the layer to green to highlight it
-}
-
-
 
 void MainWindow::onLayerClicked(MapLayer *layer) {
     if (selectedLayer == nullptr) {

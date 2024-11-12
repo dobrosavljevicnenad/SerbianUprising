@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef MAPLAYER_H
 #define MAPLAYER_H
 
@@ -8,6 +10,7 @@
 #include <QGraphicsSceneHoverEvent>
 #include <QGraphicsSceneMouseEvent>
 #include <QFont>
+
 
 
 class MapLayer : public QObject, public QGraphicsPixmapItem {
@@ -37,6 +40,8 @@ protected:
 
 private:
     int troopCount;
+    QPixmap m_originalPixmap;
+
 
 };
 

@@ -1,19 +1,28 @@
+#pragma once
+
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
 #include "../graph/graph.hpp"
+#include"maplayer.h"
+
 #include<QGraphicsScene>
 #include<iostream>
+#include<QObject>
 
-class GameManager
+class GameManager : public QObject
 {
+    Q_OBJECT
+
 public:
     GameManager(QGraphicsScene* scene);
     void initializeMap();
     void addLayer(MapLayer* layer, const std::string& label, Territory territory, Army army, Player player);
-
     void transferTroops(MapLayer* from, MapLayer* to, int troops);
     void printConnections(graph::Vertex* vertex);
+
+signals:
+    void layerClicked(MapLayer* layer);
 
 private:
     QGraphicsScene* scene;

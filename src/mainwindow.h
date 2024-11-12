@@ -24,6 +24,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
     void highlightLayer(MapLayer *layer);
 
     void print_connections(const graph::Graph &g, const graph::Vertex* vertex);

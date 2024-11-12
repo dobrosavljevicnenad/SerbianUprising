@@ -1,3 +1,5 @@
+#pragma once
+
 #ifndef MAPSCENE_H
 #define MAPSCENE_H
 

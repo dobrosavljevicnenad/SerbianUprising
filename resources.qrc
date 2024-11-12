@@ -1,9 +1,18 @@
 <RCC>
     <qresource prefix="/">
-        <file>resources/test 1.1.png</file>
-        <file>resources/gornji.png</file>
-        <file>resources/donji_l.png</file>
-        <file>resources/donji_d.png</file>
-        <file>resources/ceo.png</file>
+        <file>resources/base.png</file>
+        <file>resources/Layer14.png</file>
+        <file>resources/Layer13.png</file>
+        <file>resources/Layer12.png</file>
+        <file>resources/Layer11.png</file>
+        <file>resources/Layer10.png</file>
+        <file>resources/Layer9.png</file>
+        <file>resources/Layer8.png</file>
+        <file>resources/Layer7.png</file>
+        <file>resources/Layer6.png</file>
+        <file>resources/Layer5.png</file>
+        <file>resources/Layer4.png</file>
+        <file>resources/Layer3.png</file>
+        <file>resources/Layer2.png</file>
     </qresource>
 </RCC>
