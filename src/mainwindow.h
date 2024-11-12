@@ -24,7 +24,7 @@ public:
 
     void highlightLayer(MapLayer *layer);
 
-    void print_connections(const graph::Graph &g, const graph::Vertex &vertex);
+    void print_connections(const graph::Graph &g, const graph::Vertex* vertex);
 
 private slots:
     void onLayerClicked(MapLayer *layer);

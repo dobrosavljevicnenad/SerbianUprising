@@ -17,28 +17,28 @@ namespace graph {
 
 class Graph {
 public:
-  Graph();
+    Graph();
+    ~Graph();
 
-  ~Graph();
+    Vertex* insert_vertex(QPointF position, const std::string &label,
+                          MapLayer *map_layer, Territory territory, Army army,
+                          Player player);
 
-  Vertex insert_vertex(QPointF position, const std::string &label,
-                       MapLayer *map_layer, Territory territory, Army army,
-                       Player player);
-  bool insert_edge(const Vertex &from, const Vertex &to, double weight, EdgeType type = EdgeType::Land);
-  bool remove_vertex(const Vertex &vertex);
-  bool remove_edge(const Vertex &from, const Vertex &to);
-  std::vector<Vertex> neighbors(const Vertex &vertex) const;
-  bool is_neighbor(const Vertex &vertex1, const Vertex &vertex2) const;
-  std::unordered_map<Vertex, std::vector<Edge>> adj_list() const;
-  MapLayer *get_layer_for_vertex(const Vertex &vertex) const;
-  void print_graph() const; 
+    bool insert_edge(Vertex* from, Vertex* to, double weight, EdgeType type = EdgeType::Land);
+    bool remove_vertex(Vertex* vertex);
+    bool remove_edge(Vertex* from, Vertex* to);
+    std::vector<Vertex*> neighbors(const Vertex* vertex) const;
+    bool is_neighbor(const Vertex* vertex1, const Vertex* vertex2) const;
+    std::unordered_map<Vertex*, std::vector<Edge>> adj_list() const;
+    MapLayer* get_layer_for_vertex(const Vertex* vertex) const;
+    void print_graph() const;
 
 public:
-  std::unordered_map<nodeID_t, Vertex> vertices;
+    std::unordered_map<nodeID_t, Vertex*> vertices;
 
 private:
-  std::unordered_map<Vertex, std::vector<Edge>> m_adj_list;
-  unsigned m_next_id;
+    std::unordered_map<Vertex*, std::vector<Edge>> m_adj_list;
+    unsigned m_next_id;
 };
 
 } // namespace graph
