@@ -4,7 +4,7 @@
 MoveArmy::MoveArmy(Graph& graph) : m_graph(graph) {}
 
 bool MoveArmy::executeMove(Vertex* source, Vertex* target, unsigned int soldiersToMove) {
-        if (!areNeighbors(source, target)) {
+    if (!areNeighbors(source, target)) {
         std::cerr << "Error: Target vertex is not a neighbor of the source.\n";
         return false;
     }

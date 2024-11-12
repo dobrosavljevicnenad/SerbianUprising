@@ -14,29 +14,29 @@ Graph::~Graph(){
 }
 
 Vertex* Graph::insert_vertex(QPointF position, const std::string &label,
-                            MapLayer *map_layer, Terrain territory, Army army,
-                            Player player) {
-  Vertex* vertex = new Vertex(position, label, map_layer, territory, army, player);
+                             MapLayer *map_layer, Terrain territory, Army army,
+                             Player player) {
+    Vertex* vertex = new Vertex(position, label, map_layer, territory, army, player);
 
-  vertices.emplace(vertex->id(), vertex);
-  m_adj_list[vertex] = std::vector<Edge>();
+    vertices.emplace(vertex->id(), vertex);
+    m_adj_list[vertex] = std::vector<Edge>();
 
-  return vertex;
+    return vertex;
 }
 
 bool Graph::insert_edge(Vertex* from,Vertex* to, double weight, EdgeType type) {
-  if (vertices.find(from->id()) == vertices.end() ||
-      vertices.find(to->id()) == vertices.end()) {
-    std::cerr << "Node doesn't exist";
-    return false;
-  }
+    if (vertices.find(from->id()) == vertices.end() ||
+        vertices.find(to->id()) == vertices.end()) {
+        std::cerr << "Node doesn't exist";
+        return false;
+    }
 
-  weight = (type == EdgeType::River ? (weight - 10) : weight);
-  Edge edge(*from, *to, weight, type);
-  m_adj_list[from].push_back(edge);
-  m_adj_list[to].push_back(edge);
+    weight = (type == EdgeType::River ? (weight - 10) : weight);
+    Edge edge(*from, *to, weight, type);
+    m_adj_list[from].push_back(edge);
+    m_adj_list[to].push_back(edge);
 
-  return true;
+    return true;
 }
 
 bool Graph::remove_vertex(Vertex* vertex) {
