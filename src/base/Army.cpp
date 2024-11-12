@@ -26,3 +26,16 @@ int Army::morale() const {
 int Army::strength() const {
     return Strength::baseStrength() + morale();
 }
+
+std::string Army::to_string(ArmyType type) const {
+    switch(type){
+    case ArmyType::HAJDUK:
+        return "hajduk";
+        break;
+    case ArmyType::JANISSARY:
+        return "janicar";
+        break;
+    default:
+        return "";
+    }
+}

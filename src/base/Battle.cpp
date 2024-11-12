@@ -61,7 +61,7 @@ Army Battle::start() {
                 return m_defender;
             }
         }
-        if(m_attacker.getSoldiers() != 0 && (m_attacker.getSoldiers()>m_defender.getSoldiers())){
+        if(m_defender.getSoldiers() != 0 && (m_attacker.getSoldiers()>m_defender.getSoldiers())){
             if(std::rand() % 100 > 200*m_defender.getSoldiers()/m_attacker.getSoldiers()){
                 std::cout <<"Defender retreats. "<< (m_attacker.armyType() == ArmyType::HAJDUK ? "Hajduk" : "Janissary")
                 << " wins!" << std::endl;
@@ -73,6 +73,7 @@ Army Battle::start() {
     if (m_defender.getSoldiers() == 0) {
         std::cout << (m_attacker.armyType() == ArmyType::HAJDUK ? "Hajduk" : "Janissary")
         << " wins!" << std::endl;
+        return m_attacker;
     }
     std::cout << (m_defender.armyType() == ArmyType::HAJDUK ? "Hajduk" : "Janissary")
               << " wins!" << std::endl;

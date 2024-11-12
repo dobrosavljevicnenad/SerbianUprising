@@ -36,6 +36,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/base/Terrain.h
         src/base/player.cpp
         src/base/player.h
+        src/base/MoveArmy.cpp
+        src/base/MoveArmy.h
         src/base/mergeArmies.cpp
         src/base/mergeArmies.h
         src/gui/maplayer.h src/gui/maplayer.cpp

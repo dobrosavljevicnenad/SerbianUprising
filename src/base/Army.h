@@ -2,6 +2,7 @@
 #define ARMY_H
 
 #include "Strength.h"
+#include <string>
 
 enum class ArmyType : int {
     HAJDUK,
@@ -22,6 +23,7 @@ public:
     ArmyType armyType() const;
     int strength() const;
     int morale() const;
+    std::string to_string(ArmyType type) const;
 
 private:
     int m_soldiers;

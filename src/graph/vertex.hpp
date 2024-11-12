@@ -31,7 +31,7 @@ public:
   bool operator==(const Vertex &other) const { return id() == other.id(); }
 
 public:
-  Terrain territory;
+  Terrain terrain;
   Army army;
   Player player;
 
