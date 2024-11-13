@@ -5,10 +5,10 @@
 
 #include "../Entities/Army.h"
 
+
 #include <ctime>
 #include <iostream>
 #include <cstdlib>
-#include <ctime>
 
 class Battle
 {

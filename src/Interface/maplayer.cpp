@@ -38,7 +38,6 @@ void MapLayer::setColor(const QColor &newColor) {
 }
 
 void MapLayer::setArmyColor(ArmyType armyType) {
-    QColor color;
     switch (armyType) {
     case ArmyType::HAJDUK:
         ArmyColor = QColor(198,54,60,255);

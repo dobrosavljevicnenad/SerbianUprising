@@ -42,6 +42,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/base/graph/vertex.hpp src/base/graph/vertex.cpp
         resources.qrc
         src/Interface/gamemanager.h src/Interface/gamemanager.cpp
+        src/base/Entities/city.h src/base/Entities/city.cpp
+        src/base/Entities/region.h src/base/Entities/region.cpp
 
 
     )

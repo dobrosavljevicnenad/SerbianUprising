@@ -18,7 +18,10 @@ class GameManager : public QObject
 public:
     GameManager(QGraphicsScene* scene);
     void initializeMap();
+
     void addLayer(MapLayer* layer, const std::string& label, Terrain terrain, Army army, Player player);
+
+    void CreateRegion();
     void transferTroops(MapLayer* from, MapLayer* to, int troops);
     void printConnections(graph::Vertex* vertex);
     QMap<MapLayer*,graph::Vertex*> layerToVertex;

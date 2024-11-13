@@ -47,6 +47,7 @@ void GameManager::initializeMap(){
     std::vector<Army> armies;
     std::vector<Player> players;
     Terrain defaultTerrain(TerrainType::MOUNTAIN);
+
     int numLayers = layers.size();
     for (int i = 0; i < numLayers; ++i) {
         int soldiers = 10 + std::rand() % 91;
