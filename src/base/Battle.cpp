@@ -53,15 +53,29 @@ Army Battle::start() {
                   << " soldiers left: " << m_defender.getSoldiers() << std::endl;
         std::cout << (m_attacker.armyType() == ArmyType::HAJDUK ? "Hajduk" : "Janissary")
                   << " soldiers left: " << m_attacker.getSoldiers() << std::endl;
+        //soliders reatrithig
+        if(m_attacker.getSoldiers() != 0 && (m_attacker.getSoldiers()<m_defender.getSoldiers())){
+            if(std::rand() % 100 > 100*m_attacker.getSoldiers()/m_defender.getSoldiers()){
+                std::cout <<"Attacker retreats. "<< (m_defender.armyType() == ArmyType::HAJDUK ? "Hajduk" : "Janissary")
+                << " wins!" << std::endl;
+                return m_defender;
+            }
+        }
+        if(m_defender.getSoldiers() != 0 && (m_attacker.getSoldiers()>m_defender.getSoldiers())){
+            if(std::rand() % 100 > 200*m_defender.getSoldiers()/m_attacker.getSoldiers()){
+                std::cout <<"Defender retreats. "<< (m_attacker.armyType() == ArmyType::HAJDUK ? "Hajduk" : "Janissary")
+                << " wins!" << std::endl;
+                return m_attacker;
+            }
+        }
     }
 
-    if (m_attacker.getSoldiers() == 0) {
-        std::cout << (m_defender.armyType() == ArmyType::HAJDUK ? "Hajduk" : "Janissary")
-                  << " wins!" << std::endl;
-    } else {
+    if (m_defender.getSoldiers() == 0) {
         std::cout << (m_attacker.armyType() == ArmyType::HAJDUK ? "Hajduk" : "Janissary")
-                  << " wins!" << std::endl;
+        << " wins!" << std::endl;
         return m_attacker;
     }
+    std::cout << (m_defender.armyType() == ArmyType::HAJDUK ? "Hajduk" : "Janissary")
+              << " wins!" << std::endl;
     return m_defender;
 }

@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // test graph
     Army army(40, ArmyType::HAJDUK);
-    Territory territory(TerrainType::MOUNTAIN);
+    Terrain territory(TerrainType::MOUNTAIN);
     Player player(1, ArmyType::HAJDUK);
 
     graph::Vertex* v1 = g.insert_vertex(territoryGornji->troopText->pos(), "Gornji_layer",territoryGornji, territory, army, player);
