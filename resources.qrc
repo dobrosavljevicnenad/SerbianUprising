@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/base.png</file>
-        <file>resources/Layer14.png</file>
         <file>resources/Layer13.png</file>
         <file>resources/Layer12.png</file>
         <file>resources/Layer11.png</file>
@@ -14,5 +13,6 @@
         <file>resources/Layer4.png</file>
         <file>resources/Layer3.png</file>
         <file>resources/Layer2.png</file>
+        <file>resources/Layer1.png</file>
     </qresource>
 </RCC>

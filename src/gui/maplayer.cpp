@@ -26,7 +26,9 @@ void MapLayer::setColor(const QColor &newColor) {
     for (int y = 0; y < image.height(); ++y) {
         for (int x = 0; x<image.width(); ++x) {
             QColor color = image.pixelColor(x,y);
-            if (color.alpha()>0){
+            if (color.red() < 60 && color.green() < 60 && color.blue() < 60 && color.alpha() > 0) {
+                image.setPixelColor(x, y, QColor(0, 0, 0));
+            } else if (color.alpha() > 0) {
                 image.setPixelColor(x, y, newColor);
             }
         }
@@ -35,6 +37,21 @@ void MapLayer::setColor(const QColor &newColor) {
     setPixmap(QPixmap::fromImage(image));
 }
 
+void MapLayer::setArmyColor(ArmyType armyType) {
+    QColor color;
+    switch (armyType) {
+    case ArmyType::HAJDUK:
+        ArmyColor = QColor(198,54,60,255);
+        break;
+    case ArmyType::JANISSARY:
+        ArmyColor = QColor(0,149,48,255);
+        break;
+    default:
+        ArmyColor = QColor(255, 255, 255);
+        break;
+    }
+    setColor(ArmyColor);
+}
 
 void MapLayer::hoverEnterEvent(QGraphicsSceneHoverEvent *event)  {
     setColor(QColor(255, 0, 0, 150));
@@ -42,7 +59,7 @@ void MapLayer::hoverEnterEvent(QGraphicsSceneHoverEvent *event)  {
 }
 
 void MapLayer::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
-    setPixmap(m_originalPixmap);
+    setColor(ArmyColor);
     QGraphicsPixmapItem::hoverLeaveEvent(event);
 }
 

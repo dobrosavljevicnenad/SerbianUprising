@@ -19,7 +19,8 @@ void GameManager::initializeMap(){
     scene->addItem(baseLayer);
 
     std::vector<MapLayer*> layers = {
-        new MapLayer(":/resources/Layer2.png", true),
+        new MapLayer(":/resources/Layer1.png", true),//0
+        new MapLayer(":/resources/Layer2.png", true),//1
         new MapLayer(":/resources/Layer3.png", true),
         new MapLayer(":/resources/Layer4.png", true),
         new MapLayer(":/resources/Layer5.png", true),
@@ -31,7 +32,6 @@ void GameManager::initializeMap(){
         new MapLayer(":/resources/Layer11.png", true),
         new MapLayer(":/resources/Layer12.png", true),
         new MapLayer(":/resources/Layer13.png", true),
-        new MapLayer(":/resources/Layer14.png", true),
     };
 
     std::vector<std::pair<int, int>> positions = {
@@ -70,7 +70,7 @@ void GameManager::initializeMap(){
     }
 
 
-    if (layers.size() >= 13) {
+    if (layers.size() >= 12) {
         g.insert_edge(layerToVertex[layers[0]], layerToVertex[layers[2]], 1.0);
         g.insert_edge(layerToVertex[layers[0]], layerToVertex[layers[4]], 1.0);
         g.insert_edge(layerToVertex[layers[0]], layerToVertex[layers[10]], 1.0);
@@ -78,6 +78,7 @@ void GameManager::initializeMap(){
         g.insert_edge(layerToVertex[layers[1]], layerToVertex[layers[3]], 1.0);
         g.insert_edge(layerToVertex[layers[3]], layerToVertex[layers[2]], 1.0);
         g.insert_edge(layerToVertex[layers[4]], layerToVertex[layers[2]], 1.0);
+        g.insert_edge(layerToVertex[layers[4]], layerToVertex[layers[3]], 1.0);
         g.insert_edge(layerToVertex[layers[3]], layerToVertex[layers[5]], 1.0);
         g.insert_edge(layerToVertex[layers[4]], layerToVertex[layers[5]], 1.0);
         g.insert_edge(layerToVertex[layers[4]], layerToVertex[layers[8]], 1.0);
@@ -94,13 +95,14 @@ void GameManager::initializeMap(){
         g.insert_edge(layerToVertex[layers[9]], layerToVertex[layers[12]], 1.0);
         g.insert_edge(layerToVertex[layers[9]], layerToVertex[layers[10]], 1.0);
         g.insert_edge(layerToVertex[layers[9]], layerToVertex[layers[11]], 1.0);
-        g.insert_edge(layerToVertex[layers[10]], layerToVertex[layers[12]], 1.0);
         g.insert_edge(layerToVertex[layers[11]], layerToVertex[layers[12]], 1.0);
-    }
+        g.insert_edge(layerToVertex[layers[10]], layerToVertex[layers[11]], 1.0);
 
-}
+    }
+}//12 i 13 (11 i 12) 6 i 5 (5 i 4)
 
 void GameManager::addLayer(MapLayer* layer, const std::string& label, Terrain terrain, Army army, Player player) {
+    layer->setArmyColor(army.armyType());
     scene->addItem(layer);
     auto vertex = g.insert_vertex(layer->troopText->pos(), label, layer, terrain, army, player);
     layerToVertex[layer] = vertex;

@@ -10,7 +10,8 @@
 #include <QGraphicsSceneHoverEvent>
 #include <QGraphicsSceneMouseEvent>
 #include <QFont>
-
+#include <QGraphicsSceneMouseEvent>
+#include "../base/Army.h"
 
 
 class MapLayer : public QObject, public QGraphicsPixmapItem {
@@ -21,6 +22,8 @@ public:
     void setTroopCount(int count);
 
     void setColor(const QColor &newColor);
+
+    void setArmyColor(ArmyType armyType);
 
     QGraphicsTextItem *troopText;
 
@@ -41,6 +44,7 @@ protected:
 private:
     int troopCount;
     QPixmap m_originalPixmap;
+    QColor ArmyColor;
 
 
 };

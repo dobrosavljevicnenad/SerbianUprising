@@ -23,7 +23,7 @@ public:
            Player player);
 
     ~Vertex();
-
+    void updateLayerColor();
     unsigned id() const;
     QPointF position() const;
     std::string label() const;

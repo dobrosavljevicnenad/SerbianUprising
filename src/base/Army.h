@@ -3,7 +3,7 @@
 
 #include "Strength.h"
 #include <string>
-
+#include <QColor>
 enum class ArmyType : int {
     HAJDUK,
     JANISSARY
