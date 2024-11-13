@@ -3,6 +3,8 @@
 #ifndef MAPLAYER_H
 #define MAPLAYER_H
 
+#include "../base/Entities/Army.h"
+
 #include <QGraphicsPixmapItem>
 #include <QGraphicsTextItem>
 #include <QColor>
@@ -11,7 +13,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QFont>
 #include <QGraphicsSceneMouseEvent>
-#include "../base/Army.h"
+
 
 
 class MapLayer : public QObject, public QGraphicsPixmapItem {

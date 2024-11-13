@@ -1,9 +1,5 @@
-#include "player.h"
-#include "Army.h"
-#include "Battle.h"
 #include "mergeArmies.h"
-#include<iostream>
-#include <vector>
+
 void MergeArmies::setTerrainAdvantage(int advantage1, int advantage2) {
     m_defenderAdvantage = advantage1;
     m_attackerAdvantage = advantage2;

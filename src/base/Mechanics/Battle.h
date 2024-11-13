@@ -1,7 +1,12 @@
+#pragma once
+
 #ifndef BATTLE_H
 #define BATTLE_H
 
-#include "Army.h"
+#include "../Entities/Army.h"
+
+#include <ctime>
+#include <iostream>
 #include <cstdlib>
 #include <ctime>
 

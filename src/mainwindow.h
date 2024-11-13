@@ -1,12 +1,12 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "Interface/mapscene.h"
+#include "Interface/maplayer.h"
+#include "Interface/gamemanager.h"
+
 #include <QMainWindow>
-#include <QGraphicsView> //*
-#include "gui/mapscene.h" //*
-#include "graph/graph.hpp"
-#include "gui/maplayer.h"
-#include "gui/gamemanager.h"
+#include <QGraphicsView>
 #include <QInputDialog>
 #include <QMessageBox>
 

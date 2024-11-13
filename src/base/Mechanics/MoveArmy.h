@@ -4,7 +4,10 @@
 #include "../graph/vertex.hpp"
 #include "../graph/graph.hpp"
 #include "Battle.h"
-#include "Army.h"
+#include "../Entities/Army.h"
+
+#include <iostream>
+
 using namespace graph;
 class MoveArmy {
 public:

@@ -1,9 +1,14 @@
+#pragma once
+
 #ifndef MERGEARMIES_H
 #define MERGEARMIES_H
 
-#include <vector>
-#include "Army.h"
 #include "player.h"
+#include "Army.h"
+#include "../Mechanics/Battle.h"
+
+#include<iostream>
+#include <vector>
 
 class MergeArmies {
 public:

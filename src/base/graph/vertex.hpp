@@ -2,14 +2,14 @@
 
 #include <string>
 #include<QPointF>
-#include "../gui/maplayer.h"
-#include "../gui/maplayer.h"
-#include "../base/Army.h"
-#include "../base/Battle.h"
-#include "../base/Strength.h"
-#include "../base/mergeArmies.h"
-#include "../base/player.h"
-#include "../base/Terrain.h"
+#include "../../Interface/maplayer.h"
+#include "../../Interface/maplayer.h"
+#include "../Entities/Army.h"
+#include "../Mechanics/Battle.h"
+#include "../Mechanics/Strength.h"
+#include "../Entities/mergeArmies.h"
+#include "../Entities/player.h"
+#include "../Entities/Terrain.h"
 
 namespace graph {
 

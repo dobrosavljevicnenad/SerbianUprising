@@ -1,9 +1,4 @@
 #include "graph.hpp"
-#include "edge.hpp"
-#include "vertex.hpp"
-#include <algorithm>
-#include <cmath>
-#include <iostream>
 
 namespace graph {
 

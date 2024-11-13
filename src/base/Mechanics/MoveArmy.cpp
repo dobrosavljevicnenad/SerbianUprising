@@ -1,5 +1,4 @@
 #include "MoveArmy.h"
-#include <iostream>
 
 MoveArmy::MoveArmy(Graph& graph) : m_graph(graph) {}
 

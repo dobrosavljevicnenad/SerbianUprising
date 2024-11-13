@@ -1,9 +1,13 @@
-    #ifndef ARMY_H
+#pragma once
+
+#ifndef ARMY_H
 #define ARMY_H
 
-#include "Strength.h"
+#include "../Mechanics/Strength.h"
+
 #include <string>
 #include <QColor>
+
 enum class ArmyType : int {
     HAJDUK,
     JANISSARY

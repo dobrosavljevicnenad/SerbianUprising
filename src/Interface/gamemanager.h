@@ -3,9 +3,9 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
-#include "../graph/graph.hpp"
+#include "../base/graph/graph.hpp"
 #include"maplayer.h"
-#include "../base/MoveArmy.h"
+#include "../base/Mechanics/MoveArmy.h"
 
 #include<QGraphicsScene>
 #include<iostream>

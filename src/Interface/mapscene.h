@@ -3,9 +3,11 @@
 #ifndef MAPSCENE_H
 #define MAPSCENE_H
 
+#include "maplayer.h"
+
 #include<QGraphicsScene>
 #include<QList>
-#include "maplayer.h"
+
 class MapScene : public QGraphicsScene {
 public:
     explicit MapScene(QObject *parent = nullptr);

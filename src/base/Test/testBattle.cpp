@@ -1,8 +1,5 @@
 #include "testBattle.h"
-#include "player.h"
-#include "../graph/graph.hpp"
-#include<iostream>
-#include "MoveArmy.h"
+
 
 void test_Battle() {
     Strength::instance().setBoost(ArmyType::HAJDUK, 25);

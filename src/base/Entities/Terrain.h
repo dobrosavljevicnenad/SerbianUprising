@@ -1,7 +1,7 @@
+#pragma once
+
 #ifndef TERRAIN_H
 #define TERRAIN_H
-
-#include <string>
 
 #include <string>
 

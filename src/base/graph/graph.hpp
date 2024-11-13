@@ -2,9 +2,14 @@
 
 #include "edge.hpp"
 #include "vertex.hpp"
+
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <algorithm>
+#include <cmath>
+#include <iostream>
+
 /*#include "../gui/maplayer.h"
 #include "../base/Army.h"
 #include "../base/Battle.h"

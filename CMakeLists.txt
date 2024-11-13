@@ -27,26 +27,21 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Ustanak
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        src/base/testBattle.h
-        src/base/testBattle.cpp
-        src/base/Army.cpp
-        src/base/Battle.cpp
-        src/base/Strength.cpp
-        src/base/Terrain.cpp
-        src/base/Terrain.h
-        src/base/player.cpp
-        src/base/player.h
-        src/base/MoveArmy.cpp
-        src/base/MoveArmy.h
-        src/base/mergeArmies.cpp
-        src/base/mergeArmies.h
-        src/gui/maplayer.h src/gui/maplayer.cpp
-        src/gui/mapscene.h src/gui/mapscene.cpp
-        src/graph/edge.hpp src/graph/edge.cpp
-        src/graph/graph.hpp src/graph/graph.cpp
-        src/graph/vertex.hpp src/graph/vertex.cpp
+        src/base/Test/testBattle.h src/base/Test/testBattle.cpp
+        src/base/Entities/Army.h src/base/Entities/Army.cpp
+        src/base/Mechanics/Battle.h src/base/Mechanics/Battle.cpp
+        src/base/Mechanics/Strength.h src/base/Mechanics/Strength.cpp
+        src/base/Entities/Terrain.h src/base/Entities/Terrain.cpp
+        src/base/Entities/player.h src/base/Entities/player.cpp
+        src/base/Mechanics/MoveArmy.h src/base/Mechanics/MoveArmy.cpp
+        src/base/Entities/mergeArmies.h src/base/Entities/mergeArmies.cpp
+        src/Interface/maplayer.h src/Interface/maplayer.cpp
+        src/Interface/mapscene.h src/Interface/mapscene.cpp
+        src/base/graph/edge.hpp src/base/graph/edge.cpp
+        src/base/graph/graph.hpp src/base/graph/graph.cpp
+        src/base/graph/vertex.hpp src/base/graph/vertex.cpp
         resources.qrc
-        src/gui/gamemanager.h src/gui/gamemanager.cpp
+        src/Interface/gamemanager.h src/Interface/gamemanager.cpp
 
 
     )

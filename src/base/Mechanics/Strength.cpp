@@ -1,5 +1,4 @@
 #include "Strength.h"
-#include "Army.h"
 
 Strength& Strength::instance() {
     static Strength instance;

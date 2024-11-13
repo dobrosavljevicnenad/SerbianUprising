@@ -1,7 +1,4 @@
 #include "Battle.h"
-#include <cstdlib>
-#include <ctime>
-#include <iostream>
 
 Battle::Battle(Army& defender, Army& attacker) : m_defender(defender), m_attacker(attacker) {
     std::srand(static_cast<unsigned>(std::time(nullptr))); // Seed for random number generation
