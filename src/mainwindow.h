@@ -2,11 +2,13 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <iostream>
 #include <QGraphicsView> //*
 #include "gui/mapscene.h" //*
 #include "graph/graph.hpp"
 #include "gui/maplayer.h"
+#include "gui/gamemanager.h"
+#include <QInputDialog>
+#include <QMessageBox>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -22,6 +24,7 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+
     void highlightLayer(MapLayer *layer);
 
     void print_connections(const graph::Graph &g, const graph::Vertex* vertex);
@@ -33,5 +36,6 @@ private:
     MapScene *scene; //*
     QGraphicsView *view; //*
     MapLayer *selectedLayer = nullptr;
+    GameManager* gameManager;
 };
 #endif // MAINWINDOW_H
