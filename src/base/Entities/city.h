@@ -4,7 +4,13 @@
 class City
 {
 public:
-    City();
+    explicit City(bool isCity = false);
+    ~City() = default;
+    bool isCityLayer()const;
+    int getBattleFactor()const;
+
+private:
+    bool isCity;
 };
 
 #endif // CITY_H
