@@ -1,7 +1,7 @@
 #ifndef BATTLE_H
 #define BATTLE_H
 
-#include "Army.h"
+#include "../Entities/Army.h"
 #include <cstdlib>
 #include <ctime>
 

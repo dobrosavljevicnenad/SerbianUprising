@@ -1,7 +1,7 @@
     #ifndef ARMY_H
 #define ARMY_H
 
-#include "Strength.h"
+#include "../Mechanics/Strength.h"
 #include <string>
 
 enum class ArmyType : int {

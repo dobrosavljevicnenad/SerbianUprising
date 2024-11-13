@@ -1,10 +1,10 @@
 #ifndef TESTBATTLE_H
 #define TESTBATTLE_H
 
-#include "Army.h"
+#include "../Entities/Army.h"
 #include "Battle.h"
 #include "Strength.h"
-#include "Territory.h"
+#include "../Entities/Territory.h"
 
 void test_Battle();
 

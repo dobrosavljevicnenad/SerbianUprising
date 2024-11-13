@@ -1,6 +1,6 @@
 #include "player.h"
 #include "Army.h"
-#include "Battle.h"
+#include "../Mechanics/Battle.h"
 #include "mergeArmies.h"
 #include<iostream>
 #include <vector>

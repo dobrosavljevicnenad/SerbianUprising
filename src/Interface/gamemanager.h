@@ -3,7 +3,7 @@
 #ifndef GAMEMANAGER_H
 #define GAMEMANAGER_H
 
-#include "../graph/graph.hpp"
+#include "../base/graph/graph.hpp"
 #include"maplayer.h"
 
 #include<QGraphicsScene>

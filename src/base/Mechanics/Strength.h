@@ -1,6 +1,8 @@
 #ifndef STRENGTH_H
 #define STRENGTH_H
 
+#include "../Entities/Army.h"
+
 enum class ArmyType;
 
 class Strength
