@@ -46,8 +46,10 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
                 QMessageBox::warning(this, tr("Error"), tr("You don`t have enough troops to transfer."));
             } else {
                 gameManager->ma.executeMove(selected_vertex,vertex,troopsToTransfer);
+
                 selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
                 layer->setTroopCount(vertex->army.getSoldiers());
+                layer->setArmyColor(vertex->army.armyType());
 
                 std::cout << selected_vertex->army.getSoldiers() << " " << vertex->army.getSoldiers() << std::endl;
             }
