@@ -4,7 +4,7 @@
 #include "../Entities/Army.h"
 #include "Battle.h"
 #include "Strength.h"
-#include "../Entities/Territory.h"
+#include "../Entities/Terrain.h"
 
 void test_Battle();
 

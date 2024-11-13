@@ -21,7 +21,7 @@ public:
     ~Graph();
 
     Vertex* insert_vertex(QPointF position, const std::string &label,
-                          MapLayer *map_layer, Territory territory, Army army,
+                          MapLayer *map_layer, Terrain territory, Army army,
                           Player player);
 
     bool insert_edge(Vertex* from, Vertex* to, double weight, EdgeType type = EdgeType::Land);

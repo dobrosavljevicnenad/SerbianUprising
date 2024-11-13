@@ -31,7 +31,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/base/Entities/Army.cpp
         src/base/Mechanics/Battle.cpp
         src/base/Mechanics/Strength.cpp
-        src/base/Entities/Territory.cpp src/base/Entities/Territory.h
+        src/base/Entities/Territory.cpp src/base/Entities/Terrain.h
         src/base/Entities/player.h src/base/Entities/player.cpp
         src/base/Entities/mergeArmies.h src/base/Entities/mergeArmies.cpp
         src/base/graph/edge.hpp src/base/graph/edge.cpp

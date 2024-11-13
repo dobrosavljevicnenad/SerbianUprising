@@ -7,7 +7,7 @@ void test_Battle() {
     Army hajdukArmy(40, ArmyType::HAJDUK);
     Army janissaryArmy(70, ArmyType::JANISSARY);
 
-    Territory mountainTerrain(TerrainType::MOUNTAIN);
+    Terrain mountainTerrain(TerrainType::MOUNTAIN);
 
     Battle battle(hajdukArmy, janissaryArmy);
     battle.setTerrainAdvantage(mountainTerrain.getDefenderAdvantage(),

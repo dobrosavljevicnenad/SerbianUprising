@@ -1,5 +1,5 @@
-#ifndef TERRITORY_H
-#define TERRITORY_H
+#ifndef TERRAIN_H
+#define TERRAIN_H
 
 #include <string>
 
@@ -10,10 +10,10 @@ enum class TerrainType {
     FOREST
 };
 
-class Territory
+class Terrain
 {
 public:
-    explicit Territory(TerrainType terrain);
+    explicit Terrain(TerrainType terrain);
 
     TerrainType getTerrain() const;
     int getAttackerAdvantage() const;
@@ -32,4 +32,4 @@ private:
     void setDefaultAdvantages(TerrainType terrain);
 };
 
-#endif // TERRITORY_H
+#endif // TERRAIN_H

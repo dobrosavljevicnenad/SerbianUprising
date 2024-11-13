@@ -46,7 +46,7 @@ void GameManager::initializeMap(){
 
     std::vector<Army> armies;
     std::vector<Player> players;
-    Territory defaultTerritory(TerrainType::MOUNTAIN);
+    Terrain defaultTerritory(TerrainType::MOUNTAIN);
 
     int numLayers = layers.size();
     for (int i = 0; i < numLayers; ++i) {
@@ -101,7 +101,7 @@ void GameManager::initializeMap(){
 
 }
 
-void GameManager::addLayer(MapLayer* layer, const std::string& label, Territory territory, Army army, Player player) {
+void GameManager::addLayer(MapLayer* layer, const std::string& label, Terrain territory, Army army, Player player) {
     scene->addItem(layer);
     auto vertex = g.insert_vertex(layer->troopText->pos(), label, layer, territory, army, player);
     layerToVertex[layer] = vertex;
