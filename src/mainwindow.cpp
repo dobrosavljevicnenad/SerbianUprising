@@ -15,7 +15,7 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(view);
 
 
-    GameManager *gameManager = new GameManager(scene);
+    gameManager = new GameManager(scene);
     gameManager->initializeMap();
 
     connect(gameManager, &GameManager::layerClicked, this, &MainWindow::onLayerClicked);
@@ -29,7 +29,6 @@ MainWindow::~MainWindow()
 void MainWindow::onLayerClicked(MapLayer *layer) {
     if (selectedLayer == nullptr) {
         selectedLayer = layer;
-        //QMessageBox::information(this, tr("Selected layer"), tr("The first layer is selected."));
     } else {
         if(selectedLayer == layer) {
             QMessageBox::warning(this, tr("Error"), tr("You selected the same layer. Select another layer."));
@@ -37,17 +36,22 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
             return ;
         }
 
+        graph::Vertex* selected_vertex = gameManager->layerToVertex[selectedLayer];
+        graph::Vertex* vertex = gameManager->layerToVertex[layer];
+
         bool ok;
-        int maxTroops = selectedLayer->getTroopCount();
+        int maxTroops = selected_vertex->army.getSoldiers();
         int troopsToTransfer = QInputDialog::getInt(this, tr("Transfer Troops"), tr("Enter the number of soldiers to transfer:"), 0, 0, maxTroops, 1, &ok);
         if (ok) {
-            if(troopsToTransfer > selectedLayer->getTroopCount()) {
+            if(troopsToTransfer > selected_vertex->army.getSoldiers()) {
                 QMessageBox::warning(this, tr("Error"), tr("You don`t have enough troops to transfer."));
             } else {
-                selectedLayer->setTroopCount(selectedLayer->getTroopCount() - troopsToTransfer);
-                layer->setTroopCount(layer->getTroopCount() + troopsToTransfer);
+                selected_vertex->army.setSoldiers(selected_vertex->army.getSoldiers() - troopsToTransfer);
+                selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
+                vertex->army.setSoldiers(vertex->army.getSoldiers() + troopsToTransfer);
+                layer->setTroopCount(vertex->army.getSoldiers());
 
-                //QMessageBox::information(this, tr("Tranfer successful."), tr("%1 soldiers were transferred."));
+                std::cout << selected_vertex->army.getSoldiers() << " " << vertex->army.getSoldiers() << std::endl;
             }
         }
 

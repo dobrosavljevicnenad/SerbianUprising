@@ -34,6 +34,7 @@ public:
   Territory territory;
   Army army;
   Player player;
+  MapLayer* map_layer;
 
 private:
   static unsigned m_index;
@@ -41,7 +42,6 @@ private:
 
   QPointF m_position;
   std::string m_label;
-  MapLayer* map_layer;
 };
 
 } // namespace graph

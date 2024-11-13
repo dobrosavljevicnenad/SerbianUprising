@@ -20,6 +20,7 @@ public:
     void addLayer(MapLayer* layer, const std::string& label, Territory territory, Army army, Player player);
     void transferTroops(MapLayer* from, MapLayer* to, int troops);
     void printConnections(graph::Vertex* vertex);
+    QMap<MapLayer*,graph::Vertex*> layerToVertex;
 
 signals:
     void layerClicked(MapLayer* layer);
@@ -27,7 +28,6 @@ signals:
 private:
     QGraphicsScene* scene;
     graph::Graph g;
-    QMap<MapLayer*,graph::Vertex*> layerToVertex;
 };
 
 #endif // GAMEMANAGER_H

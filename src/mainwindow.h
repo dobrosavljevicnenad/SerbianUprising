@@ -36,5 +36,6 @@ private:
     MapScene *scene; //*
     QGraphicsView *view; //*
     MapLayer *selectedLayer = nullptr;
+    GameManager* gameManager;
 };
 #endif // MAINWINDOW_H
