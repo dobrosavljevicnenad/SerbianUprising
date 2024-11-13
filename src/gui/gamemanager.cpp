@@ -1,6 +1,6 @@
 #include "gamemanager.h"
 
-GameManager::GameManager(QGraphicsScene* scene) : scene(scene)  {}
+GameManager::GameManager(QGraphicsScene* scene) : scene(scene), ma(g)  {}
 
 void GameManager::initializeMap(){
     /*
@@ -47,7 +47,6 @@ void GameManager::initializeMap(){
     std::vector<Army> armies;
     std::vector<Player> players;
     Terrain defaultTerrain(TerrainType::MOUNTAIN);
-
     int numLayers = layers.size();
     for (int i = 0; i < numLayers; ++i) {
         int soldiers = 10 + std::rand() % 91;

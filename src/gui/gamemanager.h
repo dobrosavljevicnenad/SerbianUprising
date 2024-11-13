@@ -5,6 +5,7 @@
 
 #include "../graph/graph.hpp"
 #include"maplayer.h"
+#include "../base/MoveArmy.h"
 
 #include<QGraphicsScene>
 #include<iostream>
@@ -21,13 +22,14 @@ public:
     void transferTroops(MapLayer* from, MapLayer* to, int troops);
     void printConnections(graph::Vertex* vertex);
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
-
 signals:
     void layerClicked(MapLayer* layer);
 
 private:
     QGraphicsScene* scene;
     graph::Graph g;
+public:
+    MoveArmy ma;
 };
 
 #endif // GAMEMANAGER_H
