@@ -17,7 +17,23 @@ MainWindow::MainWindow(QWidget *parent)
     gameManager = new GameManager(scene);
     gameManager->initializeMap();
 
-    // need to implement buttons here
+    QPushButton *changePlayerButton = new QPushButton("Change Player");
+    QPushButton *endTurnButton = new QPushButton("End Turn");
+    QTextBrowser *textField = new QTextBrowser();
+
+    QGraphicsProxyWidget *changePlayerButtonProxy = scene->addWidget(changePlayerButton);
+    QGraphicsProxyWidget *endTurnButtonProxy = scene->addWidget(endTurnButton);
+    QGraphicsProxyWidget *textFieldProxy = scene->addWidget(textField);
+
+    changePlayerButtonProxy->setZValue(1);
+    endTurnButtonProxy->setZValue(1);
+    textFieldProxy->setZValue(1);
+
+    changePlayerButtonProxy->setPos(850, 10);
+    endTurnButtonProxy->setPos(1000, 10);
+    textFieldProxy->setPos(840, 50);
+
+
     // and also need to implement on moveArmy to put on buffer also buffer need
 
     connect(gameManager, &GameManager::layerClicked, this, &MainWindow::onLayerClicked);

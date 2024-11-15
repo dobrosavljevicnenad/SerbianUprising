@@ -11,6 +11,8 @@
 #include <QGraphicsView>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QGraphicsProxyWidget>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {

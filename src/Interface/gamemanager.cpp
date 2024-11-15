@@ -16,6 +16,7 @@ void GameManager::initializeMap(){
     }
     */
     MapLayer *baseLayer = new MapLayer(":/resources/base.png", false);
+    baseLayer->setZValue(-1);
     scene->addItem(baseLayer);
 
     std::vector<MapLayer*> layers = {
@@ -60,6 +61,7 @@ void GameManager::initializeMap(){
     }
 
     for (size_t i = 0; i < layers.size(); ++i) {
+        layers[i]->setZValue(0);
         addLayer(layers[i], labels[i], defaultTerrain, armies[i], players[i]);
         layers[i]->setPos(baseLayer->pos().x() + positions[i].first,
                           baseLayer->pos().y() + positions[i].second);
