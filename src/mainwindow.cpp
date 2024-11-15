@@ -17,12 +17,30 @@ MainWindow::MainWindow(QWidget *parent)
     gameManager = new GameManager(scene);
     gameManager->initializeMap();
 
+    // need to implement buttons here
+    // and also need to implement on moveArmy to put on buffer also buffer need
+
     connect(gameManager, &GameManager::layerClicked, this, &MainWindow::onLayerClicked);
+    connect(ui->changePlayerButton, &QPushButton::clicked, this, &MainWindow::onChangePlayerClicked);
+    connect(ui->endTurnButton, &QPushButton::clicked, this, &MainWindow::onEndTurnClicked);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::onChangePlayerClicked() {
+    turnManager.changePlayer();
+    int currentPlayer = turnManager.getCurrentPlayer();
+    ui->textField->append(QString("Player %1 is now active.").arg(currentPlayer));
+}
+
+void MainWindow::onEndTurnClicked() {
+    ui->textField->append(turnManager.processBuffer());
+    turnManager.endTurn();
+    int currentPlayer = turnManager.getCurrentPlayer();
+    ui->textField->append(QString("Player %1's turn starts.").arg(currentPlayer));
 }
 
 void MainWindow::onLayerClicked(MapLayer *layer) {

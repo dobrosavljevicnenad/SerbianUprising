@@ -4,6 +4,8 @@
 #include "Interface/mapscene.h"
 #include "Interface/maplayer.h"
 #include "Interface/gamemanager.h"
+#include "base/Mechanics/turn.h"
+
 
 #include <QMainWindow>
 #include <QGraphicsView>
@@ -31,11 +33,16 @@ public:
 
 private slots:
     void onLayerClicked(MapLayer *layer);
+    void onChangePlayerClicked();
+    void onEndTurnClicked();
+
 private:
     Ui::MainWindow *ui;
     MapScene *scene; //*
     QGraphicsView *view; //*
     MapLayer *selectedLayer = nullptr;
     GameManager* gameManager;
+    Turn turnManager;
+
 };
 #endif // MAINWINDOW_H

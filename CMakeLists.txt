@@ -44,6 +44,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/Interface/gamemanager.h src/Interface/gamemanager.cpp
         src/base/Entities/city.h src/base/Entities/city.cpp
         src/base/Entities/region.h src/base/Entities/region.cpp
+        src/base/Mechanics/turn.h src/base/Mechanics/turn.cpp
 
 
     )
