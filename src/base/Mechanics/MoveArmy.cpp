@@ -21,6 +21,8 @@ bool MoveArmy::executeMove(Vertex* source, Vertex* target, unsigned int soldiers
         Army sentArmy(soldiersToMove, source->army.armyType());
 
         battleArmies(sentArmy, target);
+        if(sentArmy.getSoldiers() != 0 && target->army.armyType() != sentArmy.armyType())
+            source->army.setSoldiers(source->army.getSoldiers() + sentArmy.getSoldiers());
     }
 
     return true;
@@ -69,7 +71,7 @@ void MoveArmy::battleArmies(Army& source, Vertex* target) {
         }
         target->army = winner;
         return;
-    } else {
+    } /*else {
         auto neighbors = m_graph.neighbors(target);
         for (auto& n : neighbors) {
             if (n->army.armyType() == source.armyType()) {
@@ -79,5 +81,5 @@ void MoveArmy::battleArmies(Army& source, Vertex* target) {
         }
         target->army = winner;
         return;
-    }
+    }*/
 }

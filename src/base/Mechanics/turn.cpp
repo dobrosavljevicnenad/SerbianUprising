@@ -8,6 +8,20 @@ void Turn::addAction(int playerId, const Action& action) {
 }
 
 void Turn::executeTurn() {
+    auto& buffer = getPlayerBuffer(1);
+    auto& buffer2 = getPlayerBuffer(2);
+
+    for (const auto& action : buffer) {
+        if (action.type == ActionType::MOVE_ARMY){
+            executeMoveAction(action);
+        }
+    }
+
+    for (const auto& action : buffer2) {
+        if (action.type == ActionType::MOVE_ARMY){
+            executeMoveAction(action);
+        }
+    }
     std::cout << "Executing Player 1's actions:\n";
     executePlayerActions(1);
 
@@ -34,11 +48,10 @@ void Turn::executePlayerActions(int playerId) {
 
     for (const auto& action : buffer) {
         switch (action.type) {
-        case ActionType::MOVE_ARMY:
-            executeMoveAction(action);
-            break;
         case ActionType::ATTACK:
             executeAttackAction(action);
+            break;
+        case ActionType::MOVE_ARMY:
             break;
         default:
             std::cerr << "Unknown action type!\n";
