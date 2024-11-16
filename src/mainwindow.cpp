@@ -23,7 +23,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     mediaPlayer->setAudioOutput(audioOutput);
     audioOutput->setVolume(0.5);
-    mediaPlayer->setSource(QUrl::fromLocalFile("/home/deki/Ustanak/resources/music/Hajduk.mp3"));
+    mediaPlayer->setSource(QUrl::fromLocalFile("../../resources/music/Hajduk.mp3"));
 
     mediaPlayer->play();
     QEventLoop loop;
@@ -74,10 +74,10 @@ void MainWindow::onChangePlayerClicked() {
     int currentPlayer = gameManager->turn.getCurrentPlayerId();
     mediaPlayer->stop();
     if(currentPlayer == 1){
-        mediaPlayer->setSource(QUrl::fromLocalFile("/home/deki/Ustanak/resources/music/Hajduk.mp3"));
+        mediaPlayer->setSource(QUrl::fromLocalFile("../../resources/music/Hajduk.mp3"));
     }
     else{
-        mediaPlayer->setSource(QUrl::fromLocalFile("/home/deki/Ustanak/resources/music/Janissary.mp3"));
+        mediaPlayer->setSource(QUrl::fromLocalFile("../../resources/music/Janissary.mp3"));
     }
     std::cout << std::endl;
     mediaPlayer->play();
