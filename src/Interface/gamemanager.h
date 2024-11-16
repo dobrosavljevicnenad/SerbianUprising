@@ -7,6 +7,8 @@
 #include"maplayer.h"
 #include "../base/Mechanics/MoveArmy.h"
 #include "../base/Mechanics/turn.h"
+#include "Items/customarrowitem.h"
+
 #include<QGraphicsScene>
 #include<iostream>
 #include<QObject>
@@ -20,6 +22,7 @@ public:
     void initializeMap();
 
     void updateLayersGraphics();
+    void drawArrow(MapLayer* from, MapLayer* to);
     void addLayer(MapLayer* layer, const std::string& label, Terrain terrain, Army army, Player player);
 
     void CreateRegion();

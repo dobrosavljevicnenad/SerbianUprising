@@ -115,6 +115,18 @@ void GameManager::updateLayersGraphics() {
     }
 }
 
+void GameManager::drawArrow(MapLayer* from, MapLayer* to) {
+    QPointF fromPos = from->pos() + QPointF((from->boundingRect().width() / 2)-5,
+                                            from->boundingRect().height() / 2);
+    QPointF toPos = to->pos() + QPointF((to->boundingRect().width() / 2)+20,
+                                        to->boundingRect().height() / 2);
+
+    QLineF line(fromPos, toPos);
+
+    CustomArrowItem* arrow = new CustomArrowItem(line);
+    scene->addItem(arrow);
+}
+
 void GameManager::addLayer(MapLayer* layer, const std::string& label, Terrain terrain, Army army, Player player) {
     layer->setArmyColor(army.armyType());
     scene->addItem(layer);

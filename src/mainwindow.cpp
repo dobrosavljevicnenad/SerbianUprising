@@ -102,6 +102,8 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
                 layer->setTroopCount(vertex->army.getSoldiers());
                 layer->setArmyColor(vertex->army.armyType());
 
+                gameManager->drawArrow(selectedLayer, layer);
+
                 std::cout << selected_vertex->army.getSoldiers() << " " << vertex->army.getSoldiers() << std::endl;
             }
         }
