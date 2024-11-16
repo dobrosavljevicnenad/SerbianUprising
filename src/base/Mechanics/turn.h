@@ -8,6 +8,8 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <QMediaPlayer>
+#include <QAudioOutput>
 
 class Turn {
 public:
@@ -26,6 +28,8 @@ private:
     std::vector<Action> player1Buffer;    // Buffer for Player 1's actions
     std::vector<Action> player2Buffer;    // Buffer for Player 2's actions
     graph::Graph& m_graph;                // Reference to the game graph
+    QMediaPlayer m_mediaPlayer;
+    QAudioOutput m_audioOutput;
 
     void executePlayerActions(int playerId);                     // Execute all actions for a specific player
     std::vector<Action>& getPlayerBuffer(int playerId);          // Get the buffer for a specific player

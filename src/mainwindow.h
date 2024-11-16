@@ -44,6 +44,9 @@ private:
     QGraphicsView *view; //*
     MapLayer *selectedLayer = nullptr;
     GameManager* gameManager;
+    QMediaPlayer* mediaPlayer;
+    QAudioOutput* audioOutput;
+
 
 };
 #endif // MAINWINDOW_H

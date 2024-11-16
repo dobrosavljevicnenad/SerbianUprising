@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-
+#include <QTimer>
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
@@ -16,6 +16,19 @@ MainWindow::MainWindow(QWidget *parent)
 
     gameManager = new GameManager(scene);
     gameManager->initializeMap();
+
+    mediaPlayer = new QMediaPlayer();
+    audioOutput = new QAudioOutput();
+
+    mediaPlayer->setAudioOutput(audioOutput);
+    audioOutput->setVolume(0.5);
+    mediaPlayer->setSource(QUrl::fromLocalFile("/home/deki/Ustanak/resources/music/Hajduk.mp3"));
+
+    mediaPlayer->play();
+    QEventLoop loop;
+    QTimer::singleShot(100, &loop, &QEventLoop::quit);
+    loop.exec();
+
     QPushButton *changePlayerButton = new QPushButton("Change Player");
     QPushButton *endTurnButton = new QPushButton("End Turn");
     QTextBrowser *textField = new QTextBrowser();
@@ -46,11 +59,18 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::onChangePlayerClicked() {
-    int currentPlayer = gameManager->turn.getCurrentPlayerId();
 
     gameManager->turn.changePlayer();
-    currentPlayer = gameManager->turn.getCurrentPlayerId();
+    int currentPlayer = gameManager->turn.getCurrentPlayerId();
+    mediaPlayer->stop();
+    if(currentPlayer == 1){
+        mediaPlayer->setSource(QUrl::fromLocalFile("/home/deki/Ustanak/resources/music/Hajduk.mp3"));
+    }
+    else{
+        mediaPlayer->setSource(QUrl::fromLocalFile("/home/deki/Ustanak/resources/music/Janissary.mp3"));
+    }
     std::cout << std::endl;
+    mediaPlayer->play();
 
     //textField->append(QString("Player %1 is now active.").arg(currentPlayer));
 }

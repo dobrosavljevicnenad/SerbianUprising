@@ -1,5 +1,10 @@
 #include "turn.h"
 
+#include <QTimer>
+#include <QUrl>
+#include <QEventLoop>
+
+
 Turn::Turn(Graph& graph) : currentPlayerId(1), m_graph(graph), moveArmy(graph) {}
 
 void Turn::addAction(int playerId, const Action& action) {
@@ -10,10 +15,13 @@ void Turn::addAction(int playerId, const Action& action) {
 void Turn::executeTurn() {
     auto& buffer = getPlayerBuffer(1);
     auto& buffer2 = getPlayerBuffer(2);
-
+    bool battleMusic = 0;
     for (const auto& action : buffer) {
         if (action.type == ActionType::MOVE_ARMY){
             executeMoveAction(action);
+        }
+        if (action.type == ActionType::ATTACK){
+            battleMusic = 1;
         }
     }
 
@@ -21,12 +29,34 @@ void Turn::executeTurn() {
         if (action.type == ActionType::MOVE_ARMY){
             executeMoveAction(action);
         }
+
+        if (action.type == ActionType::ATTACK){
+            battleMusic = 1;
+        }
+    }
+
+    std::time_t start_music = std::time(0);
+
+    if(battleMusic){
+        m_mediaPlayer.setAudioOutput(&m_audioOutput);
+        m_audioOutput.setVolume(0.7);
+        m_mediaPlayer.setSource(QUrl::fromLocalFile("../../resources/music/Volley.mp3"));
+
+        m_mediaPlayer.play();
+
+        QEventLoop loop;
+        QTimer::singleShot(100, &loop, &QEventLoop::quit);
+        loop.exec();
     }
     std::cout << "Executing Player 1's actions:\n";
     executePlayerActions(1);
 
     std::cout << "Executing Player 2's actions:\n";
     executePlayerActions(2);
+
+    //while (std::difftime(std::time(0), start_music) < 6.7) {
+    //}
+    m_mediaPlayer.stop();
 }
 
 void Turn::clearActionBuffers() {
