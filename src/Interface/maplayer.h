@@ -43,6 +43,8 @@ protected:
 
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
+    QColor getArmyColor();
+
 private:
     int troopCount;
     QPixmap m_originalPixmap;

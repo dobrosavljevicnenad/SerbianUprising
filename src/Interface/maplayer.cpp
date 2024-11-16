@@ -52,9 +52,27 @@ void MapLayer::setArmyColor(ArmyType armyType) {
     setColor(ArmyColor);
 }
 
-void MapLayer::hoverEnterEvent(QGraphicsSceneHoverEvent *event)  {
-    setColor(QColor(255, 0, 0, 150));
-    QGraphicsPixmapItem::hoverEnterEvent(event);
+QColor MapLayer::getArmyColor(){
+    return ArmyColor;
+}
+
+void MapLayer::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
+    int current_player = 1;
+    if(current_player == 1){
+        if(getArmyColor() == QColor(198,54,60,255)){
+            setColor(QColor(255, 0, 0, 150));
+            QGraphicsPixmapItem::hoverEnterEvent(event);
+        } else {
+            return;
+        }
+    } else {
+        if(getArmyColor() == QColor(0,149,48,255)){
+            setColor(QColor(255, 0, 0, 150));
+            QGraphicsPixmapItem::hoverEnterEvent(event);
+        } else {
+            return;
+        }
+    }
 }
 
 void MapLayer::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
