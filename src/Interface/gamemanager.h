@@ -22,7 +22,8 @@ public:
     void initializeMap();
 
     void updateLayersGraphics();
-    void drawArrow(MapLayer* from, MapLayer* to);
+    void clearArrows();
+    void drawArrow(MapLayer* from, MapLayer* to, int number);
     void addLayer(MapLayer* layer, const std::string& label, Terrain terrain, Army army, Player player);
 
     void CreateRegion();
@@ -33,6 +34,7 @@ signals:
     void layerClicked(MapLayer* layer);
 
 private:
+    std::vector<CustomArrowItem*> arrows;
     QGraphicsScene* scene;
     std::vector<MapLayer*> layers;
     graph::Graph g;

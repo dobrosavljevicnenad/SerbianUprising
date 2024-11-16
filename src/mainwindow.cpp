@@ -97,12 +97,12 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
                 int target = vertex->id();
                 Action newAction(type, pid, source,target, troopsToTransfer);
                 gameManager->turn.addAction(pid, newAction);
-
+                //TODO
+                //trooptotransfer moramo se implementirati full - trooptotransfer ali u cvoru
                 selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
                 layer->setTroopCount(vertex->army.getSoldiers());
                 layer->setArmyColor(vertex->army.armyType());
-
-                gameManager->drawArrow(selectedLayer, layer);
+                gameManager->drawArrow(selectedLayer, layer, troopsToTransfer);
 
                 std::cout << selected_vertex->army.getSoldiers() << " " << vertex->army.getSoldiers() << std::endl;
             }

@@ -15,6 +15,11 @@ public:
     QPainterPath shape() const override ;
 
     void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
+
+    void setNumber(int number);
+
+private:
+    QGraphicsTextItem* textItem;
 };
 
 #endif // CUSTOMARROWITEM_H

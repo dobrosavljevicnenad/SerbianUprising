@@ -1,7 +1,16 @@
 #include "customarrowitem.h"
 
 CustomArrowItem::CustomArrowItem(const QLineF& line, QGraphicsItem* parent)
-    : QGraphicsLineItem(line, parent) {}
+    : QGraphicsLineItem(line, parent),textItem(nullptr) {
+    textItem = new QGraphicsTextItem(this);
+    textItem->setDefaultTextColor(Qt::black);
+    QFont font = textItem->font();
+    font.setPointSize(13);
+    textItem->setFont(font);
+
+    QPointF midpoint = line.pointAt(0.5);
+    textItem->setPos(midpoint);
+}
 
 QPainterPath CustomArrowItem::shape() const {
     QPainterPath path = QGraphicsLineItem::shape();
@@ -41,4 +50,13 @@ void CustomArrowItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* o
     painter->setBrush(Qt::yellow);
     painter->setPen(Qt::yellow);
     painter->drawPolygon(arrowHead);
+}
+
+void CustomArrowItem::setNumber(int number) {
+    if (textItem) {
+        textItem->setPlainText(QString::number(number));
+        QLineF line = this->line();
+        QPointF midpoint = line.pointAt(0.5);
+        textItem->setPos(midpoint);
+    }
 }
