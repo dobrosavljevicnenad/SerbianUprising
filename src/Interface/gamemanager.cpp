@@ -106,6 +106,7 @@ void GameManager::initializeMap(){
 }
 
 void GameManager::updateLayersGraphics() {
+    clearArrows();
     for (auto &layer : layers) {
         auto vertex = layerToVertex[layer];
         Army army = vertex->army;
@@ -113,6 +114,27 @@ void GameManager::updateLayersGraphics() {
         vertex->player.setPlayerId((army.armyType()==ArmyType::HAJDUK) ? 1 : 2);
         layer->setTroopCount(vertex->army.getSoldiers());
     }
+}
+
+void GameManager::clearArrows() {
+    for (CustomArrowItem* arrow : arrows) {
+        scene->removeItem(arrow);
+        delete arrow;
+    }
+    arrows.clear();
+}
+
+void GameManager::drawArrow(MapLayer* from, MapLayer* to, int number) {
+    QPointF fromPos = from->pos() + QPointF((from->boundingRect().width() / 2)-5,
+                                            from->boundingRect().height() / 2);
+    QPointF toPos = to->pos() + QPointF((to->boundingRect().width() / 2)+20,
+                                        to->boundingRect().height() / 2);
+
+    QLineF line(fromPos, toPos);
+    CustomArrowItem* arrow = new CustomArrowItem(line);
+    scene->addItem(arrow);
+    arrow->setNumber(number);
+    arrows.push_back(arrow);
 }
 
 void GameManager::addLayer(MapLayer* layer, const std::string& label, Terrain terrain, Army army, Player player) {

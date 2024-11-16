@@ -6,6 +6,7 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , scene(new MapScene(this))
     , selectedLayer(nullptr)
+    , moveList(new QListWidget())
 {
     ui->setupUi(this);
 
@@ -31,11 +32,10 @@ MainWindow::MainWindow(QWidget *parent)
 
     QPushButton *changePlayerButton = new QPushButton("Change Player");
     QPushButton *endTurnButton = new QPushButton("End Turn");
-    QTextBrowser *textField = new QTextBrowser();
 
     QGraphicsProxyWidget *changePlayerButtonProxy = scene->addWidget(changePlayerButton);
     QGraphicsProxyWidget *endTurnButtonProxy = scene->addWidget(endTurnButton);
-    QGraphicsProxyWidget *textFieldProxy = scene->addWidget(textField);
+    QGraphicsProxyWidget *textFieldProxy = scene->addWidget(moveList);
 
     changePlayerButtonProxy->setZValue(1);
     endTurnButtonProxy->setZValue(1);
@@ -51,11 +51,21 @@ MainWindow::MainWindow(QWidget *parent)
     connect(gameManager, &GameManager::layerClicked, this, &MainWindow::onLayerClicked);
     connect(changePlayerButton, &QPushButton::clicked, this, &MainWindow::onChangePlayerClicked);
     connect(endTurnButton, &QPushButton::clicked, this, &MainWindow::onEndTurnClicked);
+    connect(moveList, &QListWidget::itemClicked, this, &MainWindow::onMoveClicked);
+
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::onMoveClicked(QListWidgetItem* item) {
+    QString moveDetails = item->text();
+
+    QMessageBox::information(this, tr("Move Details"), tr("You clicked on: %1").arg(moveDetails));
+
+    // Later Implement logic
 }
 
 void MainWindow::onChangePlayerClicked() {
@@ -81,6 +91,7 @@ void MainWindow::onEndTurnClicked() {
     gameManager->turn.executeTurn();
     //now we need to update all graphical componenets of our project aka layers
     gameManager->updateLayersGraphics();
+    moveList->clear();
     // Optionally, update the UI to show that the turn has ended
     QMessageBox::information(this, tr("Turn Ended"), tr("The turn has ended. Buffers have been cleared."));
 }
@@ -117,12 +128,19 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
                 int target = vertex->id();
                 Action newAction(type, pid, source,target, troopsToTransfer);
                 gameManager->turn.addAction(pid, newAction);
-
+                //TODO
+                //trooptotransfer moramo se implementirati full - trooptotransfer ali u cvoru
                 selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
                 layer->setTroopCount(vertex->army.getSoldiers());
                 layer->setArmyColor(vertex->army.armyType());
-
-                std::cout << selected_vertex->army.getSoldiers() << " " << vertex->army.getSoldiers() << std::endl;
+                gameManager->drawArrow(selectedLayer, layer, troopsToTransfer);
+                QString moveDescription = QString("Player %1: %2 troops from Layer %3 to Layer %4")
+                                              .arg(pid)
+                                              .arg(troopsToTransfer)
+                                              .arg(source)
+                                              .arg(target);
+                moveList->addItem(moveDescription);
+                //std::cout << selected_vertex->army.getSoldiers() << " " << vertex->army.getSoldiers() << std::endl;
             }
         }
 

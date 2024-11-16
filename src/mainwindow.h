@@ -12,6 +12,7 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QGraphicsProxyWidget>
+#include <QListWidget>
 
 
 QT_BEGIN_NAMESPACE
@@ -35,6 +36,7 @@ public:
 
 private slots:
     void onLayerClicked(MapLayer *layer);
+    void onMoveClicked(QListWidgetItem* item);
     void onChangePlayerClicked();
     void onEndTurnClicked();
 
@@ -46,7 +48,6 @@ private:
     GameManager* gameManager;
     QMediaPlayer* mediaPlayer;
     QAudioOutput* audioOutput;
-
-
+    QListWidget* moveList;
 };
 #endif // MAINWINDOW_H

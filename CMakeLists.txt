@@ -47,6 +47,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/base/Entities/region.h src/base/Entities/region.cpp
         src/base/Mechanics/turn.h src/base/Mechanics/turn.cpp
         src/base/Mechanics/Action.h
+        src/Interface/Items/customarrowitem.h src/Interface/Items/customarrowitem.cpp
 
 
     )
