@@ -1,26 +1,29 @@
 #include "MoveArmy.h"
 
-MoveArmy::MoveArmy(Graph& graph) : m_graph(graph) {}
+MoveArmy::MoveArmy(Graph& graph, Turn& turn) : m_graph(graph), m_turn(turn) {}
 
 bool MoveArmy::executeMove(Vertex* source, Vertex* target, unsigned int soldiersToMove) {
     if (!areNeighbors(source, target)) {
-        std::cerr << "Error: Target vertex is not a neighbor of the source.\n";
+        m_turn.addActionToBuffer(m_turn.getCurrentPlayer(), "Invalid Move: Target is not a neighbor.");
+        std::cout << "Invalid Move: Target is not a neighbor." << std::endl;
         return false;
     }
 
     if (soldiersToMove > source->army.getSoldiers()) {
-        std::cerr << "Error: Insufficient soldiers in the source army.\n";
+        m_turn.addActionToBuffer(m_turn.getCurrentPlayer(), "Invalid Move: Not enough soldiers.");
+        std::cout << "Invalid Move: Not enough soldiers." << std::endl;
         return false;
     }
 
+    std::string action = "";
     if (source->army.armyType() == target->army.armyType()) {
-        mergeArmies(source, target, soldiersToMove);
+        action = "Move " + std::to_string(soldiersToMove) + " soldiers from Vertex " +
+                 std::to_string(source->id()) + " to Vertex " + std::to_string(target->id());
     } else {
-        source->army.setSoldiers(source->army.getSoldiers() - soldiersToMove);
-        Army sentArmy(soldiersToMove, source->army.armyType());
-
-        battleArmies(sentArmy, target);
+        action = "Attack " + std::to_string(soldiersToMove) + " soldiers from Vertex " +
+                 std::to_string(source->id()) + " to Vertex " + std::to_string(target->id());
     }
+    m_turn.addActionToBuffer(m_turn.getCurrentPlayer(), action);
 
     return true;
 }

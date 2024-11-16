@@ -53,6 +53,7 @@ void MapLayer::setArmyColor(ArmyType armyType) {
 }
 
 void MapLayer::hoverEnterEvent(QGraphicsSceneHoverEvent *event)  {
+
     setColor(QColor(255, 0, 0, 150));
     QGraphicsPixmapItem::hoverEnterEvent(event);
 }

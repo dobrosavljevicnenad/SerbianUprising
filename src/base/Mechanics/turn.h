@@ -21,8 +21,8 @@ public:
 
 private:
     int currentPlayerId;
-    std::vector<std::string> player1Buffer;
-    std::vector<std::string> player2Buffer;
+    std::vector<std::string>*player1Buffer;
+    std::vector<std::string>*player2Buffer;
 
     void processFriendActions(std::vector<std::string>& buffer);
     void processEnemyActions(std::vector<std::string>& buffer);

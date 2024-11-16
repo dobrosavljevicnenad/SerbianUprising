@@ -14,7 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
     view = new QGraphicsView(scene, this);
     setCentralWidget(view);
 
-    gameManager = new GameManager(scene);
+    Turn turnManager;
+    gameManager = new GameManager(scene,turnManager);
     gameManager->initializeMap();
 
     QPushButton *changePlayerButton = new QPushButton("Change Player");

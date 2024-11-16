@@ -1,6 +1,6 @@
 #include "gamemanager.h"
 
-GameManager::GameManager(QGraphicsScene* scene) : scene(scene), ma(g)  {}
+GameManager::GameManager(QGraphicsScene* scene,Turn& turn) : scene(scene), ma(g,turn)  {}
 
 void GameManager::initializeMap(){
     /*
@@ -102,7 +102,7 @@ void GameManager::initializeMap(){
         g.insert_edge(layerToVertex[layers[10]], layerToVertex[layers[11]], 1.0);
 
     }
-}//12 i 13 (11 i 12) 6 i 5 (5 i 4)
+}
 
 void GameManager::addLayer(MapLayer* layer, const std::string& label, Terrain terrain, Army army, Player player) {
     layer->setArmyColor(army.armyType());

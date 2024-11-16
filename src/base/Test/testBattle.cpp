@@ -28,7 +28,8 @@ void test_Battle() {
     g.insert_edge(v1,v2,1.0);
     g.insert_edge(v1,v3,1.0);
     g.insert_edge(v2,v3,1.0);
-    MoveArmy ma(g);
+    Turn turnManager;
+    MoveArmy ma(g,turnManager);
     std::cout << "Moving Jannisary 20 of 30 army to Hajduk army\n"<< std::endl;
     ma.executeMove(v3,v1,20);
     std::cout << "V1 " << v1->army.to_string(v1->army.armyType())<<" soldiers left: "<< v1->army.getSoldiers()

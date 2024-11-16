@@ -16,7 +16,7 @@ class GameManager : public QObject
     Q_OBJECT
 
 public:
-    GameManager(QGraphicsScene* scene);
+    GameManager(QGraphicsScene* scene,Turn& turn);
     void initializeMap();
 
     void addLayer(MapLayer* layer, const std::string& label, Terrain terrain, Army army, Player player);
