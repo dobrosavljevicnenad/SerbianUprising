@@ -72,6 +72,21 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
         graph::Vertex* selected_vertex = gameManager->layerToVertex[selectedLayer];
         graph::Vertex* vertex = gameManager->layerToVertex[layer];
 
+        int currentPlayer = turnManager.getCurrentPlayer();
+        if(currentPlayer == 1){
+            if(selected_vertex->army.armyType() == ArmyType::JANISSARY){
+                QMessageBox::warning(this, tr("Error"), tr("You have to select your territory first."));
+                selectedLayer = nullptr;
+                return;
+            }
+        } else {
+            if(selected_vertex->army.armyType() == ArmyType::HAJDUK){
+                QMessageBox::warning(this, tr("Error"), tr("You have to select your territory first."));
+                selectedLayer = nullptr;
+                return;
+            }
+        }
+
         bool ok;
         int maxTroops = selected_vertex->army.getSoldiers();
         int troopsToTransfer = QInputDialog::getInt(this, tr("Transfer Troops"), tr("Enter the number of soldiers to transfer:"), 0, 0, maxTroops, 1, &ok);
