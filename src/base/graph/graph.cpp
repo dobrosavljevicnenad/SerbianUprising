@@ -17,6 +17,13 @@ Vertex* Graph::insert_vertex(QPointF position, const std::string &label,
     m_adj_list[vertex] = std::vector<Edge>();
     return vertex;
 }
+Vertex* Graph::get_vertex_by_id(nodeID_t id) const {
+    auto it = vertices.find(id);
+    if (it != vertices.end()) {
+        return it->second;
+    }
+    return nullptr;
+}
 
 bool Graph::insert_edge(Vertex* from,Vertex* to, double weight, EdgeType type) {
     if (vertices.find(from->id()) == vertices.end() ||

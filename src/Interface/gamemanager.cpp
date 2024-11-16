@@ -1,6 +1,6 @@
 #include "gamemanager.h"
 
-GameManager::GameManager(QGraphicsScene* scene,Turn& turn) : scene(scene), ma(g,turn)  {}
+GameManager::GameManager(QGraphicsScene* scene) : scene(scene), turn(g)  {}
 
 void GameManager::initializeMap(){
     /*

@@ -14,10 +14,8 @@ MainWindow::MainWindow(QWidget *parent)
     view = new QGraphicsView(scene, this);
     setCentralWidget(view);
 
-    Turn turnManager;
-    gameManager = new GameManager(scene,turnManager);
+    gameManager = new GameManager(scene);
     gameManager->initializeMap();
-
     QPushButton *changePlayerButton = new QPushButton("Change Player");
     QPushButton *endTurnButton = new QPushButton("End Turn");
     QTextBrowser *textField = new QTextBrowser();
@@ -38,8 +36,8 @@ MainWindow::MainWindow(QWidget *parent)
     // and also need to implement on moveArmy to put on buffer also buffer need
 
     connect(gameManager, &GameManager::layerClicked, this, &MainWindow::onLayerClicked);
-    connect(ui->changePlayerButton, &QPushButton::clicked, this, &MainWindow::onChangePlayerClicked);
-    connect(ui->endTurnButton, &QPushButton::clicked, this, &MainWindow::onEndTurnClicked);
+    connect(changePlayerButton, &QPushButton::clicked, this, &MainWindow::onChangePlayerClicked);
+    connect(endTurnButton, &QPushButton::clicked, this, &MainWindow::onEndTurnClicked);
 }
 
 MainWindow::~MainWindow()
@@ -48,21 +46,32 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::onChangePlayerClicked() {
-    turnManager.changePlayer();
-    int currentPlayer = turnManager.getCurrentPlayer();
-    ui->textField->append(QString("Player %1 is now active.").arg(currentPlayer));
+    int currentPlayer = gameManager->turn.getCurrentPlayerId();
+
+    gameManager->turn.changePlayer();
+    currentPlayer = gameManager->turn.getCurrentPlayerId();
+    std::cout << std::endl;
+
+    //textField->append(QString("Player %1 is now active.").arg(currentPlayer));
 }
 
+
 void MainWindow::onEndTurnClicked() {
-    ui->textField->append(turnManager.processBuffer());
-    turnManager.endTurn();
-    int currentPlayer = turnManager.getCurrentPlayer();
-    ui->textField->append(QString("Player %1's turn starts.").arg(currentPlayer));
+    //ui->textField->append(gameManager->turn.bufferToString());
+    gameManager->turn.executeTurn();
+    // Optionally, update the UI to show that the turn has ended
+    QMessageBox::information(this, tr("Turn Ended"), tr("The turn has ended. Buffers have been cleared."));
 }
 
 void MainWindow::onLayerClicked(MapLayer *layer) {
     if (selectedLayer == nullptr) {
         selectedLayer = layer;
+        graph::Vertex* selected_vertex = gameManager->layerToVertex[selectedLayer];
+        if(selected_vertex->player.getPlayerId() != gameManager->turn.getCurrentPlayerId()){
+            QMessageBox::warning(this, tr("Error"), tr("You selected the enemy layer. Select another layer."));
+            selectedLayer = nullptr;
+            return ;
+        }
     } else {
         if(selectedLayer == layer) {
             QMessageBox::warning(this, tr("Error"), tr("You selected the same layer. Select another layer."));
@@ -80,7 +89,12 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
             if(troopsToTransfer > selected_vertex->army.getSoldiers()) {
                 QMessageBox::warning(this, tr("Error"), tr("You don`t have enough troops to transfer."));
             } else {
-                gameManager->ma.executeMove(selected_vertex,vertex,troopsToTransfer);
+                ActionType type = (selected_vertex->army.armyType() == vertex->army.armyType()) ? ActionType::MOVE_ARMY : ActionType::ATTACK;
+                int pid = gameManager->turn.getCurrentPlayerId();
+                int source = selected_vertex->id();
+                int target = vertex->id();
+                Action newAction(type, pid, source,target, troopsToTransfer);
+                gameManager->turn.addAction(pid, newAction);
 
                 selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
                 layer->setTroopCount(vertex->army.getSoldiers());

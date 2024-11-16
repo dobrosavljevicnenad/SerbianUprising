@@ -44,7 +44,6 @@ private:
     QGraphicsView *view; //*
     MapLayer *selectedLayer = nullptr;
     GameManager* gameManager;
-    Turn turnManager;
 
 };
 #endif // MAINWINDOW_H
