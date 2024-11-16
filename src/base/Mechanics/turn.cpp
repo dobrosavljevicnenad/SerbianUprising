@@ -109,8 +109,10 @@ void Turn::executeMoveAction(const Action& action) {
 void Turn::executeAttackAction(const Action& action) {
     Vertex* source = m_graph.get_vertex_by_id(action.sourceVertexId);
     Vertex* target = m_graph.get_vertex_by_id(action.targetVertexId);
-
-    if (!moveArmy.executeMove(source, target, action.soldiers)) {
+    int attackSoldiers = action.soldiers;
+    if(source->army.getSoldiers()< action.soldiers)
+        attackSoldiers = source->army.getSoldiers();
+    if (!moveArmy.executeMove(source, target, attackSoldiers)) {
         std::cerr << "Attack action failed for Player " << action.playerId << ".\n";
     }
 }
