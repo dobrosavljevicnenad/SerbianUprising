@@ -34,7 +34,7 @@ void GameManager::initializeMap(){
         new MapLayer(":/resources/Layer12.png", true),
         new MapLayer(":/resources/Layer13.png", true),
     };
-
+    this->layers = layers;
     std::vector<std::pair<int, int>> positions = {
         {633, 251}, {287, 400}, {446, 291}, {261, 268}, {378, 186},
         {223, 130}, {154, 98},  {181, 27},  {359, 85},  {529, 76},
@@ -46,7 +46,8 @@ void GameManager::initializeMap(){
                                        "Layer13", "Layer14" };
 
     std::vector<Army> armies;
-    std::vector<Player> players;
+    Player player1(1,ArmyType::HAJDUK);
+    Player player2(2,ArmyType::JANISSARY);
     Terrain defaultTerrain(TerrainType::MOUNTAIN);
 
     int numLayers = layers.size();
@@ -57,12 +58,12 @@ void GameManager::initializeMap(){
 
         armies.emplace_back(soldiers,type);
 
-        players.emplace_back((type==ArmyType::HAJDUK) ? 1 : 2, type);
     }
 
     for (size_t i = 0; i < layers.size(); ++i) {
         layers[i]->setZValue(0);
-        addLayer(layers[i], labels[i], defaultTerrain, armies[i], players[i]);
+        addLayer(layers[i], labels[i], defaultTerrain, armies[i],
+                 (armies[i].armyType() == ArmyType::HAJDUK) ? player1 : player2);
         layers[i]->setPos(baseLayer->pos().x() + positions[i].first,
                           baseLayer->pos().y() + positions[i].second);
 
@@ -101,6 +102,16 @@ void GameManager::initializeMap(){
         g.insert_edge(layerToVertex[layers[11]], layerToVertex[layers[12]], 1.0);
         g.insert_edge(layerToVertex[layers[10]], layerToVertex[layers[11]], 1.0);
 
+    }
+}
+
+void GameManager::updateLayersGraphics() {
+    for (auto &layer : layers) {
+        auto vertex = layerToVertex[layer];
+        Army army = vertex->army;
+        layer->setArmyColor(army.armyType());
+        vertex->player.setPlayerId((army.armyType()==ArmyType::HAJDUK) ? 1 : 2);
+        layer->setTroopCount(vertex->army.getSoldiers());
     }
 }
 

@@ -59,6 +59,8 @@ void MainWindow::onChangePlayerClicked() {
 void MainWindow::onEndTurnClicked() {
     //ui->textField->append(gameManager->turn.bufferToString());
     gameManager->turn.executeTurn();
+    //now we need to update all graphical componenets of our project aka layers
+    gameManager->updateLayersGraphics();
     // Optionally, update the UI to show that the turn has ended
     QMessageBox::information(this, tr("Turn Ended"), tr("The turn has ended. Buffers have been cleared."));
 }

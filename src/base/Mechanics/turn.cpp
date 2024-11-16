@@ -1,6 +1,5 @@
 #include "turn.h"
-#include "MoveArmy.h"
-#include <sstream>  // For std::stringstream
+
 Turn::Turn(Graph& graph) : currentPlayerId(1), m_graph(graph), moveArmy(graph) {}
 
 void Turn::addAction(int playerId, const Action& action) {

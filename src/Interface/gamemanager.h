@@ -18,6 +18,8 @@ class GameManager : public QObject
 public:
     GameManager(QGraphicsScene* scene);
     void initializeMap();
+
+    void updateLayersGraphics();
     void addLayer(MapLayer* layer, const std::string& label, Terrain terrain, Army army, Player player);
 
     void CreateRegion();
@@ -29,6 +31,7 @@ signals:
 
 private:
     QGraphicsScene* scene;
+    std::vector<MapLayer*> layers;
     graph::Graph g;
 public:
     Turn turn;
