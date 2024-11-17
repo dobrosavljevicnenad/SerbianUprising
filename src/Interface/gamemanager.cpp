@@ -14,6 +14,7 @@ void GameManager::initializeMap(){
     for(auto n : neigh){
         std::cout << n->army.getSoldiers() << std::endl;
     }
+    int x;
     */
     MapLayer *baseLayer = new MapLayer(":/resources/base.png", false);
     baseLayer->setZValue(-1);
