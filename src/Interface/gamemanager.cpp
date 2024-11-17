@@ -70,6 +70,9 @@ void GameManager::initializeMap(){
         connect(layers[i], &MapLayer::layerClicked, this, [this, layers, i]() {
             emit layerClicked(layers[i]);
         });
+        connect(layers[i], &MapLayer::rightMouseClicked, this, [this, layers, i]() {
+            emit rightMouseClicked(layers[i]);
+        });
         layers[i]->setTroopCount(layerToVertex[layers[i]]->army.getSoldiers());
     }
 

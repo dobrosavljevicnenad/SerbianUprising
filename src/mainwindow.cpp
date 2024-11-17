@@ -37,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent)
     // and also need to implement on moveArmy to put on buffer also buffer need
 
     connect(gameManager, &GameManager::layerClicked, this, &MainWindow::onLayerClicked);
+    connect(gameManager, &GameManager::rightMouseClicked, this, &MainWindow::onRightMouseClicked);
     connect(ui->changePlayerButton, &QPushButton::clicked, this, &MainWindow::onChangePlayerClicked);
     connect(ui->endTurnButton, &QPushButton::clicked, this, &MainWindow::onEndTurnClicked);
 }
@@ -106,4 +107,13 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
 
         selectedLayer = nullptr;
     }
+}
+void MainWindow::onRightMouseClicked(MapLayer *layer) {
+    graph::Vertex* vertex = gameManager->layerToVertex[layer];
+
+    int oldNumOfSoldiers = vertex->army.getSoldiers();
+    int newNumOfSoldiers = oldNumOfSoldiers+10;
+    vertex->army.setSoldiers(newNumOfSoldiers);
+
+    layer->setTroopCount(vertex->army.getSoldiers());
 }

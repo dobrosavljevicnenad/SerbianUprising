@@ -35,6 +35,7 @@ public:
 
 private slots:
     void onLayerClicked(MapLayer *layer);
+    void onRightMouseClicked(MapLayer* layer);
     void onChangePlayerClicked();
     void onEndTurnClicked();
 

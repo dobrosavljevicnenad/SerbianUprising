@@ -85,5 +85,8 @@ void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     if (event->button() == Qt::LeftButton) {
         emit layerClicked(this);
     }
+    if (event->button() == Qt::RightButton) {
+        emit rightMouseClicked(this);
+    }
     QGraphicsPixmapItem::mousePressEvent(event);
 }

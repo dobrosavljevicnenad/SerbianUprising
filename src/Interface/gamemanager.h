@@ -27,6 +27,7 @@ public:
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
 signals:
     void layerClicked(MapLayer* layer);
+    void rightMouseClicked(MapLayer* layer);
 
 private:
     QGraphicsScene* scene;
