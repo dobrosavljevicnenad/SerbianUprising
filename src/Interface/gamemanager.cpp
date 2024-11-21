@@ -15,24 +15,24 @@ void GameManager::initializeMap(){
         std::cout << n->army.getSoldiers() << std::endl;
     }
     */
-    MapLayer *baseLayer = new MapLayer(":/resources/base.png", false);
+    MapLayer *baseLayer = new MapLayer(":/resources/Images/base.png", false);
     baseLayer->setZValue(-1);
     scene->addItem(baseLayer);
 
     std::vector<MapLayer*> layers = {
-        new MapLayer(":/resources/Layer1.png", true),//0
-        new MapLayer(":/resources/Layer2.png", true),//1
-        new MapLayer(":/resources/Layer3.png", true),
-        new MapLayer(":/resources/Layer4.png", true),
-        new MapLayer(":/resources/Layer5.png", true),
-        new MapLayer(":/resources/Layer6.png", true),
-        new MapLayer(":/resources/Layer7.png", true),
-        new MapLayer(":/resources/Layer8.png", true),
-        new MapLayer(":/resources/Layer9.png", true),
-        new MapLayer(":/resources/Layer10.png", true),
-        new MapLayer(":/resources/Layer11.png", true),
-        new MapLayer(":/resources/Layer12.png", true),
-        new MapLayer(":/resources/Layer13.png", true),
+        new MapLayer(":/resources/Images/Layer1.png", true),//0
+        new MapLayer(":/resources/Images/Layer2.png", true),//1
+        new MapLayer(":/resources/Images/Layer3.png", true),
+        new MapLayer(":/resources/Images/Layer4.png", true),
+        new MapLayer(":/resources/Images/Layer5.png", true),
+        new MapLayer(":/resources/Images/Layer6.png", true),
+        new MapLayer(":/resources/Images/Layer7.png", true),
+        new MapLayer(":/resources/Images/Layer8.png", true),
+        new MapLayer(":/resources/Images/Layer9.png", true),
+        new MapLayer(":/resources/Images/Layer10.png", true),
+        new MapLayer(":/resources/Images/Layer11.png", true),
+        new MapLayer(":/resources/Images/Layer12.png", true),
+        new MapLayer(":/resources/Images/Layer13.png", true),
     };
     this->layers = layers;
     std::vector<std::pair<int, int>> positions = {
