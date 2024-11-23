@@ -1,5 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "./Interface/gamemenu.h"
+
+GameMenu *gameMenu;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -9,12 +12,33 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    MapScene *scene = new MapScene(this);
+    gameMenu = new GameMenu(this);
+    setCentralWidget(gameMenu);
+
+    //MapScene *scene = new MapScene(this);
 
     view = new QGraphicsView(scene, this);
-    setCentralWidget(view);
 
     gameManager = new GameManager(scene);
+
+    connect(gameMenu, &GameMenu::startGame, this, [this]() {
+        gameManager->initializeMap();
+        setCentralWidget(view);
+    });
+
+    connect(gameMenu, &GameMenu::exitGame, this, &QMainWindow::close);
+
+    connect(gameMenu, &GameMenu::fullScreenClicked, this, [this] () {
+        if(isFullScreen()) {
+            showNormal();
+        } else {
+            showFullScreen();
+        }
+    });
+
+    //setCentralWidget(view);
+
+    //gameManager = new GameManager(scene);
     gameManager->initializeMap();
 
     QPushButton *changePlayerButton = new QPushButton("Change Player");
@@ -107,3 +131,6 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
         selectedLayer = nullptr;
     }
 }
+
+
+

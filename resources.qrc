@@ -14,5 +14,9 @@
         <file>resources/Layer3.png</file>
         <file>resources/Layer2.png</file>
         <file>resources/Layer1.png</file>
+        <file>resources/button.jpeg</file>
+        <file>resources/button.png</file>
+        <file>resources/background.jpg</file>
+        <file>resources/backgroundImage.jpeg</file>
     </qresource>
 </RCC>
