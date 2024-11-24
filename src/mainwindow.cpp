@@ -22,7 +22,7 @@ MainWindow::MainWindow(QWidget *parent)
     audioOutput = new QAudioOutput();
 
     mediaPlayer->setAudioOutput(audioOutput);
-    audioOutput->setVolume(0.5);
+    audioOutput->setVolume(0.0);
     mediaPlayer->setSource(QUrl::fromLocalFile("../../resources/music/Hajduk.mp3"));
 
     mediaPlayer->play();
