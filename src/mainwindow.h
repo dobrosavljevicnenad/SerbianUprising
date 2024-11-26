@@ -13,6 +13,9 @@
 #include <QMessageBox>
 #include <QGraphicsProxyWidget>
 
+#include "network/server.h"
+#include "network/client.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -45,6 +48,9 @@ private:
     MapLayer *selectedLayer = nullptr;
     GameManager* gameManager;
     Turn turnManager;
+
+    Server server;
+    Client client;
 
 };
 #endif // MAINWINDOW_H

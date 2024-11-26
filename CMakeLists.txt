@@ -46,6 +46,11 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/base/Entities/region.h src/base/Entities/region.cpp
         src/base/Mechanics/turn.h src/base/Mechanics/turn.cpp
 
+
+
+        src/network/server.h src/network/server.cpp
+        src/network/client.h src/network/client.cpp
+
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Ustanak APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

@@ -39,6 +39,22 @@ MainWindow::MainWindow(QWidget *parent)
     connect(gameManager, &GameManager::layerClicked, this, &MainWindow::onLayerClicked);
     connect(ui->changePlayerButton, &QPushButton::clicked, this, &MainWindow::onChangePlayerClicked);
     connect(ui->endTurnButton, &QPushButton::clicked, this, &MainWindow::onEndTurnClicked);
+
+    // NETWORK TEST
+    if (server.startServer(12345)) {
+        QObject::connect(&server, &Server::dataReceived, this, [this](const QString &data) {
+            qDebug() << "Server received:" << data;
+            server.sendData("Hello form Server");
+        });
+    }
+
+    if (client.connectToServer("127.0.0.1", 12345)) {
+        QObject::connect(&client, &Client::dataReceived, this, [](const QString &data) {
+            qDebug() << "Client received:" << data;
+        });
+
+        client.sendData("Hello from Client!");
+    }
 }
 
 MainWindow::~MainWindow()
