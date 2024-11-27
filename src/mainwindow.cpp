@@ -41,12 +41,12 @@ MainWindow::MainWindow(QWidget *parent)
     endTurnButtonProxy->setZValue(1);
     textFieldProxy->setZValue(1);
 
-    changePlayerButtonProxy->setPos(850, 10);
-    endTurnButtonProxy->setPos(1000, 10);
-    textFieldProxy->setPos(840, 50);
+    changePlayerButtonProxy->resize(QSize(70,50));
+    changePlayerButtonProxy->setPos(scene->width()- changePlayerButton->size().width(), 00);
 
-
-    // and also need to implement on moveArmy to put on buffer also buffer need
+    endTurnButtonProxy->resize(QSize(70,60));
+    endTurnButtonProxy->setPos(0, 0);
+    textFieldProxy->setPos(scene->width()-textFieldProxy->size().width(), 50);
 
     connect(gameManager, &GameManager::layerClicked, this, &MainWindow::onLayerClicked);
     connect(changePlayerButton, &QPushButton::clicked, this, &MainWindow::onChangePlayerClicked);
@@ -65,12 +65,26 @@ void MainWindow::onMoveClicked(QListWidgetItem* item) {
 
     QMessageBox::information(this, tr("Move Details"), tr("You clicked on: %1").arg(moveDetails));
 
-    // Later Implement logic
+    QVariant data = item->data(Qt::UserRole);
+    if (!data.isValid()) {
+        return;
+    }
+
+    int actionId = data.toInt();
+
+    gameManager->turn.removeActionById(actionId);
+
+    delete item;
+
+    std::cout << "Move with ID " << actionId << " removed.\n";
+
 }
 
 void MainWindow::onChangePlayerClicked() {
 
     gameManager->turn.changePlayer();
+    //textField->append(QString("Player %1 is now active.").arg(currentPlayer));
+    updateMoveList();
     int currentPlayer = gameManager->turn.getCurrentPlayerId();
     mediaPlayer->stop();
     if(currentPlayer == 1){
@@ -81,8 +95,6 @@ void MainWindow::onChangePlayerClicked() {
     }
     std::cout << std::endl;
     mediaPlayer->play();
-
-    //textField->append(QString("Player %1 is now active.").arg(currentPlayer));
 }
 
 
@@ -128,22 +140,39 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
                 int target = vertex->id();
                 Action newAction(type, pid, source,target, troopsToTransfer);
                 gameManager->turn.addAction(pid, newAction);
+
                 //TODO
                 //trooptotransfer moramo se implementirati full - trooptotransfer ali u cvoru
                 selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
                 layer->setTroopCount(vertex->army.getSoldiers());
                 layer->setArmyColor(vertex->army.armyType());
                 gameManager->drawArrow(selectedLayer, layer, troopsToTransfer);
-                QString moveDescription = QString("Player %1: %2 troops from Layer %3 to Layer %4")
-                                              .arg(pid)
-                                              .arg(troopsToTransfer)
-                                              .arg(source)
-                                              .arg(target);
-                moveList->addItem(moveDescription);
-                //std::cout << selected_vertex->army.getSoldiers() << " " << vertex->army.getSoldiers() << std::endl;
+
+                //buffer and textfield
+                QString move = gameManager->turn.GetCurrentAction(newAction);
+                QListWidgetItem* item = new QListWidgetItem(move);
+                item->setData(Qt::UserRole, newAction.id);
+                moveList->addItem(item);
             }
         }
 
         selectedLayer = nullptr;
+    }
+}
+
+void MainWindow::updateMoveList() {
+    moveList->clear();
+
+    const auto& buffer = gameManager->turn.getPlayerBuffer(gameManager->turn.getCurrentPlayerId());
+
+    for (const auto& action : buffer) {
+        QString moveDescription = gameManager->turn.GetCurrentAction(action);
+        QListWidgetItem* item = new QListWidgetItem(moveDescription, moveList);
+
+        // Store the action ID in the item's data for later retrieval
+        item->setData(Qt::UserRole, action.id);
+
+        // Add the item to the list
+        moveList->addItem(item);
     }
 }

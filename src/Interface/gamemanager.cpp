@@ -3,18 +3,6 @@
 GameManager::GameManager(QGraphicsScene* scene) : scene(scene), turn(g)  {}
 
 void GameManager::initializeMap(){
-    /*
-    auto neigh = g.neighbors(v1);
-    for(auto n : neigh){
-        std::cout << n->army.getSoldiers() << std::endl;
-    }
-
-    v2->army.setSoldiers(10);
-
-    for(auto n : neigh){
-        std::cout << n->army.getSoldiers() << std::endl;
-    }
-    */
     MapLayer *baseLayer = new MapLayer(":/resources/Images/base.png", false);
     baseLayer->setZValue(-1);
     scene->addItem(baseLayer);
@@ -101,7 +89,6 @@ void GameManager::initializeMap(){
         g.insert_edge(layerToVertex[layers[9]], layerToVertex[layers[11]], 1.0);
         g.insert_edge(layerToVertex[layers[11]], layerToVertex[layers[12]], 1.0);
         g.insert_edge(layerToVertex[layers[10]], layerToVertex[layers[11]], 1.0);
-
     }
 }
 
