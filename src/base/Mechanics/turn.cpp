@@ -103,8 +103,7 @@ std::vector<Action>& Turn::getPlayerBuffer(int playerId) {
 }
 
 QString Turn::GetCurrentAction(const Action& action) {
-    QString moveDescription = QString("Player %1: %2 troops from Layer %3 to Layer %4")
-        .arg(action.playerId)
+    QString moveDescription = QString("%2 troops from Layer %3 to Layer %4")
         .arg(action.soldiers)
         .arg(action.sourceVertexId)
         .arg(action.targetVertexId);

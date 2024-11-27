@@ -48,6 +48,9 @@ MainWindow::MainWindow(QWidget *parent)
     endTurnButtonProxy->setPos(0, 0);
     textFieldProxy->setPos(scene->width()-textFieldProxy->size().width(), 50);
 
+
+    moveList->addItem(QString("Player %1 on turn:").arg(gameManager->turn.getCurrentPlayerId()));
+
     connect(gameManager, &GameManager::layerClicked, this, &MainWindow::onLayerClicked);
     connect(changePlayerButton, &QPushButton::clicked, this, &MainWindow::onChangePlayerClicked);
     connect(endTurnButton, &QPushButton::clicked, this, &MainWindow::onEndTurnClicked);
@@ -74,6 +77,9 @@ void MainWindow::onMoveClicked(QListWidgetItem* item) {
 
     gameManager->turn.removeActionById(actionId);
 
+    gameManager->removeArrowByActionId(actionId);
+
+
     delete item;
 
     std::cout << "Move with ID " << actionId << " removed.\n";
@@ -83,9 +89,9 @@ void MainWindow::onMoveClicked(QListWidgetItem* item) {
 void MainWindow::onChangePlayerClicked() {
 
     gameManager->turn.changePlayer();
-    //textField->append(QString("Player %1 is now active.").arg(currentPlayer));
-    updateMoveList();
+
     int currentPlayer = gameManager->turn.getCurrentPlayerId();
+    updateMoveList(currentPlayer);
     mediaPlayer->stop();
     if(currentPlayer == 1){
         mediaPlayer->setSource(QUrl::fromLocalFile("../../resources/music/Hajduk.mp3"));
@@ -146,7 +152,7 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
                 selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
                 layer->setTroopCount(vertex->army.getSoldiers());
                 layer->setArmyColor(vertex->army.armyType());
-                gameManager->drawArrow(selectedLayer, layer, troopsToTransfer);
+                gameManager->drawArrow(selectedLayer, layer, troopsToTransfer, newAction.id);
 
                 //buffer and textfield
                 QString move = gameManager->turn.GetCurrentAction(newAction);
@@ -160,19 +166,18 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
     }
 }
 
-void MainWindow::updateMoveList() {
+void MainWindow::updateMoveList(int currentPlayer) {
     moveList->clear();
+    moveList->addItem(QString("Player %1 on turn:").arg(currentPlayer));
 
-    const auto& buffer = gameManager->turn.getPlayerBuffer(gameManager->turn.getCurrentPlayerId());
+    const auto& buffer = gameManager->turn.getPlayerBuffer(currentPlayer);
 
     for (const auto& action : buffer) {
         QString moveDescription = gameManager->turn.GetCurrentAction(action);
         QListWidgetItem* item = new QListWidgetItem(moveDescription, moveList);
 
-        // Store the action ID in the item's data for later retrieval
         item->setData(Qt::UserRole, action.id);
 
-        // Add the item to the list
         moveList->addItem(item);
     }
 }
