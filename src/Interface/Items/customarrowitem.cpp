@@ -1,7 +1,7 @@
 #include "customarrowitem.h"
 
 CustomArrowItem::CustomArrowItem(const QLineF& line,int actionId, QGraphicsItem* parent)
-    : QGraphicsLineItem(line, parent),textItem(nullptr) {
+    : QGraphicsLineItem(line, parent),textItem(nullptr),actionId(actionId) {
     textItem = new QGraphicsTextItem(this);
     textItem->setDefaultTextColor(Qt::black);
     QFont font = textItem->font();
