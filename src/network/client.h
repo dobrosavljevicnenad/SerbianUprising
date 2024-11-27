@@ -1,10 +1,12 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
-#include <QTcpSocket>
 #include <QObject>
+#include <QTcpSocket>
+#include <QString>
 
-class Client : public QObject {
+class Client : public QObject
+{
     Q_OBJECT
 
 public:
@@ -14,9 +16,13 @@ public:
 
 signals:
     void dataReceived(const QString &data);
+    void gameStarted();
+    void gameOver(const QString &reason);
 
 private slots:
     void onReadyRead();
+    void onGameStarted();
+    void onGameOver(const QString &reason);
 
 private:
     QTcpSocket *m_socket;
