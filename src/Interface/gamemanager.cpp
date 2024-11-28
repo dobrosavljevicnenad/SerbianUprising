@@ -3,52 +3,75 @@
 GameManager::GameManager(QGraphicsScene* scene) : scene(scene), turn(g)  {}
 
 void GameManager::initializeMap(){
-    MapLayer *baseLayer = new MapLayer(":/resources/Images/base.png", false);
-    baseLayer->setZValue(-1);
-    scene->addItem(baseLayer);
+    QString filePath = "../../resources/init.json";
+    QFile file(filePath);
 
-    std::vector<MapLayer*> layers = {
-        new MapLayer(":/resources/Images/Layer1.png", true),//0
-        new MapLayer(":/resources/Images/Layer2.png", true),//1
-        new MapLayer(":/resources/Images/Layer3.png", true),
-        new MapLayer(":/resources/Images/Layer4.png", true),
-        new MapLayer(":/resources/Images/Layer5.png", true),
-        new MapLayer(":/resources/Images/Layer6.png", true),
-        new MapLayer(":/resources/Images/Layer7.png", true),
-        new MapLayer(":/resources/Images/Layer8.png", true),
-        new MapLayer(":/resources/Images/Layer9.png", true),
-        new MapLayer(":/resources/Images/Layer10.png", true),
-        new MapLayer(":/resources/Images/Layer11.png", true),
-        new MapLayer(":/resources/Images/Layer12.png", true),
-        new MapLayer(":/resources/Images/Layer13.png", true),
-    };
-    this->layers = layers;
-    std::vector<std::pair<int, int>> positions = {
-        {633, 251}, {287, 400}, {446, 291}, {261, 268}, {378, 186},
-        {223, 130}, {154, 98},  {181, 27},  {359, 85},  {529, 76},
-        {706, 56},  {627, 36},  {379, 35}
-    };
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Could not open file:" << filePath;
+        return;
+    }
 
-    std::vector<std::string> labels = {"Layer2", "Layer3", "Layer4", "Layer5","Layer6",
-                                       "Layer7", "Layer8", "Layer9","Layer10", "Layer11", "Layer12",
-                                       "Layer13", "Layer14" };
+    QByteArray jsonData = file.readAll();
+    file.close();
 
+    QJsonDocument doc = QJsonDocument::fromJson(jsonData);
+    if (doc.isNull() || !doc.isObject()) {
+        qWarning() << "Invalid JSON file format.";
+        return;
+    }
+
+    QJsonObject rootObj = doc.object();
+
+    QJsonArray layersArray = rootObj["layers"].toArray();
+
+    std::vector<MapLayer*> layers(layersArray.size());
     std::vector<Army> armies;
     Player player1(1,ArmyType::HAJDUK);
     Player player2(2,ArmyType::JANISSARY);
+    std::vector<std::string> labels;
+    std::vector<std::pair<int,int>>positions;
+    std::vector<std::pair<int,std::vector<int>>> allNeighbors;
+
+    MapLayer *baseLayer = new MapLayer(":/resources/Images/base.png", false);
+    baseLayer->setZValue(-1);
+    scene->addItem(baseLayer);
     Terrain defaultTerrain(TerrainType::MOUNTAIN);
 
-    int numLayers = layers.size();
-    for (int i = 0; i < numLayers; ++i) {
-        int soldiers = 10 + std::rand() % 91;
+    for (int i = 0; i <layersArray.size(); ++i) {
+        QJsonObject layerObj = layersArray[i].toObject();
 
-        ArmyType type = (std::rand() % 2 == 0 ) ? ArmyType::HAJDUK : ArmyType::JANISSARY;
+        std::string label = layerObj.value("label").toString().toStdString();
+        labels.push_back(label);
 
-        armies.emplace_back(soldiers,type);
+        QString labelPath = layerObj.value("label_path").toString();
+        std::string armyType = layerObj.value("army_type").toString().toStdString();
 
+        int numOfSoldiers = layerObj.value("num_of_soldiers").toInt();
+        layers[i] = (new MapLayer(labelPath, true));
+
+        ArmyType type = (armyType == "HAJDUK") ? ArmyType::HAJDUK : ArmyType::JANISSARY;
+
+        armies.emplace_back(numOfSoldiers,type);
+
+
+        QJsonObject positionObj = layerObj.value("position").toObject();
+
+        int posX = positionObj.value("x").toInt();
+        int posY = positionObj.value("y").toInt();
+        positions.push_back(std::make_pair(posX,posY));
+
+
+        std::vector<int> neighbors;
+        if (layerObj.contains("neighbours") && layerObj["neighbours"].isArray()) {
+            QJsonArray neighborsArray = layerObj["neighbours"].toArray();
+            for (const QJsonValue &neighborValue : neighborsArray) {
+                neighbors.push_back(neighborValue.toInt());
+            }
+        }
+        allNeighbors.emplace_back(i,neighbors);
     }
 
-    for (size_t i = 0; i < layers.size(); ++i) {
+    for (int i = 0; i < layersArray.size(); ++i) {
         layers[i]->setZValue(0);
         addLayer(layers[i], labels[i], defaultTerrain, armies[i],
                  (armies[i].armyType() == ArmyType::HAJDUK) ? player1 : player2);
@@ -58,37 +81,20 @@ void GameManager::initializeMap(){
         connect(layers[i], &MapLayer::layerClicked, this, [this, layers, i]() {
             emit layerClicked(layers[i]);
         });
+
         layers[i]->setTroopCount(layerToVertex[layers[i]]->army.getSoldiers());
     }
 
-
     if (layers.size() >= 12) {
-        g.insert_edge(layerToVertex[layers[0]], layerToVertex[layers[2]], 1.0);
-        g.insert_edge(layerToVertex[layers[0]], layerToVertex[layers[4]], 1.0);
-        g.insert_edge(layerToVertex[layers[0]], layerToVertex[layers[10]], 1.0);
-        g.insert_edge(layerToVertex[layers[1]], layerToVertex[layers[2]], 1.0);
-        g.insert_edge(layerToVertex[layers[1]], layerToVertex[layers[3]], 1.0);
-        g.insert_edge(layerToVertex[layers[3]], layerToVertex[layers[2]], 1.0);
-        g.insert_edge(layerToVertex[layers[4]], layerToVertex[layers[2]], 1.0);
-        g.insert_edge(layerToVertex[layers[4]], layerToVertex[layers[3]], 1.0);
-        g.insert_edge(layerToVertex[layers[3]], layerToVertex[layers[5]], 1.0);
-        g.insert_edge(layerToVertex[layers[4]], layerToVertex[layers[5]], 1.0);
-        g.insert_edge(layerToVertex[layers[4]], layerToVertex[layers[8]], 1.0);
-        g.insert_edge(layerToVertex[layers[4]], layerToVertex[layers[9]], 1.0);
-        g.insert_edge(layerToVertex[layers[4]], layerToVertex[layers[10]], 1.0);
-        g.insert_edge(layerToVertex[layers[5]], layerToVertex[layers[6]], 1.0);
-        g.insert_edge(layerToVertex[layers[5]], layerToVertex[layers[7]], 1.0);
-        g.insert_edge(layerToVertex[layers[5]], layerToVertex[layers[8]], 1.0);
-        g.insert_edge(layerToVertex[layers[7]], layerToVertex[layers[6]], 1.0);
-        g.insert_edge(layerToVertex[layers[7]], layerToVertex[layers[8]], 1.0);
-        g.insert_edge(layerToVertex[layers[7]], layerToVertex[layers[12]], 1.0);
-        g.insert_edge(layerToVertex[layers[8]], layerToVertex[layers[12]], 1.0);
-        g.insert_edge(layerToVertex[layers[8]], layerToVertex[layers[9]], 1.0);
-        g.insert_edge(layerToVertex[layers[9]], layerToVertex[layers[12]], 1.0);
-        g.insert_edge(layerToVertex[layers[9]], layerToVertex[layers[10]], 1.0);
-        g.insert_edge(layerToVertex[layers[9]], layerToVertex[layers[11]], 1.0);
-        g.insert_edge(layerToVertex[layers[11]], layerToVertex[layers[12]], 1.0);
-        g.insert_edge(layerToVertex[layers[10]], layerToVertex[layers[11]], 1.0);
+
+        for (const auto &layer : allNeighbors){
+            int layer_id = layer.first;
+            const std::vector<int> &neighbors = layer.second;
+            for (int neighbor : neighbors){
+                g.insert_edge(layerToVertex[layers[layer_id]], layerToVertex[layers[neighbor]], 1.0);
+            }
+        }
+
     }
 }
 
@@ -123,6 +129,7 @@ void GameManager::drawArrow(MapLayer* from, MapLayer* to, int number, int action
     arrow->setNumber(number);
     arrows.push_back(arrow);
 }
+
 
 void GameManager::addLayer(MapLayer* layer, const std::string& label, Terrain terrain, Army army, Player player) {
     layer->setArmyColor(army.armyType());
