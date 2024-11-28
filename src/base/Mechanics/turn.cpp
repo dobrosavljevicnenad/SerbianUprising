@@ -3,7 +3,7 @@
 #include <QTimer>
 #include <QUrl>
 #include <QEventLoop>
-
+#include <vector>
 
 Turn::Turn(Graph& graph) : currentPlayerId(1), m_graph(graph), moveArmy(graph) {}
 
@@ -76,10 +76,11 @@ int Turn::getCurrentPlayerId() const {
 void Turn::executePlayerActions(int playerId) {
     auto& buffer = getPlayerBuffer(playerId);
 
-    for (const auto& action : buffer) {
+    for (auto it = buffer.begin(); it != buffer.end(); ) {
+        const auto& action = *it;
         switch (action.type) {
         case ActionType::ATTACK:
-            executeAttackAction(action);
+            executeAttackAction(playerId, action);
             break;
         case ActionType::MOVE_ARMY:
             break;
@@ -87,6 +88,8 @@ void Turn::executePlayerActions(int playerId) {
             std::cerr << "Unknown action type!\n";
             break;
         }
+        it = buffer.erase(it);
+
     }
 
     buffer.clear(); // Clear the buffer after executing all actions
@@ -131,18 +134,46 @@ void Turn::executeMoveAction(const Action& action) {
     Vertex* source = m_graph.get_vertex_by_id(action.sourceVertexId);
     Vertex* target = m_graph.get_vertex_by_id(action.targetVertexId);
 
-    if (!moveArmy.executeMove(source, target, action.soldiers)) {
+    if (!moveArmy.mergeArmies(source, target, action.soldiers)) {
         std::cerr << "Move action failed for Player " << action.playerId << ".\n";
     }
 }
 
-void Turn::executeAttackAction(const Action& action) {
+void Turn::executeAttackAction(const int playerId, const Action& action) {
     Vertex* source = m_graph.get_vertex_by_id(action.sourceVertexId);
     Vertex* target = m_graph.get_vertex_by_id(action.targetVertexId);
-    int attackSoldiers = action.soldiers;
+    std::vector<Vertex*> attackers;
+    std::vector<unsigned> soldiers;
+    attackers.push_back(source);
+    auto& buffer = getPlayerBuffer(playerId);
+    unsigned attackSoldiers = action.soldiers;
     if(source->army.getSoldiers()< action.soldiers)
         attackSoldiers = source->army.getSoldiers();
-    if (!moveArmy.executeMove(source, target, attackSoldiers)) {
+    soldiers.push_back(attackSoldiers);
+    for (auto it = buffer.begin(); it != buffer.end(); ) {
+        const auto& attackAction = *it;
+        if (attackAction.type == ActionType::ATTACK && attackAction.targetVertexId == action.targetVertexId && attackAction.id != action.id) {
+            Vertex* source = m_graph.get_vertex_by_id(attackAction.sourceVertexId);
+            if (source != nullptr) {
+                attackers.push_back(source);
+                if (source->army.getSoldiers() < attackAction.soldiers) {
+                    attackSoldiers = source->army.getSoldiers();
+                    soldiers.push_back(attackSoldiers);
+                }
+                else
+                    attackSoldiers = attackAction.soldiers;
+                    soldiers.push_back(attackSoldiers);
+            } else {
+                std::cerr << "Error: Source vertex not found!" << std::endl;
+            }
+
+            it = buffer.erase(it);
+        } else {
+            ++it;
+        }
+    }
+
+    if (!moveArmy.executeMove(attackers, target, soldiers)) {
         std::cerr << "Attack action failed for Player " << action.playerId << ".\n";
     }
 }

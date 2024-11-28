@@ -1,30 +1,46 @@
 #include "MoveArmy.h"
 #include <iostream>
-
 MoveArmy::MoveArmy(Graph& graph) : m_graph(graph) {}
 
-bool MoveArmy::executeMove(Vertex* source, Vertex* target, unsigned int soldiersToMove) {
-    if (!areNeighbors(source, target)) {
-        std::cerr << "Error: Target vertex is not a neighbor of the source.\n";
-        return false;
+bool MoveArmy::executeMove(std::vector<Vertex*> sources, Vertex* target, std::vector<unsigned> soldiersToMove) {
+    Army sentArmy(0, sources[0]->army.armyType());
+
+    for (int i = 0; i < sources.size(); i++) {
+        if (!areNeighbors(sources[i], target)) {
+            std::cerr << "Error: Target vertex is not a neighbor of the source.\n";
+            return false;
+        }
+        if (sources[i]->army.armyType() == target->army.armyType()) {
+            std::cerr << "Error: Target vertex is of same type as the source.\n";
+            return false;
+        }
+        if (sources[i]->army.armyType() != target->army.armyType()) {
+            sources[i]->army.setSoldiers(sources[i]->army.getSoldiers() - soldiersToMove[i]);
+            sentArmy.setSoldiers(sentArmy.getSoldiers() + soldiersToMove[i]);
+        }
     }
+    unsigned sent = sentArmy.getSoldiers();
+    battleArmies(sentArmy, target);
+    int left = sentArmy.getSoldiers();
+    if(sentArmy.getSoldiers() != 0 && target->army.armyType() != sentArmy.armyType())
+    {
 
-    if (soldiersToMove > source->army.getSoldiers()) {
-        std::cerr << "Error: Insufficient soldiers in the source army.\n";
-        return false;
+        for (int i = 0; i < sources.size(); i++) {
+            if(i != (sources.size() - 1)){
+                unsigned retreated = (sentArmy.getSoldiers()* soldiersToMove[i] ) / sent;
+                sources[i]->army.setSoldiers(sources[i]->army.getSoldiers() + retreated);
+                left -= retreated;
+                if(left < 0){
+                    std::cerr << "Error: Note enought soldiers to retreat.\n";
+                    return false;
+                }
+            }
+            else {
+                sources[i]->army.setSoldiers(sources[i]->army.getSoldiers() + left);
+                left = 0;
+            }
+        }
     }
-
-    if (source->army.armyType() == target->army.armyType()) {
-        mergeArmies(source, target, soldiersToMove);
-    } else {
-        source->army.setSoldiers(source->army.getSoldiers() - soldiersToMove);
-        Army sentArmy(soldiersToMove, source->army.armyType());
-
-        battleArmies(sentArmy, target);
-        if(sentArmy.getSoldiers() != 0 && target->army.armyType() != sentArmy.armyType())
-            source->army.setSoldiers(source->army.getSoldiers() + sentArmy.getSoldiers());
-    }
-
     return true;
 }
 
@@ -33,12 +49,21 @@ bool MoveArmy::areNeighbors(const Vertex* source, const Vertex* target) const {
     return std::find(neighbors.begin(), neighbors.end(), target) != neighbors.end();
 }
 
-void MoveArmy::mergeArmies(Vertex* source, Vertex* target, unsigned int soldiersToMove) {
-    source->army.setSoldiers(source->army.getSoldiers() - soldiersToMove);
-    target->army.setSoldiers(target->army.getSoldiers() + soldiersToMove);
-
-    std::cout << "Armies merged: " << soldiersToMove << " soldiers moved from Vertex "
-              << source->id() << " to Vertex " << target->id() << ".\n";
+bool MoveArmy::mergeArmies(Vertex* source, Vertex* target, unsigned int soldiersToMove) {
+    if (!areNeighbors(source, target)) {
+        std::cerr << "Error: Target vertex is not a neighbor of the source.\n";
+        return false;
+    }
+    if (source->army.armyType() == target->army.armyType()) {
+        std::cout << "Mergingd: " << soldiersToMove << " from vertex with "
+                  << source->army.getSoldiers() << " to Vertex " << target->army.getSoldiers() << ".\n";
+        source->army.setSoldiers(source->army.getSoldiers() - soldiersToMove);
+        target->army.setSoldiers(target->army.getSoldiers() + soldiersToMove);
+        std::cout << "Armies merged: " << soldiersToMove << " soldiers moved from Vertex "
+                  << source->id() << " to Vertex " << target->id() << ".\n";
+        return true;
+    }
+    return false;
 }
 
 void MoveArmy::battleArmies(Army& source, Vertex* target) {

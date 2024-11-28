@@ -1,5 +1,6 @@
 // MoveArmy.h
 #pragma once
+#include <vector>
 
 #include "../graph/vertex.hpp"
 #include "../graph/graph.hpp"
@@ -9,13 +10,13 @@ using namespace graph;
 class MoveArmy {
 public:
     MoveArmy(Graph& graph);
-    bool executeMove(Vertex* source, Vertex* target, unsigned int soldiersToMove);
+    bool executeMove(std::vector<Vertex*> sources, Vertex* target, std::vector<unsigned>soldiersToMove);
+    bool mergeArmies(Vertex* source, Vertex* target, unsigned int soldiersToMove);
 
 private:
     Graph& m_graph;
 
     bool areNeighbors(const Vertex* source, const Vertex* target) const;
-    void mergeArmies(Vertex* source, Vertex* target, unsigned int soldiersToMove);
     void battleArmies(Army& source, Vertex* target);
 };
 
