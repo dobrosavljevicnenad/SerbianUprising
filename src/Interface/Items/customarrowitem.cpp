@@ -1,7 +1,7 @@
 #include "customarrowitem.h"
 
-CustomArrowItem::CustomArrowItem(const QLineF& line, QGraphicsItem* parent)
-    : QGraphicsLineItem(line, parent),textItem(nullptr) {
+CustomArrowItem::CustomArrowItem(const QLineF& line,int actionId, QGraphicsItem* parent)
+    : QGraphicsLineItem(line, parent),textItem(nullptr),actionId(actionId) {
     textItem = new QGraphicsTextItem(this);
     textItem->setDefaultTextColor(Qt::black);
     QFont font = textItem->font();
@@ -60,3 +60,5 @@ void CustomArrowItem::setNumber(int number) {
         textItem->setPos(midpoint);
     }
 }
+
+int CustomArrowItem::getActionId()const{ return actionId; }

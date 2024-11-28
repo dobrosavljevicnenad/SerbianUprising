@@ -43,9 +43,9 @@
    <widget class="QTextBrowser" name="textField">
     <property name="geometry">
      <rect>
-      <x>850</x>
+      <x>790</x>
       <y>80</y>
-      <width>281</width>
+      <width>341</width>
       <height>341</height>
      </rect>
     </property>

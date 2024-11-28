@@ -10,6 +10,7 @@
 #include <sstream>
 #include <QMediaPlayer>
 #include <QAudioOutput>
+#include <QString>
 
 class Turn {
 public:
@@ -20,8 +21,11 @@ public:
     void clearActionBuffers();                                        // Reset action buffers at the end of the turn
     void changePlayer();                                          // Switch the current player
     int getCurrentPlayerId() const;                              // Get the current player's ID
-        QString bufferToString();  // New method to return the string from both buffers
+    QString GetCurrentAction(const Action& action);  // New method to return the string from both buffers
+    void removeActionById(int actionId);
     MoveArmy moveArmy;                    // Handles movement and battles
+    std::vector<Action>& getPlayerBuffer(int playerId);          // Get the buffer for a specific player
+
 
 private:
     int currentPlayerId;                  // Tracks the current player (1 or 2)
@@ -32,7 +36,6 @@ private:
     QAudioOutput m_audioOutput;
 
     void executePlayerActions(int playerId);                     // Execute all actions for a specific player
-    std::vector<Action>& getPlayerBuffer(int playerId);          // Get the buffer for a specific player
 
     // Methods to handle specific action types
     void executeMoveAction(const Action& action);

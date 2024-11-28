@@ -39,6 +39,7 @@ private slots:
     void onMoveClicked(QListWidgetItem* item);
     void onChangePlayerClicked();
     void onEndTurnClicked();
+    void updateMoveList(int currentPlayer);
 
 private:
     Ui::MainWindow *ui;

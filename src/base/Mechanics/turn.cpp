@@ -104,32 +104,15 @@ std::vector<Action>& Turn::getPlayerBuffer(int playerId) {
         throw std::invalid_argument("Invalid player ID");
     }
 }
-QString Turn::bufferToString() {
-    std::stringstream ss;
 
-    // Convert player 1's actions
-    ss << "Player 1's Actions:\n";
-    for (const auto& action : player1Buffer) {
-        ss << "Action: ";
-        ss << (action.type == ActionType::MOVE_ARMY ? "Move Army" : "Attack") << ", ";
-        ss << "Source: " << action.sourceVertexId << ", ";
-        ss << "Target: " << action.targetVertexId << ", ";
-        ss << "Soldiers: " << action.soldiers << "\n";
-    }
-
-    // Convert player 2's actions
-    ss << "\nPlayer 2's Actions:\n";
-    for (const auto& action : player2Buffer) {
-        ss << "Action: ";
-        ss << (action.type == ActionType::MOVE_ARMY ? "Move Army" : "Attack") << ", ";
-        ss << "Source: " << action.sourceVertexId << ", ";
-        ss << "Target: " << action.targetVertexId << ", ";
-        ss << "Soldiers: " << action.soldiers << "\n";
-    }
-
-    // Convert to QString and return
-    return QString::fromStdString(ss.str());
+QString Turn::GetCurrentAction(const Action& action) {
+    QString moveDescription = QString("%2 troops from Layer %3 to Layer %4")
+        .arg(action.soldiers)
+        .arg(action.sourceVertexId)
+        .arg(action.targetVertexId);
+    return moveDescription;
 }
+
 void Turn::executeMoveAction(const Action& action) {
     Vertex* source = m_graph.get_vertex_by_id(action.sourceVertexId);
     Vertex* target = m_graph.get_vertex_by_id(action.targetVertexId);
@@ -177,3 +160,20 @@ void Turn::executeAttackAction(const int playerId, const Action& action) {
         std::cerr << "Attack action failed for Player " << action.playerId << ".\n";
     }
 }
+
+void Turn::removeActionById(int actionId) {
+    auto& buffer = getPlayerBuffer(currentPlayerId);
+
+    auto it = std::find_if(buffer.begin(), buffer.end(),
+                           [actionId](const Action& action) {
+                               return action.id == actionId;
+                           });
+
+    if (it != buffer.end()) {
+        buffer.erase(it);
+        std::cout << "Action with ID " << actionId << " removed for Player " << currentPlayerId << ".\n";
+    } else {
+        std::cerr << "Action with ID " << actionId << " not found for Player " << currentPlayerId << ".\n";
+    }
+}
+

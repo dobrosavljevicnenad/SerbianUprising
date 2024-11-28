@@ -3,18 +3,6 @@
 GameManager::GameManager(QGraphicsScene* scene) : scene(scene), turn(g)  {}
 
 void GameManager::initializeMap(){
-    /*
-    auto neigh = g.neighbors(v1);
-    for(auto n : neigh){
-        std::cout << n->army.getSoldiers() << std::endl;
-    }
-
-    v2->army.setSoldiers(10);
-
-    for(auto n : neigh){
-        std::cout << n->army.getSoldiers() << std::endl;
-    }
-    */
     MapLayer *baseLayer = new MapLayer(":/resources/Images/base.png", false);
     baseLayer->setZValue(-1);
     scene->addItem(baseLayer);
@@ -101,7 +89,6 @@ void GameManager::initializeMap(){
         g.insert_edge(layerToVertex[layers[9]], layerToVertex[layers[11]], 1.0);
         g.insert_edge(layerToVertex[layers[11]], layerToVertex[layers[12]], 1.0);
         g.insert_edge(layerToVertex[layers[10]], layerToVertex[layers[11]], 1.0);
-
     }
 }
 
@@ -124,14 +111,14 @@ void GameManager::clearArrows() {
     arrows.clear();
 }
 
-void GameManager::drawArrow(MapLayer* from, MapLayer* to, int number) {
+void GameManager::drawArrow(MapLayer* from, MapLayer* to, int number, int actionId) {
     QPointF fromPos = from->pos() + QPointF((from->boundingRect().width() / 2)-5,
                                             from->boundingRect().height() / 2);
     QPointF toPos = to->pos() + QPointF((to->boundingRect().width() / 2)+20,
                                         to->boundingRect().height() / 2);
 
     QLineF line(fromPos, toPos);
-    CustomArrowItem* arrow = new CustomArrowItem(line);
+    CustomArrowItem* arrow = new CustomArrowItem(line,actionId);
     scene->addItem(arrow);
     arrow->setNumber(number);
     arrows.push_back(arrow);
@@ -159,4 +146,15 @@ void GameManager::printConnections(graph::Vertex* vertex) {
         std::cout << neighbor->id() << " ";
     }
     std::cout << std::endl;
+}
+
+void GameManager::removeArrowByActionId(int actionId) {
+    for (size_t i = 0; i < arrows.size(); ++i) {
+        if (arrows[i]->getActionId() == actionId) {
+            scene->removeItem(arrows[i]);
+            delete arrows[i];
+            arrows.erase(arrows.begin() + i);
+            return;
+        }
+    }
 }
