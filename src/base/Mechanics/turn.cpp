@@ -137,7 +137,13 @@ void Turn::removeActionById(int actionId) {
         ///updates soldier count
         auto cvor = m_graph.get_vertex_by_id(it->sourceVertexId);
         cvor->army.setSoldiers(cvor->army.getSoldiers() + it->soldiers);
-        cvor->map_layer->setTroopCount(0);
+        if (cvor && cvor->map_layer) {
+            std::cout << "Vertex ID: " << cvor->id()
+            << ", MapLayer address: " << cvor->map_layer << "\n";
+            cvor->map_layer->setTroopCount(cvor->army.getSoldiers());
+        } else {
+            std::cerr << "MapLayer is nullptr for vertex ID: " << it->sourceVertexId << "\n";
+        }
         ///
         buffer.erase(it);
         std::cout << "Action with ID " << actionId << " removed for Player " << currentPlayerId << ".\n";

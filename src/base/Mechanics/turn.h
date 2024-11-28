@@ -14,6 +14,7 @@
 #include <QTimer>
 #include <QUrl>
 #include <QEventLoop>
+#include <iostream>
 
 class Turn {
 public:
