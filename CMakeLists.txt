@@ -9,9 +9,9 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
-find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
+find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Multimedia)
+find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Multimedia)
+
 set(PROJECT_SOURCES
         src/main.cpp
         src/mainwindow.cpp
@@ -21,6 +21,7 @@ set(PROJECT_SOURCES
 
 )
 
+set(CMAKE_BUILD_TYPE Debug)
 
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -45,6 +46,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/base/Entities/city.h src/base/Entities/city.cpp
         src/base/Entities/region.h src/base/Entities/region.cpp
         src/base/Mechanics/turn.h src/base/Mechanics/turn.cpp
+        src/base/Mechanics/Action.h
+        src/Interface/Items/customarrowitem.h src/Interface/Items/customarrowitem.cpp
+        src/base/Mechanics/Action.cpp
 
     )
 # Define target properties for Android with Qt 6 as:
@@ -65,8 +69,9 @@ else()
     endif()
 endif()
 
-target_link_libraries(Ustanak PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
-target_link_libraries(Ustanak PRIVATE Qt${QT_VERSION_MAJOR}::Network)
+
+
+target_link_libraries(Ustanak PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Multimedia)
 
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

@@ -52,6 +52,7 @@ void MapLayer::setArmyColor(ArmyType armyType) {
     setColor(ArmyColor);
 }
 
+
 QColor MapLayer::getArmyColor(){
     return ArmyColor;
 }

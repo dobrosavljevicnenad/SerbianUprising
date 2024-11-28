@@ -12,7 +12,8 @@
 #include <QInputDialog>
 #include <QMessageBox>
 #include <QGraphicsProxyWidget>
-
+#include <QListWidget>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -35,8 +36,10 @@ public:
 
 private slots:
     void onLayerClicked(MapLayer *layer);
+    void onMoveClicked(QListWidgetItem* item);
     void onChangePlayerClicked();
     void onEndTurnClicked();
+    void updateMoveList(int currentPlayer);
 
 private:
     Ui::MainWindow *ui;
@@ -44,7 +47,8 @@ private:
     QGraphicsView *view; //*
     MapLayer *selectedLayer = nullptr;
     GameManager* gameManager;
-    Turn turnManager;
-
+    QMediaPlayer* mediaPlayer;
+    QAudioOutput* audioOutput;
+    QListWidget* moveList;
 };
 #endif // MAINWINDOW_H
