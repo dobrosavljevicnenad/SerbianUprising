@@ -1,10 +1,5 @@
 #include "turn.h"
 
-#include <QTimer>
-#include <QUrl>
-#include <QEventLoop>
-
-
 Turn::Turn(Graph& graph) : currentPlayerId(1), m_graph(graph), moveArmy(graph) {}
 
 void Turn::addAction(int playerId, const Action& action) {
@@ -139,6 +134,11 @@ void Turn::removeActionById(int actionId) {
                            });
 
     if (it != buffer.end()) {
+        ///updates soldier count
+        auto cvor = m_graph.get_vertex_by_id(it->sourceVertexId);
+        cvor->army.setSoldiers(cvor->army.getSoldiers() + it->soldiers);
+        cvor->map_layer->setTroopCount(0);
+        ///
         buffer.erase(it);
         std::cout << "Action with ID " << actionId << " removed for Player " << currentPlayerId << ".\n";
     } else {

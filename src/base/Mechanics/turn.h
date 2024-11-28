@@ -11,6 +11,9 @@
 #include <QMediaPlayer>
 #include <QAudioOutput>
 #include <QString>
+#include <QTimer>
+#include <QUrl>
+#include <QEventLoop>
 
 class Turn {
 public:

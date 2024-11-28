@@ -15,7 +15,8 @@ struct Action {
     int soldiers;          // Number of soldiers involved in the action
 
     Action(ActionType type, int playerId, int source, int target, int soldiers)
-        : id(nextId++), type(type), playerId(playerId), sourceVertexId(source), targetVertexId(target), soldiers(soldiers) {}
+        : id(nextId++), type(type), playerId(playerId), sourceVertexId(source),
+        targetVertexId(target), soldiers(soldiers) {}
 
 };
 

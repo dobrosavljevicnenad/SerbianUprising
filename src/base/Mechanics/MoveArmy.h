@@ -5,6 +5,9 @@
 #include "../graph/graph.hpp"
 #include "Battle.h"
 #include "../Entities/Army.h"
+
+#include <iostream>
+
 using namespace graph;
 class MoveArmy {
 public:
