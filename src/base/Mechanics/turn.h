@@ -43,7 +43,7 @@ private:
 
     // Methods to handle specific action types
     void executeMoveAction(const Action& action);
-    void executeAttackAction(const Action& action);
+    void executeAttackAction(const int playerId, const Action& action);
 };
 
 #endif // TURN_H
