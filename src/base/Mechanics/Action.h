@@ -17,7 +17,6 @@ struct Action {
     Action(ActionType type, int playerId, int source, int target, int soldiers)
         : id(nextId++), type(type), playerId(playerId), sourceVertexId(source),
         targetVertexId(target), soldiers(soldiers) {}
-
 };
 
 static std::atomic<int> nextId;

@@ -72,7 +72,6 @@ void MainWindow::onMoveClicked(QListWidgetItem* item) {
     gameManager->turn.removeActionById(actionId);
     gameManager->removeArrowByActionId(actionId);
 
-
     delete item;
 
     //std::cout << "Move with ID " << actionId << " removed.\n";
@@ -151,7 +150,7 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
                 //trooptotransfer moramo se implementirati full - trooptotransfer ali u cvoru
                 selected_vertex->army.setSoldiers(maxTroops - troopsToTransfer);
                 selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
-                std::cout << selectedLayer << std::endl;
+
                 gameManager->drawArrow(selectedLayer, layer, troopsToTransfer, newAction.id);
                 gameManager->turn.addAction(pid, newAction);
 
