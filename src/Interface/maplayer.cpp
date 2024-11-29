@@ -1,7 +1,10 @@
 #include "maplayer.h"
 
 MapLayer::MapLayer(const QString &imagePath,bool enableHover = true, QGraphicsItem *parent)
-    : QGraphicsPixmapItem(QPixmap(imagePath), parent), troopText(new QGraphicsTextItem(this)), m_originalPixmap(QPixmap(imagePath)) {
+    : QGraphicsPixmapItem(QPixmap(imagePath), parent),
+    troopText(new QGraphicsTextItem(this)),
+    m_originalPixmap(QPixmap(imagePath)),
+    currentPlayer(1){
     if(enableHover)
         setAcceptHoverEvents(true);
 
@@ -57,9 +60,10 @@ QColor MapLayer::getArmyColor(){
     return ArmyColor;
 }
 
+
+
 void MapLayer::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
-    int current_player = 1;
-    if(current_player == 1){
+    if(currentPlayer == 1){
         if(getArmyColor() == QColor(198,54,60,255)){
             setColor(QColor(255, 0, 0, 150));
             QGraphicsPixmapItem::hoverEnterEvent(event);
@@ -83,8 +87,13 @@ void MapLayer::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
 
 
 void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+    std::cout << currentPlayer<<std::endl;
     if (event->button() == Qt::LeftButton) {
         emit layerClicked(this);
     }
     QGraphicsPixmapItem::mousePressEvent(event);
+}
+
+void MapLayer::setCurrentPlayer(int PlayerId){
+    currentPlayer = PlayerId;
 }

@@ -32,9 +32,12 @@ void GameManager::initializeMap(){
     std::vector<std::pair<int,int>>positions;
     std::vector<std::pair<int,std::vector<int>>> allNeighbors;
 
+
+
     MapLayer *baseLayer = new MapLayer(":/resources/Images/base.png", false);
     baseLayer->setZValue(-1);
     scene->addItem(baseLayer);
+
     Terrain defaultTerrain(TerrainType::MOUNTAIN);
 
     for (int i = 0; i <layersArray.size(); ++i) {
@@ -71,10 +74,12 @@ void GameManager::initializeMap(){
         allNeighbors.emplace_back(i,neighbors);
     }
 
+    this->layers = layers;
+
     for (int i = 0; i < layersArray.size(); ++i) {
         layers[i]->setZValue(0);
         addLayer(layers[i], labels[i], defaultTerrain, armies[i],
-                 (armies[i].armyType() == ArmyType::HAJDUK) ? player1 : player2);
+                 (armies[i].armyType() == ArmyType::HAJDUK)  ? player1 : player2);
         layers[i]->setPos(baseLayer->pos().x() + positions[i].first,
                           baseLayer->pos().y() + positions[i].second);
 
@@ -95,6 +100,14 @@ void GameManager::initializeMap(){
             }
         }
 
+    }
+}
+
+void GameManager::updateLayersId(int PlayerId) {
+    for (auto &layer : layers) {
+        if (layer) {
+            layer->setCurrentPlayer(PlayerId);
+        }
     }
 }
 
@@ -165,3 +178,5 @@ void GameManager::removeArrowByActionId(int actionId) {
         }
     }
 }
+
+

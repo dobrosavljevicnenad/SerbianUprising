@@ -54,7 +54,6 @@ MainWindow::MainWindow(QWidget *parent)
     connect(changePlayerButton, &QPushButton::clicked, this, &MainWindow::onChangePlayerClicked);
     connect(endTurnButton, &QPushButton::clicked, this, &MainWindow::onEndTurnClicked);
     connect(moveList, &QListWidget::itemClicked, this, &MainWindow::onMoveClicked);
-
 }
 
 MainWindow::~MainWindow()
@@ -82,6 +81,8 @@ void MainWindow::onChangePlayerClicked() {
     gameManager->turn.changePlayer();
 
     int currentPlayer = gameManager->turn.getCurrentPlayerId();
+    gameManager->updateLayersId(currentPlayer);
+
     updateMoveList(currentPlayer);
     mediaPlayer->stop();
     if(currentPlayer == 1){

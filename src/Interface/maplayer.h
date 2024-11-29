@@ -13,7 +13,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QFont>
 #include <QGraphicsSceneMouseEvent>
-
+#include <iostream>
 
 
 class MapLayer : public QObject, public QGraphicsPixmapItem {
@@ -22,34 +22,27 @@ public:
     explicit MapLayer(const QString &imagePath, bool enableHover,  QGraphicsItem *parent = nullptr);
 
     void setTroopCount(int count);
-
     void setColor(const QColor &newColor);
-
     void setArmyColor(ArmyType armyType);
-
     QGraphicsTextItem *troopText;
-
     int getTroopCount() const;
-
-
+    void setCurrentPlayer(int PlayerId);
 
 signals:
     void layerClicked(MapLayer *layer);
 
 protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
-
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
-
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
     QColor getArmyColor();
 
 private:
     int troopCount;
+    int currentPlayer;
     QPixmap m_originalPixmap;
     QColor ArmyColor;
-
 
 };
 

@@ -49,6 +49,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/base/Mechanics/Action.h
         src/Interface/Items/customarrowitem.h src/Interface/Items/customarrowitem.cpp
         src/base/Mechanics/Action.cpp
+        src/Interface/jsonserializer.h src/Interface/jsonserializer.cpp
+        src/Interface/serializer.h
+        src/Interface/serializable.h
 
     )
 # Define target properties for Android with Qt 6 as:

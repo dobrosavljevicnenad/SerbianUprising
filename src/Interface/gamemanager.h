@@ -40,13 +40,15 @@ public:
     void printConnections(graph::Vertex* vertex);
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
     void removeArrowByActionId(int actionId);
+    void updateLayersId(int PlayerId);
+
 signals:
     void layerClicked(MapLayer* layer);
 
 private:
+    std::vector<MapLayer*> layers;
     std::vector<CustomArrowItem*> arrows;
     QGraphicsScene* scene;
-    std::vector<MapLayer*> layers;
     graph::Graph g;
 public:
     Turn turn;
