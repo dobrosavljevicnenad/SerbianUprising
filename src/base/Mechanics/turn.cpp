@@ -129,8 +129,7 @@ void Turn::executeAttackAction(const int playerId, const Action& action) {
     auto& buffer = getPlayerBuffer(playerId);
     unsigned attackSoldiers = action.soldiers;
     if(source->army.getSoldiers()< action.soldiers)
-        attackSoldiers = source->army.getSoldiers();
-    soldiers.push_back(attackSoldiers);
+        soldiers.push_back(attackSoldiers);
     for (auto it = buffer.begin(); it != buffer.end(); ) {
         const auto& attackAction = *it;
         if (attackAction.type == ActionType::ATTACK && attackAction.targetVertexId == action.targetVertexId && attackAction.id != action.id) {
