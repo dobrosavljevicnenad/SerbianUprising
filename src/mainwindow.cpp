@@ -47,7 +47,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     QPushButton* infoButton = new QPushButton("Info");
     QPushButton* moveButton = new QPushButton("Move");
+    this->moveButton = moveButton;
     QPushButton* armyButton = new QPushButton("Army");
+    this->armyButton = armyButton;
 
     buttonRowLayout->addWidget(infoButton);
     buttonRowLayout->addWidget(moveButton);
@@ -89,11 +91,14 @@ MainWindow::MainWindow(QWidget *parent)
 
     infoButton->setStyleSheet(buttonStyle);
     moveButton->setStyleSheet(buttonStyle);
-    armyButton->setStyleSheet(buttonStyle);
 
-    infoButton->setText("Info");
-    moveButton->setText("Move");
-    armyButton->setText("Army");
+    QString initStyle =
+        "QPushButton { "
+        "   background-color: darkGreen; "
+        "   border-radius: 20px; "
+        "} ";
+    armyButton->setStyleSheet(initStyle);
+    this->activeButton = armyButton;
 
     infoButton->setFixedSize(40, 40);
     moveButton->setFixedSize(40, 40);
@@ -165,17 +170,26 @@ void MainWindow::onEndTurnClicked() {
     //now we need to update all graphical componenets of our project aka layers
     gameManager->updateLayersGraphics();
     moveList->clear();
-
-    // Optionally, update the UI to show that the turn has ended
-    QMessageBox::information(this, tr("Turn Ended"), tr("The turn has ended. Buffers have been cleared."));
+    updateMoveList(gameManager->turn.getCurrentPlayerId());
 }
 
 void MainWindow::onLayerClicked(MapLayer *layer) {
+
+    if (activeButton == moveButton) {
+        handleMoveArmy(layer);  // Handle moving army
+    } else if (activeButton == armyButton) {
+        handlePlaceArmy(layer); // Handle placing army
+    } else {
+        QMessageBox::warning(this, tr("Unknown Action"), tr("This action is not supported."));
+    }
+
+}
+
+void MainWindow::handleMoveArmy(MapLayer* layer){
     if (selectedLayer == nullptr) {
         selectedLayer = layer;
         graph::Vertex* selected_vertex = gameManager->layerToVertex[selectedLayer];
         if(selected_vertex->player.getPlayerId() != gameManager->turn.getCurrentPlayerId()){
-            QMessageBox::warning(this, tr("Error"), tr("You selected the enemy layer. Select another layer."));
             selectedLayer = nullptr;
             return ;
         }
@@ -189,23 +203,9 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
         graph::Vertex* selected_vertex = gameManager->layerToVertex[selectedLayer];
         graph::Vertex* vertex = gameManager->layerToVertex[layer];
 
-        int currentPlayer = gameManager->turn.getCurrentPlayerId();
-        if(currentPlayer == 1){
-            if(selected_vertex->army.armyType() == ArmyType::JANISSARY){
-                QMessageBox::warning(this, tr("Error"), tr("You have to select your territory first."));
-                selectedLayer = nullptr;
-                return;
-            }
-        } else {
-            if(selected_vertex->army.armyType() == ArmyType::HAJDUK){
-                QMessageBox::warning(this, tr("Error"), tr("You have to select your territory first."));
-                selectedLayer = nullptr;
-                return;
-            }
-        }
-
         bool ok;
         int maxTroops = selected_vertex->army.getSoldiers();
+
         if (maxTroops <= 0) {
             QMessageBox::warning(this, tr("Error"), tr("No troops available to transfer from the selected layer."));
             selectedLayer = nullptr;
@@ -214,35 +214,40 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
 
         int troopsToTransfer = QInputDialog::getInt(this, tr("Transfer Troops"), tr("Enter the number of soldiers to transfer:"), 0, 0, maxTroops, 1, &ok);
         if (ok) {
-            if(troopsToTransfer > selected_vertex->army.getSoldiers()) {
-                QMessageBox::warning(this, tr("Error"), tr("You don`t have enough troops to transfer."));
-            } else {
-                //Action
-                ActionType type = (selected_vertex->army.armyType() == vertex->army.armyType()) ? ActionType::MOVE_ARMY : ActionType::ATTACK;
-                int pid = gameManager->turn.getCurrentPlayerId();
-                int source = selected_vertex->id();
-                int target = vertex->id();
-                Action newAction(type, pid, source,target, troopsToTransfer);
+            //Action
+            ActionType type = (selected_vertex->army.armyType() == vertex->army.armyType()) ? ActionType::MOVE_ARMY : ActionType::ATTACK;
+            int pid = gameManager->turn.getCurrentPlayerId();
+            int source = selected_vertex->id();
+            int target = vertex->id();
+            Action newAction(type, pid, source,target, troopsToTransfer);
 
-                selected_vertex->army.setSoldiers(maxTroops - troopsToTransfer);
-                selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
+            selected_vertex->army.setSoldiers(maxTroops - troopsToTransfer);
+            selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
 
-                gameManager->drawArrow(selectedLayer, layer, troopsToTransfer, newAction.id);
-                gameManager->turn.addAction(pid, newAction);
+            gameManager->drawArrow(selectedLayer, layer, troopsToTransfer, newAction.id);
+            gameManager->turn.addAction(pid, newAction);
 
-                //TODO
-                //ONLY HIGHLIGHT NEIGHBOR PROVINCE WHEN PRESSED AND ALSO
-                //DON'T ALLOW CLICKS ON NOT NEIGHBOUR PROVINCE OF FIRST CLICKED
+            //TODO
+            //ONLY HIGHLIGHT NEIGHBOR PROVINCE WHEN PRESSED AND ALSO
+            //DON'T ALLOW CLICKS ON NOT NEIGHBOUR PROVINCE OF FIRST CLICKED
 
-                //buffer and textfield
-                QString move = gameManager->turn.GetCurrentAction(newAction);
-                QListWidgetItem* item = new QListWidgetItem(move);
-                item->setData(Qt::UserRole, newAction.id);
-                moveList->addItem(item);
-            }
+            //buffer and textfield
+            QString move = gameManager->turn.GetCurrentAction(newAction);
+            QListWidgetItem* item = new QListWidgetItem(move);
+            item->setData(Qt::UserRole, newAction.id);
+            moveList->addItem(item);
         }
-
         selectedLayer = nullptr;
+    }
+}
+
+void MainWindow::handlePlaceArmy(MapLayer* layer){
+    bool ok;
+    int troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
+                                           tr("Enter the number of troops to place:"), 1, 1, 100, 1, &ok);
+    if (ok) {
+        layer->setTroopCount(layer->getTroopCount() + troopsToAdd);
+
     }
 }
 
@@ -263,13 +268,43 @@ void MainWindow::updateMoveList(int currentPlayer) {
 }
 
 void MainWindow::onInfoButtonClicked() {
-    QMessageBox::information(this, "Info", "This is the Information button.");
+    setActiveButton(qobject_cast<QPushButton*>(sender()));
 }
 
 void MainWindow::onMoveButtonClicked() {
-    QMessageBox::information(this, "Move", "This is the Move button.");
+    setActiveButton(qobject_cast<QPushButton*>(sender()));
 }
 
 void MainWindow::onPlaceButtonClicked() {
-    QMessageBox::information(this, "Place", "This is the Place button.");
+    setActiveButton(qobject_cast<QPushButton*>(sender()));
+}
+
+void MainWindow::setActiveButton(QPushButton* clickedButton) {
+    QString defaultStyle =
+        "QPushButton { "
+        "   background-color: darkGray; "
+        "   border-radius: 20px; "
+        "} "
+        "QPushButton:hover { "
+        "   background-color: Green; "
+        "} "
+        "QPushButton:pressed { "
+        "   background-color: darkGreen; "
+        "} ";
+
+    QString activeStyle =
+        "QPushButton { "
+        "   background-color: Green; "
+        "   color: white; "
+        "   border-radius: 20px; "
+        "} ";
+
+    if (activeButton) {
+        activeButton->setStyleSheet(defaultStyle);
+    }
+
+    if (clickedButton) {
+        clickedButton->setStyleSheet(activeStyle);
+        activeButton = clickedButton;
+    }
 }

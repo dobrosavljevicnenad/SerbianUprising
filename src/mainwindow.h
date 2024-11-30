@@ -46,9 +46,11 @@ private slots:
     void onInfoButtonClicked();
     void onMoveButtonClicked();
     void onPlaceButtonClicked();
+    void setActiveButton(QPushButton* clickedButton);
+    void handleMoveArmy(MapLayer* layer);
+    void handlePlaceArmy(MapLayer* layer);
 
 private:
-    QLabel* headerLabel;
     Ui::MainWindow *ui;
     MapScene *scene; //*
     QGraphicsView *view; //*
@@ -57,5 +59,9 @@ private:
     QMediaPlayer* mediaPlayer;
     QAudioOutput* audioOutput;
     QListWidget* moveList;
+    QPushButton* moveButton;
+    QPushButton* armyButton;
+    QPushButton* activeButton ;
+    QLabel* headerLabel;
 };
 #endif // MAINWINDOW_H
