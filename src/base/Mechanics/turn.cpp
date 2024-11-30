@@ -122,6 +122,7 @@ void Turn::executeMoveAction(const Action& action) {
 void Turn::executeAttackAction(const int playerId, const Action& action) {
     Vertex* source = m_graph.get_vertex_by_id(action.sourceVertexId);
     Vertex* target = m_graph.get_vertex_by_id(action.targetVertexId);
+
     std::vector<Vertex*> attackers;
     std::vector<unsigned> soldiers;
     attackers.push_back(source);

@@ -30,6 +30,7 @@ public:
     MoveArmy moveArmy;                    // Handles movement and battles
     std::vector<Action>& getPlayerBuffer(int playerId);          // Get the buffer for a specific player
     int getTurn();
+
 private:
     unsigned turn;
     int currentPlayerId;                  // Tracks the current player (1 or 2)

@@ -4,7 +4,7 @@
 class AddArmyManager
 {
 public:
-    AddArmyManager(int baseTroops);
+    AddArmyManager();
 
     void addTerritory();
     void removeTerritory();
@@ -13,16 +13,17 @@ public:
     void addCity();
     void removeCity();
 
-    int calculateTotalTroops() const;
+    int calculateTotalTroops();
+    void decreaseAvailableTroops(int troops);
 
 private:
-    int baseTroops;
     int territoryCount;
     int regionCount;
     int cityCount;
-    const int territoryBonus = 1;
-    const int regionMultiplier = 2;
-    const int cityBonus = 5;
+    int totalTroops = 5;
+    int territoryBonus = 1;
+    int regionMultiplier = 2;
+    int cityBonus = 5;
 };
 
 #endif // ADDARMYMANAGER_H

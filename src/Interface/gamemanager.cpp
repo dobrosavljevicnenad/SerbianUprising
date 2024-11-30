@@ -3,6 +3,8 @@
 GameManager::GameManager(QGraphicsScene* scene) : scene(scene), turn(g)  {}
 
 void GameManager::initializeMap(){
+
+
     QString filePath = "../../resources/init.json";
     QFile file(filePath);
 
@@ -96,8 +98,10 @@ void GameManager::initializeMap(){
         }
 
     }
-}
 
+    armyManagers[1] = AddArmyManager();
+    armyManagers[2] = AddArmyManager();
+}
 void GameManager::updateLayersId(int PlayerId) {
     for (auto &layer : layers) {
         if (layer) {
@@ -171,6 +175,15 @@ void GameManager::removeArrowByActionId(int actionId) {
             arrows.erase(arrows.begin() + i);
             return;
         }
+    }
+}
+
+AddArmyManager& GameManager::getArmyManager(int playerId) {
+    auto it = armyManagers.find(playerId);
+    if (it != armyManagers.end()) {
+        return it->second;
+    } else {
+        throw std::invalid_argument("Invalid player ID for ArmyManager");
     }
 }
 

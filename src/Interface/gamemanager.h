@@ -8,6 +8,7 @@
 #include "../base/Mechanics/MoveArmy.h"
 #include "../base/Mechanics/turn.h"
 #include "Items/customarrowitem.h"
+#include "../base/Mechanics/addarmymanager.h"
 
 #include<QGraphicsScene>
 #include<iostream>
@@ -17,6 +18,7 @@
 #include <QJsonArray>
 #include <QFile>
 #include <QDebug>
+#include <map>
 
 class GameManager : public QObject
 {
@@ -37,11 +39,13 @@ public:
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
     void removeArrowByActionId(int actionId);
     void updateLayersId(int PlayerId);
+    AddArmyManager& getArmyManager(int playerId);
 
 signals:
     void layerClicked(MapLayer* layer);
 
 private:
+    std::map<int,AddArmyManager> armyManagers;
     std::vector<MapLayer*> layers;
     std::vector<CustomArrowItem*> arrows;
     QGraphicsScene* scene;

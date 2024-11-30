@@ -3,7 +3,7 @@
 
 #include <atomic>
 
-enum class ActionType { MOVE_ARMY, ATTACK };
+enum class ActionType { MOVE_ARMY, ATTACK};
 
 struct Action {
     static std::atomic<int> nextId; //Thread Safe for later impl and now but automatic increment

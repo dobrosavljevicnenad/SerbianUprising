@@ -1,7 +1,7 @@
 #include "addarmymanager.h"
 
-AddArmyManager::AddArmyManager(int baseTroops)
-    : baseTroops(baseTroops), territoryCount(0), regionCount(0), cityCount(0) {}
+AddArmyManager::AddArmyManager()
+    :  territoryCount(0), regionCount(0), cityCount(0) {}
 
 void AddArmyManager::addTerritory() {
     territoryCount++;
@@ -33,9 +33,7 @@ void AddArmyManager::removeCity() {
     }
 }
 
-int AddArmyManager::calculateTotalTroops() const {
-    int totalTroops = baseTroops;
-
+int AddArmyManager::calculateTotalTroops(){
     totalTroops += territoryCount * territoryBonus;
 
     totalTroops *= (regionMultiplier * regionCount > 0 ? regionMultiplier * regionCount : 1);
@@ -43,4 +41,9 @@ int AddArmyManager::calculateTotalTroops() const {
     totalTroops += cityCount * cityBonus;
 
     return totalTroops;
+}
+
+void AddArmyManager::decreaseAvailableTroops(int troops) {
+    totalTroops -= troops;
+    if (totalTroops < 0) totalTroops = 0; // Prevent negative troops
 }

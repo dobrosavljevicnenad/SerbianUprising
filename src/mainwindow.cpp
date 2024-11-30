@@ -176,9 +176,9 @@ void MainWindow::onEndTurnClicked() {
 void MainWindow::onLayerClicked(MapLayer *layer) {
 
     if (activeButton == moveButton) {
-        handleMoveArmy(layer);  // Handle moving army
+        handleMoveArmy(layer);
     } else if (activeButton == armyButton) {
-        handlePlaceArmy(layer); // Handle placing army
+        handlePlaceArmy(layer);
     } else {
         QMessageBox::warning(this, tr("Unknown Action"), tr("This action is not supported."));
     }
@@ -203,6 +203,7 @@ void MainWindow::handleMoveArmy(MapLayer* layer){
         graph::Vertex* selected_vertex = gameManager->layerToVertex[selectedLayer];
         graph::Vertex* vertex = gameManager->layerToVertex[layer];
 
+
         bool ok;
         int maxTroops = selected_vertex->army.getSoldiers();
 
@@ -221,18 +222,23 @@ void MainWindow::handleMoveArmy(MapLayer* layer){
             int target = vertex->id();
             Action newAction(type, pid, source,target, troopsToTransfer);
 
+            /*std::cout << "Starting battle between "
+                      << (selected_vertex->id() ? selected_vertex->army.getSoldiers() : 0)
+                      << " soldiers from source and "
+                      << (vertex->id() ? vertex->army.getSoldiers() : 0)
+                      << " soldiers at target."
+                      << std::endl;*/
+
             selected_vertex->army.setSoldiers(maxTroops - troopsToTransfer);
             selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
 
             gameManager->drawArrow(selectedLayer, layer, troopsToTransfer, newAction.id);
             gameManager->turn.addAction(pid, newAction);
-
             //TODO
             //ONLY HIGHLIGHT NEIGHBOR PROVINCE WHEN PRESSED AND ALSO
             //DON'T ALLOW CLICKS ON NOT NEIGHBOUR PROVINCE OF FIRST CLICKED
-            //TODO
-            // Only allow second click on neighbour provinces
             //buffer and textfield
+
             QString move = gameManager->turn.GetCurrentAction(newAction);
             QListWidgetItem* item = new QListWidgetItem(move);
             item->setData(Qt::UserRole, newAction.id);
@@ -243,14 +249,26 @@ void MainWindow::handleMoveArmy(MapLayer* layer){
 }
 
 void MainWindow::handlePlaceArmy(MapLayer* layer){
+    int currentPlayerId = gameManager->turn.getCurrentPlayerId();
+    AddArmyManager& armyManager = gameManager->getArmyManager(currentPlayerId);
+
+    int maxTroops = armyManager.calculateTotalTroops();
+
+    graph::Vertex* selected_vertex = gameManager->layerToVertex[layer];
+
     bool ok;
     int troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
                                            tr("Enter the number of troops to place:"), 1, 1, 100, 1, &ok);
-
-
-    if (ok) {
+    if (ok && troopsToAdd > 0) {
         layer->setTroopCount(layer->getTroopCount() + troopsToAdd);
-        //gameManager->getArmyManager(currentPlayerId).decreaseAvailableTroops(troopsToAdd);
+
+        armyManager.decreaseAvailableTroops(troopsToAdd);
+
+        QString moveDescription = QString("Placed %1 troops on %2").arg(troopsToAdd).arg(selected_vertex->id());
+        QListWidgetItem* item = new QListWidgetItem(moveDescription);
+        item->setData(Qt::UserRole, QVariant::fromValue(selected_vertex->id())); // Čuvanje ID-a teritorije
+        item->setData(Qt::UserRole + 1, QVariant(troopsToAdd)); // Čuvanje broja vojnika
+        moveList->addItem(item);
     }
 }
 
