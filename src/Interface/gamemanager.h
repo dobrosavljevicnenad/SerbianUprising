@@ -6,6 +6,8 @@
 #include "../base/graph/graph.hpp"
 #include"maplayer.h"
 #include "../base/Mechanics/MoveArmy.h"
+#include "../network/server.h"
+#include "../network/client.h"
 
 #include<QGraphicsScene>
 #include<iostream>
@@ -25,6 +27,13 @@ public:
     void transferTroops(MapLayer* from, MapLayer* to, int troops);
     void printConnections(graph::Vertex* vertex);
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
+
+    void startServer();
+    void connectClients();
+
+    Server server;
+    Client c_player1;
+    Client c_player2;
 signals:
     void layerClicked(MapLayer* layer);
 

@@ -17,7 +17,6 @@ bool Client::connectToServer(const QString &hostAddress, quint16 port)
         qWarning() << "Could not connect to server.";
         return false;
     }
-    qDebug() << "Connected to server!";
     return true;
 }
 

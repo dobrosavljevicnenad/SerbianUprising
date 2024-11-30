@@ -40,14 +40,14 @@ void Server::onNewConnection()
         m_clientSocket = m_server->nextPendingConnection();
         connect(m_clientSocket, &QTcpSocket::readyRead, this, &Server::onReadyRead);
         connect(m_clientSocket, &QTcpSocket::disconnected, this, &Server::onClientDisconnected);
-        qDebug() << "Host (Player 1) connected!";
+        qDebug() << "Player 1 connected!";
     }
     // Handle the second player connection
     else if (m_secondPlayerSocket == nullptr) {
         m_secondPlayerSocket = m_server->nextPendingConnection();
         connect(m_secondPlayerSocket, &QTcpSocket::readyRead, this, &Server::onReadyRead);
         connect(m_secondPlayerSocket, &QTcpSocket::disconnected, this, &Server::onClientDisconnected);
-        qDebug() << "Second player connected!";
+        qDebug() << "Player 2 connected!";
         m_gameStarted = true; // The game can now start
         emit gameStarted();  // Notify both players that game has started
     } else {
@@ -57,17 +57,33 @@ void Server::onNewConnection()
 
 void Server::onReadyRead()
 {
-    // poziva se kad klijent posalje podatke
-    // podaci se salju kao niz bajtova, pa mora convert
-    if (m_clientSocket) {
-        QString data = QString::fromUtf8(m_clientSocket->readAll());
-        emit dataReceived(data);
+    QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
+    if (!socket) {
+        qWarning() << "Invalid sender in onReadyRead";
+        return;
     }
-    if (m_secondPlayerSocket) {
-        QString data = QString::fromUtf8(m_secondPlayerSocket->readAll());
-        emit dataReceived(data);
+
+    if (socket->bytesAvailable() > 0) {
+        QString data = QString::fromUtf8(socket->readAll()).trimmed();
+        if (!data.isEmpty()) {
+            if (socket == m_clientSocket) {
+                qDebug() << "Server received from Player 1:" << data;
+            } else if (socket == m_secondPlayerSocket) {
+                qDebug() << "Server received from Player 2:" << data;
+            }
+
+            // Emituje signal sa podacima
+            emit dataReceived(data);
+
+            // Šalje odgovor samo pošiljaocu
+            // socket->write(QString("Acknowledged: %1\n").arg(data).toUtf8());
+        } else {
+            qDebug() << "Received empty data, ignoring.";
+        }
     }
 }
+
+
 void Server::onClientDisconnected()
 {
     if (m_clientSocket && sender() == m_clientSocket) {
