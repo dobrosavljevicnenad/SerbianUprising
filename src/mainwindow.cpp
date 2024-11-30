@@ -1,5 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
+#include "./Interface/gamemenu.h"
+
+GameMenu *gameMenu;
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -9,13 +12,34 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    MapScene *scene = new MapScene(this);
+    gameMenu = new GameMenu(this);
+    setCentralWidget(gameMenu);
+
+    //MapScene *scene = new MapScene(this);
 
     view = new QGraphicsView(scene, this);
-    setCentralWidget(view);
+    //setCentralWidget(view);
 
     gameManager = new GameManager(scene);
-    gameManager->initializeMap();
+
+    connect(gameMenu, &GameMenu::startGame, this, [this]() {
+        if(!scene->items().isEmpty()) {
+            scene->clear();
+        }
+        gameManager->initializeMap();
+        setCentralWidget(view);
+    });
+
+    connect(gameMenu, &GameMenu::exitGame, this, &QMainWindow::close);
+
+    connect(gameMenu, &GameMenu::fullScreenClicked, this, [this] () {
+        if(isFullScreen()) {
+            showNormal();
+        } else {
+            showFullScreen();
+        }
+    });
+
 
     QPushButton *changePlayerButton = new QPushButton("Change Player");
     QPushButton *endTurnButton = new QPushButton("End Turn");

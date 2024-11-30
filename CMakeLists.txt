@@ -45,6 +45,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/base/Entities/city.h src/base/Entities/city.cpp
         src/base/Entities/region.h src/base/Entities/region.cpp
         src/base/Mechanics/turn.h src/base/Mechanics/turn.cpp
+        src/Interface/gamemenu.h src/Interface/gamemenu.cpp
 
     )
 # Define target properties for Android with Qt 6 as:
