@@ -14,6 +14,8 @@
 #include <QGraphicsProxyWidget>
 #include <QListWidget>
 #include <QTimer>
+#include <QHBoxLayout>
+#include <QLabel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -41,7 +43,12 @@ private slots:
     void onEndTurnClicked();
     void updateMoveList(int currentPlayer);
 
+    void onInfoButtonClicked();
+    void onMoveButtonClicked();
+    void onPlaceButtonClicked();
+
 private:
+    QLabel* headerLabel;
     Ui::MainWindow *ui;
     MapScene *scene; //*
     QGraphicsView *view; //*

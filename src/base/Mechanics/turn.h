@@ -29,9 +29,9 @@ public:
     void removeActionById(int actionId);
     MoveArmy moveArmy;                    // Handles movement and battles
     std::vector<Action>& getPlayerBuffer(int playerId);          // Get the buffer for a specific player
-
-
+    int getTurn();
 private:
+    unsigned turn;
     int currentPlayerId;                  // Tracks the current player (1 or 2)
     std::vector<Action> player1Buffer;    // Buffer for Player 1's actions
     std::vector<Action> player2Buffer;    // Buffer for Player 2's actions

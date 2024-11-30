@@ -55,12 +55,9 @@ void MapLayer::setArmyColor(ArmyType armyType) {
     setColor(ArmyColor);
 }
 
-
 QColor MapLayer::getArmyColor(){
     return ArmyColor;
 }
-
-
 
 void MapLayer::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
     if(currentPlayer == 1){
@@ -85,9 +82,7 @@ void MapLayer::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
     QGraphicsPixmapItem::hoverLeaveEvent(event);
 }
 
-
 void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *event) {
-    std::cout << currentPlayer<<std::endl;
     if (event->button() == Qt::LeftButton) {
         emit layerClicked(this);
     }

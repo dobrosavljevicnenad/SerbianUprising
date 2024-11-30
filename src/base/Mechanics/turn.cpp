@@ -1,6 +1,6 @@
 #include "turn.h"
 
-Turn::Turn(Graph& graph) : currentPlayerId(1), m_graph(graph), moveArmy(graph) {}
+Turn::Turn(Graph& graph) : currentPlayerId(1), m_graph(graph), moveArmy(graph),turn(1) {}
 
 void Turn::addAction(int playerId, const Action& action) {
     auto& buffer = getPlayerBuffer(playerId);
@@ -52,6 +52,8 @@ void Turn::executeTurn() {
     //while (std::difftime(std::time(0), start_music) < 6.7) {
     //}
     m_mediaPlayer.stop();
+
+    turn+=1;
 }
 
 void Turn::clearActionBuffers() {
@@ -175,5 +177,9 @@ void Turn::removeActionById(int actionId) {
     } else {
         std::cerr << "Action with ID " << actionId << " not found for Player " << currentPlayerId << ".\n";
     }
+}
+
+int Turn::getTurn(){
+    return turn;
 }
 

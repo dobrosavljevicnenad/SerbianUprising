@@ -13,7 +13,6 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QFont>
 #include <QGraphicsSceneMouseEvent>
-#include <iostream>
 
 
 class MapLayer : public QObject, public QGraphicsPixmapItem {

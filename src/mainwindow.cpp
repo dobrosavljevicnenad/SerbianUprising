@@ -29,24 +29,87 @@ MainWindow::MainWindow(QWidget *parent)
     QTimer::singleShot(100, &loop, &QEventLoop::quit);
     loop.exec();
 
-    QPushButton *changePlayerButton = new QPushButton("Change Player");
+    QWidget* layoutContainer = new QWidget();
+
+    QVBoxLayout* mainLayout = new QVBoxLayout();
+
+    QLabel* headerLabel = new QLabel("Turn 1");
+    QFont font = headerLabel->font();
+    font.setBold(true);
+    font.setPointSize(14);
+    headerLabel->setFont(font);
+    headerLabel->setAlignment(Qt::AlignCenter);
+    this->headerLabel = headerLabel;
+
+    mainLayout->addWidget(headerLabel);
+
+    QHBoxLayout* buttonRowLayout = new QHBoxLayout();
+
+    QPushButton* infoButton = new QPushButton("Info");
+    QPushButton* moveButton = new QPushButton("Move");
+    QPushButton* armyButton = new QPushButton("Army");
+
+    buttonRowLayout->addWidget(infoButton);
+    buttonRowLayout->addWidget(moveButton);
+    buttonRowLayout->addWidget(armyButton);
+
+    mainLayout->addLayout(buttonRowLayout);
+
     QPushButton *endTurnButton = new QPushButton("End Turn");
 
+    mainLayout->addWidget(endTurnButton);
+
+    layoutContainer->setLayout(mainLayout);
+
+    QGraphicsProxyWidget* layoutProxy = scene->addWidget(layoutContainer);
+
+    layoutProxy->setPos(5, 5);
+
+    buttonRowLayout->setSpacing(5);
+    buttonRowLayout->setContentsMargins(0, 0, 0, 0);
+
+    mainLayout->setSpacing(5);
+    mainLayout->setContentsMargins(5, 5, 5, 5);
+
+    layoutContainer->setStyleSheet("background-color: transparent;");
+
+    headerLabel->setStyleSheet("color: black; background-color: transparent;");
+
+    QString buttonStyle =
+        "QPushButton { "
+        "   background-color: darkGray; "
+        "   border-radius: 20px; "
+        "} "
+        "QPushButton:hover { "
+        "   background-color: Green; "
+        "} "
+        "QPushButton:pressed { "
+        "   background-color: darkGreen; "
+        "} ";
+
+    infoButton->setStyleSheet(buttonStyle);
+    moveButton->setStyleSheet(buttonStyle);
+    armyButton->setStyleSheet(buttonStyle);
+
+    infoButton->setText("Info");
+    moveButton->setText("Move");
+    armyButton->setText("Army");
+
+    infoButton->setFixedSize(40, 40);
+    moveButton->setFixedSize(40, 40);
+    armyButton->setFixedSize(40, 40);
+
+    QPushButton *changePlayerButton = new QPushButton("Change Player");
+
     QGraphicsProxyWidget *changePlayerButtonProxy = scene->addWidget(changePlayerButton);
-    QGraphicsProxyWidget *endTurnButtonProxy = scene->addWidget(endTurnButton);
     QGraphicsProxyWidget *textFieldProxy = scene->addWidget(moveList);
 
-    changePlayerButtonProxy->setZValue(1);
-    endTurnButtonProxy->setZValue(1);
-    textFieldProxy->setZValue(1);
-
-    changePlayerButtonProxy->resize(QSize(70,50));
     changePlayerButtonProxy->setPos(scene->width()- changePlayerButton->size().width(), 00);
 
-    endTurnButtonProxy->resize(QSize(70,60));
-    endTurnButtonProxy->setPos(0, 0);
     textFieldProxy->setPos(scene->width()-textFieldProxy->size().width(), 50);
 
+    changePlayerButtonProxy->setZValue(1);
+    textFieldProxy->setZValue(1);
 
     moveList->addItem(QString("Player %1 on turn:").arg(gameManager->turn.getCurrentPlayerId()));
 
@@ -54,6 +117,9 @@ MainWindow::MainWindow(QWidget *parent)
     connect(changePlayerButton, &QPushButton::clicked, this, &MainWindow::onChangePlayerClicked);
     connect(endTurnButton, &QPushButton::clicked, this, &MainWindow::onEndTurnClicked);
     connect(moveList, &QListWidget::itemClicked, this, &MainWindow::onMoveClicked);
+    connect(infoButton, &QToolButton::clicked, this, &MainWindow::onInfoButtonClicked);
+    connect(moveButton, &QToolButton::clicked, this, &MainWindow::onMoveButtonClicked);
+    connect(armyButton, &QToolButton::clicked, this, &MainWindow::onPlaceButtonClicked);
 }
 
 MainWindow::~MainWindow()
@@ -72,9 +138,6 @@ void MainWindow::onMoveClicked(QListWidgetItem* item) {
     gameManager->removeArrowByActionId(actionId);
 
     delete item;
-
-    //std::cout << "Move with ID " << actionId << " removed.\n";
-
 }
 
 void MainWindow::onChangePlayerClicked() {
@@ -95,9 +158,9 @@ void MainWindow::onChangePlayerClicked() {
     mediaPlayer->play();
 }
 
-
 void MainWindow::onEndTurnClicked() {
     gameManager->turn.executeTurn();
+    headerLabel->setText(QString("Turn %1").arg(gameManager->turn.getTurn()));
 
     //now we need to update all graphical componenets of our project aka layers
     gameManager->updateLayersGraphics();
@@ -161,9 +224,6 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
                 int target = vertex->id();
                 Action newAction(type, pid, source,target, troopsToTransfer);
 
-
-                //TODO
-                //trooptotransfer moramo se implementirati full - trooptotransfer ali u cvoru
                 selected_vertex->army.setSoldiers(maxTroops - troopsToTransfer);
                 selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
 
@@ -200,4 +260,16 @@ void MainWindow::updateMoveList(int currentPlayer) {
 
         moveList->addItem(item);
     }
+}
+
+void MainWindow::onInfoButtonClicked() {
+    QMessageBox::information(this, "Info", "This is the Information button.");
+}
+
+void MainWindow::onMoveButtonClicked() {
+    QMessageBox::information(this, "Move", "This is the Move button.");
+}
+
+void MainWindow::onPlaceButtonClicked() {
+    QMessageBox::information(this, "Place", "This is the Place button.");
 }

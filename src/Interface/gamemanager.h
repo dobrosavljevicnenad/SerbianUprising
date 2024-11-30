@@ -12,10 +12,6 @@
 #include<QGraphicsScene>
 #include<iostream>
 #include<QObject>
-
-#include<QGraphicsScene>
-#include<iostream>
-#include<QObject>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>

@@ -32,8 +32,6 @@ void GameManager::initializeMap(){
     std::vector<std::pair<int,int>>positions;
     std::vector<std::pair<int,std::vector<int>>> allNeighbors;
 
-
-
     MapLayer *baseLayer = new MapLayer(":/resources/Images/base.png", false);
     baseLayer->setZValue(-1);
     scene->addItem(baseLayer);
@@ -48,15 +46,12 @@ void GameManager::initializeMap(){
 
         QString labelPath = layerObj.value("label_path").toString();
         std::string armyType = layerObj.value("army_type").toString().toStdString();
-
         int numOfSoldiers = layerObj.value("num_of_soldiers").toInt();
+
         layers[i] = (new MapLayer(labelPath, true));
 
         ArmyType type = (armyType == "HAJDUK") ? ArmyType::HAJDUK : ArmyType::JANISSARY;
-
         armies.emplace_back(numOfSoldiers,type);
-
-
         QJsonObject positionObj = layerObj.value("position").toObject();
 
         int posX = positionObj.value("x").toInt();
