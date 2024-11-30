@@ -230,7 +230,8 @@ void MainWindow::handleMoveArmy(MapLayer* layer){
             //TODO
             //ONLY HIGHLIGHT NEIGHBOR PROVINCE WHEN PRESSED AND ALSO
             //DON'T ALLOW CLICKS ON NOT NEIGHBOUR PROVINCE OF FIRST CLICKED
-
+            //TODO
+            // Only allow second click on neighbour provinces
             //buffer and textfield
             QString move = gameManager->turn.GetCurrentAction(newAction);
             QListWidgetItem* item = new QListWidgetItem(move);
@@ -245,9 +246,11 @@ void MainWindow::handlePlaceArmy(MapLayer* layer){
     bool ok;
     int troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
                                            tr("Enter the number of troops to place:"), 1, 1, 100, 1, &ok);
+
+
     if (ok) {
         layer->setTroopCount(layer->getTroopCount() + troopsToAdd);
-
+        //gameManager->getArmyManager(currentPlayerId).decreaseAvailableTroops(troopsToAdd);
     }
 }
 

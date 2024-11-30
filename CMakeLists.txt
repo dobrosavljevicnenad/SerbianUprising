@@ -49,6 +49,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/base/Mechanics/Action.h
         src/Interface/Items/customarrowitem.h src/Interface/Items/customarrowitem.cpp
         src/base/Mechanics/Action.cpp
+        src/base/Mechanics/addarmymanager.h src/base/Mechanics/addarmymanager.cpp
 
     )
 # Define target properties for Android with Qt 6 as:
