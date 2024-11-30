@@ -15,6 +15,7 @@ bool MoveArmy::executeMove(std::vector<Vertex*> sources, Vertex* target, std::ve
             return false;
         }
         if (sources[i]->army.armyType() != target->army.armyType()) {
+            sources[i]->army.setSoldiers(sources[i]->army.getSoldiers() - soldiersToMove[i]);
             sentArmy.setSoldiers(sentArmy.getSoldiers() + soldiersToMove[i]);
         }
     }
@@ -56,6 +57,7 @@ bool MoveArmy::mergeArmies(Vertex* source, Vertex* target, unsigned int soldiers
     if (source->army.armyType() == target->army.armyType()) {
         std::cout << "Mergingd: " << soldiersToMove << " from vertex with "
                   << source->army.getSoldiers() << " to Vertex " << target->army.getSoldiers() << ".\n";
+        source->army.setSoldiers(source->army.getSoldiers() - soldiersToMove);
         target->army.setSoldiers(target->army.getSoldiers() + soldiersToMove);
         std::cout << "Armies merged: " << soldiersToMove << " soldiers moved from Vertex "
                   << source->id() << " to Vertex " << target->id() << ".\n";

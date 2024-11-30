@@ -122,12 +122,14 @@ void Turn::executeMoveAction(const Action& action) {
 void Turn::executeAttackAction(const int playerId, const Action& action) {
     Vertex* source = m_graph.get_vertex_by_id(action.sourceVertexId);
     Vertex* target = m_graph.get_vertex_by_id(action.targetVertexId);
+
     std::vector<Vertex*> attackers;
     std::vector<unsigned> soldiers;
     attackers.push_back(source);
     auto& buffer = getPlayerBuffer(playerId);
     unsigned attackSoldiers = action.soldiers;
     if(source->army.getSoldiers()< action.soldiers)
+        attackSoldiers = source->army.getSoldiers();
         soldiers.push_back(attackSoldiers);
     for (auto it = buffer.begin(); it != buffer.end(); ) {
         const auto& attackAction = *it;
@@ -135,11 +137,17 @@ void Turn::executeAttackAction(const int playerId, const Action& action) {
             Vertex* source = m_graph.get_vertex_by_id(attackAction.sourceVertexId);
             if (source != nullptr) {
                 attackers.push_back(source);
-                attackSoldiers = attackAction.soldiers;
-                soldiers.push_back(attackSoldiers);
+                if (source->army.getSoldiers() < attackAction.soldiers) {
+                    attackSoldiers = source->army.getSoldiers();
+                    soldiers.push_back(attackSoldiers);
+                }
+                else
+                    attackSoldiers = attackAction.soldiers;
+                    soldiers.push_back(attackSoldiers);
             } else {
                 std::cerr << "Error: Source vertex not found!" << std::endl;
             }
+
             it = buffer.erase(it);
         } else {
             ++it;
