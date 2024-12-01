@@ -2,6 +2,8 @@
 #define ACTION_H
 
 #include <atomic>
+#include <QJsonObject>
+#include <QJsonDocument>
 
 enum class ActionType { MOVE_ARMY, ATTACK};
 
@@ -17,6 +19,29 @@ struct Action {
     Action(ActionType type, int playerId, int source, int target, int soldiers)
         : id(nextId++), type(type), playerId(playerId), sourceVertexId(source),
         targetVertexId(target), soldiers(soldiers) {}
+
+    QString toJson() const {
+        QJsonObject json;
+        json["type"] = static_cast<int>(type);
+        json["id"] = id;
+        json["playerId"] = playerId;
+        json["sourceVertexId"] = sourceVertexId;
+        json["targetVertexId"] = targetVertexId;
+        json["soldiers"] = soldiers;
+        return QString(QJsonDocument(json).toJson(QJsonDocument::Compact));
+    }
+
+    // Deserialize Action from JSON
+    static Action fromJson(const QString &jsonString) {
+        QJsonObject json = QJsonDocument::fromJson(jsonString.toUtf8()).object();
+        Action action(static_cast<ActionType>(json["type"].toInt()),
+                      json["playerId"].toInt(),
+                      json["sourceVertexId"].toInt(),
+                      json["targetVertexId"].toInt(),
+                      json["soldiers"].toInt());
+        action.id = json["id"].toInt(); // Override auto-increment if needed
+        return action;
+    }
 };
 
 static std::atomic<int> nextId;

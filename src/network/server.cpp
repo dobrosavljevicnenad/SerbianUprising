@@ -1,6 +1,8 @@
 #include "server.h"
 #include <QDebug>
 #include <QHostAddress>
+#include "../base/Mechanics/Action.h"
+
 Server::Server(QObject *parent)
     : QObject(parent), m_server(new QTcpServer(this)), m_clientSocket(nullptr), m_secondPlayerSocket(nullptr), m_gameStarted(false), m_waitingForSecondPlayer(false)
 {
@@ -55,8 +57,7 @@ void Server::onNewConnection()
     }
 }
 
-void Server::onReadyRead()
-{
+void Server::onReadyRead() {
     QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
     if (!socket) {
         qWarning() << "Invalid sender in onReadyRead";
@@ -66,22 +67,22 @@ void Server::onReadyRead()
     if (socket->bytesAvailable() > 0) {
         QString data = QString::fromUtf8(socket->readAll()).trimmed();
         if (!data.isEmpty()) {
-            if (socket == m_clientSocket) {
-                qDebug() << "Server received from Player 1:" << data;
-            } else if (socket == m_secondPlayerSocket) {
-                qDebug() << "Server received from Player 2:" << data;
+            try {
+                Action action = Action::fromJson(data);
+                qDebug() << "[SERVER]Received Action:" << action.toJson();
+                socket->write(QString("Action received: %1\n").arg(data).toUtf8());
+
+                // Dalja logika za obradu akcije...
+                emit dataReceived(data); // Emit signal if needed
+            } catch (std::exception &e) {
+                qWarning() << "Failed to parse Action:" << e.what();
             }
-
-            // Emituje signal sa podacima
-            emit dataReceived(data);
-
-            // Šalje odgovor samo pošiljaocu
-            // socket->write(QString("Acknowledged: %1\n").arg(data).toUtf8());
         } else {
             qDebug() << "Received empty data, ignoring.";
         }
     }
 }
+
 
 
 void Server::onClientDisconnected()

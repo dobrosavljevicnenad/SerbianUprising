@@ -288,6 +288,7 @@ void MainWindow::handleMoveArmy(MapLayer* layer){
             int source = selected_vertex->id();
             int target = vertex->id();
             Action newAction(type, pid, source,target, troopsToTransfer);
+            gameManager->c_player2.sendAction(newAction);
 
             selected_vertex->army.setSoldiers(maxTroops - troopsToTransfer);
             selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());

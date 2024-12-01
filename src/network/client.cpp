@@ -45,3 +45,8 @@ void Client::onGameOver(const QString &reason)
     qDebug() << "Game over: " << reason;
     // Handle game over logic here
 }
+
+void Client::sendAction(const Action &action) {
+    QString jsonData = action.toJson();
+    sendData(jsonData);
+}

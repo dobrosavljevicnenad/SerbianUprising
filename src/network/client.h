@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QTcpSocket>
 #include <QString>
+#include "../base/Mechanics/Action.h"
 
 class Client : public QObject
 {
@@ -13,6 +14,7 @@ public:
     explicit Client(QObject *parent = nullptr);
     bool connectToServer(const QString &hostAddress, quint16 port);
     void sendData(const QString &data);
+    void sendAction(const Action &action);
 
 signals:
     void dataReceived(const QString &data);
