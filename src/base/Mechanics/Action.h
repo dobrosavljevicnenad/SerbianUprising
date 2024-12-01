@@ -4,6 +4,7 @@
 #include <atomic>
 #include <QJsonObject>
 #include <QJsonDocument>
+#include <iostream>
 
 enum class ActionType { MOVE_ARMY, ATTACK};
 
@@ -19,6 +20,16 @@ struct Action {
     Action(ActionType type, int playerId, int source, int target, int soldiers)
         : id(nextId++), type(type), playerId(playerId), sourceVertexId(source),
         targetVertexId(target), soldiers(soldiers) {}
+
+    friend std::ostream& operator<<(std::ostream& os, const Action& action) {
+        os << "Action ID: " << action.id
+           << ", Type: " << static_cast<int>(action.type) // assuming ActionType is an enum
+           << ", Player ID: " << action.playerId
+           << ", Source Vertex ID: " << action.sourceVertexId
+           << ", Target Vertex ID: " << action.targetVertexId
+           << ", Soldiers: " << action.soldiers;
+        return os;
+    }
 
     QString toJson() const {
         QJsonObject json;

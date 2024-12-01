@@ -96,15 +96,8 @@ void Server::onReadyRead() {
 
 void Server::executeActions(const std::vector<Action> &actions) {
     for (const Action &action : actions) {
-        qDebug() << "Executing Action: " << action.toJson();
-        // Ovde dodaj logiku za obradu akcija, npr. MOVE_ARMY, ATTACK, itd.
-        if (action.type == ActionType::MOVE_ARMY) {
-            std::cout << "VOJSKAAA SE POMERILA SEERVERRRRRRRRRRR" << std::endl;
-        } else if (action.type == ActionType::ATTACK) {
-            // Logika za napad
-        }
+        std::cout << "[SERVER]" <<  action << std::endl; // za sad samo ispis jbg
     }
-    qDebug() << "All actions executed for this turn.";
 }
 
 

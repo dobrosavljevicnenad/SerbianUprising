@@ -247,8 +247,10 @@ void MainWindow::onEndTurnClicked() {
     gameManager->getArmyManager(2).endTurn();
     updateMoveList(gameManager->turn.getCurrentPlayerId());
 
-    // Obavesti server
-    gameManager->c_player1.sendEndTurn();
+    if(gameManager->turn.getCurrentPlayerId() == 1)
+        gameManager->c_player1.sendEndTurn();
+    else
+        gameManager->c_player2.sendEndTurn();
 }
 
 void MainWindow::onLayerClicked(MapLayer *layer) {
@@ -291,7 +293,7 @@ void MainWindow::handleMoveArmy(MapLayer* layer){
             int source = selected_vertex->id();
             int target = vertex->id();
             Action newAction(type, pid, source,target, troopsToTransfer);
-            gameManager->c_player2.sendAction(newAction);
+            pid == 1 ? gameManager->c_player1.sendAction(newAction) : gameManager->c_player2.sendAction(newAction);
 
             selected_vertex->army.setSoldiers(maxTroops - troopsToTransfer);
             selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
