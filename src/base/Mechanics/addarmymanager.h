@@ -15,6 +15,7 @@ public:
 
     int calculateTotalTroops();
     void decreaseAvailableTroops(int troops);
+    void endTurn();
 
 private:
     int territoryCount;

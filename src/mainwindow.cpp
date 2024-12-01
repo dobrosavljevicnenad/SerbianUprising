@@ -31,7 +31,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         gameManager = new GameManager(scene);
         gameManager->initializeMap();
-
+    //////////////////////////////////////////////////////////////////////////
         mediaPlayer = new QMediaPlayer();
         audioOutput = new QAudioOutput();
 
@@ -43,15 +43,17 @@ MainWindow::MainWindow(QWidget *parent)
         QEventLoop loop;
         QTimer::singleShot(100, &loop, &QEventLoop::quit);
         loop.exec();
-
+        //////////////////////////////////////////////////////////////////////////
         QWidget* layoutContainer = new QWidget();
 
         QVBoxLayout* mainLayout = new QVBoxLayout();
 
+        mainLayout->setSpacing(5);
+        mainLayout->setContentsMargins(2, 2, 2, 2);
         QLabel* headerLabel = new QLabel("Turn 1");
         QFont font = headerLabel->font();
         font.setBold(true);
-        font.setPointSize(14);
+        font.setPointSize(12);
         headerLabel->setFont(font);
         headerLabel->setAlignment(Qt::AlignCenter);
         this->headerLabel = headerLabel;
@@ -73,20 +75,31 @@ MainWindow::MainWindow(QWidget *parent)
         mainLayout->addLayout(buttonRowLayout);
 
         QPushButton *endTurnButton = new QPushButton("End Turn");
+        endTurnButton->setFixedSize(160, 30);
+        endTurnButton->setStyleSheet(
+            "QPushButton { "
+            "   background-color: black; "
+            "   color: white; "
+            "   border-radius: 10px; "
+            "   padding: 5px; "
+            "} "
+            "QPushButton:hover { "
+            "   background-color: darkGray; "
+            "} "
+            "QPushButton:pressed { "
+            "   background-color: black; "
+            "}");
 
-        mainLayout->addWidget(endTurnButton);
+        mainLayout->addWidget(endTurnButton, 0, Qt::AlignCenter);
 
         layoutContainer->setLayout(mainLayout);
 
         QGraphicsProxyWidget* layoutProxy = scene->addWidget(layoutContainer);
+        //////////////////////////////////////////////////////////////////////////
+        layoutProxy->setPos(2, 2);
 
-        layoutProxy->setPos(5, 5);
-
-        buttonRowLayout->setSpacing(5);
+        buttonRowLayout->setSpacing(3);
         buttonRowLayout->setContentsMargins(0, 0, 0, 0);
-
-        mainLayout->setSpacing(5);
-        mainLayout->setContentsMargins(5, 5, 5, 5);
 
         layoutContainer->setStyleSheet("background-color: transparent;");
 
@@ -95,7 +108,7 @@ MainWindow::MainWindow(QWidget *parent)
         QString buttonStyle =
             "QPushButton { "
             "   background-color: darkGray; "
-            "   border-radius: 20px; "
+            "   border-radius: 18px; "
             "} "
             "QPushButton:hover { "
             "   background-color: Green; "
@@ -118,7 +131,7 @@ MainWindow::MainWindow(QWidget *parent)
         infoButton->setFixedSize(40, 40);
         moveButton->setFixedSize(40, 40);
         armyButton->setFixedSize(40, 40);
-
+        //////////////////////////////////////////////////////////////////////////
         QPushButton *changePlayerButton = new QPushButton("Change Player");
 
         QGraphicsProxyWidget *changePlayerButtonProxy = scene->addWidget(changePlayerButton);
@@ -160,16 +173,45 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::onMoveClicked(QListWidgetItem* item) {
-    QVariant data = item->data(Qt::UserRole);
-    if (!data.isValid()) {
-        return;
+    if (!item) return;
+
+    QString actionType = item->data(Qt::UserRole + 2).toString();
+
+    if (actionType == "Move") {
+        QVariant data = item->data(Qt::UserRole);
+        if (!data.isValid()) {
+            return;
+        }
+
+        int actionId = data.toInt();
+        gameManager->turn.removeActionById(actionId);
+        gameManager->removeArrowByActionId(actionId);
+
+        delete item;
+    } else if (actionType == "Place") {
+        int layerId = item->data(Qt::UserRole).toInt();
+        int troopsToRemove = item->data(Qt::UserRole + 1).toInt();
+
+        MapLayer* layer = nullptr;
+        for (auto& pair : gameManager->layerToVertex) {
+            if (pair->id() == layerId) {
+                layer = pair->map_layer;
+                break;
+            }
+        }
+
+
+        if (layer) {
+            int currentPlayerId = gameManager->turn.getCurrentPlayerId();
+            AddArmyManager& armyManager = gameManager->getArmyManager(currentPlayerId);
+            armyManager.decreaseAvailableTroops(-troopsToRemove);
+            gameManager->layerToVertex[layer]->army.setSoldiers(gameManager->layerToVertex[layer]->army.getSoldiers()-troopsToRemove);
+            layer->setTroopCount(layer->getTroopCount() - troopsToRemove);
+        }
+
+        // Remove item from the list
+        delete moveList->takeItem(moveList->row(item));
     }
-
-    int actionId = data.toInt();
-    gameManager->turn.removeActionById(actionId);
-    gameManager->removeArrowByActionId(actionId);
-
-    delete item;
 }
 
 void MainWindow::onChangePlayerClicked() {
@@ -177,6 +219,8 @@ void MainWindow::onChangePlayerClicked() {
 
     int currentPlayer = gameManager->turn.getCurrentPlayerId();
     gameManager->updateLayersId(currentPlayer);
+
+    gameManager->filterAndRedrawArrows(currentPlayer);
 
     updateMoveList(currentPlayer);
     mediaPlayer->stop();
@@ -197,6 +241,8 @@ void MainWindow::onEndTurnClicked() {
     //now we need to update all graphical componenets of our project aka layers
     gameManager->updateLayersGraphics();
     moveList->clear();
+    gameManager->getArmyManager(1).endTurn();
+    gameManager->getArmyManager(2).endTurn();
     updateMoveList(gameManager->turn.getCurrentPlayerId());
 }
 
@@ -241,12 +287,10 @@ void MainWindow::handleMoveArmy(MapLayer* layer){
             int target = vertex->id();
             Action newAction(type, pid, source,target, troopsToTransfer);
 
-            //selected_vertex->army.setSoldiers(maxTroops - troopsToTransfer);
-            //selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
+            selected_vertex->army.setSoldiers(maxTroops - troopsToTransfer);
+            selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
 
-            selectedLayer->setTroopCount(maxTroops - troopsToTransfer);
-
-            gameManager->drawArrow(selectedLayer, layer, troopsToTransfer, newAction.id);
+            gameManager->drawArrow(gameManager->turn.getCurrentPlayerId(),selectedLayer, layer, troopsToTransfer, newAction.id);
             gameManager->turn.addAction(pid, newAction);
 
             //TODO
@@ -256,6 +300,7 @@ void MainWindow::handleMoveArmy(MapLayer* layer){
             QString move = gameManager->turn.GetCurrentAction(newAction);
             QListWidgetItem* item = new QListWidgetItem(move);
             item->setData(Qt::UserRole, newAction.id);
+            item->setData(Qt::UserRole + 2, "Move");
             moveList->addItem(item);
         }
         selectedLayer = nullptr;
@@ -264,25 +309,31 @@ void MainWindow::handleMoveArmy(MapLayer* layer){
 
 void MainWindow::handlePlaceArmy(MapLayer* layer){
     int currentPlayerId = gameManager->turn.getCurrentPlayerId();
-    AddArmyManager& armyManager = gameManager->getArmyManager(currentPlayerId);
-
-    int maxTroops = armyManager.calculateTotalTroops();
-
     graph::Vertex* selected_vertex = gameManager->layerToVertex[layer];
 
-    bool ok;
-    int troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
-                                           tr("Enter the number of troops to place:"), 1, 1, 100, 1, &ok);
-    if (ok && troopsToAdd > 0) {
-        layer->setTroopCount(layer->getTroopCount() + troopsToAdd);
+    if ( selected_vertex->player.getPlayerId() == currentPlayerId ) {
+        AddArmyManager& armyManager = gameManager->getArmyManager(currentPlayerId);
 
-        armyManager.decreaseAvailableTroops(troopsToAdd);
+        int maxTroops = armyManager.calculateTotalTroops();
 
-        QString moveDescription = QString("Placed %1 troops on %2").arg(troopsToAdd).arg(selected_vertex->id());
-        QListWidgetItem* item = new QListWidgetItem(moveDescription);
-        item->setData(Qt::UserRole, QVariant::fromValue(selected_vertex->id()));
-        item->setData(Qt::UserRole + 1, QVariant(troopsToAdd));
-        moveList->addItem(item);
+
+        bool ok;
+        int troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
+                                               tr("Enter the number of troops to place:"), 0, 0, maxTroops, 1, &ok);
+        if (ok && troopsToAdd > 0) {
+            layer->setTroopCount(layer->getTroopCount() + troopsToAdd);
+
+            armyManager.decreaseAvailableTroops(troopsToAdd);
+
+            selected_vertex->army.setSoldiers(selected_vertex->army.getSoldiers()+troopsToAdd);
+
+            QString moveDescription = QString("Placed %1 troops on %2").arg(troopsToAdd).arg(selected_vertex->id());
+            QListWidgetItem* item = new QListWidgetItem(moveDescription);
+            item->setData(Qt::UserRole, QVariant::fromValue(selected_vertex->id()));
+            item->setData(Qt::UserRole + 1, QVariant(troopsToAdd));
+            item->setData(Qt::UserRole + 2, "Place");
+            moveList->addItem(item);
+        }
     }
 }
 

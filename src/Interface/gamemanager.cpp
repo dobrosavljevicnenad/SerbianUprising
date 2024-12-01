@@ -122,14 +122,14 @@ void GameManager::updateLayersGraphics() {
 }
 
 void GameManager::clearArrows() {
-    for (CustomArrowItem* arrow : arrows) {
-        scene->removeItem(arrow);
-        delete arrow;
+    for (auto& [playerId, arrowList] : arrows) {
+        for (CustomArrowItem* arrow : arrowList) {
+            scene->removeItem(arrow);
+        }
     }
-    arrows.clear();
 }
 
-void GameManager::drawArrow(MapLayer* from, MapLayer* to, int number, int actionId) {
+void GameManager::drawArrow(int playerId, MapLayer* from, MapLayer* to, int number, int actionId) {
     QPointF fromPos = from->pos() + QPointF((from->boundingRect().width() / 2)-5,
                                             from->boundingRect().height() / 2);
     QPointF toPos = to->pos() + QPointF((to->boundingRect().width() / 2)+20,
@@ -139,7 +139,7 @@ void GameManager::drawArrow(MapLayer* from, MapLayer* to, int number, int action
     CustomArrowItem* arrow = new CustomArrowItem(line,actionId);
     scene->addItem(arrow);
     arrow->setNumber(number);
-    arrows.push_back(arrow);
+    arrows[playerId].emplace_back(arrow);
 }
 
 
@@ -168,12 +168,25 @@ void GameManager::printConnections(graph::Vertex* vertex) {
 }
 
 void GameManager::removeArrowByActionId(int actionId) {
-    for (size_t i = 0; i < arrows.size(); ++i) {
-        if (arrows[i]->getActionId() == actionId) {
-            scene->removeItem(arrows[i]);
-            delete arrows[i];
-            arrows.erase(arrows.begin() + i);
-            return;
+    for (auto& [playerId, arrowList] : arrows) {
+        for (auto it = arrowList.begin(); it != arrowList.end(); ++it) {
+            if ((*it)->getActionId() == actionId) {
+                scene->removeItem(*it);
+                delete *it;
+                arrowList.erase(it);
+                return;
+            }
+        }
+    }
+}
+
+void GameManager::filterAndRedrawArrows(int currentPlayerId) {
+    clearArrows();
+
+    auto it = arrows.find(currentPlayerId);
+    if (it != arrows.end()) {
+        for (CustomArrowItem* arrow : it->second) {
+            scene->addItem(arrow);
         }
     }
 }

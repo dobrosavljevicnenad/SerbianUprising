@@ -45,5 +45,9 @@ int AddArmyManager::calculateTotalTroops(){
 
 void AddArmyManager::decreaseAvailableTroops(int troops) {
     totalTroops -= troops;
-    if (totalTroops < 0) totalTroops = 0; // Prevent negative troops
+    if (totalTroops < 0) totalTroops = 0;
+}
+
+void AddArmyManager::endTurn(){
+    totalTroops = 5;
 }

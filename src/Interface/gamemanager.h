@@ -30,7 +30,7 @@ public:
 
     void updateLayersGraphics();
     void clearArrows();
-    void drawArrow(MapLayer* from, MapLayer* to, int number,int actionId);
+    void drawArrow(int playerId, MapLayer* from, MapLayer* to, int number,int actionId);
     void addLayer(MapLayer* layer, const std::string& label, Terrain terrain, Army army, Player player);
 
     void CreateRegion();
@@ -38,6 +38,7 @@ public:
     void printConnections(graph::Vertex* vertex);
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
     void removeArrowByActionId(int actionId);
+    void filterAndRedrawArrows(int currentPlayerId);
     void updateLayersId(int PlayerId);
     AddArmyManager& getArmyManager(int playerId);
 
@@ -47,7 +48,7 @@ signals:
 private:
     std::map<int,AddArmyManager> armyManagers;
     std::vector<MapLayer*> layers;
-    std::vector<CustomArrowItem*> arrows;
+    std::map<int,std::vector<CustomArrowItem*>> arrows;
     QGraphicsScene* scene;
     graph::Graph g;
 public:

@@ -12,6 +12,15 @@ void Turn::executeTurn() {
     auto& buffer2 = getPlayerBuffer(2);
     bool battleMusic = 0;
     for (const auto& action : buffer) {
+        auto vertex = m_graph.get_vertex_by_id(action.sourceVertexId);
+        vertex->army.setSoldiers(vertex->army.getSoldiers()+action.soldiers);
+    }
+    for (const auto& action : buffer2) {
+        auto vertex = m_graph.get_vertex_by_id(action.sourceVertexId);
+        vertex->army.setSoldiers(vertex->army.getSoldiers()+action.soldiers);
+    }
+
+    for (const auto& action : buffer) {
         if (action.type == ActionType::MOVE_ARMY){
             executeMoveAction(action);
         }
