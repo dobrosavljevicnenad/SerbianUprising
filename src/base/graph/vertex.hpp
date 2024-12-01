@@ -3,7 +3,6 @@
 #include <string>
 #include<QPointF>
 #include "../../Interface/maplayer.h"
-#include "../../Interface/maplayer.h"
 #include "../Entities/Army.h"
 #include "../Mechanics/Battle.h"
 #include "../Mechanics/Strength.h"

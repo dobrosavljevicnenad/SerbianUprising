@@ -1,31 +1,50 @@
 #ifndef TURN_H
 #define TURN_H
 
-#include "../graph/vertex.hpp"
+#include "Action.h"
+#include "../graph/graph.hpp"
+#include "MoveArmy.h"
 
 #include <vector>
 #include <string>
+#include <sstream>
+#include <QMediaPlayer>
+#include <QAudioOutput>
+#include <QString>
+#include <QTimer>
+#include <QUrl>
+#include <QEventLoop>
+#include <iostream>
 
-
-class Turn
-{
+class Turn {
 public:
-    Turn();
+    explicit Turn(graph::Graph& graph);
 
-    void endTurn();
-    void changePlayer();
-    void addActionToBuffer(int playerId, const std::string& action);
-    QString processBuffer();
-
-    int getCurrentPlayer() const;
+    void addAction(int playerId, const Action& action);           // Add an action to a player's buffer
+    void executeTurn();                                           // Execute all actions for both players
+    void clearActionBuffers();                                        // Reset action buffers at the end of the turn
+    void changePlayer();                                          // Switch the current player
+    int getCurrentPlayerId() const;                              // Get the current player's ID
+    QString GetCurrentAction(const Action& action);  // New method to return the string from both buffers
+    void removeActionById(int actionId);
+    MoveArmy moveArmy;                    // Handles movement and battles
+    std::vector<Action>& getPlayerBuffer(int playerId);          // Get the buffer for a specific player
+    int getTurn();
 
 private:
-    int currentPlayerId;
-    std::vector<std::string> player1Buffer;
-    std::vector<std::string> player2Buffer;
+    unsigned turn;
+    int currentPlayerId;                  // Tracks the current player (1 or 2)
+    std::vector<Action> player1Buffer;    // Buffer for Player 1's actions
+    std::vector<Action> player2Buffer;    // Buffer for Player 2's actions
+    graph::Graph& m_graph;                // Reference to the game graph
+    QMediaPlayer m_mediaPlayer;
+    QAudioOutput m_audioOutput;
 
-    void processFriendActions(std::vector<std::string>& buffer);
-    void processEnemyActions(std::vector<std::string>& buffer);
+    void executePlayerActions(int playerId);                     // Execute all actions for a specific player
+
+    // Methods to handle specific action types
+    void executeMoveAction(const Action& action);
+    void executeAttackAction(const int playerId, const Action& action);
 };
 
 #endif // TURN_H

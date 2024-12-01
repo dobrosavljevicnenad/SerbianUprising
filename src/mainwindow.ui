@@ -17,38 +17,69 @@
    <widget class="QPushButton" name="changePlayerButton">
     <property name="geometry">
      <rect>
-      <x>890</x>
+      <x>1090</x>
       <y>0</y>
       <width>171</width>
-      <height>26</height>
+      <height>81</height>
      </rect>
     </property>
     <property name="text">
      <string>ChangePlayer</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="endTurnButton">
-    <property name="geometry">
-     <rect>
-      <x>890</x>
-      <y>30</y>
-      <width>171</width>
-      <height>26</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>End Turn</string>
-    </property>
-   </widget>
    <widget class="QTextBrowser" name="textField">
     <property name="geometry">
      <rect>
-      <x>850</x>
+      <x>920</x>
       <y>80</y>
-      <width>281</width>
+      <width>341</width>
       <height>341</height>
      </rect>
     </property>
+   </widget>
+   <widget class="QWidget" name="verticalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>10</y>
+      <width>181</width>
+      <height>131</height>
+     </rect>
+    </property>
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout">
+       <item>
+        <widget class="QToolButton" name="infoButton">
+         <property name="text">
+          <string>Info</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="moveButton">
+         <property name="text">
+          <string>Move</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QToolButton" name="placeButton">
+         <property name="text">
+          <string>Place</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QPushButton" name="endTurnButton">
+       <property name="text">
+        <string>End Turn</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
