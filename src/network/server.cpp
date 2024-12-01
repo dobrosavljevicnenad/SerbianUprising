@@ -4,7 +4,7 @@
 #include "../base/Mechanics/Action.h"
 
 Server::Server(QObject *parent)
-    : QObject(parent), m_server(new QTcpServer(this)), m_clientSocket(nullptr), m_secondPlayerSocket(nullptr), m_gameStarted(false), m_waitingForSecondPlayer(false)
+    : QObject(parent), m_server(new QTcpServer(this)), m_clientSocket(nullptr), m_secondPlayerSocket(nullptr), m_gameStarted(false), m_waitingForSecondPlayer(false), turn(g)
 {
     connect(m_server, &QTcpServer::newConnection, this, &Server::onNewConnection);
 }
@@ -68,19 +68,43 @@ void Server::onReadyRead() {
         QString data = QString::fromUtf8(socket->readAll()).trimmed();
         if (!data.isEmpty()) {
             try {
-                Action action = Action::fromJson(data);
-                qDebug() << "[SERVER]Received Action:" << action.toJson();
-                socket->write(QString("Action received: %1\n").arg(data).toUtf8());
-
-                // Dalja logika za obradu akcije...
-                emit dataReceived(data); // Emit signal if needed
+                // Proveri da li je signal za End Turn
+                if (data == "END_TURN") {
+                    qDebug() << "End Turn received!";
+                    if (socket == m_clientSocket) {
+                        executeActions(actionsPlayer1);
+                        actionsPlayer1.clear();
+                    } else if (socket == m_secondPlayerSocket) {
+                        executeActions(actionsPlayer2);
+                        actionsPlayer2.clear();
+                    }
+                } else {
+                    // Inače, tretiraj podatke kao Action
+                    Action action = Action::fromJson(data);
+                    if (socket == m_clientSocket) {
+                        actionsPlayer1.push_back(action);
+                    } else if (socket == m_secondPlayerSocket) {
+                        actionsPlayer2.push_back(action);
+                    }
+                }
             } catch (std::exception &e) {
-                qWarning() << "Failed to parse Action:" << e.what();
+                qWarning() << "Failed to parse data:" << e.what();
             }
-        } else {
-            qDebug() << "Received empty data, ignoring.";
         }
     }
+}
+
+void Server::executeActions(const std::vector<Action> &actions) {
+    for (const Action &action : actions) {
+        qDebug() << "Executing Action: " << action.toJson();
+        // Ovde dodaj logiku za obradu akcija, npr. MOVE_ARMY, ATTACK, itd.
+        if (action.type == ActionType::MOVE_ARMY) {
+            std::cout << "VOJSKAAA SE POMERILA SEERVERRRRRRRRRRR" << std::endl;
+        } else if (action.type == ActionType::ATTACK) {
+            // Logika za napad
+        }
+    }
+    qDebug() << "All actions executed for this turn.";
 }
 
 

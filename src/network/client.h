@@ -15,6 +15,7 @@ public:
     bool connectToServer(const QString &hostAddress, quint16 port);
     void sendData(const QString &data);
     void sendAction(const Action &action);
+    void sendEndTurn();
 
 signals:
     void dataReceived(const QString &data);

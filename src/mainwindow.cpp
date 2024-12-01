@@ -240,12 +240,15 @@ void MainWindow::onEndTurnClicked() {
     gameManager->turn.executeTurn();
     headerLabel->setText(QString("Turn %1").arg(gameManager->turn.getTurn()));
 
-    //now we need to update all graphical componenets of our project aka layers
+    // Update grafike i logike
     gameManager->updateLayersGraphics();
     moveList->clear();
     gameManager->getArmyManager(1).endTurn();
     gameManager->getArmyManager(2).endTurn();
     updateMoveList(gameManager->turn.getCurrentPlayerId());
+
+    // Obavesti server
+    gameManager->c_player1.sendEndTurn();
 }
 
 void MainWindow::onLayerClicked(MapLayer *layer) {

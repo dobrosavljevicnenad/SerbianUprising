@@ -50,3 +50,7 @@ void Client::sendAction(const Action &action) {
     QString jsonData = action.toJson();
     sendData(jsonData);
 }
+
+void Client::sendEndTurn() {
+    sendData("END_TURN");
+}
