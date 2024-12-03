@@ -5,6 +5,8 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include <QJsonArray>
+#include <QJsonObject>
 // #include "../gui/maplayer.h"
 // #include "../base/Army.h"
 // #include "../base/Battle.h"
@@ -17,7 +19,7 @@ namespace graph {
 
 class Graph {
 public:
-    Graph();
+    explicit Graph();
     ~Graph();
 
     Vertex* insert_vertex(QPointF position, const std::string& label,
@@ -32,6 +34,8 @@ public:
     MapLayer* get_layer_for_vertex(const Vertex* vertex) const;
     void print_graph() const;
     Vertex* get_vertex_by_id(nodeID_t id) const;
+    QJsonObject serialize() const;
+    void deserialize(const QJsonObject &json);
 
 public:
     std::unordered_map<nodeID_t, Vertex*> vertices;  // Map of vertex IDs to Vertex pointers

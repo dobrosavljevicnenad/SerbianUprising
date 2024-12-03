@@ -23,7 +23,7 @@ public:
     void addAction(int playerId, const Action& action);           // Add an action to a player's buffer
     void executeTurn();                                           // Execute all actions for both players
     void clearActionBuffers();                                        // Reset action buffers at the end of the turn
-    void changePlayer();                                          // Switch the current player
+    //void changePlayer();                                          // Switch the current player
     int getCurrentPlayerId() const;                              // Get the current player's ID
     QString GetCurrentAction(const Action& action);  // New method to return the string from both buffers
     void removeActionById(int actionId);

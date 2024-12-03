@@ -20,10 +20,13 @@ bool Client::connectToServer(const QString &hostAddress, quint16 port)
     return true;
 }
 
-void Client::onReadyRead()
-{
-    QString data = QString::fromUtf8(m_socket->readAll());
-    emit dataReceived(data);
+void Client::onReadyRead() {
+    QString data = QString::fromUtf8(m_socket->readAll()).trimmed();
+    if (data == "START_GAME") {
+        emit gameStarted(); // Emit signal to indicate the game should start
+    } else {
+        emit dataReceived(data);
+    }
 }
 
 void Client::sendData(const QString &data)
@@ -54,3 +57,5 @@ void Client::sendAction(const Action &action) {
 void Client::sendEndTurn() {
     sendData("END_TURN");
 }
+
+

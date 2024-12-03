@@ -70,10 +70,10 @@ void Turn::clearActionBuffers() {
     player2Buffer.clear();
 }
 
-void Turn::changePlayer() {
+/*void Turn::changePlayer() {
     currentPlayerId = (currentPlayerId == 1) ? 2 : 1;
     std::cout << "Switched to Player " << currentPlayerId << ".\n";
-}
+}*/
 
 int Turn::getCurrentPlayerId() const {
     return currentPlayerId;

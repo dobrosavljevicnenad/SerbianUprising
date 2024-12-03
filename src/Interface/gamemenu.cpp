@@ -11,7 +11,11 @@
 GameMenu::GameMenu(QWidget *parent) : QWidget(parent) {
     setupUI();
 
-    connect(newGameButton, &QPushButton::clicked, this, &GameMenu::startGame);
+    connect(newGameButton, &QPushButton::clicked, this, [this]() {
+        LobbyWindow *lobby = new LobbyWindow();
+        lobby->show();
+        parentWidget()->close();
+    });
     connect(settingsButton, &QPushButton::clicked, this, &GameMenu::openSettings);
     connect(exitButton, &QPushButton::clicked, this, &GameMenu::exitGame);
     connect(fullScreenButton, &QPushButton::clicked, this, &GameMenu::fullScreenClicked);

@@ -11,51 +11,49 @@ Server::Server(QObject *parent)
 
 bool Server::startServer(quint16 port)
 {
-    // QHostAddress::Any -> slusa  sa bilo koje konekcije na tom portu
     if (!m_server->listen(QHostAddress::Any, port)) {
         qWarning() << "Server could not start on port" << port;
         return false;
     }
-    qDebug() << "Server started on port" << port; // cekamo klijente
-    return true;
+    qDebug() << "Server started on port" << port;
     return true;
 }
 
-void Server::onNewConnection()
-{
-    // If the game has already started and we're waiting for second player
-    if (m_gameStarted && m_waitingForSecondPlayer) {
-        if (m_secondPlayerSocket == nullptr) {
-            m_secondPlayerSocket = m_server->nextPendingConnection();// QTcpSocket
-            // kad klijent posalje podatke, poziva se onReadyRead
-            connect(m_secondPlayerSocket, &QTcpSocket::readyRead, this, &Server::onReadyRead);
-            // kad se klijent disc, socket se brise
-            connect(m_secondPlayerSocket, &QTcpSocket::disconnected, this, &Server::onClientDisconnected);
-            qDebug() << "Second player reconnected!";
-            emit gameStarted();  // Notify both players that game has started again
-        }
+void Server::onNewConnection() {
+    QTcpSocket* newSocket = m_server->nextPendingConnection();
+
+    if (!newSocket) {
+        qWarning() << "Failed to establish a new connection.";
         return;
     }
 
-    // Handle the first player (host) connection
     if (m_clientSocket == nullptr) {
-        m_clientSocket = m_server->nextPendingConnection();
+        m_clientSocket = newSocket;
         connect(m_clientSocket, &QTcpSocket::readyRead, this, &Server::onReadyRead);
         connect(m_clientSocket, &QTcpSocket::disconnected, this, &Server::onClientDisconnected);
         qDebug() << "Player 1 connected!";
-    }
-    // Handle the second player connection
-    else if (m_secondPlayerSocket == nullptr) {
-        m_secondPlayerSocket = m_server->nextPendingConnection();
+        m_clientSocket->write("ID:1\n");
+        emit playerJoined(1); // Emit signal for Player 1
+
+    } else if (m_secondPlayerSocket == nullptr) {
+        m_secondPlayerSocket = newSocket;
         connect(m_secondPlayerSocket, &QTcpSocket::readyRead, this, &Server::onReadyRead);
         connect(m_secondPlayerSocket, &QTcpSocket::disconnected, this, &Server::onClientDisconnected);
         qDebug() << "Player 2 connected!";
-        m_gameStarted = true; // The game can now start
-        emit gameStarted();  // Notify both players that game has started
+        m_secondPlayerSocket->write("ID:2\n");
+        emit playerJoined(2); // Emit signal for Player 2
+
+        // Start the game as two players are connected
+        m_gameStarted = true;
+        m_clientSocket->write("START_GAME\n");
+        m_secondPlayerSocket->write("START_GAME\n");
+        emit gameStarted();
     } else {
         qWarning() << "Maximum players already connected.";
+        newSocket->disconnectFromHost();
     }
 }
+
 
 void Server::onReadyRead() {
     QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
@@ -63,8 +61,16 @@ void Server::onReadyRead() {
         qWarning() << "Invalid sender in onReadyRead";
         return;
     }
-
     if (socket->bytesAvailable() > 0) {
+        QString data = QString::fromUtf8(socket->readAll()).trimmed();
+        if (!data.isEmpty()) {
+            qDebug() << "Server received data:" << data;
+            emit dataReceived(data); // Emit the signal
+        } else {
+            qWarning() << "Empty data received.";
+        }
+    }
+    /*if (socket->bytesAvailable() > 0) {
         QString data = QString::fromUtf8(socket->readAll()).trimmed();
         if (!data.isEmpty()) {
             try {
@@ -91,7 +97,7 @@ void Server::onReadyRead() {
                 qWarning() << "Failed to parse data:" << e.what();
             }
         }
-    }
+    }*/
 }
 
 void Server::executeActions(const std::vector<Action> &actions) {

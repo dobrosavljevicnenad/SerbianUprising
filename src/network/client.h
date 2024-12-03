@@ -21,6 +21,7 @@ signals:
     void dataReceived(const QString &data);
     void gameStarted();
     void gameOver(const QString &reason);
+    void playerIdAssigned(int playerId);
 
 private slots:
     void onReadyRead();

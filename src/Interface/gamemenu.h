@@ -1,5 +1,7 @@
 #pragma once
 
+#include "../lobbywindow.h"
+
 #include <QWidget>
 #include <QStackedWidget>
 #include <QPushButton>

@@ -28,7 +28,7 @@ class GameManager : public QObject
 
 public:
     GameManager(QGraphicsScene* scene);
-    void initializeMap();
+ /*   void initializeMap();
 
     void updateLayersGraphics();
     void clearArrows();
@@ -38,7 +38,6 @@ public:
     void CreateRegion();
     void transferTroops(MapLayer* from, MapLayer* to, int troops);
     void printConnections(graph::Vertex* vertex);
-    QMap<MapLayer*,graph::Vertex*> layerToVertex;
     void removeArrowByActionId(int actionId);
     void filterAndRedrawArrows(int currentPlayerId);
     void updateLayersId(int PlayerId);
@@ -60,7 +59,7 @@ private:
     QGraphicsScene* scene;
     graph::Graph g;
 public:
-    Turn turn;
+    Turn turn;*/
 };
 
 #endif // GAMEMANAGER_H

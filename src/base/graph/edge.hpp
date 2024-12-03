@@ -17,7 +17,14 @@ public:
   unsigned to() const;
   double weight() const;
 
-  std::string to_string();
+  std::string to_string() const;
+
+  static EdgeType fromString(const std::string& edgeType) {
+      if (edgeType == "Land") {
+          return EdgeType::Land;
+      }
+      return EdgeType::River;
+  }
 
 private:
   unsigned m_from;

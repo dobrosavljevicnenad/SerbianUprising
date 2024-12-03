@@ -1,10 +1,8 @@
 #include "gamemanager.h"
-
+/*
 GameManager::GameManager(QGraphicsScene* scene) : scene(scene), turn(g)  {}
 
 void GameManager::initializeMap(){
-
-
     QString filePath = "../../resources/init.json";
     QFile file(filePath);
 
@@ -102,15 +100,15 @@ void GameManager::initializeMap(){
     armyManagers[1] = AddArmyManager();
     armyManagers[2] = AddArmyManager();
 }
-void GameManager::updateLayersId(int PlayerId) {
+/*void GameManager::updateLayersId(int PlayerId) {
     for (auto &layer : layers) {
         if (layer) {
             layer->setCurrentPlayer(PlayerId);
         }
     }
-}
+}*/
 
-void GameManager::updateLayersGraphics() {
+/*void GameManager::updateLayersGraphics() {
     clearArrows();
     for (auto &layer : layers) {
         auto vertex = layerToVertex[layer];
@@ -157,7 +155,6 @@ void GameManager::transferTroops(MapLayer* from, MapLayer* to, int troops) {
     }
 }
 
-//print_connections(g, cvor);
 void GameManager::printConnections(graph::Vertex* vertex) {
     auto neighbors = g.neighbors(vertex);
     std::cout << "Vertex " << vertex->id() << " is connected to: ";
@@ -227,5 +224,5 @@ void GameManager::connectClients() {
     } else {
         qWarning() << "Player 2 failed to connect!";
     }
-}
+}*/
 

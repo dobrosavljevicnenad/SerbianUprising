@@ -12,6 +12,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets Multimedia)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets Multimedia)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Network)
+
 set(PROJECT_SOURCES
         src/main.cpp
         src/mainwindow.cpp
@@ -23,63 +24,22 @@ set(PROJECT_SOURCES
 
 set(CMAKE_BUILD_TYPE Debug)
 
+file(GLOB_RECURSE PROJECT_SOURCES "src/*.cpp" "src/*.h")
 
-if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
+if (QT_VERSION_MAJOR GREATER_EQUAL 6)
     qt_add_executable(Ustanak
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        src/base/Test/testBattle.h src/base/Test/testBattle.cpp
-        src/base/Entities/Army.h src/base/Entities/Army.cpp
-        src/base/Mechanics/Battle.h src/base/Mechanics/Battle.cpp
-        src/base/Mechanics/Strength.h src/base/Mechanics/Strength.cpp
-        src/base/Entities/Terrain.h src/base/Entities/Terrain.cpp
-        src/base/Entities/player.h src/base/Entities/player.cpp
-        src/base/Mechanics/MoveArmy.h src/base/Mechanics/MoveArmy.cpp
-        src/base/Entities/mergeArmies.h src/base/Entities/mergeArmies.cpp
-        src/Interface/maplayer.h src/Interface/maplayer.cpp
-        src/Interface/mapscene.h src/Interface/mapscene.cpp
-        src/base/graph/edge.hpp src/base/graph/edge.cpp
-        src/base/graph/graph.hpp src/base/graph/graph.cpp
-        src/base/graph/vertex.hpp src/base/graph/vertex.cpp
         resources.qrc
-        src/Interface/gamemanager.h src/Interface/gamemanager.cpp
-        src/base/Entities/city.h src/base/Entities/city.cpp
-        src/base/Entities/region.h src/base/Entities/region.cpp
-        src/base/Mechanics/turn.h src/base/Mechanics/turn.cpp
-        src/base/Mechanics/Action.h
-        src/Interface/Items/customarrowitem.h src/Interface/Items/customarrowitem.cpp
-        src/base/Mechanics/Action.cpp
-        src/base/Mechanics/addarmymanager.h src/base/Mechanics/addarmymanager.cpp
-	src/Interface/gamemenu.h src/Interface/gamemenu.cpp
-        src/network/server.h src/network/server.cpp
-        src/network/client.h src/network/client.cpp    
-)
-# Define target properties for Android with Qt 6 as:
-#    set_property(TARGET Ustanak APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
-#                 ${CMAKE_CURRENT_SOURCE_DIR}/android)
-# For more information, see https://doc.qt.io/qt-6/qt-add-executable.html#target-creation
+    )
 else()
-    if(ANDROID)
-        add_library(Ustanak SHARED
-            ${PROJECT_SOURCES}
-        )
-# Define properties for Android with Qt 5 after find_package() calls as:
-#    set(ANDROID_PACKAGE_SOURCE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/android")
-    else()
-        add_executable(Ustanak
-            ${PROJECT_SOURCES}
-        )
-    endif()
+    add_executable(Ustanak ${PROJECT_SOURCES})
 endif()
 
 
 
 target_link_libraries(Ustanak PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Multimedia)
 
-
-# Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
-# If you are developing for iOS or macOS you should consider setting an
-# explicit, fixed bundle identifier manually though.
 if(${QT_VERSION} VERSION_LESS 6.1.0)
   set(BUNDLE_ID_OPTION MACOSX_BUNDLE_GUI_IDENTIFIER com.example.Ustanak)
 endif()

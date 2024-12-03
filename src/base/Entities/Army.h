@@ -29,6 +29,11 @@ public:
     int morale() const;
     std::string to_string(ArmyType type) const;
 
+    static Army fromString(const std::string& type, int soldiers) {
+        ArmyType armyType = (type == "HAJDUK") ? ArmyType::HAJDUK : ArmyType::JANISSARY;
+        return Army(soldiers, armyType);
+    }
+
 private:
     int m_soldiers;
     ArmyType m_armyType;
