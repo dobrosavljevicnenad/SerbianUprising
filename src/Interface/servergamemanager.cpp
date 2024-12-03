@@ -1,8 +1,10 @@
 #include "servergamemanager.h"
 
-ServerGameManager::ServerGameManager()
+ServerGameManager::ServerGameManager(Server* server, QObject* parent)
     : g(), // Initializes the graph
-    turn(g) // Initializes TurnManager with the graph
+    turn(g),
+    server(server),
+    QObject(parent)
 {
     // Initialize army managers or other server-specific data structures
     armyManagers[1] = AddArmyManager();
@@ -49,8 +51,8 @@ void ServerGameManager::initializeMap() {
 }*/
 
 void ServerGameManager::startServer(){
-    if (server.startServer(12345)) {
-        QObject::connect(&server, &Server::dataReceived, this, [this](const QString &data) {
+    if (server->startServer(12345)) {
+        QObject::connect(server, &Server::dataReceived, this, [this](const QString &data) {
         });
     }
 }

@@ -36,8 +36,6 @@ public:
 signals:
     void gameStarted();
 
-private slots:
-    //void processClientData(const QString &data);
 
 private:
     QGraphicsScene* scene;

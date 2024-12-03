@@ -14,11 +14,21 @@ ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *paren
     moveList(new QListWidget())
 {
     setupGame();
+    if (!gameManager) {
+        qWarning() << "Error: gameManager is null in ClientWindow.";
+        return;
+    }
+    if (!scene) {
+        qWarning() << "Error: Scene creation failed.";
+        return;
+    }
+
     setupUI();
 }
 
-ClientWindow::~ClientWindow() {}
-
+ClientWindow::~ClientWindow() {
+    qDebug() << "Destroying ClientWindow...";
+}
 void ClientWindow::setupGame() {
     view = new QGraphicsView(scene, this);
     setCentralWidget(view);
@@ -132,11 +142,13 @@ void ClientWindow::setupUI() {
 
 void ClientWindow::connectSignals() {
     //connect(gameManager, &GameManager::layerClicked, this, &ClientWindow::onLayerClicked);
-    connect(endTurnButton, &QPushButton::clicked, this, &ClientWindow::onEndTurnClicked);
-    connect(moveList, &QListWidget::itemClicked, this, &ClientWindow::onMoveClicked);
-    connect(infoButton, &QPushButton::clicked, this, &ClientWindow::onInfoButtonClicked);
-    connect(moveButton, &QPushButton::clicked, this, &ClientWindow::onMoveButtonClicked);
-    connect(armyButton, &QPushButton::clicked, this, &ClientWindow::onPlaceButtonClicked);
+    qDebug() << "Connecting endTurnButton signal...";
+    //connect(endTurnButton, &QPushButton::clicked, this, &ClientWindow::onEndTurnClicked);
+    //connect(moveList, &QListWidget::itemClicked, this, &ClientWindow::onMoveClicked);
+    //connect(infoButton, &QPushButton::clicked, this, &ClientWindow::onInfoButtonClicked);
+    //connect(moveButton, &QPushButton::clicked, this, &ClientWindow::onMoveButtonClicked);
+    //connect(armyButton, &QPushButton::clicked, this, &ClientWindow::onPlaceButtonClicked);
+    qDebug() << "END";
 
 }
 
@@ -192,7 +204,7 @@ void ClientWindow::onMoveClicked(QListWidgetItem* item) {
     }*/
 }
 
-void ClientWindow::onLayerClicked(MapLayer* layer) {
+/*void ClientWindow::onLayerClicked(MapLayer* layer) {
 
     if (activeButton == moveButton) {
         handleMoveArmy(layer);
@@ -202,7 +214,7 @@ void ClientWindow::onLayerClicked(MapLayer* layer) {
         QMessageBox::warning(this, tr("Unknown Action"), tr("This action is not supported."));
     }
 
-}
+}*/
 
 void ClientWindow::handleMoveArmy(MapLayer* layer){
     /*if (selectedLayer == nullptr) {

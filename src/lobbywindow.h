@@ -22,6 +22,8 @@ private:
     Server server;
     Client client;
 
+    ClientWindow * gameWindow;
+
     ServerGameManager* serverManager;
     ClientGameManager* clientManager;
 

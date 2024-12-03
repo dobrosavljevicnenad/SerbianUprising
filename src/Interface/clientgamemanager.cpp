@@ -1,16 +1,8 @@
 #include "clientgamemanager.h"
 
 ClientGameManager::ClientGameManager(QGraphicsScene* scene)
-    : scene(scene), // Pointer to the graphical scene for rendering
-    client()      // Initializes the client for communication
-{
-    // Initialize scene or other client-specific UI components
-    MapLayer* baseLayer = new MapLayer(":/resources/Images/base.png", false);
-    baseLayer->setZValue(-1);
-    scene->addItem(baseLayer);
-
-    // Additional setup for graphical elements or listeners
-}
+    : scene(scene) // Pointer to the graphical scene for rendering
+{}
 
 void ClientGameManager::initializeGraphics() {
     // Initialize empty map with graphical elements
@@ -61,7 +53,7 @@ bool ClientGameManager::connectToServer() {
     // Deserialize incoming game state from the server
     QJsonDocument jsonDoc = QJsonDocument::fromJson(data.toUtf8());
     QJsonObject gameState = jsonDoc.object();
-
+f
     deserializeGameState(gameState);  // Update client-side game state
     updateGraphics();  // Refresh the graphical display
 }

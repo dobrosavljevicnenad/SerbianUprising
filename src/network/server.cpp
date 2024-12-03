@@ -44,10 +44,15 @@ void Server::onNewConnection() {
         emit playerJoined(2); // Emit signal for Player 2
 
         // Start the game as two players are connected
+
         m_gameStarted = true;
         m_clientSocket->write("START_GAME\n");
+        m_clientSocket->flush();
         m_secondPlayerSocket->write("START_GAME\n");
+        m_secondPlayerSocket->flush();
+        qDebug() << "Emitting gameStarted signal";
         emit gameStarted();
+        qDebug() << "gameStarted signal emitted";
     } else {
         qWarning() << "Maximum players already connected.";
         newSocket->disconnectFromHost();
@@ -62,15 +67,6 @@ void Server::onReadyRead() {
         return;
     }
     if (socket->bytesAvailable() > 0) {
-        QString data = QString::fromUtf8(socket->readAll()).trimmed();
-        if (!data.isEmpty()) {
-            qDebug() << "Server received data:" << data;
-            emit dataReceived(data); // Emit the signal
-        } else {
-            qWarning() << "Empty data received.";
-        }
-    }
-    /*if (socket->bytesAvailable() > 0) {
         QString data = QString::fromUtf8(socket->readAll()).trimmed();
         if (!data.isEmpty()) {
             try {
@@ -97,7 +93,7 @@ void Server::onReadyRead() {
                 qWarning() << "Failed to parse data:" << e.what();
             }
         }
-    }*/
+    }
 }
 
 void Server::executeActions(const std::vector<Action> &actions) {

@@ -23,7 +23,7 @@ bool Client::connectToServer(const QString &hostAddress, quint16 port)
 void Client::onReadyRead() {
     QString data = QString::fromUtf8(m_socket->readAll()).trimmed();
     if (data == "START_GAME") {
-        emit gameStarted(); // Emit signal to indicate the game should start
+        emit gameStarted(); // Emit a signal for game start
     } else {
         emit dataReceived(data);
     }

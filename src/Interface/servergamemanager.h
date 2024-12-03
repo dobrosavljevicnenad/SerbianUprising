@@ -22,7 +22,7 @@ class ServerGameManager : public QObject{
 
     Q_OBJECT
 public:
-    ServerGameManager();
+    ServerGameManager(Server* server, QObject* parent);
     void initializeMap();
     //void processEndTurn();
     //void sendSerializedGameStateToClients();
@@ -41,7 +41,7 @@ private:
     Graph g;
     Turn turn;
     std::map<int, AddArmyManager> armyManagers;
-    Server server;
+    Server* server;
     ;  // Server handles communication
 };
 
