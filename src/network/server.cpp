@@ -120,6 +120,16 @@ void Server::executeActions(const std::vector<Action> &actions) {
 
 void Server::onClientDisconnected()
 {
+    QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
+    if (socket == m_clientSocket) {
+        qDebug() << "Player 1 disconnected.";
+        m_clientSocket = nullptr;
+    } else if (socket == m_secondPlayerSocket) {
+        qDebug() << "Player 2 disconnected.";
+        m_secondPlayerSocket = nullptr;
+    }
+
+    /*socket->deleteLater();
     if (m_clientSocket && sender() == m_clientSocket) {
         qDebug() << "Host (Player 1) disconnected!";
         m_clientSocket = nullptr;
@@ -130,7 +140,7 @@ void Server::onClientDisconnected()
         m_secondPlayerSocket = nullptr;
         m_waitingForSecondPlayer = true;  // Now we're waiting for the second player to reconnect
         emit gameOver("Second player left, waiting for reconnection.");
-    }
+    }*/
 }
 // server salje odgovor klijentu
 void Server::sendData(const QString &data)

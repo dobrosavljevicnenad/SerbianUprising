@@ -11,7 +11,11 @@ LobbyWindow::LobbyWindow(QWidget *parent)
     connectSignals();
 }
 
-LobbyWindow::~LobbyWindow() {}
+LobbyWindow::~LobbyWindow() {
+    delete serverManager;
+    delete clientManager;
+    delete &client;
+}
 
 void LobbyWindow::setupUI() {
     QVBoxLayout *layout = new QVBoxLayout(this);
@@ -49,6 +53,7 @@ void LobbyWindow::onCreateServer() {
             QMessageBox::warning(this, "Error", "Failed to connect the host client to the server.");
             return;
         }
+        disconnect(clientManager, &ClientGameManager::gameStarted, this, &LobbyWindow::handleGameStarted);
         connect(clientManager, &ClientGameManager::gameStarted, this, &LobbyWindow::handleGameStarted);
 
 }

@@ -16,6 +16,7 @@ public:
     void sendData(const QString &data);
     void sendAction(const Action &action);
     void sendEndTurn();
+    void disconnectFromServer();
 
 signals:
     void dataReceived(const QString &data);

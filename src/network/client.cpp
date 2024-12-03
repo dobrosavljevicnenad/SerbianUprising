@@ -32,6 +32,15 @@ void Client::onReadyRead() {
     }
 }
 
+void Client::disconnectFromServer() {
+    if (m_socket->state() == QAbstractSocket::ConnectedState) {
+        m_socket->disconnectFromHost();
+        if (m_socket->state() != QAbstractSocket::UnconnectedState) {
+            m_socket->waitForDisconnected(3000); // Wait for disconnection
+        }
+    }
+}
+
 void Client::sendData(const QString &data)
 {
     if (m_socket->state() == QTcpSocket::ConnectedState) {

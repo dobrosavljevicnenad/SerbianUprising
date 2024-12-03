@@ -13,6 +13,7 @@ ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *paren
     selectedLayer(nullptr),
     moveList(new QListWidget())
 {
+    setupGame();
     setupUI();
 }
 
