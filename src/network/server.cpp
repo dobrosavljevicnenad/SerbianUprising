@@ -27,35 +27,49 @@ void Server::onNewConnection() {
         return;
     }
 
+    // Handle Player 1 connection
     if (m_clientSocket == nullptr) {
         m_clientSocket = newSocket;
         connect(m_clientSocket, &QTcpSocket::readyRead, this, &Server::onReadyRead);
         connect(m_clientSocket, &QTcpSocket::disconnected, this, &Server::onClientDisconnected);
         qDebug() << "Player 1 connected!";
         m_clientSocket->write("ID:1\n");
-        emit playerJoined(1); // Emit signal for Player 1
-
-    } else if (m_secondPlayerSocket == nullptr) {
+        m_clientSocket->flush(); // Ensure the data is sent immediately
+        emit playerJoined(1);
+    }
+    // Handle Player 2 connection
+    else if (m_secondPlayerSocket == nullptr) {
         m_secondPlayerSocket = newSocket;
         connect(m_secondPlayerSocket, &QTcpSocket::readyRead, this, &Server::onReadyRead);
         connect(m_secondPlayerSocket, &QTcpSocket::disconnected, this, &Server::onClientDisconnected);
         qDebug() << "Player 2 connected!";
         m_secondPlayerSocket->write("ID:2\n");
-        emit playerJoined(2); // Emit signal for Player 2
+        m_secondPlayerSocket->flush();
+        emit playerJoined(2);
 
         // Start the game as two players are connected
-
         m_gameStarted = true;
-        m_clientSocket->write("START_GAME\n");
-        m_clientSocket->flush();
-        m_secondPlayerSocket->write("START_GAME\n");
-        m_secondPlayerSocket->flush();
-        qDebug() << "Emitting gameStarted signal";
-        emit gameStarted();
-        qDebug() << "gameStarted signal emitted";
-    } else {
+
+        // Broadcast the START_GAME message to all players
+        broadcast("START_GAME");
+        //emit gameStarted();
+    }
+    // Reject additional connections
+    else {
         qWarning() << "Maximum players already connected.";
         newSocket->disconnectFromHost();
+    }
+}
+
+
+void Server::broadcast(const QString &message) {
+    if (m_clientSocket && m_clientSocket->state() == QAbstractSocket::ConnectedState) {
+        m_clientSocket->write(message.toUtf8());
+        m_clientSocket->flush();
+    }
+    if (m_secondPlayerSocket && m_secondPlayerSocket->state() == QAbstractSocket::ConnectedState) {
+        m_secondPlayerSocket->write(message.toUtf8());
+        m_secondPlayerSocket->flush();
     }
 }
 
@@ -128,3 +142,4 @@ void Server::sendData(const QString &data)
         m_secondPlayerSocket->write(data.toUtf8());
     }
 }
+

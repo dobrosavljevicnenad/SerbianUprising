@@ -22,10 +22,11 @@ public:
     std::vector<Action> actionsPlayer1;
     std::vector<Action> actionsPlayer2;
     void executeActions(const std::vector<Action> &actions);
+    void broadcast(const QString &message);
 ////////////////////////////////////////////////
 signals:
     void dataReceived(const QString &data);
-    void gameStarted();
+    //void gameStarted();
     void gameOver(const QString &reason);
     void playerJoined(int playerId); // Signal emitted when a player joins
 private slots:

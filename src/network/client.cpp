@@ -21,11 +21,14 @@ bool Client::connectToServer(const QString &hostAddress, quint16 port)
 }
 
 void Client::onReadyRead() {
-    QString data = QString::fromUtf8(m_socket->readAll()).trimmed();
+    QByteArray rawData = m_socket->readAll();
+    QString data = QString::fromUtf8(rawData).trimmed();
+
     if (data == "START_GAME") {
-        emit gameStarted(); // Emit a signal for game start
+        qDebug() << "Received START_GAME from server. Emitting gameStarted.";
+        emit gameStarted(); // Emit the gameStarted signal
     } else {
-        emit dataReceived(data);
+        emit dataReceived(data); // Emit generic data received signal
     }
 }
 

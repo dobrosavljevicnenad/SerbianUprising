@@ -21,7 +21,7 @@ class ClientGameManager : public QObject{
     Q_OBJECT
 
 public:
-    explicit ClientGameManager(QGraphicsScene* scene);
+    explicit ClientGameManager(Client* client, QGraphicsScene* scene,  QObject* parent = nullptr);
     void initializeGraphics();
     //void updateGraphicsFromServerState(const QJsonObject& serverState);
     //void sendEndTurn();
@@ -40,7 +40,7 @@ signals:
 private:
     QGraphicsScene* scene;
     graph::Graph g;  // Logical game state received from server
-    Client client;  // Client handles communication
+    Client* client;  // Client handles communication
 
 };
 #endif // CLIENTGAMEMANAGER_H

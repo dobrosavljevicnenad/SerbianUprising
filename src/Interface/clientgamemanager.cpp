@@ -1,8 +1,13 @@
 #include "clientgamemanager.h"
 
-ClientGameManager::ClientGameManager(QGraphicsScene* scene)
-    : scene(scene) // Pointer to the graphical scene for rendering
-{}
+ClientGameManager::ClientGameManager(Client* client, QGraphicsScene* scene,QObject* parent)
+    : QObject(parent), client(client),scene(scene) // Pointer to the graphical scene for rendering
+{
+    if (client) {
+        // Connect signals from Client to ClientGameManager
+        connect(client, &Client::gameStarted, this, &ClientGameManager::gameStarted);
+    }
+}
 
 void ClientGameManager::initializeGraphics() {
     // Initialize empty map with graphical elements
@@ -33,12 +38,12 @@ void ClientGameManager::setScene(MapScene *newScene) {
 }*/
 
 bool ClientGameManager::connectToServer() {
-    if (client.connectToServer("127.0.0.1", 12345)) {
-        QObject::connect(&client, &Client::dataReceived, this, [](const QString &data) {
+    if (client->connectToServer("127.0.0.1", 12345)) {
+        QObject::connect(client, &Client::dataReceived, this, [](const QString &data) {
             qDebug() << "Client 1 received:" << data;
         });
 
-        client.sendData("Hello from Player 1!");
+        client->sendData("Hello from Player 1!");
 
         return true;
     } else {

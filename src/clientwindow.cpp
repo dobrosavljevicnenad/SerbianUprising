@@ -13,16 +13,6 @@ ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *paren
     selectedLayer(nullptr),
     moveList(new QListWidget())
 {
-    setupGame();
-    if (!gameManager) {
-        qWarning() << "Error: gameManager is null in ClientWindow.";
-        return;
-    }
-    if (!scene) {
-        qWarning() << "Error: Scene creation failed.";
-        return;
-    }
-
     setupUI();
 }
 
