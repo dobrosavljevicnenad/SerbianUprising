@@ -13,6 +13,7 @@ Server::Server(QObject *parent)
 {
     connect(m_server, &QTcpServer::newConnection, this, &Server::onNewConnection);
     connect(this, &Server::startGame, this, &Server::onGameStartRequested);
+    connect(serverGameManager, &ServerGameManager::serializedGraphReady, this, &Server::handleSerializedGraph);
 }
 
 ServerGameManager* Server::getGameManager() {
@@ -145,3 +146,7 @@ void Server::sendData(const QString &data)
     }
 }
 
+void Server::handleSerializedGraph(const QJsonObject &serializedGraph) {
+    QString serializedData = QString(QJsonDocument(serializedGraph).toJson(QJsonDocument::Compact));
+    sendData(serializedData); // send to clients
+}

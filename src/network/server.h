@@ -36,6 +36,7 @@ private slots:
 
 public slots:
     void onGameStartRequested();
+    void handleSerializedGraph(const QJsonObject &serializedGraph);
 
 private:
     QTcpServer *m_server = nullptr;

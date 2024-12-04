@@ -33,7 +33,8 @@ void ServerGameManager::initializeGame() {
 void ServerGameManager::startGame() {
     qDebug() << "Starting game...";
     initializeGame();
-    //serijalizuje graf i prosledi serveru onda server uzima to deserijalizuje i prosledi to clientmanageru koji otpakuje
+    QJsonObject serialized_graph = g.serialize();
+    emit serializedGraphReady(serialized_graph);
 }
 
 

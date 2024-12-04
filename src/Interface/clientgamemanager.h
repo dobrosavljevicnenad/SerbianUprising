@@ -23,6 +23,7 @@ public:
     explicit ClientGameManager(QGraphicsScene* scene,  QObject* parent = nullptr);
     void initializeGraphics();
     void printConnections();
+    void processDataFromServer(const QByteArray& data);
     //void updateGraphicsFromServerState(const QJsonObject& serverState);
     //void sendEndTurn();
     //void sendAction(const Action& action);
@@ -44,5 +45,6 @@ private:
 
 public:
     int ClientId ;
+
 };
 #endif // CLIENTGAMEMANAGER_H

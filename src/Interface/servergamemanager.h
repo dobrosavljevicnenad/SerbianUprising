@@ -34,6 +34,9 @@ private:
     graph::Graph g;
     Turn turn;
     ;  // Server handles communication
+
+signals:
+    void serializedGraphReady(const QJsonObject &serializedGraph);
 };
 
 #endif // SERVERGAMEMANAGER_H

@@ -54,10 +54,12 @@ void Client::onReadyRead() {
         } else if (message == "START_GAME") {
             emit gameStarted();  // Emit game started signal
         } else {
-            emit dataReceived(message);  // Emit general data signal
+            clientGameManager->processDataFromServer(rawData);
         }
     }
 }
+
+
 
 void Client::disconnectFromServer() {
     if (m_socket->state() == QAbstractSocket::ConnectedState) {

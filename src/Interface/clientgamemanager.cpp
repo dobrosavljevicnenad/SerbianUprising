@@ -84,6 +84,22 @@ void ClientGameManager::printConnections() {
     g.print_graph();
 }
 
+void ClientGameManager::processDataFromServer(const QByteArray& data) {
+    QJsonDocument doc = QJsonDocument::fromJson(data);
+    if (!doc.isNull() && doc.isObject()) {
+        QJsonObject graphData = doc.object();
+
+        g.deserialize(graphData);
+
+        qDebug() << "Graph data deserialized and processed.";
+    } else {
+        qWarning() << "Invalid data received from server.";
+    }
+}
+
+
+
+
 /*void ClientGameManager::updateGraphicsFromServerState(const QJsonObject& serverState) {
     g.deserialize(serverState);
 
@@ -100,7 +116,7 @@ void ClientGameManager::printConnections() {
 /*void ClientGameManager::sendAction(const Action& action) {
     client->sendAction(action);
 }
-
+*/
 /*void ClientGameManager::processClientData(const QString &data) {
     // Deserialize incoming game state from the server
     QJsonDocument jsonDoc = QJsonDocument::fromJson(data.toUtf8());
