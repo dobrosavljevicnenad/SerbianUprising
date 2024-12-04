@@ -43,14 +43,6 @@ public:
     void updateLayersId(int PlayerId);
     AddArmyManager& getArmyManager(int playerId);
 
-    void startServer();
-    void connectClients();
-
-    Server server;
-    Client c_player1;
-    Client c_player2;
-signals:
-    void layerClicked(MapLayer* layer);
 
 private:
     std::map<int,AddArmyManager> armyManagers;

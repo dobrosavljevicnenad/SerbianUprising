@@ -37,12 +37,6 @@ void ServerGameManager::startGame() {
 }
 
 
-
-
-
-
-
-
 /*void ServerGameManager::sendSerializedGameStateToClients() {
     QJsonObject serializedGraph = g.serialize();
     QString serializedData = QString(QJsonDocument(serializedGraph).toJson(QJsonDocument::Compact));
@@ -57,13 +51,6 @@ void ServerGameManager::startGame() {
     // Serialize and broadcast updated state to clients
     sendSerializedGameStateToClients();
 }
-
-void ServerGameManager::startServer(){
-    if (server->startServer(12345)) {
-        QObject::connect(server, &Server::dataReceived, this, [this](const QString &data) {
-        });
-    }
-}*/
 
 /*void ServerGameManager::processServerData(const QString &data) {
     // Handle incoming data from clients

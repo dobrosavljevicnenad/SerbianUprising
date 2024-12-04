@@ -22,8 +22,6 @@ private:
     QGraphicsView *view;
     ClientGameManager *gameManager;
     QLabel *headerLabel;
-    int playerId;
-
     // UI elements specific to the client
     QListWidget *moveList;
     QPushButton *moveButton;
@@ -42,7 +40,11 @@ private:
 private slots:
     void onMoveClicked(QListWidgetItem *item);
     void onEndTurnClicked();
-    //void onLayerClicked(MapLayer *layer);
+
+    void onLayerClicked(MapLayer *layer);
+    void handleMoveArmy(MapLayer* layer);
+    void handlePlaceArmy(MapLayer* layer);
+
     //void updateMoveList(int currentPlayer);
 
 
@@ -50,8 +52,8 @@ private slots:
     void onMoveButtonClicked();
     void onPlaceButtonClicked();
     void setActiveButton(QPushButton* clickedButton);
-    void handleMoveArmy(MapLayer* layer);
-    void handlePlaceArmy(MapLayer* layer);
+
+
 
 };
 

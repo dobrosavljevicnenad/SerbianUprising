@@ -1,10 +1,9 @@
 #include "clientgamemanager.h"
 
-ClientGameManager::ClientGameManager(Client* client, QGraphicsScene* scene,QObject* parent)
-    : QObject(parent), client(client),scene(scene) // Pointer to the graphical scene for rendering
+ClientGameManager::ClientGameManager(QGraphicsScene* scene,QObject* parent)
+    : QObject(parent),scene(scene) // Pointer to the graphical scene for rendering
 {
-    int clientId = client->getId();
-    qDebug() << "ClientGameManager created with ID:" << clientId;
+    qDebug() << "ClientGameManager created with ID:" << ClientId;
 }
 
 void ClientGameManager::initializeGraphics() {
@@ -34,7 +33,7 @@ void ClientGameManager::initializeGraphics() {
     scene->addItem(baseLayer);
 
     // Load and initialize layers from JSON
-    QJsonArray layersArray = rootObj["layers"].toArray();
+    QJsonArray layersArray = rootObj["vertices"].toArray();
 
     std::vector<MapLayer*> layers(layersArray.size());
     for (int i = 0; i < layersArray.size(); ++i) {
@@ -48,6 +47,13 @@ void ClientGameManager::initializeGraphics() {
 
         // Initialize the graphical layer
         MapLayer* layer = new MapLayer(labelPath, true);
+        std::string type = layerObj.value("army_type").toString().toStdString();
+        if (type == "HAJDUK") {
+            layer->setArmyColor(ArmyType::HAJDUK);
+        } else if (type == "JANISSARY") {
+            layer->setArmyColor(ArmyType::JANISSARY);
+        }
+        layer->setCurrentPlayer(ClientId);
         layer->setZValue(0); // Default Z-value for layers
         layer->setPos(posX, posY);
 
@@ -56,21 +62,28 @@ void ClientGameManager::initializeGraphics() {
 
         // Store layer in the list for future reference
         layers[i] = layer;
+
+        connect(layers[i], &MapLayer::layerClicked, this, [this, layers, i]() {
+            emit layerClicked(layers[i]);
+        });
     }
 
     // Store all layers
     this->layers = layers;
-
-    qDebug() << "Graphics initialized with" << layers.size() << "layers.";
 }
 
 void ClientGameManager::setScene(MapScene *newScene) {
     scene = newScene;
 }
 
-int ClientGameManager::getId() {
-    return client->getId();
+void ClientGameManager::setId(int id) {
+    ClientId = id;
 }
+
+void ClientGameManager::printConnections() {
+    g.print_graph();
+}
+
 /*void ClientGameManager::updateGraphicsFromServerState(const QJsonObject& serverState) {
     g.deserialize(serverState);
 
@@ -87,23 +100,6 @@ int ClientGameManager::getId() {
 /*void ClientGameManager::sendAction(const Action& action) {
     client->sendAction(action);
 }
-
-bool ClientGameManager::connectToServer() {
-    if (client->connectToServer("127.0.0.1", 12345)) {
-        QObject::connect(client, &Client::dataReceived, this, [](const QString &data) {
-            qDebug() << "Client 1 received:" << data;
-        });
-
-        client->sendData("Hello from Player 1!");
-
-        return true;
-    } else {
-        qWarning() << "Player 1 failed to connect!";
-        return false;
-    }
-
-}*/
-
 
 /*void ClientGameManager::processClientData(const QString &data) {
     // Deserialize incoming game state from the server

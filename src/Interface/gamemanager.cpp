@@ -195,34 +195,7 @@ AddArmyManager& GameManager::getArmyManager(int playerId) {
     } else {
         throw std::invalid_argument("Invalid player ID for ArmyManager");
     }
-}
-
-void GameManager::startServer(){
-    if (server.startServer(12345)) {
-        QObject::connect(&server, &Server::dataReceived, this, [this](const QString &data) {
-        });
-    }
-}
-
-void GameManager::connectClients() {
-    // Poveži prvog klijenta
-    if (c_player1.connectToServer("127.0.0.1", 12345)) {
-        QObject::connect(&c_player1, &Client::dataReceived, this, [](const QString &data) {
-            qDebug() << "Client 1 received:" << data;
-        });
-        c_player1.sendData("Hello from Player 1!");
-    } else {
-        qWarning() << "Player 1 failed to connect!";
-    }
-
-    // Poveži drugog klijenta
-    if (c_player2.connectToServer("127.0.0.1", 12345)) {
-        QObject::connect(&c_player2, &Client::dataReceived, this, [](const QString &data) {
-            qDebug() << "Client 2 received:" << data;
-        });
-        c_player2.sendData("Hello from Player 2!");
-    } else {
-        qWarning() << "Player 2 failed to connect!";
-    }
 }*/
+
+
 

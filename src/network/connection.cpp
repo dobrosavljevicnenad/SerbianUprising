@@ -24,7 +24,7 @@ bool ConnectionManager::initializeClient() {
     connect(client, &Client::idReceived, this, [this](int id) {
         qDebug() << "Client received ID from server:" << id;
 
-        clientManager = new ClientGameManager(client, nullptr, this);
+        clientManager = client->getClientGameManager();
     });
 
     connect(client, &Client::gameStarted, this, &ConnectionManager::gameStarted);

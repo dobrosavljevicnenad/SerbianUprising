@@ -16,6 +16,7 @@ ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *paren
 {
     setupGame();
     setupUI();
+    connectSignals();
 }
 
 ClientWindow::~ClientWindow() {
@@ -27,7 +28,6 @@ void ClientWindow::setupGame() {
     setCentralWidget(view);
     gameManager->setScene(scene);
     gameManager->initializeGraphics();
-    connectSignals();
 }
 
 void ClientWindow::setupUI() {
@@ -36,7 +36,7 @@ void ClientWindow::setupUI() {
 
     mainLayout->setSpacing(5);
     mainLayout->setContentsMargins(2, 2, 2, 2);
-    QString label = QString("Player %1").arg(gameManager->getId());
+    QString label = QString("Player %1").arg(gameManager->ClientId);
     headerLabel = new QLabel(label);
     QFont font = headerLabel->font();
     font.setBold(true);
@@ -134,19 +134,20 @@ void ClientWindow::setupUI() {
 }
 
 void ClientWindow::connectSignals() {
-    //connect(gameManager, &GameManager::layerClicked, this, &ClientWindow::onLayerClicked);
-    //connect(endTurnButton, &QPushButton::clicked, this, &ClientWindow::onEndTurnClicked);
-    //connect(moveList, &QListWidget::itemClicked, this, &ClientWindow::onMoveClicked);
-    //connect(infoButton, &QPushButton::clicked, this, &ClientWindow::onInfoButtonClicked);
-    //connect(moveButton, &QPushButton::clicked, this, &ClientWindow::onMoveButtonClicked);
-    //connect(armyButton, &QPushButton::clicked, this, &ClientWindow::onPlaceButtonClicked);
+    connect(gameManager, &ClientGameManager::layerClicked, this, &ClientWindow::onLayerClicked);
+    connect(endTurnButton, &QPushButton::clicked, this, &ClientWindow::onEndTurnClicked);
+    connect(moveList, &QListWidget::itemClicked, this, &ClientWindow::onMoveClicked);
+    connect(infoButton, &QPushButton::clicked, this, &ClientWindow::onInfoButtonClicked);
+    connect(moveButton, &QPushButton::clicked, this, &ClientWindow::onMoveButtonClicked);
+    connect(armyButton, &QPushButton::clicked, this, &ClientWindow::onPlaceButtonClicked);
 }
 
 void ClientWindow::onEndTurnClicked() {
     //Handle the end of the turn
     //gameManager->turn.executeTurn();
     //headerLabel->setText(QString("Turn %1").arg(gameManager->turn.getTurn()));
-    headerLabel->setText(QString("Turn 1"));
+    gameManager->printConnections();
+    //headerLabel->setText(QString("Turn 1"));
         //pdate graphics and logic
     //gameManager->updateLayersGraphics();
     moveList->clear();
@@ -194,7 +195,7 @@ void ClientWindow::onMoveClicked(QListWidgetItem* item) {
     }*/
 }
 
-/*void ClientWindow::onLayerClicked(MapLayer* layer) {
+void ClientWindow::onLayerClicked(MapLayer* layer) {
 
     if (activeButton == moveButton) {
         handleMoveArmy(layer);
@@ -204,9 +205,10 @@ void ClientWindow::onMoveClicked(QListWidgetItem* item) {
         QMessageBox::warning(this, tr("Unknown Action"), tr("This action is not supported."));
     }
 
-}*/
+}
 
 void ClientWindow::handleMoveArmy(MapLayer* layer){
+    qDebug() << "handlemovearmy";
     /*if (selectedLayer == nullptr) {
         selectedLayer = layer;
         graph::Vertex* selected_vertex = gameManager->layerToVertex[selectedLayer];
@@ -256,6 +258,7 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
 }
 
 void ClientWindow::handlePlaceArmy(MapLayer* layer){
+    qDebug() << "handlplacearmy";
     /*int currentPlayerId = gameManager->turn.getCurrentPlayerId();
     graph::Vertex* selected_vertex = gameManager->layerToVertex[layer];
 

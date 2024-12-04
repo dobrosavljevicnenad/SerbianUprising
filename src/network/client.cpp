@@ -2,12 +2,17 @@
 #include <QDebug>
 
 Client::Client(QObject *parent)
-    : QObject(parent), m_socket(new QTcpSocket(this))
+    : QObject(parent),
+    m_socket(new QTcpSocket(this)),
+    clientGameManager(new ClientGameManager(nullptr, this))
 {
     connect(m_socket, &QTcpSocket::readyRead, this, &Client::onReadyRead);
     // readyRead i onReadyRead, kada stignu podaci
     // sa server automatski se povezuje sa metodom onReadyRead()
 
+}
+ClientGameManager* Client::getClientGameManager() const {
+    return clientGameManager;
 }
 
 bool Client::connectToServer(const QString &hostAddress, quint16 port)
@@ -23,7 +28,6 @@ bool Client::connectToServer(const QString &hostAddress, quint16 port)
 
 void Client::setId(int newId) {
     id = newId;
-    qDebug() << "Client ID set to:" << id;
 }
 
 int Client::getId() const {
@@ -42,6 +46,7 @@ void Client::onReadyRead() {
             int receivedId = message.mid(3).toInt(&ok);
             if (ok) {
                 id = receivedId;
+                clientGameManager->setId(id);
                 emit idReceived(id);  // Emit the ID signal
             } else {
                 qWarning() << "Failed to parse ID from server message:" << message;

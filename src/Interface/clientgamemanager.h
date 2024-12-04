@@ -1,7 +1,6 @@
 #ifndef CLIENTGAMEMANAGER_H
 #define CLIENTGAMEMANAGER_H
 
-#include "../network/client.h"
 #include "../base/graph/graph.hpp"
 #include<QGraphicsScene>
 #include<iostream>
@@ -21,27 +20,29 @@ class ClientGameManager : public QObject{
     Q_OBJECT
 
 public:
-    explicit ClientGameManager(Client* client, QGraphicsScene* scene,  QObject* parent = nullptr);
+    explicit ClientGameManager(QGraphicsScene* scene,  QObject* parent = nullptr);
     void initializeGraphics();
+    void printConnections();
     //void updateGraphicsFromServerState(const QJsonObject& serverState);
     //void sendEndTurn();
     //void sendAction(const Action& action);
-    bool connectToServer();
     //void updateGraphics();
     //QJsonObject serializeGameState() const;
     //void deserializeGameState(const QJsonObject &json);
 
     void setScene(MapScene *newScene);
-    int getId();
+    void setId(int id);
+
+signals:
+    void layerClicked(MapLayer* layer);
 
 private:
     QGraphicsScene* scene;
     graph::Graph g;
     std::vector<MapLayer*> layers;
-    Client* client;
     AddArmyManager armyManagers;
 
-    int PlayerId = 0;
-
+public:
+    int ClientId ;
 };
 #endif // CLIENTGAMEMANAGER_H

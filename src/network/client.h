@@ -5,7 +5,7 @@
 #include <QTcpSocket>
 #include <QString>
 #include "../base/Mechanics/Action.h"
-//#include "../Interface/clientgamemanager.h"
+#include "../Interface/clientgamemanager.h"
 
 class Client : public QObject
 {
@@ -20,6 +20,7 @@ public:
     void disconnectFromServer();
     int getId() const;
     void setId(int newId);
+    ClientGameManager* getClientGameManager() const;
 
 signals:
     void dataReceived(const QString &data);
@@ -38,7 +39,7 @@ private slots:
 private:
     QTcpSocket *m_socket;
     int id;
-    //ClientGameManager clientGameManager;
+    ClientGameManager* clientGameManager;
 };
 
 #endif // CLIENT_H

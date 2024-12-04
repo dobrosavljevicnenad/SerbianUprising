@@ -34,6 +34,11 @@ public:
         return Army(soldiers, armyType);
     }
 
+    static ArmyType fromString(const std::string& type) {
+        ArmyType armyType = (type == "HAJDUK") ? ArmyType::HAJDUK : ArmyType::JANISSARY;
+        return armyType;
+    }
+
 private:
     int m_soldiers;
     ArmyType m_armyType;

@@ -69,7 +69,7 @@ void LobbyWindow::handleGameReady() {
 
 void LobbyWindow::handleGameStart() {
     clientManager = connectionManager->getClientManager();
-    qDebug() << "Game is starting."<< clientManager->getId();;
+    qDebug() << "Game is starting."<< clientManager->ClientId;
     gameWindow = new ClientWindow(clientManager, nullptr);
     gameWindow->show();
     close();
