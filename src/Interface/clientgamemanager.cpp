@@ -8,10 +8,60 @@ ClientGameManager::ClientGameManager(Client* client, QGraphicsScene* scene,QObje
 }
 
 void ClientGameManager::initializeGraphics() {
-    // Initialize empty map with graphical elements
+    // File path to JSON containing graphical data
+    QString filePath = "../../resources/init.json";
+    QFile file(filePath);
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Could not open file:" << filePath;
+        return;
+    }
+
+    QByteArray jsonData = file.readAll();
+    file.close();
+
+    QJsonDocument doc = QJsonDocument::fromJson(jsonData);
+    if (doc.isNull() || !doc.isObject()) {
+        qWarning() << "Invalid JSON file format.";
+        return;
+    }
+
+    QJsonObject rootObj = doc.object();
+
+    // Base layer initialization
     MapLayer* baseLayer = new MapLayer(":/resources/Images/base.png", false);
     baseLayer->setZValue(-1);
     scene->addItem(baseLayer);
+
+    // Load and initialize layers from JSON
+    QJsonArray layersArray = rootObj["layers"].toArray();
+
+    std::vector<MapLayer*> layers(layersArray.size());
+    for (int i = 0; i < layersArray.size(); ++i) {
+        QJsonObject layerObj = layersArray[i].toObject();
+
+        // Extract layer-specific data
+        QString labelPath = layerObj.value("label_path").toString();
+        QJsonObject positionObj = layerObj.value("position").toObject();
+        int posX = positionObj.value("x").toInt();
+        int posY = positionObj.value("y").toInt();
+
+        // Initialize the graphical layer
+        MapLayer* layer = new MapLayer(labelPath, true);
+        layer->setZValue(0); // Default Z-value for layers
+        layer->setPos(posX, posY);
+
+        // Add layer to the scene
+        scene->addItem(layer);
+
+        // Store layer in the list for future reference
+        layers[i] = layer;
+    }
+
+    // Store all layers
+    this->layers = layers;
+
+    qDebug() << "Graphics initialized with" << layers.size() << "layers.";
 }
 
 void ClientGameManager::setScene(MapScene *newScene) {

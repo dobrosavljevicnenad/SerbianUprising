@@ -1,43 +1,42 @@
-    #include "connection.h"
+#include "connection.h"
 
 
-    ConnectionManager::ConnectionManager(QObject *parent)
-    : QObject(parent), serverManager(nullptr), clientManager(nullptr),client(new Client(this)) {
+ConnectionManager::ConnectionManager(QObject *parent)
+: QObject(parent), serverManager(nullptr), clientManager(nullptr),client(new Client(this)) {
+}
+
+bool ConnectionManager::initializeServer() {
+    qDebug() << "Player";
+    if (!server.startServer(12345)) {
+        qWarning() << "Failed to start the server on port 12345.";
+        return false;
+    }
+    qDebug() << "Server initialized.";
+    return true;
+}
+
+bool ConnectionManager::initializeClient() {
+    if (!client->connectToServer("127.0.0.1", 12345)) {
+        qWarning() << "Failed to connect the client to the server.";
+        return false;
     }
 
-    bool ConnectionManager::initializeServer() {
-        qDebug() << "Player";
-        if (!server.startServer(12345)) {
-            qWarning() << "Failed to start the server on port 12345.";
-            return false;
-        }
-        serverManager = new ServerGameManager(&server, this);
-        qDebug() << "Server and ServerManager initialized.";
-        return true;
-    }
+    connect(client, &Client::idReceived, this, [this](int id) {
+        qDebug() << "Client received ID from server:" << id;
 
-    bool ConnectionManager::initializeClient() {
-        if (!client->connectToServer("127.0.0.1", 12345)) {
-            qWarning() << "Failed to connect the client to the server.";
-            return false;
-        }
+        clientManager = new ClientGameManager(client, nullptr, this);
+    });
 
-        connect(client, &Client::idReceived, this, [this](int id) {
-            qDebug() << "Client received ID from server:" << id;
+    connect(client, &Client::gameStarted, this, &ConnectionManager::gameStarted);
 
-            clientManager = new ClientGameManager(client, nullptr, this);
-        });
+    return true;
+}
 
-        connect(client, &Client::gameStarted, this, &ConnectionManager::gameStarted);
+ServerGameManager* ConnectionManager::getServerManager() {
+    return serverManager;
+}
 
-        return true;
-    }
-
-    ServerGameManager* ConnectionManager::getServerManager() {
-        return serverManager;
-    }
-
-    ClientGameManager* ConnectionManager::getClientManager() {
-        return clientManager;
-    }
+ClientGameManager* ConnectionManager::getClientManager() {
+    return clientManager;
+}
 

@@ -4,9 +4,19 @@
 #include "../base/Mechanics/Action.h"
 
 Server::Server(QObject *parent)
-    : QObject(parent), m_server(new QTcpServer()), m_clientSocket(nullptr), m_secondPlayerSocket(nullptr), m_gameStarted(false), m_waitingForSecondPlayer(false), turn(g)
+    : QObject(parent),
+    m_server(new QTcpServer()),
+    m_clientSocket(nullptr),
+    m_secondPlayerSocket(nullptr),
+    m_waitingForSecondPlayer(false),
+    serverGameManager(new ServerGameManager(this))
 {
     connect(m_server, &QTcpServer::newConnection, this, &Server::onNewConnection);
+    connect(this, &Server::startGame, this, &Server::onGameStartRequested);
+}
+
+ServerGameManager* Server::getGameManager() {
+    return serverGameManager;
 }
 
 bool Server::startServer(quint16 port)
@@ -45,13 +55,18 @@ void Server::onNewConnection() {
         if (m_clientSocket && m_secondPlayerSocket) {
             qDebug() << "Both players connected. Starting game.";
             broadcast("START_GAME");
+
+            emit startGame();
         }
     } else {
         qWarning() << "Maximum players already connected.";
         newSocket->disconnectFromHost();
     }
 }
-
+void Server::onGameStartRequested(){
+    serverGameManager->startGame();
+    //prosiri logiku emituje ... nesto
+}
 
 void Server::broadcast(const QString &message) {
     if (m_secondPlayerSocket && m_secondPlayerSocket->state() == QAbstractSocket::ConnectedState) {
@@ -63,7 +78,6 @@ void Server::broadcast(const QString &message) {
         m_clientSocket->flush();
     }
 }
-
 
 void Server::onReadyRead() {
     QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
@@ -107,14 +121,11 @@ void Server::executeActions(const std::vector<Action> &actions) {
     }
 }
 
-
-
 void Server::onClientDisconnected()
 {
     if (m_clientSocket && sender() == m_clientSocket) {
         qDebug() << "Host (Player 1) disconnected!";
         m_clientSocket = nullptr;
-        m_gameStarted = false;
         emit gameOver("Host left, game over.");
     } else if (m_secondPlayerSocket && sender() == m_secondPlayerSocket) {
         qDebug() << "Second player disconnected!";

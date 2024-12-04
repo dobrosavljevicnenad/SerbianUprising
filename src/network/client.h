@@ -5,6 +5,7 @@
 #include <QTcpSocket>
 #include <QString>
 #include "../base/Mechanics/Action.h"
+//#include "../Interface/clientgamemanager.h"
 
 class Client : public QObject
 {
@@ -37,6 +38,7 @@ private slots:
 private:
     QTcpSocket *m_socket;
     int id;
+    //ClientGameManager clientGameManager;
 };
 
 #endif // CLIENT_H

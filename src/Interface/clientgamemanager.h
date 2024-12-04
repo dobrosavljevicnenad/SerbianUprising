@@ -12,7 +12,7 @@
 #include <QFile>
 #include <QDebug>
 #include <map>
-#include "../base/Mechanics/turn.h"
+#include "../base/Mechanics/addarmymanager.h"
 #include "mapscene.h"
 
 
@@ -37,7 +37,10 @@ public:
 private:
     QGraphicsScene* scene;
     graph::Graph g;
+    std::vector<MapLayer*> layers;
     Client* client;
+    AddArmyManager armyManagers;
+
     int PlayerId = 0;
 
 };

@@ -1,9 +1,7 @@
 #ifndef SERVERGAMEMANAGER_H
 #define SERVERGAMEMANAGER_H
 
-#include "../network/server.h"
 #include "../base/Mechanics/turn.h"
-#include "../base/Mechanics/addarmymanager.h"
 #include "../base/graph/graph.hpp"
 
 #include<QGraphicsScene>
@@ -22,22 +20,19 @@ class ServerGameManager : public QObject{
 
     Q_OBJECT
 public:
-    ServerGameManager(Server* server, QObject* parent);
-    void initializeMap();
+    ServerGameManager(QObject* parent);
+    void initializeGame();
+    void startGame();
     //void processEndTurn();
     //void sendSerializedGameStateToClients();
     //void applyActions(std::vector<Action> actions);
-    void startServer();
     //void processServerData(const QString &data);
-    //void onGameStart();
     //QJsonObject serializeGameState() const;
     //void deserializeGameState(const QJsonObject &json);
 
 private:
-    Graph g;
+    graph::Graph g;
     Turn turn;
-    std::map<int, AddArmyManager> armyManagers;
-    Server* server;
     ;  // Server handles communication
 };
 

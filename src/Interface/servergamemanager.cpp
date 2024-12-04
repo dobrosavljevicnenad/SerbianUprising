@@ -1,19 +1,13 @@
 #include "servergamemanager.h"
 
-ServerGameManager::ServerGameManager(Server* server, QObject* parent)
+ServerGameManager::ServerGameManager( QObject* parent)
     : g(), // Initializes the graph
     turn(g),
-    server(server),
     QObject(parent)
 {
-    // Initialize army managers or other server-specific data structures
-    armyManagers[1] = AddArmyManager();
-    armyManagers[2] = AddArmyManager();
 }
 
-void ServerGameManager::initializeMap() {
-    // Same as your current `initializeMap` but skips graphical layer.
-    // Example: Do not add `scene->addItem(...)`.
+void ServerGameManager::initializeGame() {
     QString filePath = "../../resources/init.json";
     QFile file(filePath);
 
@@ -33,7 +27,21 @@ void ServerGameManager::initializeMap() {
 
     QJsonObject rootObj = doc.object();
     g.deserialize(rootObj);
+
 }
+
+void ServerGameManager::startGame() {
+    qDebug() << "Starting game...";
+    initializeGame();
+    //serijalizuje graf i prosledi serveru onda server uzima to deserijalizuje i prosledi to clientmanageru koji otpakuje
+}
+
+
+
+
+
+
+
 
 /*void ServerGameManager::sendSerializedGameStateToClients() {
     QJsonObject serializedGraph = g.serialize();

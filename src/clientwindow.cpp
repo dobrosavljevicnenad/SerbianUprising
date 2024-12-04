@@ -21,6 +21,7 @@ ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *paren
 ClientWindow::~ClientWindow() {
     qDebug() << "Destroying ClientWindow...";
 }
+
 void ClientWindow::setupGame() {
     view = new QGraphicsView(scene, this);
     setCentralWidget(view);
@@ -36,7 +37,6 @@ void ClientWindow::setupUI() {
     mainLayout->setSpacing(5);
     mainLayout->setContentsMargins(2, 2, 2, 2);
     QString label = QString("Player %1").arg(gameManager->getId());
-    qDebug() << "ClientWindow initialized for Player:" << gameManager->getId();
     headerLabel = new QLabel(label);
     QFont font = headerLabel->font();
     font.setBold(true);
@@ -135,14 +135,11 @@ void ClientWindow::setupUI() {
 
 void ClientWindow::connectSignals() {
     //connect(gameManager, &GameManager::layerClicked, this, &ClientWindow::onLayerClicked);
-    qDebug() << "Connecting endTurnButton signal...";
     //connect(endTurnButton, &QPushButton::clicked, this, &ClientWindow::onEndTurnClicked);
     //connect(moveList, &QListWidget::itemClicked, this, &ClientWindow::onMoveClicked);
     //connect(infoButton, &QPushButton::clicked, this, &ClientWindow::onInfoButtonClicked);
     //connect(moveButton, &QPushButton::clicked, this, &ClientWindow::onMoveButtonClicked);
     //connect(armyButton, &QPushButton::clicked, this, &ClientWindow::onPlaceButtonClicked);
-    qDebug() << "END";
-
 }
 
 void ClientWindow::onEndTurnClicked() {

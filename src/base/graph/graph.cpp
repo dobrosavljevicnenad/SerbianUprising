@@ -126,8 +126,6 @@ QJsonObject Graph::serialize() const {
         QJsonObject vertexJson;
         vertexJson["id"] = static_cast<int>(vertex->id());
         vertexJson["label"] = QString::fromStdString(vertex->label());
-        vertexJson["position_x"] = vertex->position().x();
-        vertexJson["position_y"] = vertex->position().y();
         vertexJson["army_count"] = vertex->army.getSoldiers();
         vertexJson["army_type"] = QString::fromStdString(vertex->army.to_string(vertex->army.armyType()));
         vertexJson["player_id"] = vertex->player.getPlayerId();
@@ -159,17 +157,16 @@ void Graph::deserialize(const QJsonObject &json) {
     for (const QJsonValue& value : verticesArray) {
         QJsonObject vertexJson = value.toObject();
 
-        unsigned id = vertexJson["id"].toInt();
-        std::string label = vertexJson["label"].toString().toStdString();
-        QPointF position(vertexJson["position_x"].toDouble(), vertexJson["position_y"].toDouble());
-        int armyCount = vertexJson["army_count"].toInt();
-        std::string armyType = vertexJson["army_type"].toString().toStdString();
-        int playerId = vertexJson["player_id"].toInt();
+        unsigned id = vertexJson["id"].toInt(); // Read the vertex ID
+        std::string label = vertexJson["label"].toString().toStdString(); // Read the label
+        int armyCount = vertexJson["num_of_soldiers"].toInt(); // Read the number of soldiers
+        std::string armyType = vertexJson["army_type"].toString().toStdString(); // Read the army type
+        int playerId = vertexJson["player_id"].toInt(); // Read the player ID
         std::string terrainType = vertexJson["terrain_type"].toString().toStdString();
 
         // Create vertex
         Vertex* vertex = new Vertex(
-            position,
+            QPointF(0, 0),
             label,
             nullptr, // map_layer is nullptr for now
             Terrain::fromString(terrainType),
