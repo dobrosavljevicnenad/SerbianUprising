@@ -33,7 +33,6 @@ void LobbyWindow::connectSignals() {
     connect(createServerButton, &QPushButton::clicked, this, &LobbyWindow::onCreateServer);
     connect(joinGameButton, &QPushButton::clicked, this, &LobbyWindow::onJoinGame);
     if (connectionManager) {
-        connect(connectionManager, &ConnectionManager::clientsReady, this, &LobbyWindow::handleGameReady);
         connect(connectionManager, &ConnectionManager::gameStarted, this, &LobbyWindow::handleGameStart);
         qDebug() << "Signals connected successfully.";
     } else {
@@ -61,7 +60,7 @@ void LobbyWindow::onJoinGame() {
         return;
     }
 
-    QMessageBox::information(this, "Client Connected", "Waiting for the game to start...");
+    //QMessageBox::information(this, "Client Connected", "Waiting for the game to start...");
 }
 
 void LobbyWindow::handleGameReady() {
@@ -69,12 +68,9 @@ void LobbyWindow::handleGameReady() {
 }
 
 void LobbyWindow::handleGameStart() {
-    qDebug() << "Game is starting.";
-
-
     clientManager = connectionManager->getClientManager();
-     qDebug() << "Game is starting."<< clientManager->getId();;
-    gameWindow = new ClientWindow(clientManager, this);
+    qDebug() << "Game is starting."<< clientManager->getId();;
+    gameWindow = new ClientWindow(clientManager, nullptr);
     gameWindow->show();
-
+    close();
 }

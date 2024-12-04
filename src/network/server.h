@@ -28,7 +28,6 @@ signals:
     void dataReceived(const QString &data);
     void gameStarted();
     void gameOver(const QString &reason);
-    void playerJoined(int playerId); // Signal emitted when a player joins
 private slots:
     void onNewConnection();
     void onReadyRead();

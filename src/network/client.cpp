@@ -27,26 +27,30 @@ void Client::setId(int newId) {
 }
 
 int Client::getId() const {
-    return id;  // Return the client's unique ID
+    return id;
 }
 
 void Client::onReadyRead() {
     QByteArray rawData = m_socket->readAll();
     QString data = QString::fromUtf8(rawData).trimmed();
 
-    if (data.startsWith("ID:")) {
-        bool ok;
-        int receivedId = data.mid(3).toInt(&ok);
-        if (ok) {
-            id = receivedId;
-            emit idReceived(id);  // Emit the ID signal
+    // Split the data by newline to handle multiple messages
+    QStringList messages = data.split("\n", Qt::SkipEmptyParts);
+    for (const QString& message : messages) {
+        if (message.startsWith("ID:")) {
+            bool ok;
+            int receivedId = message.mid(3).toInt(&ok);
+            if (ok) {
+                id = receivedId;
+                emit idReceived(id);  // Emit the ID signal
+            } else {
+                qWarning() << "Failed to parse ID from server message:" << message;
+            }
+        } else if (message == "START_GAME") {
+            emit gameStarted();  // Emit game started signal
         } else {
-            qWarning() << "Failed to parse ID from server message:" << data;
+            emit dataReceived(message);  // Emit general data signal
         }
-    } else if (data == "START_GAME") {
-        emit gameStarted();  // Emit game started signal
-    } else {
-        emit dataReceived(data);  // Emit general data signal
     }
 }
 

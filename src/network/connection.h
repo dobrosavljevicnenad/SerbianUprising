@@ -20,10 +20,7 @@ public:
     ServerGameManager* getServerManager();  // Get the initialized ServerGameManager
     ClientGameManager* getClientManager();  // Get the initialized ClientGameManager
 
-    void finalizeSetup();                   // Finalize connections and transitions
-
 signals:
-    void clientsReady();                    // Emitted when both clients are ready
     void gameStarted();                     // Emitted when the game starts
 
 private:
@@ -31,7 +28,5 @@ private:
     Client* client;                          // Client instance
     ServerGameManager *serverManager;       // Server-side manager
     ClientGameManager *clientManager;       // Client-side manager
-    int connectedClients = 0;               // Counter for connected clients
-    int id = 1;
 };
 #endif // CONNECTION_H

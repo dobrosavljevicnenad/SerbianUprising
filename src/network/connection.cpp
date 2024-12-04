@@ -12,19 +12,6 @@
             return false;
         }
         serverManager = new ServerGameManager(&server, this);
-
-        connect(&server, &Server::playerJoined, this, [this]() {
-            static int nextClientId = 1; // Static counter for unique IDs
-            int uniqueId = nextClientId++;
-            qDebug() << "Player connected! Assigned ID:" << uniqueId;
-
-            connectedClients++;
-            if (connectedClients == 2) {
-                qDebug() << "Both clients are connected. Notifying game start.";
-                emit gameStarted();
-            }
-        });
-
         qDebug() << "Server and ServerManager initialized.";
         return true;
     }
@@ -38,7 +25,6 @@
         connect(client, &Client::idReceived, this, [this](int id) {
             qDebug() << "Client received ID from server:" << id;
 
-            // Create and store ClientGameManager
             clientManager = new ClientGameManager(client, nullptr, this);
         });
 
@@ -55,7 +41,3 @@
         return clientManager;
     }
 
-    void ConnectionManager::finalizeSetup() {
-        qDebug() << "Finalizing setup. Notifying clients to start the game.";
-        emit gameStarted();
-    }
