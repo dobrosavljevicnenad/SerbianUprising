@@ -6,15 +6,13 @@
 
 
 LobbyWindow::LobbyWindow(QWidget *parent)
-    : QWidget(parent) {
+    : QWidget(parent), connectionManager(new ConnectionManager(this)) {
     setupUI();
     connectSignals();
 }
 
 LobbyWindow::~LobbyWindow() {
-    delete serverManager;
-    delete clientManager;
-    delete &client;
+    delete connectionManager;
 }
 
 void LobbyWindow::setupUI() {
@@ -34,46 +32,49 @@ void LobbyWindow::setupUI() {
 void LobbyWindow::connectSignals() {
     connect(createServerButton, &QPushButton::clicked, this, &LobbyWindow::onCreateServer);
     connect(joinGameButton, &QPushButton::clicked, this, &LobbyWindow::onJoinGame);
-    //connect(&server, &Server::gameStarted, this, &LobbyWindow::handleGameStarted);
-    qDebug() << "Connected gameStarted signal to handleGameStarted slot.";
-
+    if (connectionManager) {
+        connect(connectionManager, &ConnectionManager::clientsReady, this, &LobbyWindow::handleGameReady);
+        connect(connectionManager, &ConnectionManager::gameStarted, this, &LobbyWindow::handleGameStart);
+        qDebug() << "Signals connected successfully.";
+    } else {
+        qWarning() << "Failed to connect signals: ConnectionManager is nullptr.";
+    }
 }
 
 void LobbyWindow::onCreateServer() {
+    if (!connectionManager->initializeServer()) {
+        QMessageBox::warning(this, "Error", "Failed to start the server.");
+        return;
+    }
 
+    if (!connectionManager->initializeClient()) {
+        QMessageBox::warning(this, "Error", "Failed to connect the host client.");
+        return;
+    }
 
-    serverManager = new ServerGameManager(&server, this);
-    serverManager->startServer();
     QMessageBox::information(this, "Server Started", "Waiting for players to join...");
-
-    // Host connects as Player 1
-
-        clientManager = new ClientGameManager(&client, nullptr, this);
-        if (!clientManager->connectToServer()) {
-            QMessageBox::warning(this, "Error", "Failed to connect the host client to the server.");
-            return;
-        }
-        disconnect(clientManager, &ClientGameManager::gameStarted, this, &LobbyWindow::handleGameStarted);
-        connect(clientManager, &ClientGameManager::gameStarted, this, &LobbyWindow::handleGameStarted);
-
 }
 
 void LobbyWindow::onJoinGame() {
-        clientManager = new ClientGameManager(&client, nullptr, this);
-        if (!clientManager->connectToServer()) {
-            QMessageBox::warning(this, "Error", "Failed to connect to the server.");
-            return;
-        }
-        qDebug() << "Client 2 connected to the server.";
+    if (!connectionManager->initializeClient()) {
+        QMessageBox::warning(this, "Error", "Failed to connect to the server.");
+        return;
+    }
 
-        connect(clientManager, &ClientGameManager::gameStarted, this, &LobbyWindow::handleGameStarted);
+    QMessageBox::information(this, "Client Connected", "Waiting for the game to start...");
 }
 
-void LobbyWindow::handleGameStarted() {
+void LobbyWindow::handleGameReady() {
+    qDebug() << "Both clients are ready. Waiting to start the game.";
+}
 
-    ClientWindow *gameWindow = new ClientWindow(clientManager, nullptr);
+void LobbyWindow::handleGameStart() {
+    qDebug() << "Game is starting.";
 
+
+    clientManager = connectionManager->getClientManager();
+     qDebug() << "Game is starting."<< clientManager->getId();;
+    gameWindow = new ClientWindow(clientManager, this);
     gameWindow->show();
 
-    close();
 }

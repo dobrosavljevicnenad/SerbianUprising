@@ -17,20 +17,26 @@ public:
     void sendAction(const Action &action);
     void sendEndTurn();
     void disconnectFromServer();
+    int getId() const;
+    void setId(int newId);
 
 signals:
     void dataReceived(const QString &data);
     void gameStarted();
     void gameOver(const QString &reason);
     void playerIdAssigned(int playerId);
+    void idReceived(int id);
+
+public slots:
+    void onReadyRead();
 
 private slots:
-    void onReadyRead();
     void onGameStarted();
     void onGameOver(const QString &reason);
 
 private:
     QTcpSocket *m_socket;
+    int id;
 };
 
 #endif // CLIENT_H

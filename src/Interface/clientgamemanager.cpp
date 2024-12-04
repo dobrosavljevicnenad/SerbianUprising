@@ -3,10 +3,8 @@
 ClientGameManager::ClientGameManager(Client* client, QGraphicsScene* scene,QObject* parent)
     : QObject(parent), client(client),scene(scene) // Pointer to the graphical scene for rendering
 {
-    if (client) {
-        // Connect signals from Client to ClientGameManager
-        connect(client, &Client::gameStarted, this, &ClientGameManager::gameStarted);
-    }
+    int clientId = client->getId();
+    qDebug() << "ClientGameManager created with ID:" << clientId;
 }
 
 void ClientGameManager::initializeGraphics() {
@@ -20,6 +18,9 @@ void ClientGameManager::setScene(MapScene *newScene) {
     scene = newScene;
 }
 
+int ClientGameManager::getId() {
+    return client->getId();
+}
 /*void ClientGameManager::updateGraphicsFromServerState(const QJsonObject& serverState) {
     g.deserialize(serverState);
 
@@ -35,7 +36,7 @@ void ClientGameManager::setScene(MapScene *newScene) {
 
 /*void ClientGameManager::sendAction(const Action& action) {
     client->sendAction(action);
-}*/
+}
 
 bool ClientGameManager::connectToServer() {
     if (client->connectToServer("127.0.0.1", 12345)) {
@@ -51,7 +52,7 @@ bool ClientGameManager::connectToServer() {
         return false;
     }
 
-}
+}*/
 
 
 /*void ClientGameManager::processClientData(const QString &data) {

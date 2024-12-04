@@ -12,6 +12,7 @@ Client::Client(QObject *parent)
 
 bool Client::connectToServer(const QString &hostAddress, quint16 port)
 {
+
     m_socket->connectToHost(hostAddress, port);
     if (!m_socket->waitForConnected(5000)) {
         qWarning() << "Could not connect to server.";
@@ -20,15 +21,32 @@ bool Client::connectToServer(const QString &hostAddress, quint16 port)
     return true;
 }
 
+void Client::setId(int newId) {
+    id = newId;
+    qDebug() << "Client ID set to:" << id;
+}
+
+int Client::getId() const {
+    return id;  // Return the client's unique ID
+}
+
 void Client::onReadyRead() {
     QByteArray rawData = m_socket->readAll();
     QString data = QString::fromUtf8(rawData).trimmed();
 
-    if (data == "START_GAME") {
-        qDebug() << "Received START_GAME from server. Emitting gameStarted.";
-        emit gameStarted(); // Emit the gameStarted signal
+    if (data.startsWith("ID:")) {
+        bool ok;
+        int receivedId = data.mid(3).toInt(&ok);
+        if (ok) {
+            id = receivedId;
+            emit idReceived(id);  // Emit the ID signal
+        } else {
+            qWarning() << "Failed to parse ID from server message:" << data;
+        }
+    } else if (data == "START_GAME") {
+        emit gameStarted();  // Emit game started signal
     } else {
-        emit dataReceived(data); // Emit generic data received signal
+        emit dataReceived(data);  // Emit general data signal
     }
 }
 

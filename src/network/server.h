@@ -26,7 +26,7 @@ public:
 ////////////////////////////////////////////////
 signals:
     void dataReceived(const QString &data);
-    //void gameStarted();
+    void gameStarted();
     void gameOver(const QString &reason);
     void playerJoined(int playerId); // Signal emitted when a player joins
 private slots:
@@ -34,7 +34,7 @@ private slots:
     void onReadyRead();
     void onClientDisconnected();
 private:
-    QTcpServer *m_server;
+    QTcpServer *m_server = nullptr;
     QTcpSocket *m_clientSocket; // Host
     QTcpSocket *m_secondPlayerSocket; // Second Player
     bool m_gameStarted;

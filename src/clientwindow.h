@@ -16,12 +16,13 @@ public:
     void setupGame();
     ~ClientWindow();
 
+
 private:
     MapScene *scene;
     QGraphicsView *view;
     ClientGameManager *gameManager;
     QLabel *headerLabel;
-
+    int playerId;
 
     // UI elements specific to the client
     QListWidget *moveList;

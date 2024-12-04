@@ -32,15 +32,13 @@ public:
     //void deserializeGameState(const QJsonObject &json);
 
     void setScene(MapScene *newScene);
-
-signals:
-    void gameStarted();
-
+    int getId();
 
 private:
     QGraphicsScene* scene;
-    graph::Graph g;  // Logical game state received from server
-    Client* client;  // Client handles communication
+    graph::Graph g;
+    Client* client;
+    int PlayerId = 0;
 
 };
 #endif // CLIENTGAMEMANAGER_H

@@ -8,6 +8,7 @@
 #include "clientwindow.h"
 #include "Interface/servergamemanager.h"
 #include "Interface/clientgamemanager.h"
+#include "network/connection.h"
 
 
 class LobbyWindow : public QWidget {
@@ -19,9 +20,7 @@ public:
 
 
 private:
-    Server server;
-    Client client;
-
+    ConnectionManager *connectionManager;  // Centralized connection manager
     ClientWindow * gameWindow;
 
     ServerGameManager* serverManager;
@@ -37,7 +36,8 @@ private:
 private slots:
     void onCreateServer();
     void onJoinGame();
-    void handleGameStarted();
+    void handleGameStart();
+    void handleGameReady();
 };
 
 #endif // LOBBYWINDOW_H

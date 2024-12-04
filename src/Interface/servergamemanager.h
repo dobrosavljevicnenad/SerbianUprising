@@ -33,10 +33,6 @@ public:
     //QJsonObject serializeGameState() const;
     //void deserializeGameState(const QJsonObject &json);
 
-
-signals:
-    void gameStarted();
-
 private:
     Graph g;
     Turn turn;

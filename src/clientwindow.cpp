@@ -5,6 +5,7 @@
 #include <QMessageBox>
 #include <QGraphicsView>
 #include<QListWidget>
+#include<QDebug>
 
 ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *parent)
     : QMainWindow(parent),
@@ -34,8 +35,9 @@ void ClientWindow::setupUI() {
 
     mainLayout->setSpacing(5);
     mainLayout->setContentsMargins(2, 2, 2, 2);
-
-    headerLabel = new QLabel("Turn 1");
+    QString label = QString("Player %1").arg(gameManager->getId());
+    qDebug() << "ClientWindow initialized for Player:" << gameManager->getId();
+    headerLabel = new QLabel(label);
     QFont font = headerLabel->font();
     font.setBold(true);
     font.setPointSize(12);
@@ -148,8 +150,8 @@ void ClientWindow::onEndTurnClicked() {
     //gameManager->turn.executeTurn();
     //headerLabel->setText(QString("Turn %1").arg(gameManager->turn.getTurn()));
     headerLabel->setText(QString("Turn 1"));
-     //pdate graphics and logic
-   //gameManager->updateLayersGraphics();
+        //pdate graphics and logic
+    //gameManager->updateLayersGraphics();
     moveList->clear();
     //gameManager->getArmyManager(1).endTurn();
     //gameManager->getArmyManager(2).endTurn();
