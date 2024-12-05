@@ -31,7 +31,7 @@ public:
     //void deserializeGameState(const QJsonObject &json);
 
 private:
-    graph::Graph g;
+    std::unique_ptr<graph::Graph> graph;
     Turn turn;
     ;  // Server handles communication
 

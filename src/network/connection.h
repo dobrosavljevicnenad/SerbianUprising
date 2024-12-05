@@ -26,7 +26,6 @@ signals:
 private:
     Server server;                          // Server instance
     Client* client;                          // Client instance
-    ServerGameManager *serverManager;       // Server-side manager
     ClientGameManager *clientManager;       // Client-side manager
 };
 #endif // CONNECTION_H

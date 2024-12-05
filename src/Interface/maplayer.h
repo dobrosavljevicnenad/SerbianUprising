@@ -18,7 +18,7 @@
 class MapLayer : public QObject, public QGraphicsPixmapItem {
     Q_OBJECT
 public:
-    explicit MapLayer(const QString &imagePath, bool enableHover,  QGraphicsItem *parent = nullptr);
+    explicit MapLayer(unsigned id, const QString &imagePath, bool enableHover,  QGraphicsItem *parent = nullptr);
 
     void setTroopCount(int count);
     void setColor(const QColor &newColor);
@@ -26,6 +26,7 @@ public:
     QGraphicsTextItem *troopText;
     int getTroopCount() const;
     void setCurrentPlayer(int PlayerId);
+    int getId();
 
 signals:
     void layerClicked(MapLayer *layer);
@@ -38,6 +39,7 @@ protected:
     QColor getArmyColor();
 
 private:
+    int id;
     int troopCount;
     int currentPlayer;
     QPixmap m_originalPixmap;

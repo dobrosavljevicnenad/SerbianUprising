@@ -1,10 +1,11 @@
 #include "maplayer.h"
 
-MapLayer::MapLayer(const QString &imagePath,bool enableHover = true, QGraphicsItem *parent)
+MapLayer::MapLayer(unsigned id, const QString &imagePath,bool enableHover = true, QGraphicsItem *parent)
     : QGraphicsPixmapItem(QPixmap(imagePath), parent),
     troopText(new QGraphicsTextItem(this)),
     m_originalPixmap(QPixmap(imagePath)),
-    currentPlayer(1){
+    currentPlayer(1),
+    id(id){
     if(enableHover)
         setAcceptHoverEvents(true);
 
@@ -91,4 +92,8 @@ void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *event) {
 
 void MapLayer::setCurrentPlayer(int PlayerId){
     currentPlayer = PlayerId;
+}
+
+int MapLayer::getId(){
+    return id;
 }

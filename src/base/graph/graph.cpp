@@ -11,7 +11,7 @@ Graph::~Graph(){
 Vertex* Graph::insert_vertex(QPointF position, const std::string &label,
                              MapLayer *map_layer, Terrain territory, Army army,
                              Player player) {
-    Vertex* vertex = new Vertex(position, label, map_layer, territory, army, player);
+    Vertex* vertex = new Vertex(m_next_id++,position, label, map_layer, territory, army, player);
 
     vertices.emplace(vertex->id(), vertex);
     m_adj_list[vertex] = std::vector<Edge>();
@@ -124,12 +124,13 @@ QJsonObject Graph::serialize() const {
     QJsonArray verticesArray;
     for (const auto& [id, vertex] : vertices) {
         QJsonObject vertexJson;
-        vertexJson["id"] = static_cast<int>(vertex->id());
-        vertexJson["label"] = QString::fromStdString(vertex->label());
-        vertexJson["army_count"] = vertex->army.getSoldiers();
-        vertexJson["army_type"] = QString::fromStdString(vertex->army.to_string(vertex->army.armyType()));
-        vertexJson["player_id"] = vertex->player.getPlayerId();
-        vertexJson["terrain_type"] = QString::fromStdString(vertex->terrain.to_string(vertex->terrain.getTerrain()));
+        vertexJson["id"] = static_cast<int>(vertex->id()); // Store the vertex ID
+        vertexJson["label"] = QString::fromStdString(vertex->label()); // Store the label
+        vertexJson["num_of_soldiers"] = vertex->army.getSoldiers(); // Store the number of soldiers
+        vertexJson["army_type"] = QString::fromStdString(vertex->army.to_string(vertex->army.armyType())); // Store the army type
+        vertexJson["terrain_type"] = QString::fromStdString(vertex->terrain.to_string(vertex->terrain.getTerrain())); // Store the terrain type
+
+        // Add the vertex to the vertices array
         verticesArray.append(vertexJson);
     }
     graphJson["vertices"] = verticesArray;
@@ -139,10 +140,12 @@ QJsonObject Graph::serialize() const {
     for (const auto& [vertex, edges] : m_adj_list) {
         for (const Edge& edge : edges) {
             QJsonObject edgeJson;
-            edgeJson["from"] = static_cast<int>(edge.from());
-            edgeJson["to"] = static_cast<int>(edge.to());
-            edgeJson["weight"] = edge.weight();
-            edgeJson["type"] = QString::fromStdString(edge.to_string());
+            edgeJson["from"] = static_cast<int>(edge.from()); // Store the source vertex ID
+            edgeJson["to"] = static_cast<int>(edge.to()); // Store the destination vertex ID
+            edgeJson["weight"] = edge.weight(); // Store the weight of the edge
+            edgeJson["type"] = QString::fromStdString(edge.to_string()); // Store the type of the edge
+
+            // Add the edge to the edges array
             edgesArray.append(edgeJson);
         }
     }
@@ -152,51 +155,75 @@ QJsonObject Graph::serialize() const {
 }
 
 void Graph::deserialize(const QJsonObject &json) {
-    // Deserialize vertices
     QJsonArray verticesArray = json["vertices"].toArray();
-    for (const QJsonValue& value : verticesArray) {
-        QJsonObject vertexJson = value.toObject();
+    if(!initialized){// Deserialize vertices
+        for (const QJsonValue& value : verticesArray) {
+            QJsonObject vertexJson = value.toObject();
 
-        unsigned id = vertexJson["id"].toInt(); // Read the vertex ID
-        std::string label = vertexJson["label"].toString().toStdString(); // Read the label
-        int armyCount = vertexJson["num_of_soldiers"].toInt(); // Read the number of soldiers
-        std::string armyType = vertexJson["army_type"].toString().toStdString(); // Read the army type
-        int playerId = vertexJson["player_id"].toInt(); // Read the player ID
-        std::string terrainType = vertexJson["terrain_type"].toString().toStdString();
+            unsigned id = vertexJson["id"].toInt(); // Read the vertex ID
+            std::string label = vertexJson["label"].toString().toStdString(); // Read the label
+            int armyCount = vertexJson["num_of_soldiers"].toInt(); // Read the number of soldiers
+            std::string armyType = vertexJson["army_type"].toString().toStdString(); // Read the army type
+            int playerId;
+            std::string terrainType = vertexJson["terrain_type"].toString().toStdString();
+            if (armyType == "HAJDUK") {
+                playerId =1;
+            } else if (armyType == "JANISSARY") {
+                playerId=2;
+            }
+            else {
+                playerId = 1;
+            }
+            // Create vertex
+            insert_vertex(                QPointF(0, 0),
+                          label,
+                          nullptr, // map_layer is nullptr for now
+                          Terrain::fromString(terrainType),
+                          Army::fromString(armyType, armyCount),
+                          Player::fromJson(playerId, armyType));
+        }
 
-        // Create vertex
-        Vertex* vertex = new Vertex(
-            QPointF(0, 0),
-            label,
-            nullptr, // map_layer is nullptr for now
-            Terrain::fromString(terrainType),
-            Army::fromString(armyType, armyCount),
-            Player::fromJson(playerId, armyType)
-            );
+        // Deserialize edges
+        QJsonArray edgesArray = json["edges"].toArray();
+        for (const QJsonValue& value : edgesArray) {
+            QJsonObject edgeJson = value.toObject();
 
-        vertices[id] = vertex;
-        m_adj_list[vertex] = std::vector<Edge>();
-    }
+            unsigned fromId = edgeJson["from"].toInt();
+            unsigned toId = edgeJson["to"].toInt();
+            double weight = edgeJson["weight"].toDouble();
+            std::string type = edgeJson["type"].toString().toStdString();
 
-    // Deserialize edges
-    QJsonArray edgesArray = json["edges"].toArray();
-    for (const QJsonValue& value : edgesArray) {
-        QJsonObject edgeJson = value.toObject();
+            Vertex* fromVertex = vertices[fromId];
+            Vertex* toVertex = vertices[toId];
 
-        unsigned fromId = edgeJson["from"].toInt();
-        unsigned toId = edgeJson["to"].toInt();
-        double weight = edgeJson["weight"].toDouble();
-        std::string type = edgeJson["type"].toString().toStdString();
+            if (fromVertex && toVertex) {
+                EdgeType edgeType = Edge::fromString(type);
+                insert_edge(fromVertex, toVertex, weight, edgeType);
+            }
+        }
+        initialized=true;
+    } else {
+        for (const QJsonValue& value : verticesArray) {
+            QJsonObject vertexJson = value.toObject();
+            unsigned id = vertexJson["id"].toInt(); // Read the vertex ID
+            int armyCount = vertexJson["num_of_soldiers"].toInt(); // Read the number of soldiers
+            std::string armyType = vertexJson["army_type"].toString().toStdString(); // Read the army type
+            int playerId;
+            if (armyType == "HAJDUK") {
+                playerId =1;
+            } else if (armyType == "JANISSARY") {
+                playerId=2;
+            }
+            else {
+                playerId = 1;
+            }
 
-        Vertex* fromVertex = vertices[fromId];
-        Vertex* toVertex = vertices[toId];
-
-        if (fromVertex && toVertex) {
-            EdgeType edgeType = Edge::fromString(type);
-            insert_edge(fromVertex, toVertex, weight, edgeType);
+            vertices[id]->player = Player::fromJson(playerId, armyType);
+            vertices[id]->army = Army::fromString(armyType, armyCount);
         }
     }
 }
+
 
 }
 

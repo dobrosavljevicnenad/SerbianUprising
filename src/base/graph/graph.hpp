@@ -36,13 +36,15 @@ public:
     Vertex* get_vertex_by_id(nodeID_t id) const;
     QJsonObject serialize() const;
     void deserialize(const QJsonObject &json);
+    void clear();
 
 public:
     std::unordered_map<nodeID_t, Vertex*> vertices;  // Map of vertex IDs to Vertex pointers
 
 private:
     std::unordered_map<Vertex*, std::vector<Edge>> m_adj_list;  // Adjacency list for edges
-    unsigned m_next_id;  // Next ID for a new vertex
+    unsigned m_next_id=1;  // Next ID for a new vertex
+    bool initialized = false;
 };
 
 } // namespace graph

@@ -24,23 +24,27 @@ public:
     void initializeGraphics();
     void printConnections();
     void processDataFromServer(const QByteArray& data);
+    void updateGraphics();
     //void updateGraphicsFromServerState(const QJsonObject& serverState);
     //void sendEndTurn();
     //void sendAction(const Action& action);
-    //void updateGraphics();
     //QJsonObject serializeGameState() const;
     //void deserializeGameState(const QJsonObject &json);
 
     void setScene(MapScene *newScene);
     void setId(int id);
 
+    QMap<MapLayer*,graph::Vertex*> layerToVertex;
+
 signals:
     void layerClicked(MapLayer* layer);
 
 private:
+    bool init = false;
     QGraphicsScene* scene;
-    graph::Graph g;
+    std::unique_ptr<graph::Graph> clientGraph;
     std::vector<MapLayer*> layers;
+    //std::map<int,std::vector<CustomArrowItem*>> arrows;
     AddArmyManager armyManagers;
 
 public:

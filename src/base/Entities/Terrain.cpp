@@ -45,16 +45,16 @@ int Terrain::getDefenderAdvantage() const {
 std::string Terrain::to_string(TerrainType type) const{
     switch(type){
     case TerrainType::FIELD:
-        return "field";
+        return "FIELD";
         break;
     case TerrainType::FOREST:
-        return "forest";
+        return "FOREST";
         break;
     case TerrainType::HILL:
-        return "hill";
+        return "HILL";
         break;
     case TerrainType::MOUNTAIN:
-        return "mountain";
+        return "MOUNTAIN";
         break;
     default:
         return "";

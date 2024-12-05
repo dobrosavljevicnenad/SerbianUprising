@@ -2,7 +2,7 @@
 
 
 ConnectionManager::ConnectionManager(QObject *parent)
-: QObject(parent), serverManager(nullptr), clientManager(nullptr),client(new Client(this)) {
+: QObject(parent), clientManager(nullptr),client(new Client(this)) {
 }
 
 bool ConnectionManager::initializeServer() {
@@ -32,9 +32,6 @@ bool ConnectionManager::initializeClient() {
     return true;
 }
 
-ServerGameManager* ConnectionManager::getServerManager() {
-    return serverManager;
-}
 
 ClientGameManager* ConnectionManager::getClientManager() {
     return clientManager;

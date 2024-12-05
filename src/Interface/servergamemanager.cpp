@@ -1,8 +1,8 @@
 #include "servergamemanager.h"
 
 ServerGameManager::ServerGameManager( QObject* parent)
-    : g(), // Initializes the graph
-    turn(g),
+    : graph(new graph::Graph()), // Initializes the graph
+    turn(*graph),
     QObject(parent)
 {
 }
@@ -26,16 +26,19 @@ void ServerGameManager::initializeGame() {
     }
 
     QJsonObject rootObj = doc.object();
-    g.deserialize(rootObj);
+    graph->deserialize(rootObj);
 
 }
 
 void ServerGameManager::startGame() {
     qDebug() << "Starting game...";
     initializeGame();
-    QJsonObject serialized_graph = g.serialize();
+    QJsonObject serialized_graph = graph->serialize();
+    //g.deserialize(serialized_graph);
+    //.print_graph();
     emit serializedGraphReady(serialized_graph);
 }
+
 
 
 /*void ServerGameManager::sendSerializedGameStateToClients() {

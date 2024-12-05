@@ -1,13 +1,14 @@
 #include "clientgamemanager.h"
 
 ClientGameManager::ClientGameManager(QGraphicsScene* scene,QObject* parent)
-    : QObject(parent),scene(scene) // Pointer to the graphical scene for rendering
+    : QObject(parent),scene(scene),clientGraph(new graph::Graph()) // Pointer to the graphical scene for rendering
 {
     qDebug() << "ClientGameManager created with ID:" << ClientId;
 }
 
 void ClientGameManager::initializeGraphics() {
     // File path to JSON containing graphical data
+    //qDebug() << "prvo init:";
     QString filePath = "../../resources/init.json";
     QFile file(filePath);
 
@@ -28,7 +29,7 @@ void ClientGameManager::initializeGraphics() {
     QJsonObject rootObj = doc.object();
 
     // Base layer initialization
-    MapLayer* baseLayer = new MapLayer(":/resources/Images/base.png", false);
+    MapLayer* baseLayer = new MapLayer(20,":/resources/Images/base.png", false);
     baseLayer->setZValue(-1);
     scene->addItem(baseLayer);
 
@@ -46,13 +47,7 @@ void ClientGameManager::initializeGraphics() {
         int posY = positionObj.value("y").toInt();
 
         // Initialize the graphical layer
-        MapLayer* layer = new MapLayer(labelPath, true);
-        std::string type = layerObj.value("army_type").toString().toStdString();
-        if (type == "HAJDUK") {
-            layer->setArmyColor(ArmyType::HAJDUK);
-        } else if (type == "JANISSARY") {
-            layer->setArmyColor(ArmyType::JANISSARY);
-        }
+        MapLayer* layer = new MapLayer(i,labelPath, true);
         layer->setCurrentPlayer(ClientId);
         layer->setZValue(0); // Default Z-value for layers
         layer->setPos(posX, posY);
@@ -62,7 +57,6 @@ void ClientGameManager::initializeGraphics() {
 
         // Store layer in the list for future reference
         layers[i] = layer;
-
         connect(layers[i], &MapLayer::layerClicked, this, [this, layers, i]() {
             emit layerClicked(layers[i]);
         });
@@ -81,22 +75,46 @@ void ClientGameManager::setId(int id) {
 }
 
 void ClientGameManager::printConnections() {
-    g.print_graph();
+    clientGraph->print_graph();
 }
 
 void ClientGameManager::processDataFromServer(const QByteArray& data) {
     QJsonDocument doc = QJsonDocument::fromJson(data);
     if (!doc.isNull() && doc.isObject()) {
         QJsonObject graphData = doc.object();
-
-        g.deserialize(graphData);
-
-        qDebug() << "Graph data deserialized and processed.";
+        clientGraph->deserialize(graphData);
+        if(!init){
+            for (auto &layer : layers) {
+                graph::Vertex* vertex = clientGraph->get_vertex_by_id(layer->getId()+1);
+                if (vertex) {
+                    layerToVertex[layer] = vertex;
+                    vertex->map_layer = layer;
+                }
+            }
+            init = true;
+        }
+        updateGraphics();
     } else {
         qWarning() << "Invalid data received from server.";
     }
 }
 
+void ClientGameManager::updateGraphics() {
+    for (auto &layer : layers) {
+        if (layerToVertex.find(layer) != layerToVertex.end()) {
+            graph::Vertex *vertex = layerToVertex[layer];
+            if (vertex) {
+                Army army = vertex->army; // Safely access the `army`
+                layer->setArmyColor(army.armyType());
+                layer->setTroopCount(army.getSoldiers());
+            } else {
+                qWarning() << "Vertex is null for layer:" << layer->getId();
+            }
+        } else {
+            qWarning() << "Layer not found in layerToVertex map:" << layer->getId();
+        }
+    }
+}
 
 
 
@@ -124,8 +142,5 @@ void ClientGameManager::processDataFromServer(const QByteArray& data) {
 f
     deserializeGameState(gameState);  // Update client-side game state
     updateGraphics();  // Refresh the graphical display
-}
-
-void ClientGameManager::updateGraphics() {
-    // Redraw map layers, troop counts, etc.
 }*/
+
