@@ -2,8 +2,6 @@
 
 namespace graph {
 
-unsigned graph::Vertex::m_index = 1;
-
 Vertex::Vertex(unsigned id,QPointF position, const std::string &label,
                MapLayer *map_layer, Terrain terrain, Army army,
                Player player)

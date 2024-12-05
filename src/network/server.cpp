@@ -90,24 +90,37 @@ void Server::onReadyRead() {
         QString data = QString::fromUtf8(socket->readAll()).trimmed();
         if (!data.isEmpty()) {
             try {
-                // Proveri da li je signal za End Turn
-                if (data == "END_TURN") {
-                    qDebug() << "End Turn received!";
-                    if (socket == m_clientSocket) {
-                        executeActions(actionsPlayer1);
-                        actionsPlayer1.clear();
-                    } else if (socket == m_secondPlayerSocket) {
-                        executeActions(actionsPlayer2);
-                        actionsPlayer2.clear();
+                QJsonObject jsonObject = QJsonDocument::fromJson(data.toUtf8()).object();
+                if (jsonObject["type"] == "END_TURN") {
+                    int id = jsonObject["id"].toInt();
+                    QJsonArray actionsArray = jsonObject["actions"].toArray();
+                    QVector<Action> actions;
+
+                    for (const QJsonValue &value : actionsArray) {
+                        QJsonObject obj = value.toObject();
+                        QString jsonString = QString(QJsonDocument(obj).toJson(QJsonDocument::Compact));
+                        actions.push_back(Action::fromJson(jsonString));
                     }
-                } else {
-                    // Inače, tretiraj podatke kao Action
-                    Action action = Action::fromJson(data);
-                    if (socket == m_clientSocket) {
-                        actionsPlayer1.push_back(action);
-                    } else if (socket == m_secondPlayerSocket) {
-                        actionsPlayer2.push_back(action);
+
+                    endTurnActions[id] = actions;
+
+                    // Provera da li su oba igrača završila potez
+                    if (endTurnActions.size() == 2) {
+                        auto it = endTurnActions.begin();
+                        int p1_id = it.key();
+                        QVector<Action> actionsPlayer1QVector = it.value();
+                        std::vector<Action> actionsPlayer1(actionsPlayer1QVector.begin(), actionsPlayer1QVector.end());
+                        ++it;
+                        int p2_id = it.key();
+                        QVector<Action> actionsPlayer2QVector = it.value();
+                        std::vector<Action> actionsPlayer2(actionsPlayer2QVector.begin(), actionsPlayer2QVector.end());
+
+                        serverGameManager->executeActions(actionsPlayer1, p1_id, actionsPlayer2, p2_id);
+                        // cistimo endturn-ove za sledece poteze
+                        endTurnActions.clear();
                     }
+
+
                 }
             } catch (std::exception &e) {
                 qWarning() << "Failed to parse data:" << e.what();
@@ -116,9 +129,10 @@ void Server::onReadyRead() {
     }
 }
 
+
+
 void Server::executeActions(const std::vector<Action> &actions) {
     for (const Action &action : actions) {
-        std::cout << "[SERVER]" <<  action << std::endl; // za sad samo ispis jbg
     }
 }
 

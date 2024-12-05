@@ -44,5 +44,7 @@ private:
     QTcpSocket *m_secondPlayerSocket; // Second Player
     bool m_waitingForSecondPlayer;  // True if waiting for second player to reconnect
     ServerGameManager* serverGameManager; // Dedicated game manager
+    int turnCounter = 0;
+    QMap<int, QVector<Action>> endTurnActions; // cuva akcije po id-u klienta
 };
 #endif // SERVER_H

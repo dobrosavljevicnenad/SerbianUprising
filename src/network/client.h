@@ -15,8 +15,9 @@ public:
     explicit Client(QObject *parent = nullptr);
     bool connectToServer(const QString &hostAddress, quint16 port);
     void sendData(const QString &data);
-    void sendAction(const Action &action);
-    void sendEndTurn();
+    // void sendAction(const Action &action, int id);
+    void sendEndTurnWithActions(const QVector<Action> &actions, int id);
+    // void sendEndTurn();
     void disconnectFromServer();
     int getId() const;
     void setId(int newId);

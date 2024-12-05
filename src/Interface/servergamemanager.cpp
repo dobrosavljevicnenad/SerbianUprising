@@ -39,6 +39,27 @@ void ServerGameManager::startGame() {
     emit serializedGraphReady(serialized_graph);
 }
 
+void ServerGameManager::executeActions(const std::vector<Action> &actions1, int p1_id, const std::vector<Action> &actions2, int p2_id){
+    for (const Action& action : actions1) {
+        try {
+            turn.addAction(p1_id, action);
+        } catch (const std::exception& e) {
+            std::cerr << "Error adding action: " << e.what() << "\n";
+        }
+    }
+
+    for (const Action& action : actions2) {
+        try {
+            turn.addAction(p2_id, action);
+        } catch (const std::exception& e) {
+            std::cerr << "Error adding action: " << e.what() << "\n";
+        }
+    }
+
+    turn.executeTurn();
+    turn.clearActionBuffers();
+
+}
 
 
 /*void ServerGameManager::sendSerializedGameStateToClients() {

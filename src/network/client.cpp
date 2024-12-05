@@ -90,13 +90,37 @@ void Client::onGameOver(const QString &reason)
     // Handle game over logic here
 }
 
-void Client::sendAction(const Action &action) {
-    QString jsonData = action.toJson();
-    sendData(jsonData);
+// void Client::sendAction(const Action &action, int id) {
+//     QJsonObject jsonObject;
+//     jsonObject["action"] = action.toJson();
+//     jsonObject["id"] = id;
+
+//     QJsonDocument jsonDoc(jsonObject);
+//     QString jsonString = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
+
+//     m_socket->write(jsonString.toUtf8());
+// }
+
+// void Client::sendEndTurn() {
+//     sendData("END_TURN");
+// }
+
+void Client::sendEndTurnWithActions(const QVector<Action> &actions, int id) {
+    QJsonArray actionsArray;
+    for (const Action &action : actions) {
+        actionsArray.append(action.toJson()); // Pretpostavljamo da postoji metoda toJson u klasi Action
+    }
+
+    QJsonObject jsonObject;
+    jsonObject["type"] = "END_TURN";
+    jsonObject["id"] = id;
+    jsonObject["actions"] = actionsArray;
+
+    QJsonDocument jsonDoc(jsonObject);
+    QString jsonString = QString(jsonDoc.toJson(QJsonDocument::Compact));
+    m_socket->write(jsonString.toUtf8());
 }
 
-void Client::sendEndTurn() {
-    sendData("END_TURN");
-}
 
-
+// klijent salje serveru action i ID klijenta
+// server primi i skladisti podatke

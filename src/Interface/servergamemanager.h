@@ -23,6 +23,7 @@ public:
     ServerGameManager(QObject* parent);
     void initializeGame();
     void startGame();
+    void executeActions(const std::vector<Action> &actions1, int p1_id, const std::vector<Action> &actions2, int p2_id);
     //void processEndTurn();
     //void sendSerializedGameStateToClients();
     //void applyActions(std::vector<Action> actions);

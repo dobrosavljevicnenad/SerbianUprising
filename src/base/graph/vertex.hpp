@@ -36,7 +36,6 @@ public:
     MapLayer* map_layer;
 
 private:
-    static unsigned m_index;
     unsigned m_id;
 
     QPointF m_position;

@@ -224,7 +224,6 @@ void Graph::deserialize(const QJsonObject &json) {
     }
 }
 
-
 }
 
 
