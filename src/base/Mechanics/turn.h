@@ -15,6 +15,7 @@
 #include <QUrl>
 #include <QEventLoop>
 #include <iostream>
+#include "MergeArmiesWorker.h"
 
 class Turn {
 public:

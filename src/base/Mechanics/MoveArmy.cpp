@@ -19,28 +19,12 @@ bool MoveArmy::executeMove(std::vector<Vertex*> sources, Vertex* target, std::ve
             sentArmy.setSoldiers(sentArmy.getSoldiers() + soldiersToMove[i]);
         }
     }
-    unsigned sent = sentArmy.getSoldiers();
-    battleArmies(sentArmy, target);
-    int left = sentArmy.getSoldiers();
-    if(sentArmy.getSoldiers() != 0 && target->army.armyType() != sentArmy.armyType())
-    {
 
-        for (int i = 0; i < sources.size(); i++) {
-            if(i != (sources.size() - 1)){
-                unsigned retreated = (sentArmy.getSoldiers()* soldiersToMove[i] ) / sent;
-                sources[i]->army.setSoldiers(sources[i]->army.getSoldiers() + retreated);
-                left -= retreated;
-                if(left < 0){
-                    std::cerr << "Error: Note enought soldiers to retreat.\n";
-                    return false;
-                }
-            }
-            else {
-                sources[i]->army.setSoldiers(sources[i]->army.getSoldiers() + left);
-                left = 0;
-            }
-        }
-    }
+    unsigned sent = sentArmy.getSoldiers();
+    BattleArmiesWorker* battleWorker = new BattleArmiesWorker(*this, sentArmy, *target, sources, soldiersToMove, sent);
+    connect(battleWorker, &BattleArmiesWorker::battleFinished, this, &MoveArmy::onBattleFinished);
+    battleWorker->start();
+
     return true;
 }
 
@@ -96,15 +80,42 @@ void MoveArmy::battleArmies(Army& source, Vertex* target) {
         }
         target->army = winner;
         return;
-    } /*else {
-        auto neighbors = m_graph.neighbors(target);
-        for (auto& n : neighbors) {
-            if (n->army.armyType() == source.armyType()) {
-                n->army.setSoldiers(n->army.getSoldiers() + source.getSoldiers());
-                break;
+    }
+}
+
+void MoveArmy::onMergeCompleted(bool success) {
+    if (success) {
+        std::cout << "Armies successfully merged.\n";
+
+    } else {
+        std::cerr << "Error: Armies could not be merged.\n";
+    }
+}
+void MoveArmy::onBattleFinished(bool success, Army sentArmy, std::vector<Vertex*> sources,
+                                std::vector<unsigned> soldiersToMove, Vertex* target, unsigned sent){
+    if (success) {
+        std::cout << "Battle completed successfully.\n";
+        int left = sentArmy.getSoldiers();
+        if(sentArmy.getSoldiers() != 0 && target->army.armyType() != sentArmy.armyType())
+        {
+
+            for (int i = 0; i < sources.size(); i++) {
+                if(i != (sources.size() - 1)){
+                    unsigned retreated = (sentArmy.getSoldiers()* soldiersToMove[i] ) / sent;
+                    sources[i]->army.setSoldiers(sources[i]->army.getSoldiers() + retreated);
+                    left -= retreated;
+                    if(left < 0){
+                        std::cerr << "Error: Note enought soldiers to retreat.\n";
+                        return;
+                    }
+                }
+                else {
+                    sources[i]->army.setSoldiers(sources[i]->army.getSoldiers() + left);
+                    left = 0;
+                }
             }
         }
-        target->army = winner;
-        return;
-    }*/
+    } else {
+        std::cerr << "Battle failed.\n";
+    }
 }

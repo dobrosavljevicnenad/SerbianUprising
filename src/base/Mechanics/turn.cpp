@@ -122,10 +122,10 @@ QString Turn::GetCurrentAction(const Action& action) {
 void Turn::executeMoveAction(const Action& action) {
     Vertex* source = m_graph.get_vertex_by_id(action.sourceVertexId);
     Vertex* target = m_graph.get_vertex_by_id(action.targetVertexId);
-
-    if (!moveArmy.mergeArmies(source, target, action.soldiers)) {
-        std::cerr << "Move action failed for Player " << action.playerId << ".\n";
-    }
+    MergeArmiesWorker* mergeWorker = new MergeArmiesWorker(moveArmy, source, target, action.soldiers);
+    QObject::connect(mergeWorker, &MergeArmiesWorker::mergeCompleted,
+                     &moveArmy, &MoveArmy::onMergeCompleted);
+    mergeWorker->start();
 }
 
 void Turn::executeAttackAction(const int playerId, const Action& action) {
