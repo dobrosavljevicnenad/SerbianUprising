@@ -58,7 +58,8 @@ void ServerGameManager::executeActions(const std::vector<Action> &actions1, int 
 
     turn.executeTurn();
     turn.clearActionBuffers();
-
+    QJsonObject serialized_graph = graph->serialize();
+    emit serializedGraphReady(serialized_graph);
 }
 
 

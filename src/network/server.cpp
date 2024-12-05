@@ -104,7 +104,7 @@ void Server::onReadyRead() {
 
                     endTurnActions[id] = actions;
 
-                    // Provera da li su oba igrača završila potez
+                    // Provera da li su oba igraca zavrsila potez
                     if (endTurnActions.size() == 2) {
                         auto it = endTurnActions.begin();
                         int p1_id = it.key();
@@ -120,7 +120,6 @@ void Server::onReadyRead() {
                         endTurnActions.clear();
                     }
 
-
                 }
             } catch (std::exception &e) {
                 qWarning() << "Failed to parse data:" << e.what();
@@ -128,8 +127,6 @@ void Server::onReadyRead() {
         }
     }
 }
-
-
 
 void Server::executeActions(const std::vector<Action> &actions) {
     for (const Action &action : actions) {
@@ -149,6 +146,7 @@ void Server::onClientDisconnected()
         emit gameOver("Second player left, waiting for reconnection.");
     }
 }
+
 // server salje odgovor klijentu
 void Server::sendData(const QString &data)
 {
