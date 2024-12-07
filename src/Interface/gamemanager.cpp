@@ -34,7 +34,7 @@ void GameManager::initializeMap(){
     std::vector<std::pair<int,int>>positions;
     std::vector<std::pair<int,std::vector<int>>> allNeighbors;
 
-    MapLayer *baseLayer = new MapLayer(":/resources/Images/base.png", false);
+    MapLayer *baseLayer = new MapLayer(":/resources/Project/Slika.png", false);
     baseLayer->setZValue(-1);
     scene->addItem(baseLayer);
 
