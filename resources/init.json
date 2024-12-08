@@ -7,6 +7,622 @@
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
       "position": {"x":29,"y": 21}
+    },
+    {
+      "label": "Janina",
+      "label_path": ":/resources/Project/Janina.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1148,"y": 1804}
+    },
+    {
+      "label": "Sarande",
+      "label_path": ":/resources/Project/Sarande.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1028,"y": 1603}
+    },
+    {
+      "label": "Prikhala",
+      "label_path": ":/resources/Project/Prikhala.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1553,"y": 1811}
+    },
+    {
+      "label": "Larissa",
+      "label_path": ":/resources/Project/Larissa.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1809,"y": 1784}
+    },
+    {
+      "label": "Olympus",
+      "label_path": ":/resources/Project/Olympus.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1424,"y": 1556}
+    },
+    {
+      "label": "Ossa",
+      "label_path": ":/resources/Project/Ossa.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1862,"y": 1714}
+    },
+    {
+      "label": "Rapsani",
+      "label_path": ":/resources/Project/Rapsani.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1770,"y": 1655}
+    },
+    {
+      "label": "Vlore",
+      "label_path": ":/resources/Project/Vlore.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":943,"y": 1462}
+    },
+    {
+      "label": "Ohrid",
+      "label_path": ":/resources/Project/Ohrid.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1265,"y": 1353}
+    },
+    {
+      "label": "Tirane",
+      "label_path": ":/resources/Project/Tirane.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1112,"y": 1299}
+    },
+    {
+      "label": "Durres",
+      "label_path": ":/resources/Project/Durres.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":987,"y": 1278}
+    },
+    {
+      "label": "Khaterini",
+      "label_path": ":/resources/Project/Khaterini.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1732,"y": 1551}
+    },
+    {
+      "label": "Delta",
+      "label_path": ":/resources/Project/Delta.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1880,"y": 1531}
+    },
+    {
+      "label": "Solun",
+      "label_path": ":/resources/Project/Solun.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1990,"y": 1486}
+    },
+    {
+      "label": "Chalkidiki",
+      "label_path": ":/resources/Project/Chalkidiki.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1982,"y": 1539}
+    },
+    {
+      "label": "Edessa",
+      "label_path": ":/resources/Project/Edessa.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1664,"y": 1363}
+    },
+    {
+      "label": "Monastir",
+      "label_path": ":/resources/Project/Monastir.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1459,"y": 1371}
+    },
+    {
+      "label": "Serres",
+      "label_path": ":/resources/Project/Serres.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2077,"y": 1377}
+    },
+    {
+      "label": "Kavala",
+      "label_path": ":/resources/Project/Kavala.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2278,"y": 1285}
+    },
+    {
+      "label": "Xanthi",
+      "label_path": ":/resources/Project/Xanthi.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2519,"y": 1248}
+    },
+    {
+      "label": "Alexandropoli",
+      "label_path": ":/resources/Project/Alexandropoli.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2753,"y": 1274}
+    },
+    {
+      "label": "Kiklis",
+      "label_path": ":/resources/Project/Kiklis.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1850,"y": 1241}
+    },
+    {
+      "label": "Sandaski",
+      "label_path": ":/resources/Project/Sandaski.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2118,"y": 1177}
+    },
+    {
+      "label": "Rhodope",
+      "label_path": ":/resources/Project/Rhodope.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2311,"y": 1094}
+    },
+    {
+      "label": "KrumovGrad",
+      "label_path": ":/resources/Project/KrumovGrad.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2770,"y": 1157}
+    },
+    {
+      "label": "Daddia",
+      "label_path": ":/resources/Project/Daddia.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2994,"y": 1188}
+    },
+    {
+      "label": "Corlu",
+      "label_path": ":/resources/Project/Corlu.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":3131,"y": 1213}
+    },
+    {
+      "label": "Istanbul",
+      "label_path": ":/resources/Project/Istanbul.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":3504,"y": 1189}
+    },
+    {
+      "label": "Kirkareli",
+      "label_path": ":/resources/Project/Kirkareli.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":3274,"y": 913}
+    },
+    {
+      "label": "Edirne",
+      "label_path": ":/resources/Project/Edirne.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2970,"y": 1053}
+    },
+    {
+      "label": "Elhovo",
+      "label_path": ":/resources/Project/Elhovo.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2972,"y": 916}
+    },
+    {
+      "label": "Burgas",
+      "label_path": ":/resources/Project/Burgas.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":3053,"y": 755}
+    },
+    {
+      "label": "Varna",
+      "label_path": ":/resources/Project/Varna.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":3200,"y": 500}
+    },
+    {
+      "label": "Kavarna",
+      "label_path": ":/resources/Project/Kavarna.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":3464,"y": 474}
+    },
+    {
+      "label": "Constanta",
+      "label_path": ":/resources/Project/Constanta.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":3415,"y": 184}
+    },
+    {
+      "label": "Silistra",
+      "label_path": ":/resources/Project/Silistra.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2852,"y": 303}
+    },
+    {
+      "label": "Babadag",
+      "label_path": ":/resources/Project/Babadag.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":3363,"y": 0}
+    },
+    {
+      "label": "Braila",
+      "label_path": ":/resources/Project/Braila.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":3088,"y": 0}
+    },
+    {
+      "label": "Focsani",
+      "label_path": ":/resources/Project/Focsani.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2792,"y": 0}
+    },
+    {
+      "label": "Bran",
+      "label_path": ":/resources/Project/Bran.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2481,"y": 0}
+    },
+    {
+      "label": "Negoi",
+      "label_path": ":/resources/Project/Negoi.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2158,"y": 0}
+    },
+    {
+      "label": "TurnuSeverin",
+      "label_path": ":/resources/Project/Turnu_Severin.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1882,"y": 19}
+    },
+    {
+      "label": "Kraiova",
+      "label_path": ":/resources/Project/Kraiova.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1877,"y": 207}
+    },
+    {
+      "label": "Slatina",
+      "label_path": ":/resources/Project/Slatina.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2083,"y": 318}
+    },
+    {
+      "label": "Calarasi",
+      "label_path": ":/resources/Project/Calarasi.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":3097,"y": 146}
+    },
+    {
+      "label": "Bucharest",
+      "label_path": ":/resources/Project/Bucharest.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2740,"y": 174}
+    },
+    {
+      "label": "Ployeshti",
+      "label_path": ":/resources/Project/Ployeshti.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2483,"y": 143}
+    },
+    {
+      "label": "Pitesti",
+      "label_path": ":/resources/Project/Pitesti.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2158,"y": 170}
+    },
+    {
+      "label": "TurnuMagurele",
+      "label_path": ":/resources/Project/Turnu_Magurele.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2460,"y": 389}
+    },
+    {
+      "label": "Giurgiu",
+      "label_path": ":/resources/Project/Giurgiu.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2659,"y": 371}
+    },
+    {
+      "label": "Calafat",
+      "label_path": ":/resources/Project/Calafat.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1973,"y": 433}
+    },
+    {
+      "label": "Vidin",
+      "label_path": ":/resources/Project/Vidin.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1842,"y": 392}
+    },
+    {
+      "label": "Lom",
+      "label_path": ":/resources/Project/Lom.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1862,"y":513}
+    },
+    {
+      "label": "Oryahovo",
+      "label_path": ":/resources/Project/Oryahovo.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1979,"y":526}
+    },
+    {
+      "label": "Nikopoli",
+      "label_path": ":/resources/Project/Nikopoli.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2308,"y":529}
+    },
+    {
+      "label": "Ruse",
+      "label_path": ":/resources/Project/Ruse.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2685,"y":501}
+    },
+    {
+      "label": "Shumen",
+      "label_path": ":/resources/Project/Shumen.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2928,"y":551}
+    },
+    {
+      "label": "Veliko_Tarnovo",
+      "label_path": ":/resources/Project/Veliko_Tarnovo.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2755,"y":662}
+    },
+    {
+      "label": "Sliven",
+      "label_path": ":/resources/Project/Sliven.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2838,"y":780}
+    },
+    {
+      "label": "Sofija",
+      "label_path": ":/resources/Project/Sofija.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1863,"y":719}
+    },
+    {
+      "label": "Plevna",
+      "label_path": ":/resources/Project/Plevna.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2369,"y":704}
+    },
+    {
+      "label": "Stara_Zagora",
+      "label_path": ":/resources/Project/Stara_Zagora.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2588,"y":833}
+    },
+    {
+      "label": "Haskovo",
+      "label_path": ":/resources/Project/Haskovo.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2776,"y":996}
+    },
+    {
+      "label": "Plovdiv",
+      "label_path": ":/resources/Project/Plovdiv.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2448,"y":849}
+    },
+    {
+      "label": "Pazardzhik",
+      "label_path": ":/resources/Project/Pazardzhik.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2196,"y":850}
+    },
+    {
+      "label": "BlagoevGrad",
+      "label_path": ":/resources/Project/BlagoevGrad.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1991,"y":1053}
+    },
+    {
+      "label": "Kostendil",
+      "label_path": ":/resources/Project/Kostendil.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1768,"y":851}
+    },
+    {
+      "label": "Lezhe",
+      "label_path": ":/resources/Project/Lezhe.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1010,"y":1001}
+    },
+    {
+      "label": "Kichevo",
+      "label_path": ":/resources/Project/Kichevo.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1233,"y":1146}
+    },
+    {
+      "label": "Prilep",
+      "label_path": ":/resources/Project/Prilep.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1506,"y":1257}
+    },
+    {
+      "label": "Veles",
+      "label_path": ":/resources/Project/Veles.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1734,"y":1186}
+    },
+    {
+      "label": "Shtip",
+      "label_path": ":/resources/Project/Shtip.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1809,"y":1078}
+    },
+    {
+      "label": "Skodra",
+      "label_path": ":/resources/Project/Skodra.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":897,"y":933}
+    },
+    {
+      "label": "Kichevo-1",
+      "label_path": ":/resources/Project/Kichevo-1.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1279,"y":1495}
+    },
+    {
+      "label": "Skopje",
+      "label_path": ":/resources/Project/Skopje.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1472,"y":1038}
+    },
+    {
+      "label": "Kratovo",
+      "label_path": ":/resources/Project/Kratovo.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":1698,"y":954}
+    },
+    {
+      "label": "Gelibolu",
+      "label_path": ":/resources/Project/Gelibolu.png",
+      "army_type": "JANISSARY",
+      "num_of_soldiers": 10,
+      "neighbours" : [2,4,10],
+      "position": {"x":2986,"y":1516}
     }
   ]
 }
