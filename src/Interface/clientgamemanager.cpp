@@ -116,7 +116,39 @@ void ClientGameManager::updateGraphics() {
     }
 }
 
+void ClientGameManager::drawArrow(int playerId, MapLayer* from, MapLayer* to, int number, int actionId) {
+    QPointF fromPos = from->pos() + QPointF((from->boundingRect().width() / 2)-5,
+                                            from->boundingRect().height() / 2);
+    QPointF toPos = to->pos() + QPointF((to->boundingRect().width() / 2)+20,
+                                        to->boundingRect().height() / 2);
 
+    QLineF line(fromPos, toPos);
+    CustomArrowItem* arrow = new CustomArrowItem(line,actionId);
+    scene->addItem(arrow);
+    arrow->setNumber(number);
+    arrows[playerId].emplace_back(arrow);
+}
+
+void ClientGameManager::addAction(const Action& action){
+    actionBuffer.push_back(action);
+}
+
+QString ClientGameManager::GetCurrentAction(const Action& action) {
+    QString moveDescription = QString("%2 troops from Layer %3 to Layer %4")
+    .arg(action.soldiers)
+        .arg(action.sourceVertexId)
+        .arg(action.targetVertexId);
+    return moveDescription;
+}
+
+AddArmyManager& ClientGameManager::getArmyManager(int playerId) {
+    auto it = armyManagers.find(playerId);
+    if (it != armyManagers.end()) {
+        return it->second;
+    } else {
+        throw std::invalid_argument("Invalid player ID for ArmyManager");
+    }
+}
 
 /*void ClientGameManager::updateGraphicsFromServerState(const QJsonObject& serverState) {
     g.deserialize(serverState);

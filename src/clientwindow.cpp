@@ -209,10 +209,10 @@ void ClientWindow::onLayerClicked(MapLayer* layer) {
 
 void ClientWindow::handleMoveArmy(MapLayer* layer){
     qDebug() << "handlemovearmy";
-    /*if (selectedLayer == nullptr) {
+    if (selectedLayer == nullptr) {
         selectedLayer = layer;
         graph::Vertex* selected_vertex = gameManager->layerToVertex[selectedLayer];
-        if(selected_vertex->player.getPlayerId() != gameManager->turn.getCurrentPlayerId()){
+        if(selected_vertex->player.getPlayerId() != gameManager->ClientId){
             selectedLayer = nullptr;
             return ;
         }
@@ -232,7 +232,7 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
         if (ok) {
             //Action
             ActionType type = (selected_vertex->army.armyType() == vertex->army.armyType()) ? ActionType::MOVE_ARMY : ActionType::ATTACK;
-            int pid = gameManager->turn.getCurrentPlayerId();
+            int pid = gameManager->ClientId;
             int source = selected_vertex->id();
             int target = vertex->id();
             Action newAction(type, pid, source,target, troopsToTransfer);
@@ -240,32 +240,33 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
             selected_vertex->army.setSoldiers(maxTroops - troopsToTransfer);
             selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
 
-            gameManager->drawArrow(gameManager->turn.getCurrentPlayerId(),selectedLayer, layer, troopsToTransfer, newAction.id);
-            gameManager->turn.addAction(pid, newAction);
+
+            gameManager->drawArrow(gameManager->ClientId,selectedLayer, layer, troopsToTransfer, newAction.id);
+            gameManager->addAction(newAction);
 
             //TODO
             //ONLY HIGHLIGHT NEIGHBOR PROVINCE WHEN PRESSED AND ALSO
             //DON'T ALLOW CLICKS ON NOT NEIGHBOUR PROVINCE OF FIRST CLICKED
             //buffer and textfield
-            QString move = gameManager->turn.GetCurrentAction(newAction);
+            QString move = gameManager->GetCurrentAction(newAction);
             QListWidgetItem* item = new QListWidgetItem(move);
             item->setData(Qt::UserRole, newAction.id);
             item->setData(Qt::UserRole + 2, "Move");
             moveList->addItem(item);
         }
         selectedLayer = nullptr;
-    }*/
+    }
 }
 
 void ClientWindow::handlePlaceArmy(MapLayer* layer){
     qDebug() << "handlplacearmy";
-    /*int currentPlayerId = gameManager->turn.getCurrentPlayerId();
+    int currentPlayerId = gameManager->ClientId;
     graph::Vertex* selected_vertex = gameManager->layerToVertex[layer];
 
     if ( selected_vertex->player.getPlayerId() == currentPlayerId ) {
-        //AddArmyManager& armyManager = gameManager->getArmyManager(currentPlayerId);
+        AddArmyManager& armyManager = gameManager->getArmyManager(currentPlayerId);
 
-        //int maxTroops = armyManager.calculateTotalTroops();
+        int maxTroops = armyManager.calculateTotalTroops();
 
 
         bool ok;
@@ -285,7 +286,7 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer){
             item->setData(Qt::UserRole + 2, "Place");
             moveList->addItem(item);
         }
-    }*/
+    }
 }
 
 

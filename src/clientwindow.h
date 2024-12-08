@@ -7,6 +7,8 @@
 #include <QLabel>
 #include "Interface/mapscene.h"
 #include "Interface/clientgamemanager.h"
+#include "base/Mechanics/Action.h"
+#include "base/Mechanics/addarmymanager.h"
 
 class ClientWindow : public QMainWindow {
     Q_OBJECT

@@ -12,7 +12,9 @@
 #include <QDebug>
 #include <map>
 #include "../base/Mechanics/addarmymanager.h"
+#include "Items/customarrowitem.h"
 #include "mapscene.h"
+#include "../base/Mechanics/Action.h"
 
 
 class ClientGameManager : public QObject{
@@ -30,6 +32,11 @@ public:
     //void sendAction(const Action& action);
     //QJsonObject serializeGameState() const;
     //void deserializeGameState(const QJsonObject &json);
+    void drawArrow(int playerId, MapLayer* from, MapLayer* to, int number,int actionId);
+    void addAction(const Action& action);
+    QString GetCurrentAction(const Action& action);
+    AddArmyManager& getArmyManager(int playerId);
+
 
     void setScene(MapScene *newScene);
     void setId(int id);
@@ -45,10 +52,12 @@ private:
     std::unique_ptr<graph::Graph> clientGraph;
     std::vector<MapLayer*> layers;
     //std::map<int,std::vector<CustomArrowItem*>> arrows;
-    AddArmyManager armyManagers;
+    std::map<int,AddArmyManager> armyManagers;
+    std::map<int,std::vector<CustomArrowItem*>> arrows;
 
 public:
-    int ClientId ;
+    int ClientId;
+    std::vector<Action> actionBuffer;
 
 };
 #endif // CLIENTGAMEMANAGER_H
