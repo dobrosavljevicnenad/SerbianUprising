@@ -142,20 +142,33 @@ void ClientWindow::connectSignals() {
     connect(armyButton, &QPushButton::clicked, this, &ClientWindow::onPlaceButtonClicked);
 }
 
-void ClientWindow::onEndTurnClicked() {
-    //Handle the end of the turn
-    //gameManager->turn.executeTurn();
-    //headerLabel->setText(QString("Turn %1").arg(gameManager->turn.getTurn()));
-    gameManager->printConnections();
-    //headerLabel->setText(QString("Turn 1"));
-        //pdate graphics and logic
-    //gameManager->updateLayersGraphics();
-    moveList->clear();
-    //gameManager->getArmyManager(1).endTurn();
-    //gameManager->getArmyManager(2).endTurn();
-    //moveList->addItem(QString("Player %1 on turn:").arg(gameManager->turn.getCurrentPlayerId()));
+// void ClientWindow::onEndTurnClicked() {
+//     //Handle the end of the turn
+//     //gameManager->turn.executeTurn();
+//     //headerLabel->setText(QString("Turn %1").arg(gameManager->turn.getTurn()));
+//     gameManager->printConnections();
+//     //headerLabel->setText(QString("Turn 1"));
+//         //pdate graphics and logic
+//     //gameManager->updateLayersGraphics();
+//     moveList->clear();
+//     //gameManager->getArmyManager(1).endTurn();
+//     //gameManager->getArmyManager(2).endTurn();
+//     //moveList->addItem(QString("Player %1 on turn:").arg(gameManager->turn.getCurrentPlayerId()));
+//     gameManager->actionBuffer.clear();
+// }
 
+void ClientWindow::onEndTurnClicked() {
+    if (!gameManager) {
+        qWarning() << "Game manager is not available!";
+        return;
+    }
+
+    QVector<Action> actions = gameManager->actionBuffer;
+    int clientId = gameManager->ClientId;
+
+    gameManager->onEndTurnClicked(actions, clientId);
 }
+
 
 void ClientWindow::onMoveClicked(QListWidgetItem* item) {
     /*if (!item) return;
@@ -232,6 +245,9 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
         if (ok) {
             //Action
             ActionType type = (selected_vertex->army.armyType() == vertex->army.armyType()) ? ActionType::MOVE_ARMY : ActionType::ATTACK;
+            if(selected_vertex == vertex)
+                type = ActionType::PLACE_ARMY;
+
             int pid = gameManager->ClientId;
             int source = selected_vertex->id();
             int target = vertex->id();

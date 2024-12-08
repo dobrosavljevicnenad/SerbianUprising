@@ -9,6 +9,7 @@ Client::Client(QObject *parent)
     connect(m_socket, &QTcpSocket::readyRead, this, &Client::onReadyRead);
     // readyRead i onReadyRead, kada stignu podaci
     // sa server automatski se povezuje sa metodom onReadyRead()
+    connect(clientGameManager, &ClientGameManager::endTurnActionsReady, this, &Client::sendEndTurnWithActions);
 
 }
 ClientGameManager* Client::getClientGameManager() const {

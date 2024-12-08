@@ -55,8 +55,8 @@ private slots:
     void onPlaceButtonClicked();
     void setActiveButton(QPushButton* clickedButton);
 
-
-
+signals:
+    void endTurn_signal(const QVector<Action>& actions, int id);
 };
 
 #endif // CLIENTWINDOW_H

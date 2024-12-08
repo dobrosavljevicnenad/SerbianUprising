@@ -45,6 +45,7 @@ public:
 
 signals:
     void layerClicked(MapLayer* layer);
+    void endTurnActionsReady(const QVector<Action>& actions, int id);
 
 private:
     bool init = false;
@@ -57,7 +58,8 @@ private:
 
 public:
     int ClientId;
-    std::vector<Action> actionBuffer;
+    QVector<Action> actionBuffer;
+    void onEndTurnClicked(const QVector<Action>& actions, int id);
 
 };
 #endif // CLIENTGAMEMANAGER_H

@@ -150,6 +150,10 @@ AddArmyManager& ClientGameManager::getArmyManager(int playerId) {
     }
 }
 
+void ClientGameManager::onEndTurnClicked(const QVector<Action>& actions, int id){
+    emit endTurnActionsReady(actions, id);
+}
+
 /*void ClientGameManager::updateGraphicsFromServerState(const QJsonObject& serverState) {
     g.deserialize(serverState);
 

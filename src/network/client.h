@@ -6,6 +6,7 @@
 #include <QString>
 #include "../base/Mechanics/Action.h"
 #include "../Interface/clientgamemanager.h"
+#include "../clientwindow.h"
 
 class Client : public QObject
 {
@@ -16,7 +17,6 @@ public:
     bool connectToServer(const QString &hostAddress, quint16 port);
     void sendData(const QString &data);
     // void sendAction(const Action &action, int id);
-    void sendEndTurnWithActions(const QVector<Action> &actions, int id);
     // void sendEndTurn();
     void disconnectFromServer();
     int getId() const;
@@ -32,6 +32,7 @@ signals:
 
 public slots:
     void onReadyRead();
+    void sendEndTurnWithActions(const QVector<Action> &actions, int id);
 
 private slots:
     void onGameStarted();
