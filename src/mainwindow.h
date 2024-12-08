@@ -6,6 +6,7 @@
 #include "Interface/gamemanager.h"
 #include "base/Mechanics/turn.h"
 #include "base/Mechanics/addarmymanager.h"
+#include "Interface/Items/zoomablegraphicsview.h"
 
 
 #include <QMainWindow>

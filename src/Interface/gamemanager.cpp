@@ -34,9 +34,22 @@ void GameManager::initializeMap(){
     std::vector<std::pair<int,int>>positions;
     std::vector<std::pair<int,std::vector<int>>> allNeighbors;
 
+    MapLayer *background = new MapLayer(":/resources/Project/Pozadina.png", false);
     MapLayer *baseLayer = new MapLayer(":/resources/Project/Slika.png", false);
+    MapLayer *borders = new MapLayer(":/resources/Project/Linije_Granice.png", false);
+    MapLayer *water = new MapLayer(":/resources/Project/MORE.png", false);
+
+
+    background->setZValue(-1);
     baseLayer->setZValue(-1);
+    borders->setZValue(-1);
+    water->setZValue(-1);
+
+    scene->addItem(background);
     scene->addItem(baseLayer);
+    scene->addItem(borders);
+    scene->addItem(water);
+
 
     Terrain defaultTerrain(TerrainType::MOUNTAIN);
 

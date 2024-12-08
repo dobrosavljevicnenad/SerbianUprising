@@ -1,108 +1,12 @@
 {
   "layers": [
     {
-      "label": "Layer1",
-      "label_path": ":/resources/Images/Layer1.png",
+      "label": "Kladusa",
+      "label_path": ":/resources/Project/Kladusa.png",
       "army_type": "HAJDUK",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":633,"y": 251}
-    },
-    {
-      "label": "Layer2",
-      "label_path": ":/resources/Images/Layer2.png",
-      "army_type": "HAJDUK",
-      "num_of_soldiers": 20,
-      "neighbours" : [2,3],
-      "position": {"x":287,"y": 400}
-    },
-    {
-      "label": "Layer3",
-      "label_path": ":/resources/Images/Layer3.png",
-      "army_type": "JANISSARY",
-      "num_of_soldiers": 30,
-      "neighbours" : [],
-      "position": {"x":446,"y": 291}
-    },
-    {
-      "label": "Layer4",
-      "label_path": ":/resources/Images/Layer4.png",
-      "army_type": "HAJDUK",
-      "num_of_soldiers": 40,
-      "neighbours" : [2,5],
-      "position": {"x":261,"y": 268}
-    },
-    {
-      "label": "Layer5",
-      "label_path": ":/resources/Images/Layer5.png",
-     "army_type": "JANISSARY",
-     "num_of_soldiers": 50,
-     "neighbours" : [2,3,5,8,9,10],
-     "position": {"x":378,"y": 186}
-    },
-    {
-      "label": "Layer6",
-      "label_path": ":/resources/Images/Layer6.png",
-      "army_type": "HAJDUK",
-      "num_of_soldiers": 60,
-      "neighbours" : [6,7,8],
-      "position": {"x":223,"y": 130}
-    },
-    {
-      "label": "Layer7",
-      "label_path": ":/resources/Images/Layer7.png",
-      "army_type": "JANISSARY",
-      "num_of_soldiers": 70,
-      "neighbours" : [],
-      "position": {"x":154,"y": 98}
-    },
-    {
-      "label": "Layer8",
-      "label_path": ":/resources/Images/Layer8.png",
-      "army_type": "HAJDUK",
-      "num_of_soldiers": 80,
-      "neighbours" : [6,8,12],
-      "position": {"x":181,"y": 27}
-    },
-    {
-      "label": "Layer9",
-      "label_path": ":/resources/Images/Layer9.png",
-      "army_type": "JANISSARY",
-      "num_of_soldiers": 90,
-      "neighbours" : [12,9],
-      "position": {"x":359,"y": 85}
-    },
-    {
-      "label": "Layer10",
-      "label_path": ":/resources/Images/Layer10.png",
-      "army_type": "HAJDUK",
-      "num_of_soldiers": 100,
-      "neighbours" : [12,11,10],
-      "position": {"x":529,"y": 76}
-    },
-    {
-      "label": "Layer11",
-      "label_path": ":/resources/Images/Layer11.png",
-      "army_type": "JANISSARY",
-      "num_of_soldiers": 110,
-      "neighbours" : [11],
-      "position": {"x":706,"y": 56}
-    },
-    {
-      "label": "Layer12",
-      "label_path": ":/resources/Images/Layer12.png",
-      "army_type": "HAJDUK",
-      "num_of_soldiers": 120,
-      "neighbours" : [12],
-      "position": {"x":627,"y": 36}
-    },
-    {
-      "label": "Layer13",
-      "label_path": ":/resources/Images/Layer13.png",
-     "army_type": "JANISSARY",
-     "num_of_soldiers": 130,
-     "neighbours" : [],
-     "position": {"x":379,"y": 35}
+      "position": {"x":29,"y": 21}
     }
   ]
 }

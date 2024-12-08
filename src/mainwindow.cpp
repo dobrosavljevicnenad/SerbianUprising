@@ -12,7 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
     , moveList(new QListWidget())
 {
     ui->setupUi(this);
-
     gameMenu = new GameMenu(this);
     setCentralWidget(gameMenu);
 
@@ -38,6 +37,9 @@ MainWindow::MainWindow(QWidget *parent)
         MapScene *scene = new MapScene(this);
 
         view = new QGraphicsView(scene, this);
+        view->setDragMode(QGraphicsView::ScrollHandDrag);
+        zoomOutView(view, 2);
+        view->show();
         setCentralWidget(view);
 
         gameManager = new GameManager(scene);
