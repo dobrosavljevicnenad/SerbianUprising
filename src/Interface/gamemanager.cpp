@@ -38,17 +38,41 @@ void GameManager::initializeMap(){
     MapLayer *baseLayer = new MapLayer(":/resources/Project/Slika.png", false);
     MapLayer *borders = new MapLayer(":/resources/Project/Linije_Granice.png", false);
     MapLayer *water = new MapLayer(":/resources/Project/MORE.png", false);
+    MapLayer *rivers = new MapLayer(":/resources/Project/Reke_.png", false);
+    MapLayer *relief = new MapLayer(":/resources/Project/reljef.png", false);
+
+
+    MapLayer *s1 = new MapLayer(":/resources/Project/S1.png", false);
+    MapLayer *s2 = new MapLayer(":/resources/Project/S2.png", false);
+    MapLayer *s3 = new MapLayer(":/resources/Project/S3.png", false);
+    MapLayer *s4 = new MapLayer(":/resources/Project/S4.png", false);
+    MapLayer *s5 = new MapLayer(":/resources/Project/S5.png", false);
+
+    s2->setPos(113,0);
+    s3->setPos(0,1088);
+    s4->setPos(958,1802);
+    s5->setPos(2486,1286);
+    s1->setOpacity(0.95);
+    s2->setOpacity(0.95);
+    s3->setOpacity(0.95);
+    s4->setOpacity(0.95);
+    s5->setOpacity(0.95);
 
 
     background->setZValue(-1);
     baseLayer->setZValue(-1);
-    borders->setZValue(-1);
-    water->setZValue(-1);
 
     scene->addItem(background);
     scene->addItem(baseLayer);
+    scene->addItem(relief);
     scene->addItem(borders);
     scene->addItem(water);
+
+    scene->addItem(s1);
+    scene->addItem(s2);
+    scene->addItem(s3);
+    scene->addItem(s4);
+    scene->addItem(s5);
 
 
     Terrain defaultTerrain(TerrainType::MOUNTAIN);
@@ -92,6 +116,7 @@ void GameManager::initializeMap(){
                  (armies[i].armyType() == ArmyType::HAJDUK)  ? player1 : player2);
         layers[i]->setPos(baseLayer->pos().x() + positions[i].first,
                           baseLayer->pos().y() + positions[i].second);
+        layers[i]->setOpacity(0.95);
 
         connect(layers[i], &MapLayer::layerClicked, this, [this, layers, i]() {
             emit layerClicked(layers[i]);
@@ -111,6 +136,8 @@ void GameManager::initializeMap(){
         }
 
     }
+    scene->addItem(rivers);
+
 
     armyManagers[1] = AddArmyManager();
     armyManagers[2] = AddArmyManager();

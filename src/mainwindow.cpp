@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     view = new ZoomableGraphicsView(this);
     view->setScene(scene);
+    //setCentralWidget(view);
 
     gameManager = new GameManager(scene);
 
@@ -27,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         view = new ZoomableGraphicsView(this);
         view->setScene(scene);
+        view->setDragMode(QGraphicsView::ScrollHandDrag);
         view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
         setCentralWidget(view);
 
@@ -48,7 +50,6 @@ MainWindow::MainWindow(QWidget *parent)
         QWidget* layoutContainer = new QWidget();
 
         QVBoxLayout* mainLayout = new QVBoxLayout();
-        //mainLayout->addWidget(view);
 
         mainLayout->setSpacing(5);
         mainLayout->setContentsMargins(2, 2, 2, 2);

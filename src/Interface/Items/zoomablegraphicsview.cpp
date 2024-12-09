@@ -4,23 +4,36 @@ ZoomableGraphicsView::ZoomableGraphicsView(QWidget* parent)
     : QGraphicsView(parent), horizontalDirection(0), verticalDirection(0) {
     movementTimer = new QTimer(this);
     connect(movementTimer, &QTimer::timeout, this, &ZoomableGraphicsView::moveView);
-    movementTimer->start(30); // Adjust for smoothness
+    movementTimer->start(30);
 }
 
 
-void ZoomableGraphicsView::wheelEvent(QWheelEvent *event){
+void ZoomableGraphicsView::wheelEvent(QWheelEvent *event) {
     constexpr double scaleFactor = 1.15;
-    if (event->angleDelta().y() > 0) {
-        scale(scaleFactor, scaleFactor); // Zoom in
-    }
-    else {
-        scale(1.0 / scaleFactor, 1.0 / scaleFactor); // Zoom out
+    constexpr double maxZoomLevel = 5.0;
+    constexpr double minZoomWidth = 3840;
+    constexpr double minZoomHeight = 2160;
 
+    QRectF visibleRect = mapToScene(viewport()->rect()).boundingRect();
+    double currentWidth = visibleRect.width();
+    double currentHeight = visibleRect.height();
+
+    if (event->angleDelta().y() > 0) {
+        if (transform().m11() < maxZoomLevel) {
+            scale(scaleFactor, scaleFactor);
+        }
+    } else {
+        if (currentWidth * 1.0 / scaleFactor > minZoomWidth &&
+            currentHeight * 1.0 / scaleFactor > minZoomHeight) {
+            scale(1.0 / scaleFactor, 1.0 / scaleFactor);
+        } else {
+            fitInView(0, 0, minZoomWidth, minZoomHeight, Qt::KeepAspectRatio);
+        }
     }
 }
 
 void ZoomableGraphicsView::keyPressEvent(QKeyEvent* event) {
-    constexpr int moveStep = 20; // Movement step size
+    constexpr int moveStep = 40;
 
     switch (event->key()) {
     case Qt::Key_Left:
@@ -65,3 +78,4 @@ void ZoomableGraphicsView::moveView() {
         verticalScrollBar()->setValue(verticalScrollBar()->value() + verticalDirection);
     }
 }
+
