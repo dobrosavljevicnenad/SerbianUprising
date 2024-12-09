@@ -4,8 +4,6 @@
 #define BATTLE_H
 
 #include "../Entities/Army.h"
-
-
 #include <ctime>
 #include <iostream>
 #include <cstdlib>
@@ -14,8 +12,8 @@ class Battle
 {
 public:
     Battle(Army& defender, Army& attacker);
-    Army start();
 
+    Army start();
     void setTerrainAdvantage(int defenderAdvantage, int attackerAdvantage);
 
 private:
@@ -26,6 +24,8 @@ private:
     int m_attackerAdvantage = 0;
 
     int calculateHit(int strength, int terrainAdvantage, int soldiers);
+    void printArmyStatus(const Army& army, const std::string& armyName) const;
+    bool shouldRetreat(int attackerSoldiers, int defenderSoldiers, bool isAttacker) const;
 };
 
 #endif // BATTLE_H

@@ -6,65 +6,67 @@ void Turn::addAction(int playerId, const Action& action) {
     auto& buffer = getPlayerBuffer(playerId);
     buffer.push_back(action);
 }
-
+void Turn::updateSoldiersForPlayer(int playerId) {
+    auto& buffer = getPlayerBuffer(playerId);
+    for (const auto& action : buffer) {
+        auto vertex = m_graph.get_vertex_by_id(action.sourceVertexId);
+        vertex->army.setSoldiers(vertex->army.getSoldiers() + action.soldiers);
+    }
+}
 void Turn::executeTurn() {
-    auto& buffer = getPlayerBuffer(1);
-    auto& buffer2 = getPlayerBuffer(2);
-    bool battleMusic = 0;
-    for (const auto& action : buffer) {
-        auto vertex = m_graph.get_vertex_by_id(action.sourceVertexId);
-        vertex->army.setSoldiers(vertex->army.getSoldiers()+action.soldiers);
-    }
-    for (const auto& action : buffer2) {
-        auto vertex = m_graph.get_vertex_by_id(action.sourceVertexId);
-        vertex->army.setSoldiers(vertex->army.getSoldiers()+action.soldiers);
-    }
+    bool battleMusic = false;
 
-    for (const auto& action : buffer) {
-        if (action.type == ActionType::MOVE_ARMY){
-            executeMoveAction(action);
-        }
-        if (action.type == ActionType::ATTACK){
-            battleMusic = 1;
-        }
+    // Update the soldiers count for both players
+    updateSoldiersForPlayer(1);
+    updateSoldiersForPlayer(2);
+
+    // Execute actions for both players
+    for (const auto& action : getPlayerBuffer(1)) {
+        executePlayerMoves(action, battleMusic);
+    }
+    for (const auto& action : getPlayerBuffer(2)) {
+        executePlayerMoves(action, battleMusic);
     }
 
-    for (const auto& action : buffer2) {
-        if (action.type == ActionType::MOVE_ARMY){
-            executeMoveAction(action);
-        }
-
-        if (action.type == ActionType::ATTACK){
-            battleMusic = 1;
-        }
+    // Play battle music if necessary
+    if (battleMusic) {
+        playBattleMusic();
     }
 
-    std::time_t start_music = std::time(0);
+    // Execute actions for both players
+    executePlayerAttacks(1);
+    executePlayerAttacks(2);
 
-    if(battleMusic){
-        m_mediaPlayer.setAudioOutput(&m_audioOutput);
-        m_audioOutput.setVolume(0.7);
-        m_mediaPlayer.setSource(QUrl::fromLocalFile("../../resources/music/Volley.mp3"));
-
-        m_mediaPlayer.play();
-
-        QEventLoop loop;
-        QTimer::singleShot(100, &loop, &QEventLoop::quit);
-        loop.exec();
-    }
-    std::cout << "Executing Player 1's actions:\n";
-    executePlayerActions(1);
-
-    std::cout << "Executing Player 2's actions:\n";
-    executePlayerActions(2);
-
-    //while (std::difftime(std::time(0), start_music) < 6.7) {
-    //}
     m_mediaPlayer.stop();
-
-    turn+=1;
+    turn++;
 }
 
+void Turn::executePlayerMoves(const Action& action, bool& battleMusic) {
+    switch (action.type) {
+    case ActionType::MOVE_ARMY:
+        executeMoveAction(action);
+        break;
+    case ActionType::ATTACK:
+        battleMusic = true;
+        break;
+    default:
+        std::cerr << "Unknown action type!\n";
+        break;
+    }
+}
+
+void Turn::playBattleMusic() {
+    std::time_t start_music = std::time(0);
+    m_mediaPlayer.setAudioOutput(&m_audioOutput);
+    m_audioOutput.setVolume(0.7);
+    m_mediaPlayer.setSource(QUrl::fromLocalFile("../../resources/music/Volley.mp3"));
+    m_mediaPlayer.play();
+
+
+    QEventLoop loop;
+    QTimer::singleShot(100, &loop, &QEventLoop::quit);
+    loop.exec();
+}
 void Turn::clearActionBuffers() {
     player1Buffer.clear();
     player2Buffer.clear();
@@ -79,7 +81,7 @@ int Turn::getCurrentPlayerId() const {
     return currentPlayerId;
 }
 
-void Turn::executePlayerActions(int playerId) {
+void Turn::executePlayerAttacks(int playerId) {
     auto& buffer = getPlayerBuffer(playerId);
 
     for (auto it = buffer.begin(); it != buffer.end(); ) {
@@ -113,7 +115,7 @@ std::vector<Action>& Turn::getPlayerBuffer(int playerId) {
 
 QString Turn::GetCurrentAction(const Action& action) {
     QString moveDescription = QString("%2 troops from Layer %3 to Layer %4")
-        .arg(action.soldiers)
+    .arg(action.soldiers)
         .arg(action.sourceVertexId)
         .arg(action.targetVertexId);
     return moveDescription;
@@ -122,48 +124,36 @@ QString Turn::GetCurrentAction(const Action& action) {
 void Turn::executeMoveAction(const Action& action) {
     Vertex* source = m_graph.get_vertex_by_id(action.sourceVertexId);
     Vertex* target = m_graph.get_vertex_by_id(action.targetVertexId);
-    MergeArmiesWorker* mergeWorker = new MergeArmiesWorker(moveArmy, source, target, action.soldiers);
-    QObject::connect(mergeWorker, &MergeArmiesWorker::mergeCompleted,
-                     &moveArmy, &MoveArmy::onMergeCompleted);
-    mergeWorker->start();
+    if (!moveArmy.executeMerge(source, target, action.soldiers)) {
+        std::cerr << "Merge action failed for Player " << action.playerId << ".\n";
+    }
 }
 
 void Turn::executeAttackAction(const int playerId, const Action& action) {
     Vertex* source = m_graph.get_vertex_by_id(action.sourceVertexId);
     Vertex* target = m_graph.get_vertex_by_id(action.targetVertexId);
 
-    std::vector<Vertex*> attackers;
-    std::vector<unsigned> soldiers;
-    attackers.push_back(source);
+    std::vector<Vertex*> attackers = {source};
+    std::vector<unsigned> soldiers = {static_cast<unsigned int>(std::min(source->army.getSoldiers(), action.soldiers))};
+
     auto& buffer = getPlayerBuffer(playerId);
-    unsigned attackSoldiers = action.soldiers;
-    if(source->army.getSoldiers()< action.soldiers)
-        attackSoldiers = source->army.getSoldiers();
-        soldiers.push_back(attackSoldiers);
     for (auto it = buffer.begin(); it != buffer.end(); ) {
         const auto& attackAction = *it;
         if (attackAction.type == ActionType::ATTACK && attackAction.targetVertexId == action.targetVertexId && attackAction.id != action.id) {
-            Vertex* source = m_graph.get_vertex_by_id(attackAction.sourceVertexId);
-            if (source != nullptr) {
-                attackers.push_back(source);
-                if (source->army.getSoldiers() < attackAction.soldiers) {
-                    attackSoldiers = source->army.getSoldiers();
-                    soldiers.push_back(attackSoldiers);
-                }
-                else
-                    attackSoldiers = attackAction.soldiers;
-                    soldiers.push_back(attackSoldiers);
+            Vertex* attackSource = m_graph.get_vertex_by_id(attackAction.sourceVertexId);
+            if (attackSource != nullptr) {
+                attackers.push_back(attackSource);
+                soldiers.push_back(std::min(attackSource->army.getSoldiers(), attackAction.soldiers));
             } else {
                 std::cerr << "Error: Source vertex not found!" << std::endl;
             }
-
-            it = buffer.erase(it);
+            it = buffer.erase(it); // Remove the attack action from the buffer
         } else {
             ++it;
         }
     }
 
-    if (!moveArmy.executeMove(attackers, target, soldiers)) {
+    if (!moveArmy.executeAttack(attackers, target, soldiers)) {
         std::cerr << "Attack action failed for Player " << action.playerId << ".\n";
     }
 }

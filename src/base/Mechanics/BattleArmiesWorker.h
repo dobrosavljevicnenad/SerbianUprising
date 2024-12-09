@@ -4,8 +4,8 @@
 #include <QThread>
 #include "../graph/vertex.hpp"
 #include "../Entities/Army.h"
-
-class MoveArmy;
+#include "MoveArmy.h"
+#include "Battle.h"
 
 class BattleArmiesWorker : public QThread {
     Q_OBJECT
@@ -15,11 +15,15 @@ public:
 
 signals:
     void battleFinished(bool success, Army sentArmy, std::vector<graph::Vertex*> sources,
-                          std::vector<unsigned> soldiersToMove, graph::Vertex* target, unsigned sent);
+                        std::vector<unsigned> soldiersToMove, graph::Vertex* target, unsigned sent);
+
 protected:
     void run() override;
 
 private:
+    void handleBattleOutcome(Army& winner);
+    void updateNeighboringArmy();
+
     MoveArmy& m_moveArmy;
     Army m_sentArmy;
     graph::Vertex* m_target;
