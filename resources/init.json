@@ -1,12 +1,5 @@
 {
   "layers": [
-    {
-      "label": "Kladusa",
-      "label_path": ":/resources/Project/Kladusa.png",
-      "army_type": "HAJDUK",
-      "num_of_soldiers": 10,
-      "neighbours" : [2,4,10],
-      "position": {"x":29,"y": 21}
-    }
+
   ]
 }

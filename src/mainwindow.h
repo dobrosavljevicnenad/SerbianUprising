@@ -33,7 +33,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void zoomOutView(QGraphicsView* view, qreal zoomFactor = 1.75);
     void highlightLayer(MapLayer *layer);
 
     void print_connections(const graph::Graph &g, const graph::Vertex* vertex);
@@ -55,7 +54,7 @@ private slots:
 private:
     Ui::MainWindow *ui;
     MapScene *scene; //*
-    QGraphicsView *view; //*
+    ZoomableGraphicsView *view; //*
     MapLayer *selectedLayer = nullptr;
     GameManager* gameManager;
     QMediaPlayer* mediaPlayer;

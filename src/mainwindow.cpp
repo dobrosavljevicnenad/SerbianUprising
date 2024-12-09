@@ -17,29 +17,17 @@ MainWindow::MainWindow(QWidget *parent)
 
     //MapScene *scene = new MapScene(this);
 
-    scene->setSceneRect(0, 0, 2000, 2000); // Set the scene size
-
-
-    view = new QGraphicsView(scene, this);
-    view->setDragMode(QGraphicsView::ScrollHandDrag);
-
-
-    // Apply the zoom-out effect
-    zoomOutView(view, 2);
-
-    view->show();
-
-    //setCentralWidget(view);
+    view = new ZoomableGraphicsView(this);
+    view->setScene(scene);
 
     gameManager = new GameManager(scene);
 
     connect(gameMenu, &GameMenu::startGame, this, [this]() {
         MapScene *scene = new MapScene(this);
 
-        view = new QGraphicsView(scene, this);
-        view->setDragMode(QGraphicsView::ScrollHandDrag);
-        zoomOutView(view, 2);
-        view->show();
+        view = new ZoomableGraphicsView(this);
+        view->setScene(scene);
+        view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
         setCentralWidget(view);
 
         gameManager = new GameManager(scene);
@@ -60,6 +48,7 @@ MainWindow::MainWindow(QWidget *parent)
         QWidget* layoutContainer = new QWidget();
 
         QVBoxLayout* mainLayout = new QVBoxLayout();
+        //mainLayout->addWidget(view);
 
         mainLayout->setSpacing(5);
         mainLayout->setContentsMargins(2, 2, 2, 2);
@@ -183,19 +172,6 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
-}
-void MainWindow::zoomOutView(QGraphicsView* view, qreal zoomFactor) {
-    // Calculate the scaling factor to zoom out
-    QRectF sceneRect = view->scene()->sceneRect();
-
-    // Adjust the rectangle for zoom factor
-    QRectF adjustedRect = sceneRect;
-    adjustedRect.setWidth(sceneRect.width() * zoomFactor);
-    adjustedRect.setHeight(sceneRect.height() * zoomFactor);
-    adjustedRect.moveCenter(sceneRect.center()); // Keep the center aligned
-
-    // Fit the adjusted rectangle to the view
-    view->fitInView(adjustedRect, Qt::KeepAspectRatio);
 }
 
 void MainWindow::onMoveClicked(QListWidgetItem* item) {
