@@ -1,4 +1,3 @@
-// MoveArmy.h
 #pragma once
 #include <vector>
 #include <QThread>
@@ -8,24 +7,28 @@
 #include "../graph/graph.hpp"
 #include "Battle.h"
 #include "../Entities/Army.h"
-#include "BattleArmiesWorker.h"
 
 using namespace graph;
-class MoveArmy : public QThread{
+
+class MoveArmy : public QThread {
     Q_OBJECT
+
 public:
-    MoveArmy(Graph& graph);
-    bool executeMove(std::vector<Vertex*> sources, Vertex* target, std::vector<unsigned>soldiersToMove);
-    bool mergeArmies(Vertex* source, Vertex* target, unsigned int soldiersToMove);
-    void battleArmies(Army& source, Vertex* target);
+    explicit MoveArmy(Graph& graph);
+
+    bool executeAttack(std::vector<Vertex*> sources, Vertex* target, std::vector<unsigned> soldiersToMove);
+    bool executeMerge(Vertex* source, Vertex* target, unsigned soldiers);
+    Graph& getGraph() const;
+
+    bool areNeighbors(const Vertex* source, const Vertex* target) const;
+    bool validateAttack(std::vector<Vertex*> sources, Vertex* target, std::vector<unsigned> soldiersToMove) const;
+signals:
+    Results battleFinished(Results result);
 public slots:
     void onMergeCompleted(bool success);
     void onBattleFinished(bool success, Army sentArmy, std::vector<Vertex*> sources,
-                                    std::vector<unsigned> soldiersToMove, Vertex* target, unsigned sent);
+                          std::vector<unsigned> soldiersToMove, Vertex* target, unsigned sent, Results results);
 
 private:
     Graph& m_graph;
-
-    bool areNeighbors(const Vertex* source, const Vertex* target) const;
 };
-

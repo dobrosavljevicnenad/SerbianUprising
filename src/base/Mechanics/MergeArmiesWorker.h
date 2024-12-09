@@ -1,6 +1,7 @@
 #ifndef MERGEARMIESWORKER_H
 #define MERGEARMIESWORKER_H
 
+#include <iostream>
 #include <QThread>
 #include "../Entities/Army.h"
 #include "../graph/vertex.hpp"

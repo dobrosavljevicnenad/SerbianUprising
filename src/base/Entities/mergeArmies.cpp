@@ -40,7 +40,7 @@ Army MergeArmies::battleArmies(Player& player1,Player& player2, std::vector<Army
         Army attackArmy(totalStrengthfirstPlayer, firstPlayer.getArmyType());
         Battle battle(armies[0],attackArmy);
         battle.setTerrainAdvantage(m_defenderAdvantage,m_attackerAdvantage);
-        armies[0] = battle.start();
+        armies[0] = *battle.start().getWinner();
     }
     for(auto& army : armies){
         if(army.armyType() == secondPlayer.getArmyType()){
@@ -56,7 +56,7 @@ Army MergeArmies::battleArmies(Player& player1,Player& player2, std::vector<Army
         Army counterAttackArmy (remainingStrength, secondPlayer.getArmyType());
         Battle battle2(armies[0], counterAttackArmy);
         battle2.setTerrainAdvantage(m_defenderAdvantage+ disorganised,m_attackerAdvantage);
-        armies[0] = battle2.start();
+        armies[0] = *battle2.start().getWinner();
     }
     while(armies.size()!=1)
         armies.pop_back();
