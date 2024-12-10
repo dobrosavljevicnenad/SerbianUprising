@@ -136,6 +136,7 @@ void GameManager::initializeMap(){
         }
 
     }
+
     scene->addItem(rivers);
 
 
