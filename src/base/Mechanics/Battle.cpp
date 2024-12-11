@@ -92,4 +92,5 @@ Results Battle::start() {
     results.setWinner(winner);
 
     return results;
+
 }

@@ -50,6 +50,7 @@ private:
     void executeAttackAction(const int playerId, const Action& action); // Handle attack actions
 private slots:
     void onBattleFinished(Results results);
+
 };
 
 #endif // TURN_H

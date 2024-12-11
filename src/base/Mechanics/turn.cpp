@@ -18,7 +18,6 @@ void Turn::updateSoldiersForPlayer(int playerId) {
 }
 void Turn::executeTurn() {
     bool battleMusic = false;
-
     // Update the soldiers count for both players
     updateSoldiersForPlayer(1);
     updateSoldiersForPlayer(2);
@@ -35,7 +34,6 @@ void Turn::executeTurn() {
     if (battleMusic) {
         playBattleMusic();
     }
-
     // Execute actions for both players
     executePlayerAttacks(1);
     executePlayerAttacks(2);
@@ -47,6 +45,7 @@ void Turn::executeTurn() {
         res.printResults();
                   std::cout << std::flush;
     }
+
     m_mediaPlayer.stop();
     turn++;
 }
