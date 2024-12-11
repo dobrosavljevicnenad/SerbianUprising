@@ -352,8 +352,9 @@ QVector<QStringList> MainWindow::generateBattleResults() {
         row.append(QString::number(battle.getTargetVertexId())); // Vertex ID
         row.append(QString::number(battle.getDefenderNumber())); // Defender soldiers
         row.append(QString::number(battle.getAttackerNumber())); // Attacker soldiers
-        row.append(QString("%1 vs %2").arg(battle.getDefenderType() == ArmyType::HAJDUK ? "Hajduk" : "Janissary")
-                       .arg(battle.getAttackerType() == ArmyType::HAJDUK ? "Hajduk" : "Janissary")); // Army Types
+        row.append(QString("%1").arg(battle.getDefenderType() == ArmyType::HAJDUK ? "Hajduk " : "Janissary "));
+        row.append(QString("%1").arg(battle.getAttackerType() == ArmyType::HAJDUK ? "Hajduk " : "Janissary ")); // Army Types
+        row.append(QString("%1").arg(battle.getWinner()->armyType() == ArmyType::HAJDUK ? "Hajduk" : "Janissary")); // Army Types
 
         results.append(row);
     }

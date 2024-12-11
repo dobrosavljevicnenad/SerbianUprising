@@ -12,10 +12,12 @@ class BattleResultsDialog : public QDialog {
 public:
     explicit BattleResultsDialog(QWidget *parent = nullptr);
     void setResults(const QVector<QStringList> &results);
+    void setBackgroundImage(const QString &imagePath);
 
 private:
-    QLabel *titleLabel;
+    QGridLayout *gridLayout;  // Declare gridLayout as a member of the class
     QTableWidget *resultsTable;
 };
 
 #endif // BATTLERESULTSDIALOG_H
+
