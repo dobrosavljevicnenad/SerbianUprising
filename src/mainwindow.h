@@ -7,7 +7,7 @@
 #include "base/Mechanics/turn.h"
 #include "base/Mechanics/addarmymanager.h"
 
-
+#include "base/Mechanics/BattleResultsDialog.h"
 #include <QMainWindow>
 #include <QGraphicsView>
 #include <QInputDialog>
@@ -50,7 +50,7 @@ private slots:
     void setActiveButton(QPushButton* clickedButton);
     void handleMoveArmy(MapLayer* layer);
     void handlePlaceArmy(MapLayer* layer);
-
+    QVector<QStringList>  generateBattleResults();
 private:
     Ui::MainWindow *ui;
     MapScene *scene; //*

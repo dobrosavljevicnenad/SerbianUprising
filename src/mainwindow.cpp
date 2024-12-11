@@ -244,6 +244,12 @@ void MainWindow::onEndTurnClicked() {
     gameManager->getArmyManager(1).endTurn();
     gameManager->getArmyManager(2).endTurn();
     updateMoveList(gameManager->turn.getCurrentPlayerId());
+    QVector<QStringList> resultsData = generateBattleResults();
+
+    // Create and show BattleResultsDialog with the results data
+    BattleResultsDialog *dialog = new BattleResultsDialog(this);
+    dialog->setResults(resultsData);
+    dialog->exec();  // Show dialog modally
 }
 
 void MainWindow::onLayerClicked(MapLayer *layer) {
@@ -336,6 +342,25 @@ void MainWindow::handlePlaceArmy(MapLayer* layer){
         }
     }
 }
+
+QVector<QStringList> MainWindow::generateBattleResults() {
+    QVector<QStringList> results;
+
+    // Pretpostavljamo da imate objekte koji čuvaju podatke o bitci
+    for (const auto& battle : gameManager->turn.battlesResults){
+        QStringList row;
+        row.append(QString::number(battle.getTargetVertexId())); // Vertex ID
+        row.append(QString::number(battle.getDefenderNumber())); // Defender soldiers
+        row.append(QString::number(battle.getAttackerNumber())); // Attacker soldiers
+        row.append(QString("%1 vs %2").arg(battle.getDefenderType() == ArmyType::HAJDUK ? "Hajduk" : "Janissary")
+                       .arg(battle.getAttackerType() == ArmyType::HAJDUK ? "Hajduk" : "Janissary")); // Army Types
+
+        results.append(row);
+    }
+    gameManager->turn.battlesResults.clear();
+    return results;
+}
+
 
 void MainWindow::updateMoveList(int currentPlayer) {
     moveList->clear();

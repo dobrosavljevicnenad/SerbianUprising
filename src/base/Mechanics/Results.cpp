@@ -57,3 +57,20 @@ const Army* Results::getWinner() const {
 int Results::getTargetVertexId() const {
     return targetVertexId;
 }
+
+int Results::getDefenderNumber() const{
+    return defenderNumber;
+}
+int Results::getAttackerNumber() const{
+    return attackerNumber;
+}
+
+ArmyType Results::getDefenderType() const
+{
+    return defenderType;
+}
+
+ArmyType Results::getAttackerType() const
+{
+    return attackerType;
+}

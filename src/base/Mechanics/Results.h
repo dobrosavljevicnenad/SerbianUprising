@@ -23,6 +23,10 @@ public:
 
     const Army* getWinner() const;
     int getTargetVertexId() const;
+    int getDefenderNumber() const;
+    int getAttackerNumber() const;
+    ArmyType getAttackerType() const;
+    ArmyType getDefenderType() const;
 
 private:
     int defenderNumber;
