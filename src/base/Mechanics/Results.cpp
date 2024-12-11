@@ -2,7 +2,7 @@
 #include <iostream>
 
 Results::Results()
-    : rounds(), winner(nullptr), targetVertexId(-1) {}
+    : defenderNumber(0), attackerNumber(0), rounds(), winner(nullptr), targetVertexId(-1) {}
 
 void Results::recordRound(int defenderHit, int attackerHit, int defenderRemaining, int attackerRemaining) {
     BattleRound round = {
@@ -21,7 +21,12 @@ void Results::setWinner(Army* winner) {
 void Results::setTargetVertexId(int id){
     this->targetVertexId = id;
 }
-
+void Results::setDefenderNumber(int soldiers){
+    this->defenderNumber = soldiers;
+}
+void Results::setAttackerNumber(int soldiers){
+    this->attackerNumber = soldiers;
+}
 void Results::setArmyTypes(ArmyType defenderType, ArmyType attackerType) {
     this->defenderType = defenderType;
     this->attackerType = attackerType;
@@ -30,7 +35,9 @@ void Results::setArmyTypes(ArmyType defenderType, ArmyType attackerType) {
 void Results::printResults() const {
     std::cout << "Battle Results:\n";
     std::cout << "Defender Type: " << (defenderType == ArmyType::HAJDUK ? "Hajduk" : "Janissary") << "\n";
+    std::cout << "Defender number of soldiers: " << defenderNumber << "\n";
     std::cout << "Attacker Type: " << (attackerType == ArmyType::HAJDUK ? "Hajduk" : "Janissary") << "\n";
+    std::cout << "Attacker number of soldiers: " << attackerNumber << "\n";
     std::cout << "Winner: " << (winner ? (winner->armyType() == ArmyType::HAJDUK ? "Hajduk" : "Janissary") : "None") << "\n";
     std::cout << "Target Vertex ID: " << targetVertexId << "\n";
 

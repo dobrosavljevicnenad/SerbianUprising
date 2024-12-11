@@ -12,8 +12,15 @@ void BattleArmiesWorker::run() {
 
     std::cout << "Battle initiated between attacking army and defender at Vertex "
               << m_target->id() << ".\n";
+
+    int defenderNumber = m_target->army.getSoldiers();
+    int attackerNumber = m_sentArmy.getSoldiers();
     this->results = battle.start();
+    results.setAttackerNumber(attackerNumber);
+    results.setDefenderNumber(defenderNumber);
+
     results.setTargetVertexId(m_target->id());
+
     Army winner = *results.getWinner();
 
     handleBattleOutcome(winner);

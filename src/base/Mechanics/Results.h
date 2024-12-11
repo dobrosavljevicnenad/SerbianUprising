@@ -16,6 +16,8 @@ public:
     void recordRound(int defenderHit, int attackerHit, int defenderRemaining, int attackerRemaining);
     void setWinner(Army* winner);
     void setTargetVertexId(int id);
+    void setDefenderNumber(int soldiers);
+    void setAttackerNumber(int soldiers);
     void setArmyTypes(ArmyType defenderType, ArmyType attackerType);
     void printResults() const;
 
@@ -23,6 +25,8 @@ public:
     int getTargetVertexId() const;
 
 private:
+    int defenderNumber;
+    int attackerNumber;
     std::vector<BattleRound> rounds;
     Army* winner;
     ArmyType defenderType;
