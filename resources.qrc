@@ -17,8 +17,10 @@
         <file>resources/Images/Layer11.png</file>
         <file>resources/Images/Layer12.png</file>
         <file>resources/Images/Layer13.png</file>
-	<file>resources/pozadina.png</file>
+        <file>resources/pozadina.png</file>
         <file>resources/button.png</file>
         <file>resources/out.png</file>
+        <file>resources/Jannisary.png</file>
+        <file>resources/Hajduk.png</file>
     </qresource>
 </RCC>

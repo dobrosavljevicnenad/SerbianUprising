@@ -235,6 +235,7 @@ void MainWindow::onChangePlayerClicked() {
 }
 
 void MainWindow::onEndTurnClicked() {
+    gameManager->turn.battlesResults.clear();
     gameManager->turn.executeTurn();
     headerLabel->setText(QString("Turn %1").arg(gameManager->turn.getTurn()));
 
@@ -247,7 +248,7 @@ void MainWindow::onEndTurnClicked() {
     QVector<QStringList> resultsData = generateBattleResults();
 
     // Create and show BattleResultsDialog with the results data
-    BattleResultsDialog *dialog = new BattleResultsDialog(this);
+    BattleResultsDialog *dialog = new BattleResultsDialog(gameManager->turn.battlesResults, this);
     dialog->setResults(resultsData);
     dialog->exec();  // Show dialog modally
 }
@@ -358,7 +359,6 @@ QVector<QStringList> MainWindow::generateBattleResults() {
 
         results.append(row);
     }
-    gameManager->turn.battlesResults.clear();
     return results;
 }
 

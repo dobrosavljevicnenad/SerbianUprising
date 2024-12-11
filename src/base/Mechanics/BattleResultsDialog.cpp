@@ -1,30 +1,26 @@
 #include "BattleResultsDialog.h"
-#include <QHeaderView>
-#include <QPushButton>
-#include <QVBoxLayout>
-#include <QGridLayout>  // Include QGridLayout
-#include <QTableWidget>
-#include <QTableWidgetItem>
-#include <QColor>
+#include <iostream>
 
-BattleResultsDialog::BattleResultsDialog(QWidget *parent)
-    : QDialog(parent) {
+BattleResultsDialog::BattleResultsDialog(const std::vector<Results> battleResults, QWidget *parent)
+    : QDialog(parent), battleResults(battleResults){
     // Setup grid layout to hold multiple tables in rows and columns
     gridLayout = new QGridLayout(this);  // Use member gridLayout
     setLayout(gridLayout);
 
     // Set dialog title
     setWindowTitle("Battle Results");
-
-    // Set the background image for the dialog window
-    setBackgroundImage(":/resources/pozadina.png"); // Path to your background image
+    setObjectName("BattleResultsDialog");    // Set the background image for the dialog window
+    setBackgroundImage(":/resources/pozadina.png");
+    // Path to your background image
     resize(600, 400);
 }
 
 void BattleResultsDialog::setBackgroundImage(const QString &imagePath) {
-    // Set background image for the dialog (not for tables)
-    QString styleSheet = QString("QDialog { background-image: url(%1); background-repeat: no-repeat; background-position: center; }").arg(imagePath);
-    setStyleSheet(styleSheet);  // Only apply the background to the QDialog
+    QString styleSheet = QString("QDialog#BattleResultsDialog { "
+                                 "background-image: url(%1); "
+                                 "background-repeat: no-repeat; "
+                                 "background-position: center; }").arg(imagePath);
+    setStyleSheet(styleSheet);  // Apply the background image only to BattleResultsDialog
 }
 void BattleResultsDialog::setResults(const QVector<QStringList> &results) {
     // Clear any existing widgets
@@ -44,7 +40,9 @@ void BattleResultsDialog::setResults(const QVector<QStringList> &results) {
         QTableWidget *table = new QTableWidget(this);
         table->setColumnCount(2); // Two columns: Vertex ID and Defender/Attacker info
         table->setRowCount(3);    // Three rows for the specified format
-
+        connect(table, &QTableWidget::cellClicked, this, [this, i](int row, int col) {
+            onTableCellClicked(i, battleResults[i]); // Pass index to identify which table was clicked
+        });
         // Set a specific style for the table to avoid inheriting from the dialog
         QString tableStyle = "QTableWidget { "
                              "background-color: transparent; "
@@ -75,7 +73,6 @@ void BattleResultsDialog::setResults(const QVector<QStringList> &results) {
                                  .arg(backgroundColor.green())
                                  .arg(backgroundColor.blue())
                                  .arg(1));
-
         // Remove headers and gridlines
         table->setHorizontalHeaderLabels({"", ""}); // Empty headers
         table->setVerticalHeaderLabels({"", "", ""}); // Empty vertical headers
@@ -161,4 +158,41 @@ void BattleResultsDialog::setResults(const QVector<QStringList> &results) {
         }
     }
 }
+
+void BattleResultsDialog::onTableCellClicked(int tableIndex, Results results) {
+    // Pokažite dijalog sa detaljima
+    BattleReplayDialog *detailsDialog = new BattleReplayDialog(this, tableIndex, results);
+    detailsDialog->exec(); // Prikazivanje dijaloga sa detaljima
+
+    // Nakon što je dijalog zatvoren, sakrijte odgovarajući `QTableWidget` iz layout-a
+    QLayoutItem *child;
+    int removedIndex = 0; // Pokazaćemo koji je indeks obrisan
+    bool allTablesHidden = true;  // Flag koji prati da li su sve tabele nevidljive
+
+    // Iterirajte kroz sve widgete u layout-u i pronađite odgovarajući `QTableWidget` koji treba sakriti
+    for (int i = 0; i < gridLayout->count(); ++i) {
+        child = gridLayout->itemAt(i); // Dobijamo widget na određenom indeksu
+
+        QTableWidget *tableWidget = qobject_cast<QTableWidget *>(child->widget()); // Pokušajte da kastujete widget u QTableWidget
+
+        if (tableWidget) {
+            if (tableIndex == removedIndex) {
+                // Ako je našao odgovarajući `QTableWidget`, sakrijte ga
+                tableWidget->setVisible(false); // Sakrivanje tabele
+            }
+
+            // Proveravamo da li je tabela još uvek vidljiva
+            if (tableWidget->isVisible()) {
+                allTablesHidden = false; // Ako je bilo koja tabela vidljiva, postaviće se flag na false
+            }
+        }
+        removedIndex++;
+    }
+
+    // Ako su sve tabele postale nevidljive, zatvori dijalog
+    if (allTablesHidden) {
+        accept(); // Zatvori dijalog
+    }
+}
+
 

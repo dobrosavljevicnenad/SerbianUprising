@@ -57,6 +57,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/base/Mechanics/MergeArmiesWorker.cpp
         src/base/Mechanics/Results.h src/base/Mechanics/Results.cpp
         src/base/Mechanics/BattleResultsDialog.h src/base/Mechanics/BattleResultsDialog.cpp
+        src/base/Mechanics/BattleReplayDialog.h src/base/Mechanics/BattleReplayDialog.cpp
 
     )
 # Define target properties for Android with Qt 6 as:
