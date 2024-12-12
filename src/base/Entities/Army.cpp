@@ -33,7 +33,7 @@ std::string Army::to_string(ArmyType type) const {
         return "HAJDUK";
         break;
     case ArmyType::JANISSARY:
-        return "JANNISARY";
+        return "JANISSARY";
         break;
     default:
         return "";

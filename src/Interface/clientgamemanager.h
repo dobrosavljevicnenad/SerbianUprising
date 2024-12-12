@@ -15,6 +15,7 @@
 #include "Items/customarrowitem.h"
 #include "mapscene.h"
 #include "../base/Mechanics/Action.h"
+#include "../base/Entities/player.h"
 
 
 class ClientGameManager : public QObject{
@@ -27,19 +28,18 @@ public:
     void printConnections();
     void processDataFromServer(const QByteArray& data);
     void updateGraphics();
-    //void updateGraphicsFromServerState(const QJsonObject& serverState);
-    //void sendEndTurn();
-    //void sendAction(const Action& action);
-    //QJsonObject serializeGameState() const;
-    //void deserializeGameState(const QJsonObject &json);
+    void EndTurnClicked(const QVector<Action>& actions, int id);
+    void armyManagerReset();
     void drawArrow(int playerId, MapLayer* from, MapLayer* to, int number,int actionId);
     void addAction(const Action& action);
     QString GetCurrentAction(const Action& action);
-    AddArmyManager& getArmyManager(int playerId);
-
-
+    AddArmyManager& getArmyManager();
+    void removeActionById(int actionId);
+    void removeArrowByActionId(int actionId);
+    void clearArrows();
     void setScene(MapScene *newScene);
     void setId(int id);
+
 
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
 
@@ -52,14 +52,13 @@ private:
     QGraphicsScene* scene;
     std::unique_ptr<graph::Graph> clientGraph;
     std::vector<MapLayer*> layers;
-    //std::map<int,std::vector<CustomArrowItem*>> arrows;
-    std::map<int,AddArmyManager> armyManagers;
+    AddArmyManager armyManager;
     std::map<int,std::vector<CustomArrowItem*>> arrows;
+    Player player;
 
 public:
     int ClientId;
     QVector<Action> actionBuffer;
-    void onEndTurnClicked(const QVector<Action>& actions, int id);
 
 };
 #endif // CLIENTGAMEMANAGER_H

@@ -74,7 +74,6 @@ void Client::disconnectFromServer() {
 void Client::sendData(const QString &data)
 {
     if (m_socket->state() == QTcpSocket::ConnectedState) {
-        // tekst u niz bajtova
         m_socket->write(data.toUtf8());
     }
 }
@@ -90,21 +89,6 @@ void Client::onGameOver(const QString &reason)
     qDebug() << "Game over: " << reason;
     // Handle game over logic here
 }
-
-// void Client::sendAction(const Action &action, int id) {
-//     QJsonObject jsonObject;
-//     jsonObject["action"] = action.toJson();
-//     jsonObject["id"] = id;
-
-//     QJsonDocument jsonDoc(jsonObject);
-//     QString jsonString = QString::fromUtf8(jsonDoc.toJson(QJsonDocument::Compact));
-
-//     m_socket->write(jsonString.toUtf8());
-// }
-
-// void Client::sendEndTurn() {
-//     sendData("END_TURN");
-// }
 
 void Client::sendEndTurnWithActions(const QVector<Action> &actions, int id) {
     QJsonArray actionsArray;

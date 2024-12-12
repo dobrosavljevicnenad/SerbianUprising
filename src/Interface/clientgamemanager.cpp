@@ -1,14 +1,12 @@
 #include "clientgamemanager.h"
 
 ClientGameManager::ClientGameManager(QGraphicsScene* scene,QObject* parent)
-    : QObject(parent),scene(scene),clientGraph(new graph::Graph()) // Pointer to the graphical scene for rendering
+    : QObject(parent),scene(scene),clientGraph(new graph::Graph())
 {
     qDebug() << "ClientGameManager created with ID:" << ClientId;
 }
 
 void ClientGameManager::initializeGraphics() {
-    // File path to JSON containing graphical data
-    //qDebug() << "prvo init:";
     QString filePath = "../../resources/init.json";
     QFile file(filePath);
 
@@ -28,41 +26,33 @@ void ClientGameManager::initializeGraphics() {
 
     QJsonObject rootObj = doc.object();
 
-    // Base layer initialization
     MapLayer* baseLayer = new MapLayer(20,":/resources/Images/base.png", false);
     baseLayer->setZValue(-1);
     scene->addItem(baseLayer);
 
-    // Load and initialize layers from JSON
     QJsonArray layersArray = rootObj["vertices"].toArray();
 
     std::vector<MapLayer*> layers(layersArray.size());
     for (int i = 0; i < layersArray.size(); ++i) {
         QJsonObject layerObj = layersArray[i].toObject();
 
-        // Extract layer-specific data
         QString labelPath = layerObj.value("label_path").toString();
         QJsonObject positionObj = layerObj.value("position").toObject();
         int posX = positionObj.value("x").toInt();
         int posY = positionObj.value("y").toInt();
 
-        // Initialize the graphical layer
         MapLayer* layer = new MapLayer(i,labelPath, true);
         layer->setCurrentPlayer(ClientId);
-        layer->setZValue(0); // Default Z-value for layers
+        layer->setZValue(0);
         layer->setPos(posX, posY);
-
-        // Add layer to the scene
         scene->addItem(layer);
 
-        // Store layer in the list for future reference
         layers[i] = layer;
         connect(layers[i], &MapLayer::layerClicked, this, [this, layers, i]() {
             emit layerClicked(layers[i]);
         });
     }
 
-    // Store all layers
     this->layers = layers;
 }
 
@@ -72,6 +62,9 @@ void ClientGameManager::setScene(MapScene *newScene) {
 
 void ClientGameManager::setId(int id) {
     ClientId = id;
+    player = Player();
+    player.setPlayerId(ClientId);
+    ClientId == 1 ? player.setArmyType(ArmyType::HAJDUK) : player.setArmyType(ArmyType::JANISSARY);
 }
 
 void ClientGameManager::printConnections() {
@@ -93,10 +86,20 @@ void ClientGameManager::processDataFromServer(const QByteArray& data) {
             }
             init = true;
         }
+        if(init)
+            armyManagerReset();
+        armyManager = AddArmyManager();
         updateGraphics();
+        //clientGraph->print_graph();
     } else {
         qWarning() << "Invalid data received from server.";
     }
+}
+
+void ClientGameManager::armyManagerReset(){
+    //Here implement logic to reset armyManager after every Turn
+    //For now just initialization and maybe reset
+
 }
 
 void ClientGameManager::updateGraphics() {
@@ -133,6 +136,41 @@ void ClientGameManager::addAction(const Action& action){
     actionBuffer.push_back(action);
 }
 
+AddArmyManager& ClientGameManager::getArmyManager() {
+    return armyManager;
+}
+
+void ClientGameManager::removeActionById(int actionId) {
+    auto& buffer = actionBuffer;
+
+    auto it = std::find_if(buffer.begin(), buffer.end(),
+                           [actionId](const Action& action) {
+                               return action.id == actionId;
+                           });
+
+    if (it != buffer.end()) {
+        graph::Vertex* cvor = clientGraph->get_vertex_by_id(it->sourceVertexId);
+        cvor->army.setSoldiers(cvor->army.getSoldiers() + it->soldiers);
+        cvor->map_layer->setTroopCount(cvor->army.getSoldiers());
+        buffer.erase(it);
+        std::cout << "Action with ID " << actionId << " removed for Player " << ClientId << ".\n";
+    } else {
+        std::cerr << "Action with ID " << actionId << " not found for Player " << ClientId << ".\n";
+    }
+}
+
+void ClientGameManager::removeArrowByActionId(int actionId) {
+    for (auto& [playerId, arrowList] : arrows) {
+        for (auto it = arrowList.begin(); it != arrowList.end(); ++it) {
+            if ((*it)->getActionId() == actionId) {
+                scene->removeItem(*it);
+                delete *it;
+                arrowList.erase(it);
+                return;
+            }
+        }
+    }
+}
 QString ClientGameManager::GetCurrentAction(const Action& action) {
     QString moveDescription = QString("%2 troops from Layer %3 to Layer %4")
     .arg(action.soldiers)
@@ -141,42 +179,14 @@ QString ClientGameManager::GetCurrentAction(const Action& action) {
     return moveDescription;
 }
 
-AddArmyManager& ClientGameManager::getArmyManager(int playerId) {
-    auto it = armyManagers.find(playerId);
-    if (it != armyManagers.end()) {
-        return it->second;
-    } else {
-        throw std::invalid_argument("Invalid player ID for ArmyManager");
-    }
-}
-
-void ClientGameManager::onEndTurnClicked(const QVector<Action>& actions, int id){
+void ClientGameManager::EndTurnClicked(const QVector<Action>& actions, int id){
     emit endTurnActionsReady(actions, id);
 }
 
-/*void ClientGameManager::updateGraphicsFromServerState(const QJsonObject& serverState) {
-    g.deserialize(serverState);
-
-    for (auto& [layer, vertex] : g.getLayerToVertex()) {
-        layer->setTroopCount(vertex->army.getSoldiers());
-        layer->setArmyColor(vertex->army.armyType());
+void ClientGameManager::clearArrows() {
+    for (auto& [playerId, arrowList] : arrows) {
+        for (CustomArrowItem* arrow : arrowList) {
+            scene->removeItem(arrow);
+        }
     }
-}*/
-
-/*void ClientGameManager::sendEndTurn() {
-    client.sendData("END_TURN");
-}*/
-
-/*void ClientGameManager::sendAction(const Action& action) {
-    client->sendAction(action);
 }
-*/
-/*void ClientGameManager::processClientData(const QString &data) {
-    // Deserialize incoming game state from the server
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(data.toUtf8());
-    QJsonObject gameState = jsonDoc.object();
-f
-    deserializeGameState(gameState);  // Update client-side game state
-    updateGraphics();  // Refresh the graphical display
-}*/
-

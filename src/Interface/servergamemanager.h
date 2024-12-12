@@ -25,16 +25,10 @@ public:
     void startGame();
     void executeActions(const std::vector<Action> &actions1, int p1_id, const std::vector<Action> &actions2, int p2_id);
     //void processEndTurn();
-    //void sendSerializedGameStateToClients();
-    //void applyActions(std::vector<Action> actions);
-    //void processServerData(const QString &data);
-    //QJsonObject serializeGameState() const;
-    //void deserializeGameState(const QJsonObject &json);
 
 private:
     std::unique_ptr<graph::Graph> graph;
     Turn turn;
-    ;  // Server handles communication
 
 signals:
     void serializedGraphReady(const QJsonObject &serializedGraph);

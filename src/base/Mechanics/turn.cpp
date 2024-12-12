@@ -11,14 +11,6 @@ void Turn::executeTurn() {
     auto& buffer = getPlayerBuffer(1);
     auto& buffer2 = getPlayerBuffer(2);
     bool battleMusic = 0;
-    for (const auto& action : buffer) {
-        auto vertex = m_graph.get_vertex_by_id(action.sourceVertexId);
-        vertex->army.setSoldiers(vertex->army.getSoldiers()+action.soldiers);
-    }
-    for (const auto& action : buffer2) {
-        auto vertex = m_graph.get_vertex_by_id(action.sourceVertexId);
-        vertex->army.setSoldiers(vertex->army.getSoldiers()+action.soldiers);
-    }
 
     for (const auto& action : buffer) {
         if (action.type == ActionType::MOVE_ARMY){
@@ -165,27 +157,6 @@ void Turn::executeAttackAction(const int playerId, const Action& action) {
 
     if (!moveArmy.executeMove(attackers, target, soldiers)) {
         std::cerr << "Attack action failed for Player " << action.playerId << ".\n";
-    }
-}
-
-void Turn::removeActionById(int actionId) {
-    auto& buffer = getPlayerBuffer(currentPlayerId);
-
-    auto it = std::find_if(buffer.begin(), buffer.end(),
-                           [actionId](const Action& action) {
-                               return action.id == actionId;
-                           });
-
-    if (it != buffer.end()) {
-        ///updates soldier count
-        graph::Vertex* cvor = m_graph.get_vertex_by_id(it->sourceVertexId);
-        cvor->army.setSoldiers(cvor->army.getSoldiers() + it->soldiers);
-        cvor->map_layer->setTroopCount(cvor->army.getSoldiers());
-        ///
-        buffer.erase(it);
-        std::cout << "Action with ID " << actionId << " removed for Player " << currentPlayerId << ".\n";
-    } else {
-        std::cerr << "Action with ID " << actionId << " not found for Player " << currentPlayerId << ".\n";
     }
 }
 

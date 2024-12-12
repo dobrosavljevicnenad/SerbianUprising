@@ -34,8 +34,7 @@ void ServerGameManager::startGame() {
     qDebug() << "Starting game...";
     initializeGame();
     QJsonObject serialized_graph = graph->serialize();
-    //g.deserialize(serialized_graph);
-    //.print_graph();
+
     emit serializedGraphReady(serialized_graph);
 }
 
@@ -55,37 +54,15 @@ void ServerGameManager::executeActions(const std::vector<Action> &actions1, int 
             std::cerr << "Error adding action: " << e.what() << "\n";
         }
     }
-
     turn.executeTurn();
-    turn.clearActionBuffers();
     QJsonObject serialized_graph = graph->serialize();
+    graph->print_graph();
     emit serializedGraphReady(serialized_graph);
 }
-
-
-/*void ServerGameManager::sendSerializedGameStateToClients() {
-    QJsonObject serializedGraph = g.serialize();
-    QString serializedData = QString(QJsonDocument(serializedGraph).toJson(QJsonDocument::Compact));
-
-    server.sendData(serializedData);
-}*/
-
 /*void ServerGameManager::processEndTurn() {
     // Example: Execute turn logic, update graph state
     turn.executeTurn();
 
     // Serialize and broadcast updated state to clients
     sendSerializedGameStateToClients();
-}
-
-/*void ServerGameManager::processServerData(const QString &data) {
-    // Handle incoming data from clients
 }*/
-
-/*void ServerGameManager::onGameStart() {
-    // Notify all connected clients to initialize their game states
-    QJsonObject gameState = serializeGameState();  // Serialize game state
-    QString serializedData = QJsonDocument(gameState).toJson();
-    server.sendData(serializedData);  // Send game state to clients
-}*/
-

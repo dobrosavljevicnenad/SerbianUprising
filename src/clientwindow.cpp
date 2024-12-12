@@ -130,7 +130,6 @@ void ClientWindow::setupUI() {
     moveListProxy->setZValue(1);
 
     moveList->addItem(QString("Player 1 on turn:"));
-
 }
 
 void ClientWindow::connectSignals() {
@@ -143,14 +142,9 @@ void ClientWindow::connectSignals() {
 }
 
 // void ClientWindow::onEndTurnClicked() {
-//     //Handle the end of the turn
-//     //gameManager->turn.executeTurn();
 //     //headerLabel->setText(QString("Turn %1").arg(gameManager->turn.getTurn()));
-//     gameManager->printConnections();
 //     //headerLabel->setText(QString("Turn 1"));
-//         //pdate graphics and logic
-//     //gameManager->updateLayersGraphics();
-//     moveList->clear();
+//
 //     //gameManager->getArmyManager(1).endTurn();
 //     //gameManager->getArmyManager(2).endTurn();
 //     //moveList->addItem(QString("Player %1 on turn:").arg(gameManager->turn.getCurrentPlayerId()));
@@ -166,12 +160,13 @@ void ClientWindow::onEndTurnClicked() {
     QVector<Action> actions = gameManager->actionBuffer;
     int clientId = gameManager->ClientId;
 
-    gameManager->onEndTurnClicked(actions, clientId);
+    gameManager->EndTurnClicked(actions, clientId);
+    moveList->clear();
 }
 
 
 void ClientWindow::onMoveClicked(QListWidgetItem* item) {
-    /*if (!item) return;
+    if (!item) return;
 
     QString actionType = item->data(Qt::UserRole + 2).toString();
 
@@ -180,32 +175,31 @@ void ClientWindow::onMoveClicked(QListWidgetItem* item) {
         if (!data.isValid()) return;
 
         int actionId = data.toInt();
-        //gameManager->turn.removeActionById(actionId);
-        //gameManager->removeArrowByActionId(actionId);
+        gameManager->removeActionById(actionId);
+        gameManager->removeArrowByActionId(actionId);
         delete item;
     } else if (actionType == "Place") {
         int layerId = item->data(Qt::UserRole).toInt();
         int troopsToRemove = item->data(Qt::UserRole + 1).toInt();
 
         MapLayer* layer = nullptr;
-        /*for (auto& pair : gameManager->layerToVertex) {
-            if (pair.second->id() == layerId) {
-                layer = pair.first;
+        for (auto pair : gameManager->layerToVertex) {
+            if (pair->id() == layerId) {
+                layer = pair->map_layer;
                 break;
             }
         }
 
         if (layer) {
-            //int currentPlayerId = gameManager->turn.getCurrentPlayerId();
-            //AddArmyManager& armyManager = gameManager->getArmyManager(currentPlayerId);
-           // armyManager.decreaseAvailableTroops(-troopsToRemove);
-            //gameManager->layerToVertex[layer]->army.setSoldiers(
-            //    gameManager->layerToVertex[layer]->army.getSoldiers() - troopsToRemove);
+            AddArmyManager& armyManager = gameManager->getArmyManager();
+            armyManager.decreaseAvailableTroops(-troopsToRemove);
+            gameManager->layerToVertex[layer]->army.setSoldiers(
+            gameManager->layerToVertex[layer]->army.getSoldiers() - troopsToRemove);
             layer->setTroopCount(layer->getTroopCount() - troopsToRemove);
         }
 
         delete moveList->takeItem(moveList->row(item));
-    }*/
+    }
 }
 
 void ClientWindow::onLayerClicked(MapLayer* layer) {
@@ -221,7 +215,6 @@ void ClientWindow::onLayerClicked(MapLayer* layer) {
 }
 
 void ClientWindow::handleMoveArmy(MapLayer* layer){
-    qDebug() << "handlemovearmy";
     if (selectedLayer == nullptr) {
         selectedLayer = layer;
         graph::Vertex* selected_vertex = gameManager->layerToVertex[selectedLayer];
@@ -275,12 +268,11 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
 }
 
 void ClientWindow::handlePlaceArmy(MapLayer* layer){
-    qDebug() << "handlplacearmy";
     int currentPlayerId = gameManager->ClientId;
     graph::Vertex* selected_vertex = gameManager->layerToVertex[layer];
-
+    qDebug() << selected_vertex->player.getPlayerId() << "=" << gameManager->ClientId;
     if ( selected_vertex->player.getPlayerId() == currentPlayerId ) {
-        AddArmyManager& armyManager = gameManager->getArmyManager(currentPlayerId);
+        AddArmyManager& armyManager = gameManager->getArmyManager();
 
         int maxTroops = armyManager.calculateTotalTroops();
 
@@ -291,7 +283,7 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer){
         if (ok && troopsToAdd > 0) {
             layer->setTroopCount(layer->getTroopCount() + troopsToAdd);
 
-            //armyManager.decreaseAvailableTroops(troopsToAdd);
+            armyManager.decreaseAvailableTroops(troopsToAdd);
 
             selected_vertex->army.setSoldiers(selected_vertex->army.getSoldiers()+troopsToAdd);
 
