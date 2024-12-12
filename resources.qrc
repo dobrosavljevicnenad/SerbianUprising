@@ -20,9 +20,20 @@
         <file>resources/pozadina.png</file>
         <file>resources/button.png</file>
         <file>resources/out.png</file>
-        <file>resources/Jannisary.png</file>
-        <file>resources/Hajduk.png</file>
         <file>resources/Images/Board.png</file>
         <file>resources/Images/Explosion.png</file>
+        <file>resources/Images/MapFields.png</file>
+        <file>resources/Images/MapMountains.png</file>
+        <file>resources/Images/MapHills.png</file>
+        <file>resources/Images/MapForest.png</file>
+        <file>resources/Images/SoldierJannisaryStanding.png</file>
+        <file>resources/Images/SoldierJannisaryFiring.png</file>
+        <file>resources/Images/SoldierJannisaryFallen.png</file>
+        <file>resources/Images/SoldierHajdukStanding.png</file>
+        <file>resources/Images/SoldierHajdukFiring.png</file>
+        <file>resources/Images/SoldierHajdukFallen.png</file>
+        <file>resources/Images/RetreatFlag.png</file>
+        <file>resources/Images/Victory.png</file>
+        <file>resources/Images/Lose.png</file>
     </qresource>
 </RCC>

@@ -2,6 +2,7 @@
 #define RESULTS_H
 
 #include "../Entities/Army.h"
+#include "../Entities/Terrain.h"
 struct BattleRound {
     int roundNumber;
     int defenderHits;
@@ -28,6 +29,11 @@ public:
     ArmyType getAttackerType() const;
     ArmyType getDefenderType() const;
 
+    TerrainType getTerrain() const;
+    void setTerrain(TerrainType newTerrain);
+
+    std::vector<BattleRound> getRounds() const;
+
 private:
     int defenderNumber;
     int attackerNumber;
@@ -36,6 +42,7 @@ private:
     ArmyType defenderType;
     ArmyType attackerType;
     int targetVertexId;
+    TerrainType terrain;
 };
 
 #endif // RESULTS_H

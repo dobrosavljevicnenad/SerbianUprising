@@ -16,6 +16,7 @@ void BattleArmiesWorker::run() {
     int defenderNumber = m_target->army.getSoldiers();
     int attackerNumber = m_sentArmy.getSoldiers();
     this->results = battle.start();
+    this->results.setTerrain(m_target->terrain.getTerrain());
     results.setAttackerNumber(attackerNumber);
     results.setDefenderNumber(defenderNumber);
 

@@ -41,7 +41,7 @@ void GameManager::initializeMap(){
     baseLayer->setZValue(-1);
     scene->addItem(baseLayer);
 
-    Terrain defaultTerrain(TerrainType::MOUNTAIN);
+    Terrain defaultTerrain(TerrainType::HILL);
 
     for (int i = 0; i <layersArray.size(); ++i) {
         QJsonObject layerObj = layersArray[i].toObject();

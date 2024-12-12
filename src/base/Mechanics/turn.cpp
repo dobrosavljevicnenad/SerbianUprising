@@ -44,7 +44,7 @@ void Turn::executeTurn() {
     }
     for(auto res : battlesResults){
         res.printResults();
-                  std::cout << std::flush;
+        std::cout << std::flush;
     }
 
     m_mediaPlayer.stop();

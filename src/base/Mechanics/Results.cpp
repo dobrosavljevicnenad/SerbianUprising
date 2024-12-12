@@ -70,6 +70,21 @@ ArmyType Results::getDefenderType() const
     return defenderType;
 }
 
+TerrainType Results::getTerrain() const
+{
+    return terrain;
+}
+
+void Results::setTerrain(TerrainType newTerrain)
+{
+    terrain = newTerrain;
+}
+
+std::vector<BattleRound> Results::getRounds() const
+{
+    return rounds;
+}
+
 ArmyType Results::getAttackerType() const
 {
     return attackerType;

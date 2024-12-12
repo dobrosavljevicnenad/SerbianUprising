@@ -18,7 +18,7 @@ using nodeID_t = unsigned;
 class Vertex {
 public:
     Vertex(QPointF position, const std::string &label,
-           MapLayer *map_layer, Terrain territory, Army army,
+           MapLayer *map_layer, Terrain terrain, Army army,
            Player player);
 
     ~Vertex();
