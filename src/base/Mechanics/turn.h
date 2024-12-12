@@ -33,6 +33,9 @@ public:
     std::vector<Action>& getPlayerBuffer(int playerId);           // Get the buffer for a specific player
     int getTurn();                                                // Get the current turn number
     std::vector<Results> battlesResults;
+signals:
+    void printExplosion(Vertex *target);
+
 private:
     unsigned turn;                                                // Current turn number
     unsigned numBattles;

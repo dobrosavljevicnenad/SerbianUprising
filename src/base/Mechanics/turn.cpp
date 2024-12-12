@@ -1,5 +1,6 @@
 #include "turn.h"
 #include <qapplication.h>
+#include <qlabel.h>
 
 Turn::Turn(Graph& graph) : currentPlayerId(1), m_graph(graph), moveArmy(graph),turn(1), numBattles(0) {
     connect(&moveArmy, &MoveArmy::battleFinished, this, &Turn::onBattleFinished);
@@ -144,7 +145,7 @@ void Turn::executeAttackAction(const int playerId, const Action& action) {
 
     std::vector<Vertex*> attackers = {source};
     std::vector<unsigned> soldiers = {static_cast<unsigned int>(std::min(source->army.getSoldiers(), action.soldiers))};
-
+    emit printExplosion(target);
     auto& buffer = getPlayerBuffer(playerId);
     for (auto it = buffer.begin(); it != buffer.end(); ) {
         const auto& attackAction = *it;
@@ -172,6 +173,7 @@ void Turn::onBattleFinished(Results results) {
     numBattles--;
     std::cout << "Battles left: " << numBattles << ".\n";
     std::cout << std::flush;
+
 }
 
 

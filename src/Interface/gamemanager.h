@@ -30,6 +30,7 @@ public:
 
     void updateLayersGraphics();
     void clearArrows();
+    void clearExplosions();
     void drawArrow(int playerId, MapLayer* from, MapLayer* to, int number,int actionId);
     void addLayer(MapLayer* layer, const std::string& label, Terrain terrain, Army army, Player player);
 
@@ -46,6 +47,7 @@ signals:
     void layerClicked(MapLayer* layer);
 
 private:
+    std::vector<MapLayer*> explosions;
     std::map<int,AddArmyManager> armyManagers;
     std::vector<MapLayer*> layers;
     std::map<int,std::vector<CustomArrowItem*>> arrows;
@@ -53,6 +55,9 @@ private:
     graph::Graph g;
 public:
     Turn turn;
+public slots:
+    void printExplosion(Vertex *target);
+
 };
 
 #endif // GAMEMANAGER_H

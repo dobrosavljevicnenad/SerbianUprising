@@ -1,6 +1,9 @@
 #include "gamemanager.h"
 
-GameManager::GameManager(QGraphicsScene* scene) : scene(scene), turn(g)  {}
+GameManager::GameManager(QGraphicsScene* scene) : scene(scene), turn(g)  {
+    connect(&turn, &Turn::printExplosion, this, &GameManager::printExplosion);
+
+}
 
 void GameManager::initializeMap(){
 
@@ -200,4 +203,26 @@ AddArmyManager& GameManager::getArmyManager(int playerId) {
     }
 }
 
+void GameManager::printExplosion(Vertex *target)
+{
+    std::srand(static_cast<unsigned>(std::time(nullptr)));
+    int minx = target->map_layer->boundingRect().width() / 4;
+    int miny = target->map_layer->boundingRect().height() / 4;
 
+    int expN = 3 +(std::rand() % 8);
+    for(int i = 0; i < expN; i++){
+        int x = std::rand() % static_cast<int>(target->map_layer->boundingRect().width() / 2);
+        int y = std::rand() % static_cast<int>(target->map_layer->boundingRect().height() / 2);
+        MapLayer *explosionLayer = new MapLayer(QString(":/resources/Images/Explosion.png"),false);
+        explosions.push_back(explosionLayer);
+        explosionLayer->setPos(target->map_layer->pos()+ QPointF(minx+x,miny+y));
+        explosionLayer->setZValue(2);
+        explosionLayer->setScale(0.04);
+        scene->addItem(explosionLayer);
+    }
+}
+void GameManager::clearExplosions() {
+    for (auto& explosion : explosions) {
+            scene->removeItem(explosion);
+    }
+}

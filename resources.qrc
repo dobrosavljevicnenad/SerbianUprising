@@ -22,5 +22,7 @@
         <file>resources/out.png</file>
         <file>resources/Jannisary.png</file>
         <file>resources/Hajduk.png</file>
+        <file>resources/Images/Board.png</file>
+        <file>resources/Images/Explosion.png</file>
     </qresource>
 </RCC>

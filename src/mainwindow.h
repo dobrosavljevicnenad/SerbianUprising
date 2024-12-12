@@ -43,7 +43,7 @@ private slots:
     void onChangePlayerClicked();
     void onEndTurnClicked();
     void updateMoveList(int currentPlayer);
-
+    void clearExplosions();
     void onInfoButtonClicked();
     void onMoveButtonClicked();
     void onPlaceButtonClicked();

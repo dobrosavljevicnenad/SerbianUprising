@@ -26,7 +26,9 @@ private slots:
 private:
     const std::vector<Results> battleResults;
     QGridLayout *gridLayout;  // Declare gridLayout as a member of the class
+    QGridLayout *containerLayout;  // Declare gridLayout as a member of the class
     QTableWidget *resultsTable;
+    QWidget *tablesContainer;
 };
 
 #endif // BATTLERESULTSDIALOG_H

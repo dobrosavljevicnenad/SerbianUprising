@@ -6,20 +6,25 @@ BattleResultsDialog::BattleResultsDialog(const std::vector<Results> battleResult
     // Setup grid layout to hold multiple tables in rows and columns
     gridLayout = new QGridLayout(this);  // Use member gridLayout
     setLayout(gridLayout);
+    tablesContainer = new QWidget(this);
+    tablesContainer->setGeometry(265, 255, 606, 262);  // Set the container position and size
+    tablesContainer->setStyleSheet("background: transparent;");  // Make the container background transparent
+
+    // Create a grid layout inside the container to arrange tables
+    containerLayout = new QGridLayout(tablesContainer);
+    tablesContainer->setLayout(containerLayout);
 
     // Set dialog title
     setWindowTitle("Battle Results");
     setObjectName("BattleResultsDialog");    // Set the background image for the dialog window
-    setBackgroundImage(":/resources/pozadina.png");
+    setBackgroundImage(":/resources/Images/Board.png");
     // Path to your background image
-    resize(600, 400);
+    resize(1084, 905);
 }
 
 void BattleResultsDialog::setBackgroundImage(const QString &imagePath) {
     QString styleSheet = QString("QDialog#BattleResultsDialog { "
-                                 "background-image: url(%1); "
-                                 "background-repeat: no-repeat; "
-                                 "background-position: center; }").arg(imagePath);
+                                 "border-image: url(%1);}").arg(imagePath);
     setStyleSheet(styleSheet);  // Apply the background image only to BattleResultsDialog
 }
 void BattleResultsDialog::setResults(const QVector<QStringList> &results) {
@@ -33,11 +38,11 @@ void BattleResultsDialog::setResults(const QVector<QStringList> &results) {
     // Create a new table for each result set
     int row = 0; // Starting row
     int col = 0; // Starting column
-    const int maxColumns = 5; // Max number of tables per row (5 columns)
+    const int maxColumns = 4; // Max number of tables per row (5 columns)
 
     for (int i = 0; i < results.size(); ++i) {
         // Create a new table widget for each result
-        QTableWidget *table = new QTableWidget(this);
+        QTableWidget *table = new QTableWidget(tablesContainer);
         table->setColumnCount(2); // Two columns: Vertex ID and Defender/Attacker info
         table->setRowCount(3);    // Three rows for the specified format
         connect(table, &QTableWidget::cellClicked, this, [this, i](int row, int col) {
@@ -46,7 +51,7 @@ void BattleResultsDialog::setResults(const QVector<QStringList> &results) {
         // Set a specific style for the table to avoid inheriting from the dialog
         QString tableStyle = "QTableWidget { "
                              "background-color: transparent; "
-                             "font-size: 14px; "
+                             "font-size: 12px; "
                              "font-weight: bold; "
                              "color: white; "
                              "margin: 0px; "
@@ -59,9 +64,9 @@ void BattleResultsDialog::setResults(const QVector<QStringList> &results) {
         QColor backgroundColor;
 
         if (winnerType == "Hajduk") {
-            backgroundColor = QColor(198,54,60,255);  // Red for Hajduk
+            backgroundColor = QColor(241, 84, 102, 255);  // Red for Hajduk
         } else if (winnerType == "Janissary") {
-            backgroundColor = QColor(0,149,48,255);  // Green for Janissary
+            backgroundColor = QColor(109, 210, 72, 255);  // Green for Janissary
         } else {
             backgroundColor = QColor(255, 255, 255);  // Default to white if not Hajduk or Janissary
         }
@@ -86,33 +91,33 @@ void BattleResultsDialog::setResults(const QVector<QStringList> &results) {
         // Fill in the first row with Vertex ID in both columns
         QTableWidgetItem *vertexIDItem = new QTableWidgetItem(results[i][0]);
         vertexIDItem->setTextAlignment(Qt::AlignCenter);  // Center the text
-        vertexIDItem->setFont(QFont("Arial", 12, QFont::Bold));  // Bold font
+        vertexIDItem->setFont(QFont("Arial", 11, QFont::Bold));  // Bold font
         vertexIDItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled); // Make item non-editable
         table->setItem(0, 0, vertexIDItem);
 
         // Fill in the second row (Defender Type and Attacker Type)
         QTableWidgetItem *defenderTypeItem = new QTableWidgetItem(results[i][3]);
         defenderTypeItem->setTextAlignment(Qt::AlignCenter);  // Center the text
-        defenderTypeItem->setFont(QFont("Arial", 12, QFont::Bold));  // Bold font
+        defenderTypeItem->setFont(QFont("Arial", 11, QFont::Bold));  // Bold font
         defenderTypeItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled); // Make item non-editable
         table->setItem(1, 0, defenderTypeItem);
 
         QTableWidgetItem *attackerTypeItem = new QTableWidgetItem(results[i][4]);
         attackerTypeItem->setTextAlignment(Qt::AlignCenter);  // Center the text
-        attackerTypeItem->setFont(QFont("Arial", 12, QFont::Bold));  // Bold font
+        attackerTypeItem->setFont(QFont("Arial", 11, QFont::Bold));  // Bold font
         attackerTypeItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled); // Make item non-editable
         table->setItem(1, 1, attackerTypeItem);
 
         // Fill in the third row (Defender Soldiers and Attacker Soldiers)
         QTableWidgetItem *defenderSoldiersItem = new QTableWidgetItem(results[i][1]);
         defenderSoldiersItem->setTextAlignment(Qt::AlignCenter);  // Center the text
-        defenderSoldiersItem->setFont(QFont("Arial", 12, QFont::Bold));  // Bold font
+        defenderSoldiersItem->setFont(QFont("Arial", 11, QFont::Bold));  // Bold font
         defenderSoldiersItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled); // Make item non-editable
         table->setItem(2, 0, defenderSoldiersItem);
 
         QTableWidgetItem *attackerSoldiersItem = new QTableWidgetItem(results[i][2]);
         attackerSoldiersItem->setTextAlignment(Qt::AlignCenter);  // Center the text
-        attackerSoldiersItem->setFont(QFont("Arial", 12, QFont::Bold));  // Bold font
+        attackerSoldiersItem->setFont(QFont("Arial", 11, QFont::Bold));  // Bold font
         attackerSoldiersItem->setFlags(Qt::ItemIsSelectable | Qt::ItemIsEnabled); // Make item non-editable
         table->setItem(2, 1, attackerSoldiersItem);
 
@@ -146,7 +151,7 @@ void BattleResultsDialog::setResults(const QVector<QStringList> &results) {
         table->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);   // Disable vertical scrollbar
 
         // Add table to the grid layout (position it in the grid)
-        gridLayout->addWidget(table, row, col);
+        containerLayout->addWidget(table, row, col);
 
         // Move to the next column
         col++;
@@ -170,8 +175,8 @@ void BattleResultsDialog::onTableCellClicked(int tableIndex, Results results) {
     bool allTablesHidden = true;  // Flag koji prati da li su sve tabele nevidljive
 
     // Iterirajte kroz sve widgete u layout-u i pronađite odgovarajući `QTableWidget` koji treba sakriti
-    for (int i = 0; i < gridLayout->count(); ++i) {
-        child = gridLayout->itemAt(i); // Dobijamo widget na određenom indeksu
+    for (int i = 0; i < containerLayout->count(); ++i) {
+        child = containerLayout->itemAt(i); // Dobijamo widget na određenom indeksu
 
         QTableWidget *tableWidget = qobject_cast<QTableWidget *>(child->widget()); // Pokušajte da kastujete widget u QTableWidget
 
@@ -191,6 +196,7 @@ void BattleResultsDialog::onTableCellClicked(int tableIndex, Results results) {
 
     // Ako su sve tabele postale nevidljive, zatvori dijalog
     if (allTablesHidden) {
+
         accept(); // Zatvori dijalog
     }
 }

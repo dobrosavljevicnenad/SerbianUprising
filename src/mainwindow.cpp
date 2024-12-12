@@ -153,7 +153,6 @@ MainWindow::MainWindow(QWidget *parent)
         connect(infoButton, &QToolButton::clicked, this, &MainWindow::onInfoButtonClicked);
         connect(moveButton, &QToolButton::clicked, this, &MainWindow::onMoveButtonClicked);
         connect(armyButton, &QToolButton::clicked, this, &MainWindow::onPlaceButtonClicked);
-
     });
 
     connect(gameMenu, &GameMenu::exitGame, this, &QMainWindow::close);
@@ -249,6 +248,10 @@ void MainWindow::onEndTurnClicked() {
 
     // Create and show BattleResultsDialog with the results data
     BattleResultsDialog *dialog = new BattleResultsDialog(gameManager->turn.battlesResults, this);
+    connect(dialog, &BattleResultsDialog::close, this, &MainWindow::clearExplosions);
+    connect(dialog, &BattleResultsDialog::accepted, this, &MainWindow::clearExplosions);
+    connect(dialog, &BattleResultsDialog::rejected, this, &MainWindow::clearExplosions);
+
     dialog->setResults(resultsData);
     dialog->exec();  // Show dialog modally
 }
@@ -379,7 +382,16 @@ void MainWindow::updateMoveList(int currentPlayer) {
     }
 }
 
+void MainWindow::clearExplosions()
+{
+    gameManager->clearExplosions();
+}
+
+
+
 void MainWindow::onInfoButtonClicked() {
+    gameManager->clearExplosions();
+
     setActiveButton(qobject_cast<QPushButton*>(sender()));
 }
 
