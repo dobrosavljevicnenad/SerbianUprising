@@ -41,6 +41,7 @@ void ServerGameManager::startGame() {
 void ServerGameManager::executeActions(const std::vector<Action> &actions1, int p1_id, const std::vector<Action> &actions2, int p2_id){
     for (const Action& action : actions1) {
         try {
+            //std::cout << action;
             turn.addAction(p1_id, action);
         } catch (const std::exception& e) {
             std::cerr << "Error adding action: " << e.what() << "\n";
@@ -49,14 +50,17 @@ void ServerGameManager::executeActions(const std::vector<Action> &actions1, int 
 
     for (const Action& action : actions2) {
         try {
+            //std::cout << action;
+
             turn.addAction(p2_id, action);
         } catch (const std::exception& e) {
             std::cerr << "Error adding action: " << e.what() << "\n";
         }
     }
     turn.executeTurn();
+    //graph->print_graph();
     QJsonObject serialized_graph = graph->serialize();
-    graph->print_graph();
+    //graph->print_graph();
     emit serializedGraphReady(serialized_graph);
 }
 /*void ServerGameManager::processEndTurn() {

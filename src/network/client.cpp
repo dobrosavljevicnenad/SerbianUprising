@@ -93,7 +93,7 @@ void Client::onGameOver(const QString &reason)
 void Client::sendEndTurnWithActions(const QVector<Action> &actions, int id) {
     QJsonArray actionsArray;
     for (const Action &action : actions) {
-        actionsArray.append(action.toJson()); // Pretpostavljamo da postoji metoda toJson u klasi Action
+        actionsArray.append(QJsonDocument::fromJson(action.toJson().toUtf8()).object());
     }
 
     QJsonObject jsonObject;
@@ -102,9 +102,11 @@ void Client::sendEndTurnWithActions(const QVector<Action> &actions, int id) {
     jsonObject["actions"] = actionsArray;
 
     QJsonDocument jsonDoc(jsonObject);
-    QString jsonString = QString(jsonDoc.toJson(QJsonDocument::Compact));
+    QString jsonString = jsonDoc.toJson(QJsonDocument::Compact); // No double serialization
+    qDebug() << "Sending JSON to server:" << jsonString;
     m_socket->write(jsonString.toUtf8());
 }
+
 
 
 // klijent salje serveru action i ID klijenta

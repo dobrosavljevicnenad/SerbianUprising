@@ -18,7 +18,6 @@ public:
     void setupGame();
     ~ClientWindow();
 
-
 private:
     MapScene *scene;
     QGraphicsView *view;

@@ -44,14 +44,36 @@ struct Action {
 
     // Deserialize Action from JSON
     static Action fromJson(const QString &jsonString) {
-        QJsonObject json = QJsonDocument::fromJson(jsonString.toUtf8()).object();
-        Action action(static_cast<ActionType>(json["type"].toInt()),
-                      json["playerId"].toInt(),
-                      json["sourceVertexId"].toInt(),
-                      json["targetVertexId"].toInt(),
-                      json["soldiers"].toInt());
-        action.id = json["id"].toInt(); // Override auto-increment if needed
-        return action;
+        QJsonDocument jsonDoc = QJsonDocument::fromJson(jsonString.toUtf8());
+        if (jsonDoc.isNull() || !jsonDoc.isObject()) {
+            throw std::invalid_argument("Invalid JSON format for Action");
+        }
+
+        QJsonObject json = jsonDoc.object();
+        QStringList missingFields;
+        if (!json.contains("type")) missingFields << "type";
+        if (!json.contains("playerId")) missingFields << "playerId";
+        if (!json.contains("sourceVertexId")) missingFields << "sourceVertexId";
+        if (!json.contains("targetVertexId")) missingFields << "targetVertexId";
+        if (!json.contains("soldiers")) missingFields << "soldiers";
+
+        if (!missingFields.isEmpty()) {
+            throw std::invalid_argument(
+                QString("Missing required fields in Action JSON: %1").arg(missingFields.join(", ")).toStdString()
+                );
+        }
+
+        try {
+            Action action(static_cast<ActionType>(json["type"].toInt()),
+                          json["playerId"].toInt(),
+                          json["sourceVertexId"].toInt(),
+                          json["targetVertexId"].toInt(),
+                          json["soldiers"].toInt());
+            action.id = json["id"].toInt(0); // Optional, default to 0 if not present
+            return action;
+        } catch (...) {
+            throw std::invalid_argument("Invalid field types in Action JSON");
+        }
     }
 };
 

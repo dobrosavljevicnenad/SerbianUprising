@@ -88,6 +88,7 @@ void Server::onReadyRead() {
     }
     if (socket->bytesAvailable() > 0) {
         QString data = QString::fromUtf8(socket->readAll()).trimmed();
+
         if (!data.isEmpty()) {
             try {
                 QJsonObject jsonObject = QJsonDocument::fromJson(data.toUtf8()).object();

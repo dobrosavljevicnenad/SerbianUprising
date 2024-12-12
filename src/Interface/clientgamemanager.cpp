@@ -3,7 +3,16 @@
 ClientGameManager::ClientGameManager(QGraphicsScene* scene,QObject* parent)
     : QObject(parent),scene(scene),clientGraph(new graph::Graph())
 {
-    qDebug() << "ClientGameManager created with ID:" << ClientId;
+}
+
+void ClientGameManager::initializeUI(
+    QLabel* headerLabel, QPushButton* endTurnButton, QPushButton* moveButton, QPushButton* infoButton, QListWidget* moveList,QPushButton* armyButton) {
+    this->headerLabel = headerLabel;
+    this->endTurnButton = endTurnButton;
+    this->moveButton = moveButton;
+    this->infoButton = infoButton;
+    this->moveList = moveList;
+    this->armyButton = armyButton;
 }
 
 void ClientGameManager::initializeGraphics() {
@@ -76,7 +85,10 @@ void ClientGameManager::processDataFromServer(const QByteArray& data) {
     if (!doc.isNull() && doc.isObject()) {
         QJsonObject graphData = doc.object();
         clientGraph->deserialize(graphData);
-        if(!init){
+        if(init){
+            allReset();
+            TurnId = TurnId + 1;
+        } else if(!init){
             for (auto &layer : layers) {
                 graph::Vertex* vertex = clientGraph->get_vertex_by_id(layer->getId()+1);
                 if (vertex) {
@@ -84,22 +96,47 @@ void ClientGameManager::processDataFromServer(const QByteArray& data) {
                     vertex->map_layer = layer;
                 }
             }
+            armyManager = AddArmyManager();
             init = true;
         }
-        if(init)
-            armyManagerReset();
-        armyManager = AddArmyManager();
+        enableInteractions();
         updateGraphics();
-        //clientGraph->print_graph();
     } else {
         qWarning() << "Invalid data received from server.";
     }
 }
 
-void ClientGameManager::armyManagerReset(){
-    //Here implement logic to reset armyManager after every Turn
-    //For now just initialization and maybe reset
+void ClientGameManager::disableInteractions() {
+    headerLabel->setText("Waiting for new turn...");
 
+    for (auto &layer : layers) {
+        layer->setEnabled(false);
+    }
+    if (moveButton) moveButton->setEnabled(false);
+    if (infoButton) infoButton->setEnabled(false);
+    if (endTurnButton) endTurnButton->setEnabled(false);
+    if (moveList) moveList->setEnabled(false);
+    if (armyButton) armyButton->setEnabled(false);
+}
+
+void ClientGameManager::enableInteractions() {
+    moveList->clear();
+    moveList->addItem(QString("Player %1 on turn:").arg(ClientId));
+    headerLabel->setText(QString("Turn %1").arg(TurnId));
+
+    for (auto &layer : layers) {
+        layer->setEnabled(true);
+    }
+    if (moveButton) moveButton->setEnabled(true);
+    if (infoButton) infoButton->setEnabled(true);
+    if (endTurnButton) endTurnButton->setEnabled(true);
+    if (moveList) moveList->setEnabled(true);
+    if (armyButton) armyButton->setEnabled(true);
+}
+
+void ClientGameManager::allReset(){
+    armyManager.endTurn();
+    clearArrows();
 }
 
 void ClientGameManager::updateGraphics() {

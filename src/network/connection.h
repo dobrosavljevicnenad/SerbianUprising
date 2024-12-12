@@ -17,7 +17,6 @@ public:
     // Core initialization methods
     bool initializeServer();                // Set up the server
     bool initializeClient();                // Set up the client
-    ServerGameManager* getServerManager();  // Get the initialized ServerGameManager
     ClientGameManager* getClientManager();  // Get the initialized ClientGameManager
 
 signals:

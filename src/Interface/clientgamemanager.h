@@ -11,6 +11,9 @@
 #include <QFile>
 #include <QDebug>
 #include <map>
+#include <qlabel.h>
+#include <qlistwidget.h>
+#include <qpushbutton.h>
 #include "../base/Mechanics/addarmymanager.h"
 #include "Items/customarrowitem.h"
 #include "mapscene.h"
@@ -24,12 +27,13 @@ class ClientGameManager : public QObject{
 
 public:
     explicit ClientGameManager(QGraphicsScene* scene,  QObject* parent = nullptr);
+    void initializeUI(QLabel* headerLabel, QPushButton* endTurnButton, QPushButton* moveButton, QPushButton* infoButton, QListWidget* moveList,QPushButton* armyButton);
     void initializeGraphics();
     void printConnections();
     void processDataFromServer(const QByteArray& data);
     void updateGraphics();
     void EndTurnClicked(const QVector<Action>& actions, int id);
-    void armyManagerReset();
+    void allReset();
     void drawArrow(int playerId, MapLayer* from, MapLayer* to, int number,int actionId);
     void addAction(const Action& action);
     QString GetCurrentAction(const Action& action);
@@ -39,7 +43,8 @@ public:
     void clearArrows();
     void setScene(MapScene *newScene);
     void setId(int id);
-
+    void disableInteractions();
+    void enableInteractions();
 
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
 
@@ -56,7 +61,16 @@ private:
     std::map<int,std::vector<CustomArrowItem*>> arrows;
     Player player;
 
+private://UI
+    QLabel* headerLabel;
+    QPushButton* endTurnButton;
+    QListWidget *moveList;
+    QPushButton *moveButton;
+    QPushButton *armyButton;
+    QPushButton* infoButton;
+
 public:
+    unsigned TurnId = 1;
     int ClientId;
     QVector<Action> actionBuffer;
 

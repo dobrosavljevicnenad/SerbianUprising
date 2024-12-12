@@ -17,6 +17,7 @@ ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *paren
     setupGame();
     setupUI();
     connectSignals();
+    gameManager->initializeUI(headerLabel, endTurnButton, moveButton, infoButton,moveList,armyButton);
 }
 
 ClientWindow::~ClientWindow() {
@@ -36,7 +37,7 @@ void ClientWindow::setupUI() {
 
     mainLayout->setSpacing(5);
     mainLayout->setContentsMargins(2, 2, 2, 2);
-    QString label = QString("Player %1").arg(gameManager->ClientId);
+    QString label = QString("Turn %1").arg(gameManager->TurnId);
     headerLabel = new QLabel(label);
     QFont font = headerLabel->font();
     font.setBold(true);
@@ -129,7 +130,7 @@ void ClientWindow::setupUI() {
     moveListProxy->setPos(scene->width() - moveList->width() - 10, 10);
     moveListProxy->setZValue(1);
 
-    moveList->addItem(QString("Player 1 on turn:"));
+    moveList->addItem(QString("Player %1 on turn:").arg(gameManager->ClientId));
 }
 
 void ClientWindow::connectSignals() {
@@ -161,9 +162,8 @@ void ClientWindow::onEndTurnClicked() {
     int clientId = gameManager->ClientId;
 
     gameManager->EndTurnClicked(actions, clientId);
-    moveList->clear();
+    gameManager->disableInteractions();
 }
-
 
 void ClientWindow::onMoveClicked(QListWidgetItem* item) {
     if (!item) return;
@@ -253,6 +253,7 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
             gameManager->drawArrow(gameManager->ClientId,selectedLayer, layer, troopsToTransfer, newAction.id);
             gameManager->addAction(newAction);
 
+
             //TODO
             //ONLY HIGHLIGHT NEIGHBOR PROVINCE WHEN PRESSED AND ALSO
             //DON'T ALLOW CLICKS ON NOT NEIGHBOUR PROVINCE OF FIRST CLICKED
@@ -283,6 +284,10 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer){
         if (ok && troopsToAdd > 0) {
             layer->setTroopCount(layer->getTroopCount() + troopsToAdd);
 
+            int pid = gameManager->ClientId;
+            int source = selected_vertex->id();
+            Action newAction(ActionType::PLACE_ARMY, pid, source, 0, troopsToAdd);
+            gameManager->addAction(newAction);
             armyManager.decreaseAvailableTroops(troopsToAdd);
 
             selected_vertex->army.setSoldiers(selected_vertex->army.getSoldiers()+troopsToAdd);

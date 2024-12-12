@@ -13,6 +13,18 @@ void Turn::executeTurn() {
     bool battleMusic = 0;
 
     for (const auto& action : buffer) {
+        if (action.type == ActionType::PLACE_ARMY){
+            executePlaceAction(action);
+        }
+    }
+
+    for (const auto& action : buffer2) {
+        if (action.type == ActionType::PLACE_ARMY){
+            executePlaceAction(action);
+        }
+    }
+
+    for (const auto& action : buffer) {
         if (action.type == ActionType::MOVE_ARMY){
             executeMoveAction(action);
         }
@@ -25,7 +37,6 @@ void Turn::executeTurn() {
         if (action.type == ActionType::MOVE_ARMY){
             executeMoveAction(action);
         }
-
         if (action.type == ActionType::ATTACK){
             battleMusic = 1;
         }
@@ -109,6 +120,13 @@ QString Turn::GetCurrentAction(const Action& action) {
         .arg(action.sourceVertexId)
         .arg(action.targetVertexId);
     return moveDescription;
+}
+
+void Turn::executePlaceAction(const Action& action) {
+    Vertex* source = m_graph.get_vertex_by_id(action.sourceVertexId);
+    int soldiers = source->army.getSoldiers();
+    if (source->player.getPlayerId() == action.playerId)
+        source->army.setSoldiers(soldiers+action.soldiers);
 }
 
 void Turn::executeMoveAction(const Action& action) {
