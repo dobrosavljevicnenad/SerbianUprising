@@ -202,6 +202,7 @@ void ClientGameManager::updateGraphics() {
             qWarning() << "Layer not found in layerToVertex map:" << layer->getId();
         }
     }
+    emit gameYearUpdated(gameYear.getCurrentDateString());
 }
 
 void ClientGameManager::drawArrow(int playerId, MapLayer* from, MapLayer* to, int number, int actionId) {
@@ -300,5 +301,9 @@ void ClientGameManager::clearExplosions() {
     for (auto& explosion : explosions) {
         scene->removeItem(explosion);
     }
+}
+
+Year ClientGameManager::year(){
+    return gameYear;
 }
 

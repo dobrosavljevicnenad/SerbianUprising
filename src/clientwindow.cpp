@@ -20,6 +20,7 @@ ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *paren
     setupUI();
     connectSignals();
     gameManager->initializeUI(headerLabel, endTurnButton, moveButton, infoButton,moveList,armyButton);
+    connect(gameManager, &ClientGameManager::gameYearUpdated, this, &ClientWindow::updateYearLabel);
 }
 
 ClientWindow::~ClientWindow() {
@@ -34,47 +35,74 @@ void ClientWindow::setupGame() {
 }
 
 void ClientWindow::setupUI() {
-    /*
-    //////////////////////////////////////////////////////////////////////////
-        mediaPlayer = new QMediaPlayer();
-        audioOutput = new QAudioOutput();
-
-        mediaPlayer->setAudioOutput(audioOutput);
-        audioOutput->setVolume(0.0);
-        mediaPlayer->setSource(QUrl::fromLocalFile("../../resources/music/Hajduk.mp3"));
-
-        mediaPlayer->play();
-        QEventLoop loop;
-        QTimer::singleShot(100, &loop, &QEventLoop::quit);
-        loop.exec();
-        //////////////////////////////////////////////////////////////////////////
-    */
     QWidget *layoutContainer = new QWidget();
     QVBoxLayout *mainLayout = new QVBoxLayout();
 
     mainLayout->setSpacing(5);
     mainLayout->setContentsMargins(2, 2, 2, 2);
-    QString label = QString("Turn %1").arg(gameManager->TurnId);
-    headerLabel = new QLabel(label);
+
+    QString turnLabel = QString("Turn %1").arg(gameManager->TurnId);
+    headerLabel = new QLabel(turnLabel);
     QFont font = headerLabel->font();
     font.setBold(true);
     font.setPointSize(12);
     headerLabel->setFont(font);
     headerLabel->setAlignment(Qt::AlignCenter);
-
+    headerLabel->setStyleSheet("color: black; background-color: transparent;");
     mainLayout->addWidget(headerLabel);
 
+    // Novi QLabel za prikaz godine
+    QString yearLabel = QString("Year: %1").arg(gameManager->year().getCurrentDateString());
+    yearDisplayLabel = new QLabel(yearLabel);
+    QFont yearFont = yearDisplayLabel->font();
+    yearFont.setBold(true);
+    yearFont.setPointSize(10);
+    yearDisplayLabel->setFont(yearFont);
+    yearDisplayLabel->setAlignment(Qt::AlignCenter);
+    yearDisplayLabel->setStyleSheet("color: darkGreen; background-color: transparent;");
+    mainLayout->addWidget(yearDisplayLabel);
+
+    // Red dugmića
     QHBoxLayout *buttonRowLayout = new QHBoxLayout();
     infoButton = new QPushButton("Info");
     moveButton = new QPushButton("Move");
     armyButton = new QPushButton("Army");
 
+    QString buttonStyle =
+        "QPushButton { "
+        "   background-color: darkGray; "
+        "   border-radius: 20px; "
+        "} "
+        "QPushButton:hover { "
+        "   background-color: Green; "
+        "} "
+        "QPushButton:pressed { "
+        "   background-color: darkGreen; "
+        "} ";
+
+    infoButton->setStyleSheet(buttonStyle);
+    moveButton->setStyleSheet(buttonStyle);
+    armyButton->setStyleSheet(
+        "QPushButton { "
+        "   background-color: darkGreen; "
+        "   border-radius: 20px; "
+        "} "
+        );
+
+    infoButton->setFixedSize(40, 40);
+    moveButton->setFixedSize(40, 40);
+    armyButton->setFixedSize(40, 40);
+    this->activeButton = armyButton;
+
     buttonRowLayout->addWidget(infoButton);
     buttonRowLayout->addWidget(moveButton);
     buttonRowLayout->addWidget(armyButton);
+    buttonRowLayout->setSpacing(3);
+    buttonRowLayout->setContentsMargins(0, 0, 0, 0);
 
     mainLayout->addLayout(buttonRowLayout);
 
+    // Dugme za završetak poteza
     endTurnButton = new QPushButton("End Turn");
     endTurnButton->setFixedSize(160, 30);
     endTurnButton->setStyleSheet(
@@ -93,48 +121,8 @@ void ClientWindow::setupUI() {
 
     mainLayout->addWidget(endTurnButton, 0, Qt::AlignCenter);
 
-    layoutContainer->setStyleSheet("background-color: transparent;");
-
-    buttonRowLayout->setSpacing(3);
-    buttonRowLayout->setContentsMargins(0, 0, 0, 0);
-
-    headerLabel->setStyleSheet("color: black; background-color: transparent;");
-
-    QString buttonStyle =
-        "QPushButton { "
-        "   background-color: darkGray; "
-        "   border-radius: 20px; "
-        "} "
-        "QPushButton:hover { "
-        "   background-color: Green; "
-        "} "
-        "QPushButton:pressed { "
-        "   background-color: darkGreen; "
-        "} ";
-
-    infoButton->setStyleSheet(buttonStyle);
-    moveButton->setStyleSheet(buttonStyle);
-
-    QString initStyle =
-        "QPushButton { "
-        "   background-color: darkGreen; "
-        "   border-radius: 20px; "
-        "} ";
-    armyButton->setStyleSheet(initStyle);
-    this->activeButton = armyButton;
-
-
-    infoButton->setFixedSize(40, 40);
-    moveButton->setFixedSize(40, 40);
-    armyButton->setFixedSize(40, 40);
-
+    // Lista poteza
     moveList = new QListWidget();
-    mainLayout->addWidget(moveList);
-
-    layoutContainer->setLayout(mainLayout);
-    QGraphicsProxyWidget *layoutProxy = scene->addWidget(layoutContainer);
-    layoutProxy->setPos(2, 2);
-
     moveList->setFixedSize(200, 300);
     moveList->setStyleSheet(
         "QListWidget { "
@@ -143,12 +131,24 @@ void ClientWindow::setupUI() {
         "   border-radius: 5px; "
         "} "
         );
+    moveList->addItem(QString("Player %1 on turn:").arg(gameManager->ClientId));
+
+    mainLayout->addWidget(moveList);
+    layoutContainer->setLayout(mainLayout);
+
+    // Dodavanje u scenu
+    QGraphicsProxyWidget *layoutProxy = scene->addWidget(layoutContainer);
+    layoutProxy->setPos(2, 2);
+
     QGraphicsProxyWidget *moveListProxy = scene->addWidget(moveList);
     moveListProxy->setPos(scene->width() - moveList->width() - 10, 10);
     moveListProxy->setZValue(1);
-
-    moveList->addItem(QString("Player %1 on turn:").arg(gameManager->ClientId));
 }
+
+void ClientWindow::updateYearLabel(QString newYear) {
+    yearDisplayLabel->setText(newYear);
+}
+
 
 void ClientWindow::connectSignals() {
     connect(gameManager, &ClientGameManager::layerClicked, this, &ClientWindow::onLayerClicked);

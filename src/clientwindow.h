@@ -28,6 +28,7 @@ private:
     QGraphicsView *view;
     ClientGameManager *gameManager;
     QLabel *headerLabel;
+    QLabel *yearDisplayLabel;
     // UI elements specific to the client
     QListWidget *moveList;
     QPushButton *moveButton;
@@ -55,6 +56,7 @@ private slots:
     void onMoveButtonClicked();
     void onPlaceButtonClicked();
     void setActiveButton(QPushButton* clickedButton);
+    void updateYearLabel(QString year);
 
 signals:
     void endTurn_signal(const QVector<Action>& actions, int id);

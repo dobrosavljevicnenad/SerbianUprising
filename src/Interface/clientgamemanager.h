@@ -51,6 +51,7 @@ public:
     void clearExplosions();
     QVector<QStringList> generateBattleResults();
     std::vector<Results> resultsVector;
+    Year year();
 
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
 
@@ -60,6 +61,8 @@ private slots:
 signals:
     void layerClicked(MapLayer* layer);
     void endTurnActionsReady(const QVector<Action>& actions, int id);
+    void gameYearUpdated(QString gameYear);
+
 
 private:
     bool init = false;
