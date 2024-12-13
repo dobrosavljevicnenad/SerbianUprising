@@ -120,6 +120,8 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
         armyManager = AddArmyManager();
         init = true;
     }
+    gameYear.advanceThreeMonths();
+    qDebug() << "Current Game Date:" << gameYear.getCurrentDateString();
     updateGraphics();
 }
 

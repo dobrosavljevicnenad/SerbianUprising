@@ -21,6 +21,7 @@
 #include "../base/Entities/player.h"
 #include "../base/Mechanics/Results.h"
 #include "../base/Mechanics/BattleResultsDialog.h"
+#include "../base/Entities/year.h"
 
 
 class ClientGameManager : public QObject{
@@ -69,6 +70,7 @@ private:
     AddArmyManager armyManager;
     std::map<int,std::vector<CustomArrowItem*>> arrows;
     Player player;
+    Year gameYear;
 
 private://UI
     QLabel* headerLabel;
