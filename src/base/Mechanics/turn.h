@@ -33,8 +33,10 @@ public:
     std::vector<Action>& getPlayerBuffer(int playerId);           // Get the buffer for a specific player
     int getTurn();                                                // Get the current turn number
     std::vector<Results> battlesResults;
+    QJsonObject serializeResultsVector(const std::vector<Results>& resultsVector);
 signals:
     void printExplosion(Vertex *target);
+
 
 private:
     unsigned turn;                                                // Current turn number
@@ -51,9 +53,9 @@ private:
     void playBattleMusic();                                       // Play battle music if an attack happens
     void executeMoveAction(const Action& action);                 // Handle move actions
     void executeAttackAction(const int playerId, const Action& action); // Handle attack actions
+    void executePlaceAction(const Action& action);
 private slots:
     void onBattleFinished(Results results);
-
 };
 
 #endif // TURN_H

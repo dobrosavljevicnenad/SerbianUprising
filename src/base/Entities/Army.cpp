@@ -30,10 +30,10 @@ int Army::strength() const {
 std::string Army::to_string(ArmyType type) const {
     switch(type){
     case ArmyType::HAJDUK:
-        return "hajduk";
+        return "HAJDUK";
         break;
     case ArmyType::JANISSARY:
-        return "janicar";
+        return "JANISSARY";
         break;
     default:
         return "";

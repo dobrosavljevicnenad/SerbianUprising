@@ -9,6 +9,8 @@
 #include "../base/Mechanics/turn.h"
 #include "Items/customarrowitem.h"
 #include "../base/Mechanics/addarmymanager.h"
+#include "../network/server.h"
+#include "../network/client.h"
 
 #include<QGraphicsScene>
 #include<iostream>
@@ -26,7 +28,7 @@ class GameManager : public QObject
 
 public:
     GameManager(QGraphicsScene* scene);
-    void initializeMap();
+ /*   void initializeMap();
 
     void updateLayersGraphics();
     void clearArrows();
@@ -37,14 +39,11 @@ public:
     void CreateRegion();
     void transferTroops(MapLayer* from, MapLayer* to, int troops);
     void printConnections(graph::Vertex* vertex);
-    QMap<MapLayer*,graph::Vertex*> layerToVertex;
     void removeArrowByActionId(int actionId);
     void filterAndRedrawArrows(int currentPlayerId);
     void updateLayersId(int PlayerId);
     AddArmyManager& getArmyManager(int playerId);
 
-signals:
-    void layerClicked(MapLayer* layer);
 
 private:
     std::vector<MapLayer*> explosions;
@@ -54,10 +53,12 @@ private:
     QGraphicsScene* scene;
     graph::Graph g;
 public:
+<<<<<<< HEAD
     Turn turn;
 public slots:
     void printExplosion(Vertex *target);
 
+*/
 };
 
 #endif // GAMEMANAGER_H

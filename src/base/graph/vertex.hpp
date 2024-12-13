@@ -17,7 +17,8 @@ using nodeID_t = unsigned;
 
 class Vertex {
 public:
-    Vertex(QPointF position, const std::string &label,
+
+    Vertex(unsigned id,QPointF position, const std::string &label,
            MapLayer *map_layer, Terrain terrain, Army army,
            Player player);
 
@@ -36,7 +37,6 @@ public:
     MapLayer* map_layer;
 
 private:
-    static unsigned m_index;
     unsigned m_id;
 
     QPointF m_position;

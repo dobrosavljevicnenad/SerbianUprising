@@ -15,6 +15,70 @@ void Results::recordRound(int defenderHit, int attackerHit, int defenderRemainin
     rounds.push_back(round);
 }
 
+QJsonObject Results::toJson() const {
+    QJsonObject json;
+
+    // Serialize simple fields
+    json["defenderNumber"] = defenderNumber;
+    json["attackerNumber"] = attackerNumber;
+    json["targetVertexId"] = targetVertexId;
+    json["defenderType"] = static_cast<int>(defenderType); // Assuming ArmyType is an enum
+    json["attackerType"] = static_cast<int>(attackerType); // Assuming ArmyType is an enum
+    json["terrain"] = static_cast<int>(terrain);          // Assuming TerrainType is an enum
+
+    // Serialize winner
+    json["winner"] = (winner && winner->armyType() == ArmyType::HAJDUK) ? "Hajduk" : "Janissary";
+
+    // Serialize battle rounds
+    QJsonArray roundsArray;
+    for (const auto& round : rounds) {
+        QJsonObject roundJson;
+        roundJson["roundNumber"] = round.roundNumber;
+        roundJson["defenderHits"] = round.defenderHits;
+        roundJson["attackerHits"] = round.attackerHits;
+        roundJson["defenderRemaining"] = round.defenderRemaining;
+        roundJson["attackerRemaining"] = round.attackerRemaining;
+        roundsArray.append(roundJson);
+    }
+    json["rounds"] = roundsArray;
+
+    return json;
+}
+
+void Results::fromJson(const QJsonObject& json) {
+    // Deserialize simple fields
+    defenderNumber = json["defenderNumber"].toInt();
+    attackerNumber = json["attackerNumber"].toInt();
+    targetVertexId = json["targetVertexId"].toInt();
+    defenderType = static_cast<ArmyType>(json["defenderType"].toInt());
+    attackerType = static_cast<ArmyType>(json["attackerType"].toInt());
+    terrain = static_cast<TerrainType>(json["terrain"].toInt());
+
+    // Deserialize winner based on the string value
+    QString winnerString = json["winner"].toString();
+    if (winnerString == "Hajduk") {
+        winner = new Army(ArmyType::HAJDUK); // Create a new Army object with the corresponding type
+    } else if (winnerString == "Janissary") {
+        winner = new Army(ArmyType::JANISSARY);
+    } else {
+        winner = nullptr;
+    }
+
+    // Deserialize battle rounds
+    rounds.clear();
+    QJsonArray roundsArray = json["rounds"].toArray();
+    for (const auto& roundValue : roundsArray) {
+        QJsonObject roundJson = roundValue.toObject();
+        BattleRound round;
+        round.roundNumber = roundJson["roundNumber"].toInt();
+        round.defenderHits = roundJson["defenderHits"].toInt();
+        round.attackerHits = roundJson["attackerHits"].toInt();
+        round.defenderRemaining = roundJson["defenderRemaining"].toInt();
+        round.attackerRemaining = roundJson["attackerRemaining"].toInt();
+        rounds.push_back(round);
+    }
+}
+
 void Results::setWinner(Army* winner) {
     this->winner = winner;
 }

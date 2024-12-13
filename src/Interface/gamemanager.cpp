@@ -1,13 +1,16 @@
 #include "gamemanager.h"
 
+/*
 GameManager::GameManager(QGraphicsScene* scene) : scene(scene), turn(g)  {
     connect(&turn, &Turn::printExplosion, this, &GameManager::printExplosion);
 
 }
 
+
+GameManager::GameManager(QGraphicsScene* scene) : scene(scene), turn(g)  {}
+>>>>>>> develop/network
+
 void GameManager::initializeMap(){
-
-
     QString filePath = "../../resources/init.json";
     QFile file(filePath);
 
@@ -105,15 +108,15 @@ void GameManager::initializeMap(){
     armyManagers[1] = AddArmyManager();
     armyManagers[2] = AddArmyManager();
 }
-void GameManager::updateLayersId(int PlayerId) {
+/*void GameManager::updateLayersId(int PlayerId) {
     for (auto &layer : layers) {
         if (layer) {
             layer->setCurrentPlayer(PlayerId);
         }
     }
-}
+}*/
 
-void GameManager::updateLayersGraphics() {
+/*void GameManager::updateLayersGraphics() {
     clearArrows();
     for (auto &layer : layers) {
         auto vertex = layerToVertex[layer];
@@ -160,7 +163,6 @@ void GameManager::transferTroops(MapLayer* from, MapLayer* to, int troops) {
     }
 }
 
-//print_connections(g, cvor);
 void GameManager::printConnections(graph::Vertex* vertex) {
     auto neighbors = g.neighbors(vertex);
     std::cout << "Vertex " << vertex->id() << " is connected to: ";
@@ -201,28 +203,7 @@ AddArmyManager& GameManager::getArmyManager(int playerId) {
     } else {
         throw std::invalid_argument("Invalid player ID for ArmyManager");
     }
-}
+}*/
 
-void GameManager::printExplosion(Vertex *target)
-{
-    std::srand(static_cast<unsigned>(std::time(nullptr)));
-    int minx = target->map_layer->boundingRect().width() / 4;
-    int miny = target->map_layer->boundingRect().height() / 4;
 
-    int expN = 3 +(std::rand() % 8);
-    for(int i = 0; i < expN; i++){
-        int x = std::rand() % static_cast<int>(target->map_layer->boundingRect().width() / 2);
-        int y = std::rand() % static_cast<int>(target->map_layer->boundingRect().height() / 2);
-        MapLayer *explosionLayer = new MapLayer(QString(":/resources/Images/Explosion.png"),false);
-        explosions.push_back(explosionLayer);
-        explosionLayer->setPos(target->map_layer->pos()+ QPointF(minx+x,miny+y));
-        explosionLayer->setZValue(2);
-        explosionLayer->setScale(0.04);
-        scene->addItem(explosionLayer);
-    }
-}
-void GameManager::clearExplosions() {
-    for (auto& explosion : explosions) {
-            scene->removeItem(explosion);
-    }
-}
+

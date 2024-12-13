@@ -23,12 +23,30 @@ void Turn::executeTurn() {
     updateSoldiersForPlayer(1);
     updateSoldiersForPlayer(2);
 
+    auto& buffer = getPlayerBuffer(1);
+    auto& buffer2 = getPlayerBuffer(2);
+
+    for (const auto& action : buffer) {
+        if (action.type == ActionType::PLACE_ARMY){
+            executePlaceAction(action);
+        }
+    }
+
+    for (const auto& action : buffer2) {
+        if (action.type == ActionType::PLACE_ARMY){
+            executePlaceAction(action);
+        }
+    }
+
+
     // Execute actions for both players
     for (const auto& action : getPlayerBuffer(1)) {
         executePlayerMoves(action, battleMusic);
     }
+
     for (const auto& action : getPlayerBuffer(2)) {
         executePlayerMoves(action, battleMusic);
+
     }
     std::time_t start_music = std::time(0);
     // Play battle music if necessary
@@ -82,10 +100,10 @@ void Turn::clearActionBuffers() {
     player2Buffer.clear();
 }
 
-void Turn::changePlayer() {
+/*void Turn::changePlayer() {
     currentPlayerId = (currentPlayerId == 1) ? 2 : 1;
     std::cout << "Switched to Player " << currentPlayerId << ".\n";
-}
+}*/
 
 int Turn::getCurrentPlayerId() const {
     return currentPlayerId;
@@ -129,6 +147,13 @@ QString Turn::GetCurrentAction(const Action& action) {
         .arg(action.sourceVertexId)
         .arg(action.targetVertexId);
     return moveDescription;
+}
+
+void Turn::executePlaceAction(const Action& action) {
+    Vertex* source = m_graph.get_vertex_by_id(action.sourceVertexId);
+    int soldiers = source->army.getSoldiers();
+    if (source->player.getPlayerId() == action.playerId)
+        source->army.setSoldiers(soldiers+action.soldiers);
 }
 
 void Turn::executeMoveAction(const Action& action) {
@@ -176,7 +201,6 @@ void Turn::onBattleFinished(Results results) {
 
 }
 
-
 void Turn::removeActionById(int actionId) {
     auto& buffer = getPlayerBuffer(currentPlayerId);
 
@@ -197,8 +221,19 @@ void Turn::removeActionById(int actionId) {
         std::cerr << "Action with ID " << actionId << " not found for Player " << currentPlayerId << ".\n";
     }
 }
-
 int Turn::getTurn(){
     return turn;
+}
+
+QJsonObject Turn::serializeResultsVector(const std::vector<Results>& resultsVector) {
+    QJsonObject jsonObject;
+    QJsonArray resultsArray;
+
+    for (const Results& result : resultsVector) {
+        resultsArray.append(result.toJson());
+    }
+
+    jsonObject["results"] = resultsArray;
+    return jsonObject;
 }
 

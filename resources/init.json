@@ -1,108 +1,137 @@
 {
-  "layers": [
+  "vertices": [
     {
+      "id": 1,
       "label": "Layer1",
       "label_path": ":/resources/Images/Layer1.png",
       "army_type": "HAJDUK",
       "num_of_soldiers": 10,
-      "neighbours" : [2,4,10],
       "position": {"x":633,"y": 251}
     },
     {
+        "id": 2,
       "label": "Layer2",
       "label_path": ":/resources/Images/Layer2.png",
       "army_type": "HAJDUK",
       "num_of_soldiers": 20,
-      "neighbours" : [2,3],
       "position": {"x":287,"y": 400}
     },
     {
+        "id": 3,
       "label": "Layer3",
       "label_path": ":/resources/Images/Layer3.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 30,
-      "neighbours" : [],
       "position": {"x":446,"y": 291}
     },
     {
+        "id": 4,
       "label": "Layer4",
       "label_path": ":/resources/Images/Layer4.png",
       "army_type": "HAJDUK",
       "num_of_soldiers": 40,
-      "neighbours" : [2,5],
       "position": {"x":261,"y": 268}
     },
     {
+        "id": 5,
       "label": "Layer5",
       "label_path": ":/resources/Images/Layer5.png",
      "army_type": "JANISSARY",
      "num_of_soldiers": 50,
-     "neighbours" : [2,3,5,8,9,10],
      "position": {"x":378,"y": 186}
     },
     {
+        "id": 6,
       "label": "Layer6",
       "label_path": ":/resources/Images/Layer6.png",
       "army_type": "HAJDUK",
       "num_of_soldiers": 60,
-      "neighbours" : [6,7,8],
       "position": {"x":223,"y": 130}
     },
     {
+        "id": 7,
       "label": "Layer7",
       "label_path": ":/resources/Images/Layer7.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 70,
-      "neighbours" : [],
       "position": {"x":154,"y": 98}
     },
     {
+        "id": 8,
       "label": "Layer8",
       "label_path": ":/resources/Images/Layer8.png",
       "army_type": "HAJDUK",
       "num_of_soldiers": 80,
-      "neighbours" : [6,8,12],
       "position": {"x":181,"y": 27}
     },
     {
+        "id": 9,
       "label": "Layer9",
       "label_path": ":/resources/Images/Layer9.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 90,
-      "neighbours" : [12,9],
       "position": {"x":359,"y": 85}
     },
     {
+        "id": 10,
       "label": "Layer10",
       "label_path": ":/resources/Images/Layer10.png",
       "army_type": "HAJDUK",
       "num_of_soldiers": 100,
-      "neighbours" : [12,11,10],
       "position": {"x":529,"y": 76}
     },
     {
+        "id": 11,
       "label": "Layer11",
       "label_path": ":/resources/Images/Layer11.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 110,
-      "neighbours" : [11],
       "position": {"x":706,"y": 56}
     },
     {
+        "id": 12,
       "label": "Layer12",
       "label_path": ":/resources/Images/Layer12.png",
       "army_type": "HAJDUK",
       "num_of_soldiers": 120,
-      "neighbours" : [12],
       "position": {"x":627,"y": 36}
     },
     {
+        "id": 13,
       "label": "Layer13",
       "label_path": ":/resources/Images/Layer13.png",
      "army_type": "JANISSARY",
      "num_of_soldiers": 130,
-     "neighbours" : [],
      "position": {"x":379,"y": 35}
     }
+  ]
+,
+  "edges": [
+    { "from": 1, "to": 2, "weight": 1.0, "type": "Land" },
+    { "from": 1, "to": 5, "weight": 1.0, "type": "River" },
+    { "from": 1, "to": 9, "weight": 1.0, "type": "Land" },
+    { "from": 2, "to": 3, "weight": 1.0, "type": "River" },
+    { "from": 2, "to": 4, "weight": 1.0, "type": "Land" },
+    { "from": 4, "to": 3, "weight": 1.0, "type": "River" },
+    { "from": 4, "to": 6, "weight": 1.0, "type": "River" },
+    { "from": 5, "to": 3, "weight": 1.0, "type": "Land" },
+    { "from": 5, "to": 4, "weight": 1.0, "type": "River" },
+    { "from": 5, "to": 6, "weight": 1.0, "type": "River" },
+    { "from": 5, "to": 9, "weight": 1.0, "type": "Land" },
+    { "from": 5, "to": 10, "weight": 1.0, "type": "River" },
+    { "from": 5, "to": 11, "weight": 1.0, "type": "Land" },
+    { "from": 6, "to": 7, "weight": 1.0, "type": "River" },
+    { "from": 6, "to": 8, "weight": 1.0, "type": "Land" },
+    { "from": 6, "to": 9, "weight": 1.0, "type": "River" },
+    { "from": 8, "to": 7, "weight": 1.0, "type": "Land" },
+    { "from": 8, "to": 9, "weight": 1.0, "type": "River" },
+    { "from": 8, "to": 13, "weight": 1.0, "type": "River" },
+    { "from": 9, "to": 13, "weight": 1.0, "type": "River" },
+    { "from": 9, "to": 10, "weight": 1.0, "type": "Land" },
+    { "from": 10, "to": 13, "weight": 1.0, "type": "River" },
+    { "from": 10, "to": 12, "weight": 1.0, "type": "River" },
+    { "from": 10, "to": 11, "weight": 1.0, "type": "Land" },
+    { "from": 11, "to": 12, "weight": 1.0, "type": "Land" },
+    { "from": 12, "to": 13, "weight": 1.0, "type": "River" }
   ]
 }

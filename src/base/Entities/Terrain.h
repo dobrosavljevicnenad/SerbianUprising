@@ -26,6 +26,12 @@ public:
 
     std::string to_string(TerrainType type) const;
 
+    static Terrain fromString(const std::string& type) {
+        if (type == "MOUNTAIN") return Terrain(TerrainType::MOUNTAIN);
+        if (type == "FOREST") return Terrain(TerrainType::FOREST);
+        return Terrain(TerrainType::HILL);
+    }
+
 private:
     TerrainType m_terrain;
     int m_attackerAdvantage;

@@ -3,6 +3,11 @@
 
 #include "../Entities/Army.h"
 #include "../Entities/Terrain.h"
+
+#include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonDocument>
+
 struct BattleRound {
     int roundNumber;
     int defenderHits;
@@ -28,6 +33,9 @@ public:
     int getAttackerNumber() const;
     ArmyType getAttackerType() const;
     ArmyType getDefenderType() const;
+
+    QJsonObject toJson() const;
+    void fromJson(const QJsonObject& json);
 
     TerrainType getTerrain() const;
     void setTerrain(TerrainType newTerrain);
