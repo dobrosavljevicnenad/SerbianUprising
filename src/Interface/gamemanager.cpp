@@ -24,7 +24,7 @@ void GameManager::initializeMap(){
 
     QJsonObject rootObj = doc.object();
 
-    QJsonArray layersArray = rootObj["layers"].toArray();
+    QJsonArray layersArray = rootObj["vertices"].toArray();
 
     std::vector<MapLayer*> layers(layersArray.size());
     std::vector<Army> armies;
@@ -32,7 +32,7 @@ void GameManager::initializeMap(){
     Player player2(2,ArmyType::JANISSARY);
     std::vector<std::string> labels;
     std::vector<std::pair<int,int>>positions;
-    std::vector<std::pair<int,std::vector<int>>> allNeighbors;
+    std::vector<std::pair<int,std::string>>verticesId;
 
     MapLayer *background = new MapLayer(":/resources/Project/Pozadina.png", false);
     MapLayer *baseLayer = new MapLayer(":/resources/Project/Slika.png", false);
@@ -86,8 +86,21 @@ void GameManager::initializeMap(){
         QString labelPath = layerObj.value("label_path").toString();
         std::string armyType = layerObj.value("army_type").toString().toStdString();
         int numOfSoldiers = layerObj.value("num_of_soldiers").toInt();
-
+        int id = layerObj.value("id").toInt();
+        verticesId.push_back(make_pair(id,label));
         layers[i] = (new MapLayer(labelPath, true));
+
+        std::string terrain = layerObj.value("terrain_type").toString().toStdString();
+
+        TerrainType terrainType;
+
+        if(terrain == "HILL"){
+            terrainType = TerrainType::HILL;
+        }else if(terrain == "FIELD"){
+            terrainType = TerrainType::FIELD;
+        }else{
+            terrainType = TerrainType::MOUNTAIN;
+        }
 
         ArmyType type = (armyType == "HAJDUK") ? ArmyType::HAJDUK : ArmyType::JANISSARY;
         armies.emplace_back(numOfSoldiers,type);
@@ -97,18 +110,10 @@ void GameManager::initializeMap(){
         int posY = positionObj.value("y").toInt();
         positions.push_back(std::make_pair(posX,posY));
 
-
-        std::vector<int> neighbors;
-        if (layerObj.contains("neighbours") && layerObj["neighbours"].isArray()) {
-            QJsonArray neighborsArray = layerObj["neighbours"].toArray();
-            for (const QJsonValue &neighborValue : neighborsArray) {
-                neighbors.push_back(neighborValue.toInt());
-            }
-        }
-        allNeighbors.emplace_back(i,neighbors);
     }
 
     this->layers = layers;
+    //std::cout<<layersArray.size()<<std::endl;
 
     for (int i = 0; i < layersArray.size(); ++i) {
         layers[i]->setZValue(0);
@@ -125,17 +130,33 @@ void GameManager::initializeMap(){
         layers[i]->setTroopCount(layerToVertex[layers[i]]->army.getSoldiers());
     }
 
-    if (layers.size() >= 12) {
 
-        for (const auto &layer : allNeighbors){
-            int layer_id = layer.first;
-            const std::vector<int> &neighbors = layer.second;
-            for (int neighbor : neighbors){
-                g.insert_edge(layerToVertex[layers[layer_id]], layerToVertex[layers[neighbor]], 1.0);
-            }
+    QJsonArray edgesArray = rootObj["edges"].toArray();
+
+    for(int i = 0 ; i < edgesArray.size();i++){
+        QJsonObject edge = edgesArray[i].toObject();
+
+        int from = edge["from"].toInt();
+        int to = edge["to"].toInt();
+        double weight = edge["weight"].toDouble();
+
+        std::string type = edge["type"].toString().toStdString();
+
+        EdgeType edgeType;
+        if(type == "River"){
+             edgeType = EdgeType::River;
+        }else{
+             edgeType = EdgeType::Land;
         }
 
+
+        Vertex* fromVertex = layerToVertex[layers[from-1]];//layer's index starts from 0, but id starts from 1
+        Vertex* toVertex = layerToVertex[layers[to-1]];//layer's index starts from 0, but id starts from 1
+
+
+        g.insert_edge(fromVertex, toVertex,weight, edgeType);
     }
+
     scene->addItem(rivers);
 
 

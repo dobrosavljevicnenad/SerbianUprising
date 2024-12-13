@@ -1,12 +1,13 @@
 {
-  "layers": [
+  "vertices": [
     {
       "label": "Janina",
       "id" : 45,
       "label_path": ":/resources/Project/Janina.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1148,"y": 1804}
+      "position": {"x":1148,"y": 1804},
+      "terrain_type": "MOUNTAIN"
     },
     {
       "label": "Sarande",
@@ -14,7 +15,8 @@
       "label_path": ":/resources/Project/Sarande.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1028,"y": 1603}
+      "position": {"x":1028,"y": 1603},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Prikhala",
@@ -22,7 +24,8 @@
       "label_path": ":/resources/Project/Prikhala.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1553,"y": 1811}
+      "position": {"x":1553,"y": 1811},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Larissa",
@@ -30,7 +33,8 @@
       "label_path": ":/resources/Project/Larissa.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1809,"y": 1784}
+      "position": {"x":1809,"y": 1784},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Olympus",
@@ -38,15 +42,17 @@
       "label_path": ":/resources/Project/Olympus.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1424,"y": 1556}
+      "position": {"x":1424,"y": 1556},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Ossa",
-	"id" : 50,
+	     "id" : 50,
       "label_path": ":/resources/Project/Ossa.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1862,"y": 1714}
+      "position": {"x":1862,"y": 1714},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Rapsani",
@@ -54,7 +60,8 @@
       "label_path": ":/resources/Project/Rapsani.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1770,"y": 1655}
+      "position": {"x":1770,"y": 1655},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Vlore",
@@ -62,7 +69,8 @@
       "label_path": ":/resources/Project/Vlore.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":943,"y": 1462}
+      "position": {"x":943,"y": 1462},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Ohrid",
@@ -70,7 +78,8 @@
       "label_path": ":/resources/Project/Ohrid.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1265,"y": 1353}
+      "position": {"x":1265,"y": 1353},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Tirane",
@@ -78,7 +87,8 @@
       "label_path": ":/resources/Project/Tirane.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1112,"y": 1299}
+      "position": {"x":1112,"y": 1299},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Durres",
@@ -86,7 +96,8 @@
       "label_path": ":/resources/Project/Durres.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":987,"y": 1278}
+      "position": {"x":987,"y": 1278},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Khaterini",
@@ -94,7 +105,8 @@
       "label_path": ":/resources/Project/Khaterini.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1732,"y": 1551}
+      "position": {"x":1732,"y": 1551},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Delta",
@@ -102,7 +114,8 @@
       "label_path": ":/resources/Project/Delta.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1880,"y": 1531}
+      "position": {"x":1880,"y": 1531},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Solun",
@@ -110,7 +123,8 @@
       "label_path": ":/resources/Project/Solun.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1990,"y": 1486}
+      "position": {"x":1990,"y": 1486},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Chalkidiki",
@@ -118,7 +132,8 @@
       "label_path": ":/resources/Project/Chalkidiki.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1982,"y": 1539}
+      "position": {"x":1982,"y": 1539},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Edessa",
@@ -126,7 +141,8 @@
       "label_path": ":/resources/Project/Edessa.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1664,"y": 1363}
+      "position": {"x":1664,"y": 1363},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Monastir",
@@ -134,7 +150,8 @@
       "label_path": ":/resources/Project/Monastir.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1459,"y": 1371}
+      "position": {"x":1459,"y": 1371},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Serres",
@@ -142,7 +159,8 @@
       "label_path": ":/resources/Project/Serres.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2077,"y": 1377}
+      "position": {"x":2077,"y": 1377},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Kavala",
@@ -150,7 +168,8 @@
       "label_path": ":/resources/Project/Kavala.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2278,"y": 1285}
+      "position": {"x":2278,"y": 1285},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Xanthi",
@@ -158,7 +177,8 @@
       "label_path": ":/resources/Project/Xanthi.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2519,"y": 1248}
+      "position": {"x":2519,"y": 1248},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Alexandropoli",
@@ -166,7 +186,8 @@
       "label_path": ":/resources/Project/Alexandropoli.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2753,"y": 1274}
+      "position": {"x":2753,"y": 1274},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Kiklis",
@@ -174,7 +195,8 @@
       "label_path": ":/resources/Project/Kiklis.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1850,"y": 1241}
+      "position": {"x":1850,"y": 1241},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Sandaski",
@@ -182,7 +204,8 @@
       "label_path": ":/resources/Project/Sandaski.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2118,"y": 1177}
+      "position": {"x":2118,"y": 1177},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Rhodope",
@@ -190,7 +213,8 @@
       "label_path": ":/resources/Project/Rhodope.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2311,"y": 1094}
+      "position": {"x":2311,"y": 1094},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "KrumovGrad",
@@ -198,7 +222,8 @@
       "label_path": ":/resources/Project/KrumovGrad.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2770,"y": 1157}
+      "position": {"x":2770,"y": 1157},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Daddia",
@@ -206,7 +231,8 @@
       "label_path": ":/resources/Project/Daddia.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2994,"y": 1188}
+      "position": {"x":2994,"y": 1188},
+      "terrain_type" : "FOREST"
     },
     {
       "label": "Corlu",
@@ -214,7 +240,8 @@
       "label_path": ":/resources/Project/Corlu.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3131,"y": 1213}
+      "position": {"x":3131,"y": 1213},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Istanbul",
@@ -222,7 +249,8 @@
       "label_path": ":/resources/Project/Istanbul.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3504,"y": 1189}
+      "position": {"x":3504,"y": 1189},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Kirkareli",
@@ -230,7 +258,8 @@
       "label_path": ":/resources/Project/Kirkareli.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3274,"y": 913}
+      "position": {"x":3274,"y": 913},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Edirne",
@@ -238,7 +267,8 @@
       "label_path": ":/resources/Project/Edirne.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2970,"y": 1053}
+      "position": {"x":2970,"y": 1053},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Elhovo",
@@ -246,7 +276,8 @@
       "label_path": ":/resources/Project/Elhovo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2972,"y": 916}
+      "position": {"x":2972,"y": 916},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Burgas",
@@ -254,7 +285,8 @@
       "label_path": ":/resources/Project/Burgas.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3053,"y": 755}
+      "position": {"x":3053,"y": 755},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Varna",
@@ -262,7 +294,8 @@
       "label_path": ":/resources/Project/Varna.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3200,"y": 500}
+      "position": {"x":3200,"y": 500},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Kavarna",
@@ -270,7 +303,8 @@
       "label_path": ":/resources/Project/Kavarna.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3464,"y": 474}
+      "position": {"x":3464,"y": 474},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Constanta",
@@ -278,7 +312,8 @@
       "label_path": ":/resources/Project/Constanta.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3415,"y": 184}
+      "position": {"x":3415,"y": 184},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Silistra",
@@ -286,7 +321,8 @@
       "label_path": ":/resources/Project/Silistra.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2852,"y": 303}
+      "position": {"x":2852,"y": 303},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Babadag",
@@ -294,7 +330,8 @@
       "label_path": ":/resources/Project/Babadag.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3363,"y": 0}
+      "position": {"x":3363,"y": 0},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Braila",
@@ -302,7 +339,8 @@
       "label_path": ":/resources/Project/Braila.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3088,"y": 0}
+      "position": {"x":3088,"y": 0},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Focsani",
@@ -310,7 +348,8 @@
       "label_path": ":/resources/Project/Focsani.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2792,"y": 0}
+      "position": {"x":2792,"y": 0},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Bran",
@@ -318,7 +357,8 @@
       "label_path": ":/resources/Project/Bran.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2481,"y": 0}
+      "position": {"x":2481,"y": 0},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Negoi",
@@ -326,7 +366,8 @@
       "label_path": ":/resources/Project/Negoi.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2158,"y": 0}
+      "position": {"x":2158,"y": 0},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "TurnuSeverin",
@@ -334,7 +375,8 @@
       "label_path": ":/resources/Project/Turnu_Severin.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1882,"y": 19}
+      "position": {"x":1882,"y": 19},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Kraiova",
@@ -342,7 +384,8 @@
       "label_path": ":/resources/Project/Kraiova.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1877,"y": 207}
+      "position": {"x":1877,"y": 207},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Slatina",
@@ -350,7 +393,8 @@
       "label_path": ":/resources/Project/Slatina.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2083,"y": 318}
+      "position": {"x":2083,"y": 318},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Calarasi",
@@ -358,7 +402,8 @@
       "label_path": ":/resources/Project/Calarasi.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3097,"y": 146}
+      "position": {"x":3097,"y": 146},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Bucharest",
@@ -366,7 +411,8 @@
       "label_path": ":/resources/Project/Bucharest.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2740,"y": 174}
+      "position": {"x":2740,"y": 174},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Ployeshti",
@@ -374,7 +420,8 @@
       "label_path": ":/resources/Project/Ployeshti.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2483,"y": 143}
+      "position": {"x":2483,"y": 143},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Pitesti",
@@ -382,7 +429,8 @@
       "label_path": ":/resources/Project/Pitesti.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2158,"y": 170}
+      "position": {"x":2158,"y": 170},
+      "terrain_type" : "HILL"
     },
     {
       "label": "TurnuMagurele",
@@ -390,7 +438,8 @@
       "label_path": ":/resources/Project/Turnu_Magurele.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2460,"y": 389}
+      "position": {"x":2460,"y": 389},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Giurgiu",
@@ -398,7 +447,8 @@
       "label_path": ":/resources/Project/Giurgiu.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2659,"y": 371}
+      "position": {"x":2659,"y": 371},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Calafat",
@@ -406,7 +456,8 @@
       "label_path": ":/resources/Project/Calafat.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1973,"y": 433}
+      "position": {"x":1973,"y": 433},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Vidin",
@@ -414,7 +465,8 @@
       "label_path": ":/resources/Project/Vidin.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1842,"y": 392}
+      "position": {"x":1842,"y": 392},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Lom",
@@ -422,7 +474,8 @@
       "label_path": ":/resources/Project/Lom.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1862,"y":513}
+      "position": {"x":1862,"y":513},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Oryahovo",
@@ -430,7 +483,8 @@
       "label_path": ":/resources/Project/Oryahovo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1979,"y":526}
+      "position": {"x":1979,"y":526},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Nikopoli",
@@ -438,7 +492,8 @@
       "label_path": ":/resources/Project/Nikopoli.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2308,"y":529}
+      "position": {"x":2308,"y":529},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Ruse",
@@ -446,7 +501,8 @@
       "label_path": ":/resources/Project/Ruse.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2685,"y":501}
+      "position": {"x":2685,"y":501},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Shumen",
@@ -454,7 +510,8 @@
       "label_path": ":/resources/Project/Shumen.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2928,"y":551}
+      "position": {"x":2928,"y":551},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Veliko_Tarnovo",
@@ -462,7 +519,8 @@
       "label_path": ":/resources/Project/Veliko_Tarnovo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2755,"y":662}
+      "position": {"x":2755,"y":662},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Sliven",
@@ -470,7 +528,8 @@
       "label_path": ":/resources/Project/Sliven.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2838,"y":780}
+      "position": {"x":2838,"y":780},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Sofija",
@@ -478,7 +537,8 @@
       "label_path": ":/resources/Project/Sofija.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1863,"y":719}
+      "position": {"x":1863,"y":719},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Plevna",
@@ -486,7 +546,8 @@
       "label_path": ":/resources/Project/Plevna.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2369,"y":704}
+      "position": {"x":2369,"y":704},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Stara_Zagora",
@@ -494,7 +555,8 @@
       "label_path": ":/resources/Project/Stara_Zagora.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2588,"y":833}
+      "position": {"x":2588,"y":833},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Haskovo",
@@ -502,7 +564,8 @@
       "label_path": ":/resources/Project/Haskovo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2776,"y":996}
+      "position": {"x":2776,"y":996},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Plovdiv",
@@ -510,7 +573,8 @@
       "label_path": ":/resources/Project/Plovdiv.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2448,"y":849}
+      "position": {"x":2448,"y":849},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Pazardzhik",
@@ -518,7 +582,8 @@
       "label_path": ":/resources/Project/Pazardzhik.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2196,"y":850}
+      "position": {"x":2196,"y":850},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "BlagoevGrad",
@@ -526,7 +591,8 @@
       "label_path": ":/resources/Project/BlagoevGrad.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1991,"y":1053}
+      "position": {"x":1991,"y":1053},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Kostendil",
@@ -534,7 +600,8 @@
       "label_path": ":/resources/Project/Kostendil.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1768,"y":851}
+      "position": {"x":1768,"y":851},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Lezhe",
@@ -542,7 +609,8 @@
       "label_path": ":/resources/Project/Lezhe.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1010,"y":1001}
+      "position": {"x":1010,"y":1001},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Kichevo",
@@ -550,7 +618,8 @@
       "label_path": ":/resources/Project/Kichevo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1233,"y":1146}
+      "position": {"x":1233,"y":1146},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Prilep",
@@ -558,7 +627,8 @@
       "label_path": ":/resources/Project/Prilep.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1506,"y":1257}
+      "position": {"x":1506,"y":1257},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Veles",
@@ -566,7 +636,8 @@
       "label_path": ":/resources/Project/Veles.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1734,"y":1186}
+      "position": {"x":1734,"y":1186},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Shtip",
@@ -574,7 +645,8 @@
       "label_path": ":/resources/Project/Shtip.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1809,"y":1078}
+      "position": {"x":1809,"y":1078},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Skodra",
@@ -582,7 +654,8 @@
       "label_path": ":/resources/Project/Skodra.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":897,"y":933}
+      "position": {"x":897,"y":933},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Kichevo-1",
@@ -590,7 +663,8 @@
       "label_path": ":/resources/Project/Kichevo-1.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1279,"y":1495}
+      "position": {"x":1279,"y":1495},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Skopje",
@@ -598,7 +672,8 @@
       "label_path": ":/resources/Project/Skopje.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1472,"y":1038}
+      "position": {"x":1472,"y":1038},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Kratovo",
@@ -606,7 +681,8 @@
       "label_path": ":/resources/Project/Kratovo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1698,"y":954}
+      "position": {"x":1698,"y":954},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Gelibolu",
@@ -614,7 +690,8 @@
       "label_path": ":/resources/Project/Gelibolu.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2986,"y":1516}
+      "position": {"x":2986,"y":1516},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Kladusa",
@@ -623,7 +700,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":29,"y": 21}
+      "position": {"x":29,"y": 21},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Novi_Grad",
@@ -632,7 +710,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":178,"y": 16}
+      "position": {"x":178,"y": 16},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Gradiska",
@@ -641,7 +720,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":409,"y": 52}
+      "position": {"x":409,"y": 52},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Sanski_Most",
@@ -650,7 +730,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":234,"y": 112}
+      "position": {"x":234,"y": 112},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Jajce",
@@ -659,7 +740,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":283,"y": 192}
+      "position": {"x":283,"y": 192},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Bugojno",
@@ -668,7 +750,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":339,"y": 346}
+      "position": {"x":339,"y": 346},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Banja_Luka",
@@ -677,7 +760,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":441,"y": 144}
+      "position": {"x":441,"y": 144},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Travnik",
@@ -686,7 +770,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":465,"y": 245}
+      "position": {"x":465,"y": 245},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Sarajevo",
@@ -695,7 +780,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":558,"y": 377}
+      "position": {"x":558,"y": 377},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Focha",
@@ -704,7 +790,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":683,"y": 561}
+      "position": {"x":683,"y": 561},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Tuzla",
@@ -713,7 +800,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":728,"y": 227}
+      "position": {"x":728,"y": 227},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Zvornik",
@@ -722,7 +810,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":849,"y": 269}
+      "position": {"x":849,"y": 269},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Srebrenica",
@@ -731,7 +820,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":867,"y": 363}
+      "position": {"x":867,"y": 363},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Visegrad",
@@ -740,7 +830,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":855,"y": 451}
+      "position": {"x":855,"y": 451},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Sjenica",
@@ -749,7 +840,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":866,"y": 576}
+      "position": {"x":866,"y": 576},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Novi_Pazar",
@@ -758,7 +850,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":997,"y": 687}
+      "position": {"x":997,"y": 687},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Doboj",
@@ -767,7 +860,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":613,"y": 145}
+      "position": {"x":613,"y": 145},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Ves",
@@ -776,7 +870,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":563,"y": 74}
+      "position": {"x":563,"y": 74},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Brod",
@@ -785,7 +880,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":649,"y": 66}
+      "position": {"x":649,"y": 66},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Shamac",
@@ -794,7 +890,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":784,"y": 98}
+      "position": {"x":784,"y": 98},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Bijeljina",
@@ -803,7 +900,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":849,"y": 158}
+      "position": {"x":849,"y": 158},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Sabac",
@@ -812,7 +910,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":966,"y": 139}
+      "position": {"x":966,"y": 139},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Beograd",
@@ -821,7 +920,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":1238,"y": 181}
+      "position": {"x":1238,"y": 181},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Smederevo",
@@ -830,7 +930,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":1441,"y": 187}
+      "position": {"x":1441,"y": 187},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Valjevo",
@@ -839,7 +940,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":1140,"y": 322}
+      "position": {"x":1140,"y": 322},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Uzice",
@@ -848,7 +950,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":990,"y": 395}
+      "position": {"x":990,"y": 395},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Raska",
@@ -857,7 +960,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":1199,"y": 502}
+      "position": {"x":1199,"y": 502},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Krusevac",
@@ -866,7 +970,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":1480,"y": 501}
+      "position": {"x":1480,"y": 501},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Nis",
@@ -875,7 +980,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":1635,"y": 631}
+      "position": {"x":1635,"y": 631},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Vranje",
@@ -884,7 +990,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":1398,"y": 651}
+      "position": {"x":1398,"y": 651},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Pristina",
@@ -893,7 +1000,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":1282,"y": 736}
+      "position": {"x":1282,"y": 736},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Kumanovo",
@@ -902,7 +1010,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":1472,"y": 895}
+      "position": {"x":1472,"y": 895},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Prizren",
@@ -911,7 +1020,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":1213,"y": 899}
+      "position": {"x":1213,"y": 899},
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Kragujevac",
@@ -920,7 +1030,8 @@
       "army_type": "HAJDUK",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":1417,"y": 320}
+      "position": {"x":1417,"y": 320},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Negotin",
@@ -929,7 +1040,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":1660,"y": 252}
+      "position": {"x":1660,"y": 252},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Zajecar",
@@ -938,7 +1050,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":1755,"y": 438}
+      "position": {"x":1755,"y": 438},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Kladovo",
@@ -947,7 +1060,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":1817,"y": 227}
+      "position": {"x":1817,"y": 227},
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Bihac",
@@ -956,7 +1070,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":62,"y": 96}
+      "position": {"x":62,"y": 96},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Grahovo",
@@ -965,7 +1080,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":122,"y": 221}
+      "position": {"x":122,"y": 221},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Livno",
@@ -974,7 +1090,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":251,"y": 443}
+      "position": {"x":251,"y": 443},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Mostar",
@@ -983,7 +1100,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":292,"y": 498}
+      "position": {"x":292,"y": 498},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Trebinje",
@@ -992,7 +1110,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":450,"y": 686}
+      "position": {"x":450,"y": 686},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Cetinje",
@@ -1001,7 +1120,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":759,"y": 777}
+      "position": {"x":759,"y": 777},
+      "terrain_type" : "HILL"
     },
     {
       "label": "Djakovica",
@@ -1010,7 +1130,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "neighbours" : [2,4,10],
-      "position": {"x":1039,"y": 839}
+      "position": {"x":1039,"y": 839},
+      "terrain_type" : "MOUNTAIN"
     }
   ],
   "edges": [
