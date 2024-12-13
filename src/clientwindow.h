@@ -19,6 +19,10 @@ public:
     ~ClientWindow();
 
     void processEndTurnClicked();
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
+
 private:
     MapScene *scene;
     QGraphicsView *view;
@@ -38,6 +42,7 @@ private:
 
     void setupUI();
     void connectSignals();
+    void showPauseMenu();
 
 private slots:
     void onMoveClicked(QListWidgetItem *item);

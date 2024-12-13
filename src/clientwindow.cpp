@@ -6,6 +6,8 @@
 #include <QGraphicsView>
 #include<QListWidget>
 #include<QDebug>
+#include <qapplication.h>
+#include <qgraphicseffect.h>
 
 ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *parent)
     : QMainWindow(parent),
@@ -359,3 +361,77 @@ void ClientWindow::clearExplosions()
     gameManager->clearExplosions();
 }
 
+void ClientWindow::keyPressEvent(QKeyEvent *event) {
+    if (event->key() == Qt::Key_Escape) {
+        showPauseMenu();
+    } else {
+        QMainWindow::keyPressEvent(event);
+    }
+}
+
+void ClientWindow::showPauseMenu() {
+    if (findChild<QWidget*>("PauseMenuOverlay")) {
+        findChild<QWidget*>("PauseMenuOverlay")->deleteLater();
+        return;
+    }
+
+    QWidget *overlay = new QWidget(this);
+    overlay->setObjectName("PauseMenuOverlay");
+    overlay->setStyleSheet("background-color: rgba(0, 0, 0, 120);");
+    overlay->setGeometry(this->rect());
+
+    QWidget *menuWidget = new QWidget(overlay);
+    menuWidget->setStyleSheet(
+        "background-color: rgba(50, 50, 50, 200); "
+        "border-radius: 10px;"
+        );
+    menuWidget->setFixedSize(300, 350);
+    menuWidget->move((width() - menuWidget->width()) / 2, (height() - menuWidget->height()) / 2);
+
+    QVBoxLayout *layout = new QVBoxLayout(menuWidget);
+
+    QLabel *label = new QLabel("Game paused");
+    label->setAlignment(Qt::AlignCenter);
+    QFont font = label->font();
+    font.setBold(true);
+    font.setPointSize(14);
+    label->setFont(font);
+    label->setStyleSheet("color: white;");
+    layout->addWidget(label);
+
+    QPushButton *continueButton = new QPushButton("Continue Game");
+    QPushButton *saveButton = new QPushButton("Save Game");
+    QPushButton *optionsButton = new QPushButton("Options");
+    QPushButton *quitButton = new QPushButton("Quit Game");
+
+    QString buttonStyle =
+        "QPushButton { "
+        "   background-color: gray; "
+        "   color: white; "
+        "   border-radius: 10px; "
+        "   padding: 10px; "
+        "} "
+        "QPushButton:hover { "
+        "   background-color: darkGray; "
+        "} ";
+    continueButton->setStyleSheet(buttonStyle);
+    saveButton->setStyleSheet(buttonStyle);
+    optionsButton->setStyleSheet(buttonStyle);
+    quitButton->setStyleSheet(buttonStyle);
+
+    layout->addWidget(continueButton);
+    layout->addWidget(saveButton);
+    layout->addWidget(optionsButton);
+    layout->addWidget(quitButton);
+
+    connect(continueButton, &QPushButton::clicked, overlay, &QWidget::deleteLater);
+    connect(quitButton, &QPushButton::clicked, this, &QApplication::quit);
+    connect(saveButton, &QPushButton::clicked, this, []() {
+        QMessageBox::information(nullptr, "Save Game", "Game saved successfully!");
+    });
+    connect(optionsButton, &QPushButton::clicked, this, []() {
+        QMessageBox::information(nullptr, "Options", "Options menu under construction.");
+    });
+
+    overlay->show();
+}
