@@ -52,7 +52,7 @@ Results Battle::start() {
 
     while (m_defender.getSoldiers() > 0 && m_attacker.getSoldiers() > 0) {
         std::time_t start_time = std::time(0);
-        while (std::difftime(std::time(0), start_time) < 0.5) {}
+        //while (std::difftime(std::time(0), start_time) < 0.5) {}
 
         int defenderHits = calculateHit(m_defender.strength(), m_defenderAdvantage, m_defender.getSoldiers());
         int attackerHits = calculateHit(m_attacker.strength(), m_attackerAdvantage, m_attacker.getSoldiers());

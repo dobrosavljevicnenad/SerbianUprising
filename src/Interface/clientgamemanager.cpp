@@ -96,6 +96,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
                     result.fromJson(resultJson);
                     result.printResults();
                     resultsVector.push_back(result);
+                    printExplosion(clientGraph->get_vertex_by_id(result.getTargetVertexId()));
                 }
             }
         } else {
@@ -153,6 +154,7 @@ void ClientGameManager::disableInteractions() {
 }
 
 void ClientGameManager::enableInteractions() {
+    actionBuffer.clear();
     QVector<QStringList> resultsData = generateBattleResults();
 
     dialog = new BattleResultsDialog(resultsVector, nullptr);
@@ -261,6 +263,7 @@ QString ClientGameManager::GetCurrentAction(const Action& action) {
 }
 
 void ClientGameManager::EndTurnClicked(const QVector<Action>& actions, int id){
+    resultsVector.clear();
     emit endTurnActionsReady(actions, id);
 }
 
