@@ -105,6 +105,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     } else {
         qWarning() << "No valid 'results' object found in the data.";
     }
+
     if(init){
         allReset();
         TurnId = TurnId + 1;
@@ -120,8 +121,8 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
         armyManager = AddArmyManager();
         init = true;
     }
+    //qDebug() << "Current Game Date:" << gameYear.getCurrentDateString();
     gameYear.advanceThreeMonths();
-    qDebug() << "Current Game Date:" << gameYear.getCurrentDateString();
     updateGraphics();
 }
 

@@ -107,7 +107,7 @@
   ]
 ,
   "edges": [
-    { "from": 1, "to": 2, "weight": 1.0, "type": "Land" },
+    { "from": 1, "to": 3, "weight": 1.0, "type": "Land" },
     { "from": 1, "to": 5, "weight": 1.0, "type": "River" },
     { "from": 1, "to": 9, "weight": 1.0, "type": "Land" },
     { "from": 2, "to": 3, "weight": 1.0, "type": "River" },
@@ -132,6 +132,7 @@
     { "from": 10, "to": 12, "weight": 1.0, "type": "River" },
     { "from": 10, "to": 11, "weight": 1.0, "type": "Land" },
     { "from": 11, "to": 12, "weight": 1.0, "type": "Land" },
+    { "from": 11, "to": 1, "weight": 1.0, "type": "Land" },
     { "from": 12, "to": 13, "weight": 1.0, "type": "River" }
   ]
 }

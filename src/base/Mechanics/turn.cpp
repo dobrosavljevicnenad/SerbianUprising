@@ -2,7 +2,7 @@
 #include <qapplication.h>
 #include <qlabel.h>
 
-Turn::Turn(Graph& graph) : currentPlayerId(1), m_graph(graph), moveArmy(graph),turn(1), numBattles(0) {
+Turn::Turn(Graph& graph) : m_graph(graph), moveArmy(graph), numBattles(0) {
     connect(&moveArmy, &MoveArmy::battleFinished, this, &Turn::onBattleFinished);
 }
 
@@ -10,18 +10,9 @@ void Turn::addAction(int playerId, const Action& action) {
     auto& buffer = getPlayerBuffer(playerId);
     buffer.push_back(action);
 }
-void Turn::updateSoldiersForPlayer(int playerId) {
-    auto& buffer = getPlayerBuffer(playerId);
-    for (const auto& action : buffer) {
-        auto vertex = m_graph.get_vertex_by_id(action.sourceVertexId);
-        vertex->army.setSoldiers(vertex->army.getSoldiers() + action.soldiers);
-    }
-}
+
 void Turn::executeTurn() {
     bool battleMusic = false;
-    // Update the soldiers count for both players
-    updateSoldiersForPlayer(1);
-    updateSoldiersForPlayer(2);
 
     auto& buffer = getPlayerBuffer(1);
     auto& buffer2 = getPlayerBuffer(2);
@@ -38,7 +29,6 @@ void Turn::executeTurn() {
         }
     }
 
-
     // Execute actions for both players
     for (const auto& action : getPlayerBuffer(1)) {
         executePlayerMoves(action, battleMusic);
@@ -46,8 +36,8 @@ void Turn::executeTurn() {
 
     for (const auto& action : getPlayerBuffer(2)) {
         executePlayerMoves(action, battleMusic);
-
     }
+
     std::time_t start_music = std::time(0);
     // Play battle music if necessary
     if (battleMusic) {
@@ -66,7 +56,6 @@ void Turn::executeTurn() {
     }
 
     m_mediaPlayer.stop();
-    turn++;
 }
 
 void Turn::executePlayerMoves(const Action& action, bool& battleMusic) {
@@ -98,15 +87,6 @@ void Turn::playBattleMusic() {
 void Turn::clearActionBuffers() {
     player1Buffer.clear();
     player2Buffer.clear();
-}
-
-/*void Turn::changePlayer() {
-    currentPlayerId = (currentPlayerId == 1) ? 2 : 1;
-    std::cout << "Switched to Player " << currentPlayerId << ".\n";
-}*/
-
-int Turn::getCurrentPlayerId() const {
-    return currentPlayerId;
 }
 
 void Turn::executePlayerAttacks(int playerId) {
@@ -167,10 +147,8 @@ void Turn::executeMoveAction(const Action& action) {
 void Turn::executeAttackAction(const int playerId, const Action& action) {
     Vertex* source = m_graph.get_vertex_by_id(action.sourceVertexId);
     Vertex* target = m_graph.get_vertex_by_id(action.targetVertexId);
-
     std::vector<Vertex*> attackers = {source};
     std::vector<unsigned> soldiers = {static_cast<unsigned int>(std::min(source->army.getSoldiers(), action.soldiers))};
-    emit printExplosion(target);
     auto& buffer = getPlayerBuffer(playerId);
     for (auto it = buffer.begin(); it != buffer.end(); ) {
         const auto& attackAction = *it;
@@ -199,30 +177,6 @@ void Turn::onBattleFinished(Results results) {
     std::cout << "Battles left: " << numBattles << ".\n";
     std::cout << std::flush;
 
-}
-
-void Turn::removeActionById(int actionId) {
-    auto& buffer = getPlayerBuffer(currentPlayerId);
-
-    auto it = std::find_if(buffer.begin(), buffer.end(),
-                           [actionId](const Action& action) {
-                               return action.id == actionId;
-                           });
-
-    if (it != buffer.end()) {
-        ///updates soldier count
-        graph::Vertex* cvor = m_graph.get_vertex_by_id(it->sourceVertexId);
-        cvor->army.setSoldiers(cvor->army.getSoldiers() + it->soldiers);
-        cvor->map_layer->setTroopCount(cvor->army.getSoldiers());
-        ///
-        buffer.erase(it);
-        std::cout << "Action with ID " << actionId << " removed for Player " << currentPlayerId << ".\n";
-    } else {
-        std::cerr << "Action with ID " << actionId << " not found for Player " << currentPlayerId << ".\n";
-    }
-}
-int Turn::getTurn(){
-    return turn;
 }
 
 QJsonObject Turn::serializeResultsVector(const std::vector<Results>& resultsVector) {
