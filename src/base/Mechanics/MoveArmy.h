@@ -7,7 +7,7 @@
 #include "../graph/graph.hpp"
 #include "Battle.h"
 #include "../Entities/Army.h"
-
+#include <QCoreApplication>
 using namespace graph;
 
 class MoveArmy : public QThread {
@@ -16,7 +16,7 @@ class MoveArmy : public QThread {
 public:
     explicit MoveArmy(Graph& graph);
 
-    bool executeAttack(std::vector<Vertex*> sources, Vertex* target, std::vector<unsigned> soldiersToMove);
+    bool executeAttack(int playerId, std::vector<Vertex*> sources, Vertex* target, std::vector<unsigned> soldiersToMove);
     bool executeMerge(Vertex* source, Vertex* target, unsigned soldiers);
     Graph& getGraph() const;
 
@@ -24,11 +24,16 @@ public:
     bool validateAttack(std::vector<Vertex*> sources, Vertex* target, std::vector<unsigned> soldiersToMove) const;
 signals:
     Results battleFinished(Results result);
+    void battleCanceled();
+
 public slots:
     void onMergeCompleted(bool success);
-    void onBattleFinished(bool success, Army sentArmy, std::vector<Vertex*> sources,
+    void onBattleFinished(int playerId, bool success, Army sentArmy, std::vector<Vertex*> sources,
                           std::vector<unsigned> soldiersToMove, Vertex* target, unsigned sent, Results results);
 
 private:
     Graph& m_graph;
+    std::vector<int> contested;
+    std::vector<bool> player1Attacks;
+    void checkPlayer1Attack(int playerId, std::vector<Vertex *> sources, Vertex *target, std::vector<unsigned int> soldiersToMove);
 };

@@ -49,6 +49,7 @@ private:
     void executePlaceAction(const Action& action);
 private slots:
     void onBattleFinished(Results results);
+    void onBattleCanceled();
 };
 
 #endif // TURN_H

@@ -1,26 +1,40 @@
 #include "MoveArmy.h"
 #include "BattleArmiesWorker.h"
 #include "MergeArmiesWorker.h"
+#include <algorithm>
 
 MoveArmy::MoveArmy(Graph& graph) : m_graph(graph) {}
 
-bool MoveArmy::executeAttack(std::vector<Vertex*> sources, Vertex* target, std::vector<unsigned> soldiersToMove) {
+bool MoveArmy::executeAttack(int playerId, std::vector<Vertex*> sources, Vertex* target, std::vector<unsigned> soldiersToMove) {
+    while (playerId == 2 && !player1Attacks.empty()) {
+        QCoreApplication::processEvents();
+    }
+    while (std::find(contested.begin(), contested.end(), target->id()) != contested.end()) {
+        QCoreApplication::processEvents();
+    }
     if (!validateAttack(sources, target, soldiersToMove)) {
+        emit battleCanceled();
         return false;
     }
-
     Army sentArmy(0, sources[0]->army.armyType());
 
     for (size_t i = 0; i < sources.size(); i++) {
+        soldiersToMove[i] = std::min(static_cast<unsigned int>(sources[i]->army.getSoldiers()), soldiersToMove[i]);
         sources[i]->army.setSoldiers(sources[i]->army.getSoldiers() - soldiersToMove[i]);
         sentArmy.setSoldiers(sentArmy.getSoldiers() + soldiersToMove[i]);
     }
 
+    contested.push_back(target->id());
+    for (int var = 0; var < sources.size(); var++) {
+        contested.push_back(sources[var]->id());
+    }
+    if(playerId == 1)
+        player1Attacks.push_back(1);
     unsigned sent = sentArmy.getSoldiers();
-    BattleArmiesWorker* battleWorker = new BattleArmiesWorker(*this, sentArmy, *target, sources, soldiersToMove, sent);
+    BattleArmiesWorker* battleWorker = new BattleArmiesWorker(*this, playerId, sentArmy, *target, sources, soldiersToMove, sent);
     connect(battleWorker, &BattleArmiesWorker::battleFinished, this, &MoveArmy::onBattleFinished);
-    battleWorker->start();
 
+    battleWorker->start();
     return true;
 }
 
@@ -62,10 +76,9 @@ void MoveArmy::onMergeCompleted(bool success) {
     }
 }
 
-void MoveArmy::onBattleFinished(bool success, Army sentArmy, std::vector<Vertex*> sources,
+void MoveArmy::onBattleFinished(int playerId, bool success, Army sentArmy, std::vector<Vertex*> sources,
                                 std::vector<unsigned> soldiersToMove, Vertex* target, unsigned sent, Results results) {
     emit battleFinished(results);
-
     if (success) {
         std::cout << "Battle completed successfully.\n";
         int left = sentArmy.getSoldiers();
@@ -78,7 +91,7 @@ void MoveArmy::onBattleFinished(bool success, Army sentArmy, std::vector<Vertex*
 
                 if (left < 0) {
                     std::cerr << "Error: Not enough soldiers to retreat.\n";
-                    return;
+                    //return;
                 }
             }
         }
@@ -86,6 +99,14 @@ void MoveArmy::onBattleFinished(bool success, Army sentArmy, std::vector<Vertex*
     } else {
         std::cerr << "Battle failed.\n";
     }
+    auto targetId = target->id();
+    contested.erase(std::remove(contested.begin(), contested.end(), targetId), contested.end());
+
+    for (int var = 0; var < sources.size(); var++) {
+        auto sourceId = sources[var]->id();
+        contested.erase(std::remove(contested.begin(), contested.end(), sourceId), contested.end());
+    }
+    player1Attacks.pop_back();
 }
 
 Graph& MoveArmy::getGraph() const {

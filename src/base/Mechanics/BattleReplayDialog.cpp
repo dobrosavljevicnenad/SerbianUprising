@@ -52,7 +52,7 @@ BattleReplayDialog::BattleReplayDialog(QWidget *parent, int tableIndex, Results 
 
     int defenderSoldiers = std::ceil(static_cast<double>(defenderNumber) / 10.0);
     int currentDefenderSoldier  = 0;
-    while (currentDefenderSoldier < defenderSoldiers) {
+    while (defenderNumber != 0 && currentDefenderSoldier < defenderSoldiers) {
         QVBoxLayout *defenderArmyLayout = new QVBoxLayout();
         for (int i = 0; i < 8 && currentDefenderSoldier < defenderSoldiers ; ++i) {
             QLabel *soldierLabel = new QLabel(this);
@@ -72,7 +72,7 @@ BattleReplayDialog::BattleReplayDialog(QWidget *parent, int tableIndex, Results 
 
     int attackerSoldiers = std::ceil(static_cast<double>(attackerNumber) / 10.0);
     int currentAttackerSoldier  = 0;
-    while (currentAttackerSoldier < attackerSoldiers) {
+    while (attackerNumber != 0 && currentAttackerSoldier < attackerSoldiers) {
         QVBoxLayout *attackerArmyLayout = new QVBoxLayout();
         for (int i = 0; i < 8 && currentAttackerSoldier < attackerSoldiers; ++i) {
             QLabel *soldierLabel = new QLabel(this);
@@ -184,125 +184,127 @@ void BattleReplayDialog::onReplayClicked() {
     while(std::difftime(std::time(0),start)<1) {
         QCoreApplication::processEvents();
     }
-    for(auto round : results.getRounds()){
-        std::srand(static_cast<unsigned>(std::time(nullptr)));
-        int firingDef = (std::ceil(static_cast<double>(round.defenderHits)/10));
-        if (remainingDefenders <= round.defenderHits)
-            for (int var = 0; var < defenderImages.size(); var++) {
-                QPixmap defenderSoldierFiringImage = getSoldierFiringImage(results.getDefenderType());
-                defenderImages[var]->setPixmap(defenderSoldierFiringImage.scaled(70, 70, Qt::KeepAspectRatio));
+        if(defenderNumber != 0 && attackerNumber != 0){
+        for(auto round : results.getRounds()){
+            std::srand(static_cast<unsigned>(std::time(nullptr)));
+            int firingDef = (std::ceil(static_cast<double>(round.defenderHits)/10));
+            if (remainingDefenders <= round.defenderHits)
+                for (int var = 0; var < defenderImages.size(); var++) {
+                    QPixmap defenderSoldierFiringImage = getSoldierFiringImage(results.getDefenderType());
+                    defenderImages[var]->setPixmap(defenderSoldierFiringImage.scaled(70, 70, Qt::KeepAspectRatio));
+                }
+            else{
+                for(int i = 0; i < firingDef; i++){
+                    int x = 0;
+                    do{
+                        x = std::rand() % defenderSoldiers;
+                    } while(std::find(fallenDefenders.begin(), fallenDefenders.end(), x) != fallenDefenders.end());
+                    QPixmap defenderSoldierFiringImage = getSoldierFiringImage(results.getDefenderType());
+                    defenderImages[x]->setPixmap(defenderSoldierFiringImage.scaled(70, 70, Qt::KeepAspectRatio));
+                }
             }
-        else{
-            for(int i = 0; i < firingDef; i++){
-                int x = 0;
-                do{
-                    x = std::rand() % defenderSoldiers;
-                } while(std::find(fallenDefenders.begin(), fallenDefenders.end(), x) != fallenDefenders.end());
-                QPixmap defenderSoldierFiringImage = getSoldierFiringImage(results.getDefenderType());
-                defenderImages[x]->setPixmap(defenderSoldierFiringImage.scaled(70, 70, Qt::KeepAspectRatio));
+            int firingAck = std::ceil(static_cast<double>(round.attackerHits)/10);
+            if(remainingAtackers <= round.attackerHits){
+                for (int var = 0; var < attackerImages.size(); var++) {
+                    QPixmap attackerSoldierFiringImage = getSoldierFiringImage(results.getAttackerType());
+                    QTransform transform;
+                    transform.scale(-1, 1);
+                    QPixmap flippedAttackerImage = attackerSoldierFiringImage.transformed(transform);
+                    attackerImages[var]->setPixmap(flippedAttackerImage.scaled(70, 70, Qt::KeepAspectRatio));            }
             }
-        }
-        int firingAck = std::ceil(static_cast<double>(round.attackerHits)/10);
-        if(remainingAtackers <= round.attackerHits){
-            for (int var = 0; var < attackerImages.size(); var++) {
-                QPixmap attackerSoldierFiringImage = getSoldierFiringImage(results.getAttackerType());
-                QTransform transform;
-                transform.scale(-1, 1);
-                QPixmap flippedAttackerImage = attackerSoldierFiringImage.transformed(transform);
-                attackerImages[var]->setPixmap(flippedAttackerImage.scaled(70, 70, Qt::KeepAspectRatio));            }
-        }
-        else{
-            for(int i = 0; i < firingAck; i++){
-                int x = 0;
-                do{
-                    x = std::rand() % attackerSoldiers;
-                } while(std::find(fallenAttackers.begin(), fallenAttackers.end(), x) != fallenAttackers.end());
-                QPixmap attackerSoldierFiringImage = getSoldierFiringImage(results.getAttackerType());
-                QTransform transform;
-                transform.scale(-1, 1);
-                QPixmap flippedAttackerImage = attackerSoldierFiringImage.transformed(transform);
-                attackerImages[x]->setPixmap(flippedAttackerImage.scaled(70, 70, Qt::KeepAspectRatio));              }
-        }
+            else{
+                for(int i = 0; i < firingAck; i++){
+                    int x = 0;
+                    do{
+                        x = std::rand() % attackerSoldiers;
+                    } while(std::find(fallenAttackers.begin(), fallenAttackers.end(), x) != fallenAttackers.end());
+                    QPixmap attackerSoldierFiringImage = getSoldierFiringImage(results.getAttackerType());
+                    QTransform transform;
+                    transform.scale(-1, 1);
+                    QPixmap flippedAttackerImage = attackerSoldierFiringImage.transformed(transform);
+                    attackerImages[x]->setPixmap(flippedAttackerImage.scaled(70, 70, Qt::KeepAspectRatio));              }
+            }
 
-        std::time_t startReplay = std::time(0);
-        int fallenDef =(defenderSoldiers - fallenDefenders.size()) - std::ceil(static_cast<double>(round.defenderRemaining)/10);
-        if (round.defenderRemaining <= 0)
-            for (int var = 0; var < defenderImages.size(); var++) {
-                QPixmap defenderSoldierFallenImage = getSoldierFallenImage(results.getDefenderType());
-                defenderImages[var]->setPixmap(defenderSoldierFallenImage.scaled(70, 70, Qt::KeepAspectRatio));
-                if((std::find(fallenDefenders.begin(), fallenDefenders.end(), var) == fallenDefenders.end())){
-                    fallenDefenders.push_back(var);
+            std::time_t startReplay = std::time(0);
+            int fallenDef =(defenderSoldiers - fallenDefenders.size()) - std::ceil(static_cast<double>(round.defenderRemaining)/10);
+            if (round.defenderRemaining <= 0)
+                for (int var = 0; var < defenderImages.size(); var++) {
+                    QPixmap defenderSoldierFallenImage = getSoldierFallenImage(results.getDefenderType());
+                    defenderImages[var]->setPixmap(defenderSoldierFallenImage.scaled(70, 70, Qt::KeepAspectRatio));
+                    if((std::find(fallenDefenders.begin(), fallenDefenders.end(), var) == fallenDefenders.end())){
+                        fallenDefenders.push_back(var);
+                    }
+                }
+            else{
+                for(int i = 0; i < fallenDef; i++){
+                    int x = 0;
+                    do{
+                        x = std::rand() % defenderSoldiers;
+                    } while(std::find(fallenDefenders.begin(), fallenDefenders.end(), x) != fallenDefenders.end());
+                    fallenDefenders.push_back(x);
+                    QPixmap defenderSoldierFallenImage = getSoldierFallenImage(results.getDefenderType());
+                    defenderImages[x]->setPixmap(defenderSoldierFallenImage.scaled(70, 70, Qt::KeepAspectRatio));
                 }
             }
-        else{
-            for(int i = 0; i < fallenDef; i++){
-                int x = 0;
-                do{
-                    x = std::rand() % defenderSoldiers;
-                } while(std::find(fallenDefenders.begin(), fallenDefenders.end(), x) != fallenDefenders.end());
-                fallenDefenders.push_back(x);
-                QPixmap defenderSoldierFallenImage = getSoldierFallenImage(results.getDefenderType());
-                defenderImages[x]->setPixmap(defenderSoldierFallenImage.scaled(70, 70, Qt::KeepAspectRatio));
+            int fallenAtk = (attackerSoldiers - fallenAttackers.size()) - std::ceil(static_cast<double>(round.attackerRemaining)/10);
+            if(round.attackerRemaining <= 0){
+                for (int var = 0; var < attackerImages.size(); var++) {
+                    QPixmap attackerSoldiersFallenImage = getSoldierFallenImage(results.getAttackerType());
+                    QTransform transform;
+                    transform.scale(-1, 1);
+                    QPixmap flippedAttackerImage = attackerSoldiersFallenImage.transformed(transform);
+                    attackerImages[var]->setPixmap(flippedAttackerImage.scaled(70, 70, Qt::KeepAspectRatio));
+                    if((std::find(fallenAttackers.begin(), fallenAttackers.end(), var) == fallenAttackers.end())){
+                        fallenAttackers.push_back(var);
+                    }
+                }
             }
-        }
-        int fallenAtk = (attackerSoldiers - fallenAttackers.size()) - std::ceil(static_cast<double>(round.attackerRemaining)/10);
-        if(round.attackerRemaining <= 0){
+            else{
+                for(int i = 0; i < fallenAtk; i++){
+                    int x = 0;
+                    do{
+                        x = std::rand() % attackerSoldiers;
+                    } while(std::find(fallenAttackers.begin(), fallenAttackers.end(), x) != fallenAttackers.end());
+                    fallenAttackers.push_back(x);
+                    QPixmap attackerSoldiersFallenImage = getSoldierFallenImage(results.getAttackerType());
+                    QTransform transform;
+                    transform.scale(-1, 1);
+                    QPixmap flippedAttackerImage = attackerSoldiersFallenImage.transformed(transform);
+                    attackerImages[x]->setPixmap(flippedAttackerImage.scaled(70, 70, Qt::KeepAspectRatio));            }
+            }
+            while (std::difftime(std::time(0), startReplay) < 1) {
+                QCoreApplication::processEvents();
+            }
             for (int var = 0; var < attackerImages.size(); var++) {
-                QPixmap attackerSoldiersFallenImage = getSoldierFallenImage(results.getAttackerType());
-                QTransform transform;
-                transform.scale(-1, 1);
-                QPixmap flippedAttackerImage = attackerSoldiersFallenImage.transformed(transform);
-                attackerImages[var]->setPixmap(flippedAttackerImage.scaled(70, 70, Qt::KeepAspectRatio));
                 if((std::find(fallenAttackers.begin(), fallenAttackers.end(), var) == fallenAttackers.end())){
-                    fallenAttackers.push_back(var);
+                    QPixmap standingSoldierImage = getSoldierStandingImage(results.getAttackerType());
+                    QTransform transform;
+                    transform.scale(-1, 1);
+                    QPixmap flippedAttackerImage = standingSoldierImage.transformed(transform);
+                    attackerImages[var]->setPixmap(flippedAttackerImage.scaled(70, 70, Qt::KeepAspectRatio));
+                }
+            }
+            for (int var = 0; var < defenderImages.size(); var++) {
+                if((std::find(fallenDefenders.begin(), fallenDefenders.end(), var) == fallenDefenders.end())){
+                    QPixmap standingSoldierImage =getSoldierStandingImage(results.getDefenderType());
+                    defenderImages[var]->setPixmap(standingSoldierImage.scaled(70, 70, Qt::KeepAspectRatio));
                 }
             }
         }
-        else{
-            for(int i = 0; i < fallenAtk; i++){
-                int x = 0;
-                do{
-                    x = std::rand() % attackerSoldiers;
-                } while(std::find(fallenAttackers.begin(), fallenAttackers.end(), x) != fallenAttackers.end());
-                fallenAttackers.push_back(x);
-                QPixmap attackerSoldiersFallenImage = getSoldierFallenImage(results.getAttackerType());
-                QTransform transform;
-                transform.scale(-1, 1);
-                QPixmap flippedAttackerImage = attackerSoldiersFallenImage.transformed(transform);
-                attackerImages[x]->setPixmap(flippedAttackerImage.scaled(70, 70, Qt::KeepAspectRatio));            }
-        }
-        while (std::difftime(std::time(0), startReplay) < 1) {
-            QCoreApplication::processEvents();
-        }
-        for (int var = 0; var < attackerImages.size(); var++) {
-            if((std::find(fallenAttackers.begin(), fallenAttackers.end(), var) == fallenAttackers.end())){
-                QPixmap standingSoldierImage = getSoldierStandingImage(results.getAttackerType());
-                QTransform transform;
-                transform.scale(-1, 1);
-                QPixmap flippedAttackerImage = standingSoldierImage.transformed(transform);
-                attackerImages[var]->setPixmap(flippedAttackerImage.scaled(70, 70, Qt::KeepAspectRatio));
+        if(results.getWinner()->armyType() == results.getDefenderType() && results.getRounds()[results.getRounds().size()-1].attackerRemaining> 0){
+            for (int var = 0; var < attackerImages.size(); var++) {
+                if((std::find(fallenAttackers.begin(), fallenAttackers.end(), var) == fallenAttackers.end())){
+                    QPixmap retreatImage = QPixmap(QString(":/resources/Images/RetreatFlag.png"));
+                    attackerImages[var]->setPixmap(retreatImage.scaled(70, 70, Qt::KeepAspectRatio));
+                }
             }
         }
-        for (int var = 0; var < defenderImages.size(); var++) {
-            if((std::find(fallenDefenders.begin(), fallenDefenders.end(), var) == fallenDefenders.end())){
-                QPixmap standingSoldierImage =getSoldierStandingImage(results.getDefenderType());
-                defenderImages[var]->setPixmap(standingSoldierImage.scaled(70, 70, Qt::KeepAspectRatio));
-            }
-        }
-    }
-    if(results.getWinner()->armyType() == results.getDefenderType() && results.getRounds()[results.getRounds().size()-1].attackerRemaining> 0){
-        for (int var = 0; var < attackerImages.size(); var++) {
-            if((std::find(fallenAttackers.begin(), fallenAttackers.end(), var) == fallenAttackers.end())){
-                QPixmap retreatImage = QPixmap(QString(":/resources/Images/RetreatFlag.png"));
-                attackerImages[var]->setPixmap(retreatImage.scaled(70, 70, Qt::KeepAspectRatio));
-            }
-        }
-    }
-    if(results.getWinner()->armyType() == results.getAttackerType() &&  results.getRounds()[results.getRounds().size()-1].defenderRemaining> 0){
-        for (int var = 0; var < defenderImages.size(); var++) {
-            if((std::find(fallenDefenders.begin(), fallenDefenders.end(), var) == fallenDefenders.end())){
-                QPixmap retreatImage = QPixmap(QString(":/resources/Images/RetreatFlag.png"));
-                defenderImages[var]->setPixmap(retreatImage.scaled(70, 70, Qt::KeepAspectRatio));
+        if(results.getWinner()->armyType() == results.getAttackerType() &&  results.getRounds()[results.getRounds().size()-1].defenderRemaining> 0){
+            for (int var = 0; var < defenderImages.size(); var++) {
+                if((std::find(fallenDefenders.begin(), fallenDefenders.end(), var) == fallenDefenders.end())){
+                    QPixmap retreatImage = QPixmap(QString(":/resources/Images/RetreatFlag.png"));
+                    defenderImages[var]->setPixmap(retreatImage.scaled(70, 70, Qt::KeepAspectRatio));
+                }
             }
         }
     }
@@ -316,12 +318,13 @@ void BattleReplayDialog::onReplayClicked() {
     loseLabel->setAlignment(Qt::AlignCenter);
 
     if(results.getWinner()->armyType() == results.getDefenderType()){
+
         defenderResultLayout->addWidget(victoryLabel);
-        attackerResultLayout->addWidget(loseLabel);
+        if(attackerNumber != 0) attackerResultLayout->addWidget(loseLabel);
     }
     else{
         attackerResultLayout->addWidget(victoryLabel);
-        defenderResultLayout->addWidget(loseLabel);
+        if(defenderNumber != 0)defenderResultLayout->addWidget(loseLabel);
     }
     replayButton->setEnabled(false);
     replayButton->deleteLater();

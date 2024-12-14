@@ -1,9 +1,9 @@
 #include "BattleArmiesWorker.h"
 #include "Battle.h"
 
-BattleArmiesWorker::BattleArmiesWorker(MoveArmy& moveArmy, Army sentArmy, graph::Vertex& target,
+BattleArmiesWorker::BattleArmiesWorker(MoveArmy& moveArmy, int playerId, Army sentArmy, graph::Vertex& target,
                                        std::vector<graph::Vertex*> sources, std::vector<unsigned> soldiersToMove, unsigned sent)
-    : m_moveArmy(moveArmy), m_sentArmy(sentArmy), m_target(&target),
+    : m_moveArmy(moveArmy), playerId(playerId), m_sentArmy(sentArmy), m_target(&target),
     m_sources(sources), m_soldiersToMove(soldiersToMove), m_sent(sent) {}
 
 void BattleArmiesWorker::run() {
@@ -30,14 +30,14 @@ void BattleArmiesWorker::run() {
 void BattleArmiesWorker::handleBattleOutcome(Army& winner) {
     if (m_sentArmy.getSoldiers() == 0) {
         std::cout << "Attacking army defeated!\n";
-        emit battleFinished(true, m_sentArmy, m_sources, m_soldiersToMove, m_target, m_sent, results);
+        emit battleFinished(true, playerId, m_sentArmy, m_sources, m_soldiersToMove, m_target, m_sent, results);
         return;
     }
 
     if (m_target->army.getSoldiers() == 0) {
         std::cout << "Defender army defeated!\n";
         m_target->army = winner;
-        emit battleFinished(true, m_sentArmy, m_sources, m_soldiersToMove, m_target, m_sent, results);
+        emit battleFinished(true, playerId, m_sentArmy, m_sources, m_soldiersToMove, m_target, m_sent, results);
         return;
     }
 
@@ -47,7 +47,7 @@ void BattleArmiesWorker::handleBattleOutcome(Army& winner) {
         m_target->army = winner;
     }
 
-    emit battleFinished(true, m_sentArmy, m_sources, m_soldiersToMove, m_target, m_sent, results);
+    emit battleFinished(true, playerId, m_sentArmy, m_sources, m_soldiersToMove, m_target, m_sent, results);
 }
 
 void BattleArmiesWorker::updateNeighboringArmy() {

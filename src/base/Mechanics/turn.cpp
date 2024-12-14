@@ -4,6 +4,8 @@
 
 Turn::Turn(Graph& graph) : m_graph(graph), moveArmy(graph), numBattles(0) {
     connect(&moveArmy, &MoveArmy::battleFinished, this, &Turn::onBattleFinished);
+    connect(&moveArmy, &MoveArmy::battleCanceled, this, &Turn::onBattleCanceled);
+
 }
 
 void Turn::addAction(int playerId, const Action& action) {
@@ -45,6 +47,7 @@ void Turn::executeTurn() {
     }
     // Execute actions for both players
     executePlayerAttacks(1);
+
     executePlayerAttacks(2);
 
     while (numBattles > 0) {
@@ -166,7 +169,7 @@ void Turn::executeAttackAction(const int playerId, const Action& action) {
         }
     }
 
-    if (!moveArmy.executeAttack(attackers, target, soldiers)) {
+    if (!moveArmy.executeAttack(playerId, attackers, target, soldiers)) {
         std::cerr << "Attack action failed for Player " << action.playerId << ".\n";
     }
 }
@@ -178,7 +181,11 @@ void Turn::onBattleFinished(Results results) {
     std::cout << std::flush;
 
 }
-
+void Turn::onBattleCanceled(){
+    numBattles--;
+    std::cout << "Battles left: " << numBattles << ".\n";
+    std::cout << std::flush;
+}
 QJsonObject Turn::serializeResultsVector(const std::vector<Results>& resultsVector) {
     QJsonObject jsonObject;
     QJsonArray resultsArray;
