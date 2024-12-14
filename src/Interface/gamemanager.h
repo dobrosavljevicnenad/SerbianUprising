@@ -9,6 +9,8 @@
 #include "../base/Mechanics/turn.h"
 #include "Items/customarrowitem.h"
 #include "../base/Mechanics/addarmymanager.h"
+#include "../base/Entities/region.h"
+#include "../base/Entities/city.h"
 
 #include<QGraphicsScene>
 #include<iostream>

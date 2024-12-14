@@ -28,8 +28,10 @@ void GameManager::initializeMap(){
 
     std::vector<MapLayer*> layers(layersArray.size());
     std::vector<Army> armies;
+
     Player player1(1,ArmyType::HAJDUK);
     Player player2(2,ArmyType::JANISSARY);
+
     std::vector<std::string> labels;
     std::vector<std::pair<int,int>>positions;
     std::vector<std::pair<int,std::string>>verticesId;
@@ -85,9 +87,13 @@ void GameManager::initializeMap(){
 
         QString labelPath = layerObj.value("label_path").toString();
         std::string armyType = layerObj.value("army_type").toString().toStdString();
+
         int numOfSoldiers = layerObj.value("num_of_soldiers").toInt();
         int id = layerObj.value("id").toInt();
-        verticesId.push_back(make_pair(id,label));
+
+        int cityLevel = layerObj.value("cityLevel").toInt();
+
+        verticesId.push_back(make_pair(i,label));
         layers[i] = (new MapLayer(labelPath, true));
 
         std::string terrain = layerObj.value("terrain_type").toString().toStdString();
@@ -156,6 +162,54 @@ void GameManager::initializeMap(){
 
         g.insert_edge(fromVertex, toVertex,weight, edgeType);
     }
+
+
+    //inicijalizacija regiona
+
+    QJsonArray regionsArray = rootObj["regions"].toArray();
+
+
+    std::vector<Region>regions;
+    std::vector<std::pair<int,std::vector<std::string>>>niz_lejera;
+    std::vector<std::string>layer_string;
+    std::map<int,std::vector<std::string>>regionLayers;
+
+    for(int i = 0;i<regionsArray.size();i++){
+        QJsonObject regionObj = regionsArray[i].toObject();
+        std::string regionId = regionObj["regionId"].toString().toStdString();
+        std::string regionName = regionObj["regionName"].toString().toStdString();
+
+        regions.emplace_back(Region(regionId,regionName));
+
+        QJsonArray layersArray = regionObj["layers"].toArray();
+
+        for(const QJsonValue &layerValue : layersArray){
+            MapLayer *mp ;
+            for(const auto &x : verticesId){
+                if(layerValue.toString().toStdString() == x.second){
+                    mp = layers[x.first];
+                }
+            }
+            regions[i].territories.push_back(mp);
+            layer_string.push_back(layerValue.toString().toStdString());
+        }
+
+        niz_lejera.push_back(std::make_pair(i,layer_string));
+        layer_string.clear();
+    }
+    /*for(int i = 0;i<regions.size();i++)   {
+        std::cout << "Region ID: " << regions[i].getRegionId() << "\n";
+        std::cout << "Region Name: " << regions[i].getRegionName() << "\n";
+        std::cout<<"Sastoji se od sledecih lejera"  << "\n";
+        for(std::string &x : niz_lejera[i].second){
+            std::cout<<x<< " ";
+        }
+        std::cout<<std::endl;
+        std::cout << "--------------------------\n";
+    }*/
+
+
+
 
     scene->addItem(rivers);
 
