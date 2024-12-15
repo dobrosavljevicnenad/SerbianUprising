@@ -52,7 +52,7 @@
     },
     {
       "label": "Ossa",
-             "id" : 50,
+      "id" : 50,
       "label_path": ":/resources/Project/Ossa.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,

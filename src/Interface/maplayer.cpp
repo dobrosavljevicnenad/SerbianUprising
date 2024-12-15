@@ -20,6 +20,11 @@ void MapLayer::setTroopCount(int count) {
     troopText->setPlainText(QString::number(count));
 }
 
+QPixmap MapLayer::get_m_originalPixmap(){
+    return m_originalPixmap;
+}
+
+
 int MapLayer::getTroopCount() const {
     return troopCount;
 }

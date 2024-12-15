@@ -7,7 +7,7 @@
 #include "base/Mechanics/turn.h"
 #include "base/Mechanics/addarmymanager.h"
 #include "Interface/Items/zoomablegraphicsview.h"
-
+#include "./Interface/infowidget.h"
 
 #include <QMainWindow>
 #include <QGraphicsView>
@@ -57,6 +57,7 @@ private slots:
     void setActiveButton(QPushButton* clickedButton);
     void handleMoveArmy(MapLayer* layer);
     void handlePlaceArmy(MapLayer* layer);
+    void handleInfomation(MapLayer* layer);
 
 private:
     Ui::MainWindow *ui;
@@ -73,6 +74,7 @@ private:
     QPushButton* activeButton ;
     QPushButton* infoButton;
     QPushButton* endTurnButton;
+    NodeInfoWidget* nodeInfoWidget;
 
     QLabel* headerLabel;
 };

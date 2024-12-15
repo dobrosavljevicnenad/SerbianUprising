@@ -26,7 +26,7 @@ public:
     QGraphicsTextItem *troopText;
     int getTroopCount() const;
     void setCurrentPlayer(int PlayerId);
-
+    QPixmap get_m_originalPixmap();
 signals:
     void layerClicked(MapLayer *layer);
 
@@ -42,6 +42,7 @@ private:
     int currentPlayer;
     QPixmap m_originalPixmap;
     QColor ArmyColor;
+    QString labelName;
 
 };
 

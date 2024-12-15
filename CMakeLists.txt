@@ -56,6 +56,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         src/base/Mechanics/BattleArmiesWorker.cpp
         src/base/Mechanics/MergeArmiesWorker.cpp
         src/Interface/Items/zoomablegraphicsview.h src/Interface/Items/zoomablegraphicsview.cpp
+        src/Interface/infowidget.h src/Interface/infowidget.cpp
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET Ustanak APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR

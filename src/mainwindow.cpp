@@ -33,6 +33,9 @@ MainWindow::MainWindow(QWidget *parent)
         gameManager = new GameManager(scene);
         gameManager->initializeMap();
 
+        nodeInfoWidget = new NodeInfoWidget(gameManager->layerToVertex,this);
+        nodeInfoWidget->hide();
+
         layoutContainer = new QWidget(view->viewport());
         layoutContainer->setStyleSheet("background-color: rgba(0, 0, 0, 128);"
                                        "border-radius: 15px;");
@@ -170,7 +173,7 @@ MainWindow::MainWindow(QWidget *parent)
                 for (auto* widget : layoutWidgets) {
                     widget->hide();
                 }
-                layoutContainer->setFixedSize(toggleButton->width() + 10, toggleButton->height() + 10);
+                layoutContainer->setFixedSize(250, toggleButton->height() + 10);
                 layoutContainer->setStyleSheet("background-color: transparent");
                 toggleButton->setText("⮟");
             } else {
@@ -304,11 +307,26 @@ void MainWindow::onLayerClicked(MapLayer *layer) {
         handleMoveArmy(layer);
     } else if (activeButton == armyButton) {
         handlePlaceArmy(layer);
+    } else if (activeButton == infoButton) {
+        handleInfomation(layer);
     } else {
         QMessageBox::warning(this, tr("Unknown Action"), tr("This action is not supported."));
     }
 
 }
+
+void MainWindow::handleInfomation(MapLayer* layer){
+    if (layer) {
+        nodeInfoWidget->updateNodeInfo(layer);
+        QPoint bottomRight = view->viewport()->rect().bottomRight();
+        QPoint globalPos = view->mapToGlobal(bottomRight) - QPoint(nodeInfoWidget->width() + 10, nodeInfoWidget->height() + 10);
+        nodeInfoWidget->move(globalPos);
+        nodeInfoWidget->show();
+    } else {
+        QMessageBox::information(this, "Info", "No layer selected!");
+    }
+}
+
 
 void MainWindow::handleMoveArmy(MapLayer* layer){
     if (selectedLayer == nullptr) {
