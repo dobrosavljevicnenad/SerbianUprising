@@ -308,3 +308,35 @@ Year ClientGameManager::year(){
     return gameYear;
 }
 
+// void ClientGameManager::saveGame(const QString& savePath) {
+//     if (!clientGraph) {
+//         qWarning() << "Graph is null, cannot save game.";
+//         return;
+//     }
+
+//     QJsonObject gameState;
+//     gameState["graph"] = clientGraph->serialize();
+
+//     if (FileManager::saveToFile(savePath, gameState)) {
+//         qDebug() << "Game saved successfully to:" << savePath;
+//     } else {
+//         qWarning() << "Failed to save game to:" << savePath;
+//     }
+// }
+
+// void ClientGameManager::loadGame(const QString& loadPath) {
+//     if (!FileManager::fileExists(loadPath)) {
+//         qWarning() << "Save file does not exist:" << loadPath;
+//         return;
+//     }
+
+//     QJsonObject gameState = FileManager::loadFromFile(loadPath);
+//     if (gameState.contains("graph") && gameState["graph"].isObject()) {
+//         QJsonObject graphData = gameState["graph"].toObject();
+//         clientGraph->deserialize(graphData);
+//         qDebug() << "Game loaded successfully from:" << loadPath;
+//         updateGraphics(); // Update visuals
+//     } else {
+//         qWarning() << "Invalid game state in file:" << loadPath;
+//     }
+// }

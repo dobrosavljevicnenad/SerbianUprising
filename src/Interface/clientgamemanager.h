@@ -22,6 +22,7 @@
 #include "../base/Mechanics/Results.h"
 #include "../base/Mechanics/BattleResultsDialog.h"
 #include "../base/Entities/year.h"
+#include "filemanager.h"
 
 
 class ClientGameManager : public QObject{
@@ -52,6 +53,10 @@ public:
     QVector<QStringList> generateBattleResults();
     std::vector<Results> resultsVector;
     Year year();
+    // void saveGame(const QString& savePath);
+    // void loadGame(const QString& loadPath);
+
+
 
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
 
