@@ -28,6 +28,8 @@ protected:
 
 private slots:
     void openSettings();
+    void adjustVolume(int value);
+    void openLobby();
 
 private:
     QLabel *shadowLabel;
@@ -38,6 +40,11 @@ private:
     QPushButton *fullScreenButton;
     QStackedWidget *stackedWidget;
     QFrame *buttonFrame;
+    QMediaPlayer *mediaPlayer;
+    QAudioOutput *audioOutput;
+
+    LobbyWindow *lobbyWindow;
+
 
     void setupUI();
     void setBackgroundImage();

@@ -1,7 +1,9 @@
-#ifndef LOBBYWINDOW_H
-#define LOBBYWINDOW_H
+#pragma once
 
 #include <QWidget>
+#include <QBoxLayout>
+#include <QLabel>
+#include <QTableView>
 #include <QPushButton>
 #include "network/server.h"
 #include "network/client.h"
@@ -18,26 +20,34 @@ public:
     explicit LobbyWindow(QWidget *parent = nullptr);
     ~LobbyWindow();
 
+    void connectSignals();
+    void updateLobbyList(const QString &gameName, const QString &playerName);
+
 
 private:
-    ConnectionManager *connectionManager;  // Centralized connection manager
+    ConnectionManager *connectionManager;
     ClientWindow * gameWindow;
 
     ServerGameManager* serverManager;
     ClientGameManager* clientManager;
 
-    QPushButton *createServerButton;
-    QPushButton *joinGameButton;
+    QPushButton *createLobbyButton;
+    QPushButton *joinLobbyButton;
     QPushButton *backButton;
 
+    QTableWidget *table;
+
     void setupUI();
-    void connectSignals();
 
 private slots:
     void onCreateServer();
     void onJoinGame();
     void handleGameStart();
-    void handleGameReady();
+    void returnToMenu();
+
+
+signals:
+    void backToMenu();
+    void startGame();
 };
 
-#endif // LOBBYWINDOW_H

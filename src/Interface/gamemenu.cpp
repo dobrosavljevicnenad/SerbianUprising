@@ -11,14 +11,24 @@
 GameMenu::GameMenu(QWidget *parent) : QWidget(parent) {
     setupUI();
 
-    connect(newGameButton, &QPushButton::clicked, this, [this]() {
-        LobbyWindow *lobby = new LobbyWindow();
-        lobby->show();
-        parentWidget()->close();
-    });
+    mediaPlayer = new QMediaPlayer(this);
+    audioOutput = new QAudioOutput(this);
+    mediaPlayer->setAudioOutput(audioOutput);
+    mediaPlayer->setSource(QUrl::fromLocalFile("../../resources/music/output.mp3"));
+    audioOutput->setVolume(0.5);
+    mediaPlayer->play();
+
+    connect(newGameButton, &QPushButton::clicked, this, &GameMenu::openLobby);
     connect(settingsButton, &QPushButton::clicked, this, &GameMenu::openSettings);
     connect(exitButton, &QPushButton::clicked, this, &GameMenu::exitGame);
     connect(fullScreenButton, &QPushButton::clicked, this, &GameMenu::fullScreenClicked);
+
+    lobbyWindow = new LobbyWindow(this);
+    stackedWidget->addWidget(lobbyWindow);
+
+    connect(lobbyWindow, &LobbyWindow::backToMenu, this, [this]() {
+        stackedWidget->setCurrentIndex(0);
+    });
 
 }
 
@@ -335,6 +345,12 @@ void GameMenu::openSettings() {
     stackedWidget->setCurrentIndex(1);
 }
 
+void GameMenu::adjustVolume(int value) {
+    if (audioOutput) {
+        audioOutput->setVolume(value / 100.0);
+    }
+}
+
 void GameMenu::keyPressEvent(QKeyEvent *event) {
     if (event->key() == Qt::Key_Escape) {
         QWidget *parentWindow = parentWidget();
@@ -347,3 +363,7 @@ void GameMenu::keyPressEvent(QKeyEvent *event) {
     QWidget::keyPressEvent(event);
 }
 
+void GameMenu::openLobby()
+{
+    stackedWidget->setCurrentWidget(lobbyWindow);
+}
