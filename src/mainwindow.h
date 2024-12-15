@@ -36,6 +36,13 @@ public:
     void highlightLayer(MapLayer *layer);
 
     void print_connections(const graph::Graph &g, const graph::Vertex* vertex);
+    void repositionFixedWidgets();
+
+
+    void setupFixedWidgets();
+
+protected:
+    //void resizeEvent(QResizeEvent *event) override;
 
 private slots:
     void onLayerClicked(MapLayer *layer);
@@ -59,10 +66,14 @@ private:
     GameManager* gameManager;
     QMediaPlayer* mediaPlayer;
     QAudioOutput* audioOutput;
+    QWidget* layoutContainer;
     QListWidget* moveList;
     QPushButton* moveButton;
     QPushButton* armyButton;
     QPushButton* activeButton ;
+    QPushButton* infoButton;
+    QPushButton* endTurnButton;
+
     QLabel* headerLabel;
 };
 #endif // MAINWINDOW_H

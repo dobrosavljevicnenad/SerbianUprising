@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include "./Interface/gamemenu.h"
+#include <qtoolbutton.h>
 
 GameMenu *gameMenu;
 
@@ -9,17 +10,13 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
     , scene(new MapScene(this))
     , selectedLayer(nullptr)
-    , moveList(new QListWidget())
 {
     ui->setupUi(this);
     gameMenu = new GameMenu(this);
     setCentralWidget(gameMenu);
 
-    //MapScene *scene = new MapScene(this);
-
     view = new ZoomableGraphicsView(this);
     view->setScene(scene);
-    //setCentralWidget(view);
 
     gameManager = new GameManager(scene);
 
@@ -28,56 +25,75 @@ MainWindow::MainWindow(QWidget *parent)
 
         view = new ZoomableGraphicsView(this);
         view->setScene(scene);
-        view->setDragMode(QGraphicsView::ScrollHandDrag);
         view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+        view->setFocusPolicy(Qt::StrongFocus);
+        view->setFocus();
         setCentralWidget(view);
 
         gameManager = new GameManager(scene);
         gameManager->initializeMap();
-    //////////////////////////////////////////////////////////////////////////
-        mediaPlayer = new QMediaPlayer();
-        audioOutput = new QAudioOutput();
 
-        mediaPlayer->setAudioOutput(audioOutput);
-        audioOutput->setVolume(0.0);
-        mediaPlayer->setSource(QUrl::fromLocalFile("../../resources/music/Hajduk.mp3"));
+        //setupFixedWidgets();
 
-        mediaPlayer->play();
-        QEventLoop loop;
-        QTimer::singleShot(100, &loop, &QEventLoop::quit);
-        loop.exec();
-        //////////////////////////////////////////////////////////////////////////
-        QWidget* layoutContainer = new QWidget();
-
-        QVBoxLayout* mainLayout = new QVBoxLayout();
+        layoutContainer = new QWidget(view->viewport());
+        QVBoxLayout *mainLayout = new QVBoxLayout();
 
         mainLayout->setSpacing(5);
         mainLayout->setContentsMargins(2, 2, 2, 2);
-        QLabel* headerLabel = new QLabel("Turn 1");
+
+        // Header Label
+        QString turnLabel = QString("Turn %1").arg(1);
+        headerLabel = new QLabel(turnLabel);
         QFont font = headerLabel->font();
         font.setBold(true);
         font.setPointSize(12);
         headerLabel->setFont(font);
         headerLabel->setAlignment(Qt::AlignCenter);
-        this->headerLabel = headerLabel;
-
+        headerLabel->setStyleSheet("color: black; background-color: transparent;");
         mainLayout->addWidget(headerLabel);
 
-        QHBoxLayout* buttonRowLayout = new QHBoxLayout();
+        // Buttons Row
+        QHBoxLayout *buttonRowLayout = new QHBoxLayout();
+        infoButton = new QPushButton("Info");
+        moveButton = new QPushButton("Move");
+        armyButton = new QPushButton("Army");
 
-        QPushButton* infoButton = new QPushButton("Info");
-        QPushButton* moveButton = new QPushButton("Move");
-        this->moveButton = moveButton;
-        QPushButton* armyButton = new QPushButton("Army");
-        this->armyButton = armyButton;
+        QString buttonStyle =
+            "QPushButton { "
+            "   background-color: darkGray; "
+            "   border-radius: 20px; "
+            "} "
+            "QPushButton:hover { "
+            "   background-color: Green; "
+            "} "
+            "QPushButton:pressed { "
+            "   background-color: darkGreen; "
+            "} ";
+
+        infoButton->setStyleSheet(buttonStyle);
+        moveButton->setStyleSheet(buttonStyle);
+        armyButton->setStyleSheet(
+            "QPushButton { "
+            "   background-color: darkGreen; "
+            "   border-radius: 20px; "
+            "} "
+            );
+
+        infoButton->setFixedSize(40, 40);
+        moveButton->setFixedSize(40, 40);
+        armyButton->setFixedSize(40, 40);
+        this->activeButton = armyButton;
 
         buttonRowLayout->addWidget(infoButton);
         buttonRowLayout->addWidget(moveButton);
         buttonRowLayout->addWidget(armyButton);
+        buttonRowLayout->setSpacing(3);
+        buttonRowLayout->setContentsMargins(0, 0, 0, 0);
 
         mainLayout->addLayout(buttonRowLayout);
 
-        QPushButton *endTurnButton = new QPushButton("End Turn");
+        // End Turn Button
+        endTurnButton = new QPushButton("End Turn");
         endTurnButton->setFixedSize(160, 30);
         endTurnButton->setStyleSheet(
             "QPushButton { "
@@ -91,64 +107,51 @@ MainWindow::MainWindow(QWidget *parent)
             "} "
             "QPushButton:pressed { "
             "   background-color: black; "
-            "}");
-
+            "}"
+            );
         mainLayout->addWidget(endTurnButton, 0, Qt::AlignCenter);
+        QPushButton *changePlayerButton = new QPushButton("Change Player", layoutContainer);
+        changePlayerButton->setFixedSize(160, 30);
+        changePlayerButton->setStyleSheet(
+            "QPushButton { "
+            "   background-color: black; "
+            "   color: white; "
+            "   border-radius: 10px; "
+            "   padding: 5px; "
+            "} "
+            "QPushButton:hover { "
+            "   background-color: darkGray; "
+            "} "
+            "QPushButton:pressed { "
+            "   background-color: black; "
+            "}"
+            );
+        mainLayout->addWidget(changePlayerButton, 0, Qt::AlignCenter);
+
+        // Move List
+        moveList = new QListWidget(view->viewport());
+        moveList->setFixedSize(200, 300);
+        moveList->setStyleSheet(
+            "QListWidget { "
+            "   background-color: darkGray; "
+            "   border: 1px solid black; "
+            "   border-radius: 5px; "
+            "}"
+            );
+        mainLayout->addWidget(moveList, 0, Qt::AlignCenter);
 
         layoutContainer->setLayout(mainLayout);
 
-        QGraphicsProxyWidget* layoutProxy = scene->addWidget(layoutContainer);
-        //////////////////////////////////////////////////////////////////////////
-        layoutProxy->setPos(2, 2);
+        // Set the initial position of layoutContainer
+        layoutContainer->setGeometry(10, 10, 250, 400);
 
-        buttonRowLayout->setSpacing(3);
-        buttonRowLayout->setContentsMargins(0, 0, 0, 0);
+        // Add player change button
 
-        layoutContainer->setStyleSheet("background-color: transparent;");
 
-        headerLabel->setStyleSheet("color: black; background-color: transparent;");
-
-        QString buttonStyle =
-            "QPushButton { "
-            "   background-color: darkGray; "
-            "   border-radius: 18px; "
-            "} "
-            "QPushButton:hover { "
-            "   background-color: Green; "
-            "} "
-            "QPushButton:pressed { "
-            "   background-color: darkGreen; "
-            "} ";
-
-        infoButton->setStyleSheet(buttonStyle);
-        moveButton->setStyleSheet(buttonStyle);
-
-        QString initStyle =
-            "QPushButton { "
-            "   background-color: darkGreen; "
-            "   border-radius: 20px; "
-            "} ";
-        armyButton->setStyleSheet(initStyle);
-        this->activeButton = armyButton;
-
-        infoButton->setFixedSize(40, 40);
-        moveButton->setFixedSize(40, 40);
-        armyButton->setFixedSize(40, 40);
-        //////////////////////////////////////////////////////////////////////////
-        QPushButton *changePlayerButton = new QPushButton("Change Player");
-
-        QGraphicsProxyWidget *changePlayerButtonProxy = scene->addWidget(changePlayerButton);
-        QGraphicsProxyWidget *textFieldProxy = scene->addWidget(moveList);
-
-        changePlayerButtonProxy->setPos(scene->width()- changePlayerButton->size().width(), 00);
-
-        textFieldProxy->setPos(scene->width()-textFieldProxy->size().width(), 50);
-
-        changePlayerButtonProxy->setZValue(1);
-        textFieldProxy->setZValue(1);
-
+        // Initial move list
         moveList->addItem(QString("Player %1 on turn:").arg(gameManager->turn.getCurrentPlayerId()));
 
+        // Connect signals
         connect(gameManager, &GameManager::layerClicked, this, &MainWindow::onLayerClicked);
         connect(changePlayerButton, &QPushButton::clicked, this, &MainWindow::onChangePlayerClicked);
         connect(endTurnButton, &QPushButton::clicked, this, &MainWindow::onEndTurnClicked);
@@ -156,6 +159,10 @@ MainWindow::MainWindow(QWidget *parent)
         connect(infoButton, &QToolButton::clicked, this, &MainWindow::onInfoButtonClicked);
         connect(moveButton, &QToolButton::clicked, this, &MainWindow::onMoveButtonClicked);
         connect(armyButton, &QToolButton::clicked, this, &MainWindow::onPlaceButtonClicked);
+
+        // Connect scrollbars to reposition the widgets dynamically
+        connect(view->horizontalScrollBar(), &QScrollBar::valueChanged, this, [this]() { repositionFixedWidgets(); });
+        connect(view->verticalScrollBar(), &QScrollBar::valueChanged, this, [this]() { repositionFixedWidgets(); });
 
     });
 
@@ -173,6 +180,12 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::repositionFixedWidgets()
+{
+    // Always position layoutContainer relative to the viewport
+    layoutContainer->move(view->viewport()->rect().topLeft() + QPoint(10, 10));
 }
 
 void MainWindow::onMoveClicked(QListWidgetItem* item) {
@@ -216,6 +229,8 @@ void MainWindow::onMoveClicked(QListWidgetItem* item) {
         delete moveList->takeItem(moveList->row(item));
     }
 }
+
+
 
 void MainWindow::onChangePlayerClicked() {
     gameManager->turn.changePlayer();

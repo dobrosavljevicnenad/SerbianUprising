@@ -2,6 +2,14 @@
 
 Region::Region() : city(nullptr), troopProductionRate(1) {}
 
+
+Region::Region(const std::string& id,
+               const std::string& name)
+    : regionId(id),
+    regionName(name)
+{}
+
+
 bool Region::addLayer(MapLayer* layer, std::unique_ptr<City> layerCity) {
     if (territories.size() < 5) {
         territories.push_back(layer);
@@ -12,6 +20,15 @@ bool Region::addLayer(MapLayer* layer, std::unique_ptr<City> layerCity) {
     }
     return false;
 }
+
+const std::string& Region::getRegionId() const {
+    return regionId;
+}
+
+const std::string& Region::getRegionName() const {
+    return regionName;
+}
+
 
 int Region::getBattleFactor() const {
     return (city != nullptr) ? city->getBattleFactor() : 0;

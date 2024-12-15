@@ -6,6 +6,8 @@
 #include <QKeyEvent>
 #include <QScrollBar>
 #include <QTimer>
+#include <QMouseEvent>
+#include <QScrollBar>
 
 
 class ZoomableGraphicsView : public QGraphicsView {
@@ -18,14 +20,19 @@ protected:
     void wheelEvent(QWheelEvent *event) override;
     void keyPressEvent(QKeyEvent* event) override;
     void keyReleaseEvent(QKeyEvent* event) override;
+    void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
     QTimer* movementTimer;
+    QTimer* edgeScrollTimer;
+    QPoint cursorPos;
+    int edgeScrollSpeed;
     int horizontalDirection;
     int verticalDirection;
 
 private slots:
     void moveView();
+    void scrollOnEdge();
 };
 
 #endif // ZOOMABLEGRAPHICSVIEW_H

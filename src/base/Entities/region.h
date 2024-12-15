@@ -13,16 +13,25 @@ class Region
 public:
     Region();
 
+    Region(const std::string& id,
+           const std::string& name);
+
     //~Region();
+
+    const std::string& getRegionId() const;
+    const std::string& getRegionName() const;
 
     bool addLayer(MapLayer*layer, std::unique_ptr<City> layerCity);
     int getBattleFactor() const;
     int generateTroops() const;
+    std::vector<MapLayer*>territories;
 
 private:
-    std::vector<MapLayer*>territories;
     std::unique_ptr<City> city;
     int troopProductionRate;
+
+    std::string regionId;
+    std::string regionName;
 };
 
 #endif // REGION_H

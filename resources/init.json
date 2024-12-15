@@ -1,12 +1,14 @@
 {
-  "layers": [
+  "vertices": [
     {
       "label": "Janina",
       "id" : 45,
       "label_path": ":/resources/Project/Janina.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1148,"y": 1804}
+      "position": {"x":1148,"y": 1804},
+      "cityLevel": 1,
+      "terrain_type": "MOUNTAIN"
     },
     {
       "label": "Sarande",
@@ -14,7 +16,9 @@
       "label_path": ":/resources/Project/Sarande.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1028,"y": 1603}
+      "position": {"x":1028,"y": 1603},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Prikhala",
@@ -22,7 +26,9 @@
       "label_path": ":/resources/Project/Prikhala.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1553,"y": 1811}
+      "position": {"x":1553,"y": 1811},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Larissa",
@@ -30,7 +36,9 @@
       "label_path": ":/resources/Project/Larissa.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1809,"y": 1784}
+      "position": {"x":1809,"y": 1784},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Olympus",
@@ -38,15 +46,19 @@
       "label_path": ":/resources/Project/Olympus.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1424,"y": 1556}
+      "position": {"x":1424,"y": 1556},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Ossa",
-	"id" : 50,
+             "id" : 50,
       "label_path": ":/resources/Project/Ossa.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1862,"y": 1714}
+      "position": {"x":1862,"y": 1714},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Rapsani",
@@ -54,7 +66,9 @@
       "label_path": ":/resources/Project/Rapsani.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1770,"y": 1655}
+      "position": {"x":1770,"y": 1655},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Vlore",
@@ -62,7 +76,9 @@
       "label_path": ":/resources/Project/Vlore.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":943,"y": 1462}
+      "position": {"x":943,"y": 1462},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Ohrid",
@@ -70,7 +86,9 @@
       "label_path": ":/resources/Project/Ohrid.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1265,"y": 1353}
+      "position": {"x":1265,"y": 1353},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Tirane",
@@ -78,7 +96,9 @@
       "label_path": ":/resources/Project/Tirane.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1112,"y": 1299}
+      "position": {"x":1112,"y": 1299},
+      "cityLevel": 3,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Durres",
@@ -86,7 +106,9 @@
       "label_path": ":/resources/Project/Durres.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":987,"y": 1278}
+      "position": {"x":987,"y": 1278},
+      "cityLevel":3,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Khaterini",
@@ -94,7 +116,9 @@
       "label_path": ":/resources/Project/Khaterini.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1732,"y": 1551}
+      "position": {"x":1732,"y": 1551},
+      "cityLevel":2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Delta",
@@ -102,7 +126,9 @@
       "label_path": ":/resources/Project/Delta.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1880,"y": 1531}
+      "position": {"x":1880,"y": 1531},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Solun",
@@ -110,7 +136,9 @@
       "label_path": ":/resources/Project/Solun.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1990,"y": 1486}
+      "position": {"x":1990,"y": 1486},
+      "cityLevel": 3,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Chalkidiki",
@@ -118,7 +146,9 @@
       "label_path": ":/resources/Project/Chalkidiki.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1982,"y": 1539}
+      "position": {"x":1982,"y": 1539},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Edessa",
@@ -126,7 +156,9 @@
       "label_path": ":/resources/Project/Edessa.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1664,"y": 1363}
+      "position": {"x":1664,"y": 1363},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Monastir",
@@ -134,7 +166,9 @@
       "label_path": ":/resources/Project/Monastir.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1459,"y": 1371}
+      "position": {"x":1459,"y": 1371},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Serres",
@@ -142,7 +176,9 @@
       "label_path": ":/resources/Project/Serres.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2077,"y": 1377}
+      "position": {"x":2077,"y": 1377},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Kavala",
@@ -150,7 +186,9 @@
       "label_path": ":/resources/Project/Kavala.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2278,"y": 1285}
+      "position": {"x":2278,"y": 1285},
+      "cityLevel": 3,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Xanthi",
@@ -158,7 +196,9 @@
       "label_path": ":/resources/Project/Xanthi.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2519,"y": 1248}
+      "position": {"x":2519,"y": 1248},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Alexandropoli",
@@ -166,7 +206,9 @@
       "label_path": ":/resources/Project/Alexandropoli.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2753,"y": 1274}
+      "position": {"x":2753,"y": 1274},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Kiklis",
@@ -174,7 +216,9 @@
       "label_path": ":/resources/Project/Kiklis.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1850,"y": 1241}
+      "position": {"x":1850,"y": 1241},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Sandaski",
@@ -182,7 +226,9 @@
       "label_path": ":/resources/Project/Sandaski.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2118,"y": 1177}
+      "position": {"x":2118,"y": 1177},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Rhodope",
@@ -190,7 +236,9 @@
       "label_path": ":/resources/Project/Rhodope.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2311,"y": 1094}
+      "position": {"x":2311,"y": 1094},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "KrumovGrad",
@@ -198,7 +246,9 @@
       "label_path": ":/resources/Project/KrumovGrad.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2770,"y": 1157}
+      "position": {"x":2770,"y": 1157},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Daddia",
@@ -206,7 +256,9 @@
       "label_path": ":/resources/Project/Daddia.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2994,"y": 1188}
+      "position": {"x":2994,"y": 1188},
+      "cityLevel": 2,
+      "terrain_type" : "FOREST"
     },
     {
       "label": "Corlu",
@@ -214,7 +266,9 @@
       "label_path": ":/resources/Project/Corlu.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3131,"y": 1213}
+      "position": {"x":3131,"y": 1213},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Istanbul",
@@ -222,7 +276,9 @@
       "label_path": ":/resources/Project/Istanbul.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3504,"y": 1189}
+      "position": {"x":3504,"y": 1189},
+      "cityLevel": 3,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Kirkareli",
@@ -230,7 +286,9 @@
       "label_path": ":/resources/Project/Kirkareli.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3274,"y": 913}
+      "position": {"x":3274,"y": 913},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Edirne",
@@ -238,7 +296,9 @@
       "label_path": ":/resources/Project/Edirne.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2970,"y": 1053}
+      "position": {"x":2970,"y": 1053},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Elhovo",
@@ -246,7 +306,9 @@
       "label_path": ":/resources/Project/Elhovo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2972,"y": 916}
+      "position": {"x":2972,"y": 916},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Burgas",
@@ -254,7 +316,9 @@
       "label_path": ":/resources/Project/Burgas.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3053,"y": 755}
+      "position": {"x":3053,"y": 755},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Varna",
@@ -262,7 +326,9 @@
       "label_path": ":/resources/Project/Varna.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3200,"y": 500}
+      "position": {"x":3200,"y": 500},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Kavarna",
@@ -270,7 +336,9 @@
       "label_path": ":/resources/Project/Kavarna.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3464,"y": 474}
+      "position": {"x":3464,"y": 474},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Constanta",
@@ -278,7 +346,9 @@
       "label_path": ":/resources/Project/Constanta.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3415,"y": 184}
+      "position": {"x":3415,"y": 184},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Silistra",
@@ -286,7 +356,9 @@
       "label_path": ":/resources/Project/Silistra.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2852,"y": 303}
+      "position": {"x":2852,"y": 303},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Babadag",
@@ -294,7 +366,9 @@
       "label_path": ":/resources/Project/Babadag.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3363,"y": 0}
+      "position": {"x":3363,"y": 0},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Braila",
@@ -302,7 +376,9 @@
       "label_path": ":/resources/Project/Braila.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3088,"y": 0}
+      "position": {"x":3088,"y": 0},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Focsani",
@@ -310,7 +386,9 @@
       "label_path": ":/resources/Project/Focsani.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2792,"y": 0}
+      "position": {"x":2792,"y": 0},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Bran",
@@ -318,7 +396,9 @@
       "label_path": ":/resources/Project/Bran.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2481,"y": 0}
+      "position": {"x":2481,"y": 0},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Negoi",
@@ -326,7 +406,9 @@
       "label_path": ":/resources/Project/Negoi.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2158,"y": 0}
+      "position": {"x":2158,"y": 0},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "TurnuSeverin",
@@ -334,7 +416,9 @@
       "label_path": ":/resources/Project/Turnu_Severin.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1882,"y": 19}
+      "position": {"x":1882,"y": 19},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Kraiova",
@@ -342,7 +426,9 @@
       "label_path": ":/resources/Project/Kraiova.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1877,"y": 207}
+      "position": {"x":1877,"y": 207},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Slatina",
@@ -350,7 +436,9 @@
       "label_path": ":/resources/Project/Slatina.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2083,"y": 318}
+      "position": {"x":2083,"y": 318},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Calarasi",
@@ -358,7 +446,9 @@
       "label_path": ":/resources/Project/Calarasi.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":3097,"y": 146}
+      "position": {"x":3097,"y": 146},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Bucharest",
@@ -366,7 +456,9 @@
       "label_path": ":/resources/Project/Bucharest.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2740,"y": 174}
+      "position": {"x":2740,"y": 174},
+      "cityLevel": 3,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Ployeshti",
@@ -374,7 +466,9 @@
       "label_path": ":/resources/Project/Ployeshti.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2483,"y": 143}
+      "position": {"x":2483,"y": 143},
+      "cityLevel": 3,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Pitesti",
@@ -382,7 +476,9 @@
       "label_path": ":/resources/Project/Pitesti.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2158,"y": 170}
+      "position": {"x":2158,"y": 170},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "TurnuMagurele",
@@ -390,7 +486,9 @@
       "label_path": ":/resources/Project/Turnu_Magurele.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2460,"y": 389}
+      "position": {"x":2460,"y": 389},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Giurgiu",
@@ -398,7 +496,9 @@
       "label_path": ":/resources/Project/Giurgiu.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2659,"y": 371}
+      "position": {"x":2659,"y": 371},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Calafat",
@@ -406,7 +506,9 @@
       "label_path": ":/resources/Project/Calafat.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1973,"y": 433}
+      "position": {"x":1973,"y": 433},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Vidin",
@@ -414,7 +516,9 @@
       "label_path": ":/resources/Project/Vidin.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1842,"y": 392}
+      "position": {"x":1842,"y": 392},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Lom",
@@ -422,7 +526,9 @@
       "label_path": ":/resources/Project/Lom.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1862,"y":513}
+      "position": {"x":1862,"y":513},
+      "cityLevel": 1,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Oryahovo",
@@ -430,7 +536,9 @@
       "label_path": ":/resources/Project/Oryahovo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1979,"y":526}
+      "position": {"x":1979,"y":526},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Nikopoli",
@@ -438,7 +546,9 @@
       "label_path": ":/resources/Project/Nikopoli.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2308,"y":529}
+      "position": {"x":2308,"y":529},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Ruse",
@@ -446,7 +556,9 @@
       "label_path": ":/resources/Project/Ruse.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2685,"y":501}
+      "position": {"x":2685,"y":501},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Shumen",
@@ -454,7 +566,9 @@
       "label_path": ":/resources/Project/Shumen.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2928,"y":551}
+      "position": {"x":2928,"y":551},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Veliko_Tarnovo",
@@ -462,7 +576,9 @@
       "label_path": ":/resources/Project/Veliko_Tarnovo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2755,"y":662}
+      "position": {"x":2755,"y":662},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Sliven",
@@ -470,7 +586,9 @@
       "label_path": ":/resources/Project/Sliven.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2838,"y":780}
+      "position": {"x":2838,"y":780},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Sofija",
@@ -478,7 +596,9 @@
       "label_path": ":/resources/Project/Sofija.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1863,"y":719}
+      "position": {"x":1863,"y":719},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Plevna",
@@ -486,7 +606,9 @@
       "label_path": ":/resources/Project/Plevna.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2369,"y":704}
+      "position": {"x":2369,"y":704},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Stara_Zagora",
@@ -494,7 +616,9 @@
       "label_path": ":/resources/Project/Stara_Zagora.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2588,"y":833}
+      "position": {"x":2588,"y":833},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Haskovo",
@@ -502,7 +626,9 @@
       "label_path": ":/resources/Project/Haskovo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2776,"y":996}
+      "position": {"x":2776,"y":996},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Plovdiv",
@@ -510,7 +636,9 @@
       "label_path": ":/resources/Project/Plovdiv.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2448,"y":849}
+      "position": {"x":2448,"y":849},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Pazardzhik",
@@ -518,7 +646,9 @@
       "label_path": ":/resources/Project/Pazardzhik.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2196,"y":850}
+      "position": {"x":2196,"y":850},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "BlagoevGrad",
@@ -526,7 +656,9 @@
       "label_path": ":/resources/Project/BlagoevGrad.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1991,"y":1053}
+      "position": {"x":1991,"y":1053},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Kostendil",
@@ -534,7 +666,9 @@
       "label_path": ":/resources/Project/Kostendil.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1768,"y":851}
+      "position": {"x":1768,"y":851},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Lezhe",
@@ -542,7 +676,9 @@
       "label_path": ":/resources/Project/Lezhe.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1010,"y":1001}
+      "position": {"x":1010,"y":1001},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Kichevo",
@@ -550,7 +686,9 @@
       "label_path": ":/resources/Project/Kichevo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1233,"y":1146}
+      "position": {"x":1233,"y":1146},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Prilep",
@@ -558,7 +696,9 @@
       "label_path": ":/resources/Project/Prilep.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1506,"y":1257}
+      "position": {"x":1506,"y":1257},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Veles",
@@ -566,7 +706,9 @@
       "label_path": ":/resources/Project/Veles.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1734,"y":1186}
+      "position": {"x":1734,"y":1186},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Shtip",
@@ -574,7 +716,9 @@
       "label_path": ":/resources/Project/Shtip.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1809,"y":1078}
+      "position": {"x":1809,"y":1078},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Skodra",
@@ -582,7 +726,9 @@
       "label_path": ":/resources/Project/Skodra.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":897,"y":933}
+      "position": {"x":897,"y":933},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Kichevo-1",
@@ -590,7 +736,9 @@
       "label_path": ":/resources/Project/Kichevo-1.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1279,"y":1495}
+      "position": {"x":1279,"y":1495},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Skopje",
@@ -598,7 +746,9 @@
       "label_path": ":/resources/Project/Skopje.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1472,"y":1038}
+      "position": {"x":1472,"y":1038},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Kratovo",
@@ -606,7 +756,9 @@
       "label_path": ":/resources/Project/Kratovo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1698,"y":954}
+      "position": {"x":1698,"y":954},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Gelibolu",
@@ -614,7 +766,9 @@
       "label_path": ":/resources/Project/Gelibolu.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":2986,"y":1516}
+      "position": {"x":2986,"y":1516},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Kladusa",
@@ -622,7 +776,9 @@
       "label_path": ":/resources/Project/Kladusa.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":29,"y": 21}
+      "position": {"x":29,"y": 21},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Novi_Grad",
@@ -630,7 +786,9 @@
       "label_path": ":/resources/Project/Novi_Grad.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":178,"y": 16}
+      "position": {"x":178,"y": 16},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Gradiska",
@@ -638,7 +796,9 @@
       "label_path": ":/resources/Project/Gradiska.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":409,"y": 52}
+      "position": {"x":409,"y": 52},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Sanski_Most",
@@ -646,7 +806,9 @@
       "label_path": ":/resources/Project/Sanski_Most.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":234,"y": 112}
+      "position": {"x":234,"y": 112},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Jajce",
@@ -654,7 +816,9 @@
       "label_path": ":/resources/Project/Jajce.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":283,"y": 192}
+      "position": {"x":283,"y": 192},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Bugojno",
@@ -662,7 +826,9 @@
       "label_path": ":/resources/Project/Bugojno.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":339,"y": 346}
+      "position": {"x":339,"y": 346},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Banja_Luka",
@@ -670,7 +836,9 @@
       "label_path": ":/resources/Project/Banja_Luka.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":441,"y": 144}
+      "position": {"x":441,"y": 144},
+      "cityLevel": 3,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Travnik",
@@ -678,7 +846,9 @@
       "label_path": ":/resources/Project/Travnik.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":465,"y": 245}
+      "position": {"x":465,"y": 245},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Sarajevo",
@@ -686,7 +856,9 @@
       "label_path": ":/resources/Project/Sarajevo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":558,"y": 377}
+      "position": {"x":558,"y": 377},
+      "cityLevel": 3,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Focha",
@@ -694,7 +866,9 @@
       "label_path": ":/resources/Project/Focha.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":683,"y": 561}
+      "position": {"x":683,"y": 561},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Tuzla",
@@ -702,7 +876,9 @@
       "label_path": ":/resources/Project/Tuzla.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":728,"y": 227}
+      "position": {"x":728,"y": 227},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Zvornik",
@@ -710,7 +886,9 @@
       "label_path": ":/resources/Project/Zvornik.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":849,"y": 269}
+      "position": {"x":849,"y": 269},
+      "cityLevel": 3,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Srebrenica",
@@ -718,7 +896,9 @@
       "label_path": ":/resources/Project/Srebrenica.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":867,"y": 363}
+      "position": {"x":867,"y": 363},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Visegrad",
@@ -726,7 +906,9 @@
       "label_path": ":/resources/Project/Visegrad.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":855,"y": 451}
+      "position": {"x":855,"y": 451},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Sjenica",
@@ -734,7 +916,9 @@
       "label_path": ":/resources/Project/Sjenica.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":866,"y": 576}
+      "position": {"x":866,"y": 576},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Novi_Pazar",
@@ -742,7 +926,9 @@
       "label_path": ":/resources/Project/Novi_Pazar.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":997,"y": 687}
+      "position": {"x":997,"y": 687},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Doboj",
@@ -750,7 +936,9 @@
       "label_path": ":/resources/Project/Doboj.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":613,"y": 145}
+      "position": {"x":613,"y": 145},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Ves",
@@ -758,7 +946,9 @@
       "label_path": ":/resources/Project/Ves.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":563,"y": 74}
+      "position": {"x":563,"y": 74},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Brod",
@@ -766,7 +956,9 @@
       "label_path": ":/resources/Project/Brod.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":649,"y": 66}
+      "position": {"x":649,"y": 66},
+      "cityLevel": 3,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Shamac",
@@ -774,7 +966,9 @@
       "label_path": ":/resources/Project/Shamac.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":784,"y": 98}
+      "position": {"x":784,"y": 98},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Bijeljina",
@@ -782,7 +976,9 @@
       "label_path": ":/resources/Project/Bijeljina.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":849,"y": 158}
+      "position": {"x":849,"y": 158},
+      "cityLevel": 3,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Sabac",
@@ -790,7 +986,9 @@
       "label_path": ":/resources/Project/Sabac.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":966,"y": 139}
+      "position": {"x":966,"y": 139},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Beograd",
@@ -798,7 +996,9 @@
       "label_path": ":/resources/Project/Beograd.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1238,"y": 181}
+      "position": {"x":1238,"y": 181},
+      "cityLevel": 3,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Smederevo",
@@ -806,7 +1006,9 @@
       "label_path": ":/resources/Project/Smederevo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1441,"y": 187}
+      "position": {"x":1441,"y": 187},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Valjevo",
@@ -814,7 +1016,9 @@
       "label_path": ":/resources/Project/Valjevo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1140,"y": 322}
+      "position": {"x":1140,"y": 322},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Uzice",
@@ -822,7 +1026,9 @@
       "label_path": ":/resources/Project/Uzice.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":990,"y": 395}
+      "position": {"x":990,"y": 395},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Raska",
@@ -830,7 +1036,9 @@
       "label_path": ":/resources/Project/Raska.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1199,"y": 502}
+      "position": {"x":1199,"y": 502},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Krusevac",
@@ -838,7 +1046,9 @@
       "label_path": ":/resources/Project/Krusevac.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1480,"y": 501}
+      "position": {"x":1480,"y": 501},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Nis",
@@ -846,7 +1056,9 @@
       "label_path": ":/resources/Project/Nis.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1635,"y": 631}
+      "position": {"x":1635,"y": 631},
+      "cityLevel": 3,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Vranje",
@@ -854,7 +1066,9 @@
       "label_path": ":/resources/Project/Vranje.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1398,"y": 651}
+      "position": {"x":1398,"y": 651},
+      "cityLevel": 3,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Pristina",
@@ -862,7 +1076,9 @@
       "label_path": ":/resources/Project/Pristina.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1282,"y": 736}
+      "position": {"x":1282,"y": 736},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Kumanovo",
@@ -870,7 +1086,9 @@
       "label_path": ":/resources/Project/Kumanovo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1472,"y": 895}
+      "position": {"x":1472,"y": 895},
+      "cityLevel": 3,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Prizren",
@@ -878,7 +1096,9 @@
       "label_path": ":/resources/Project/Prizren.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1213,"y": 899}
+      "position": {"x":1213,"y": 899},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     },
     {
       "label": "Kragujevac",
@@ -886,7 +1106,9 @@
       "label_path": ":/resources/Project/Kragujevac.png",
       "army_type": "HAJDUK",
       "num_of_soldiers": 10,
-      "position": {"x":1417,"y": 320}
+      "position": {"x":1417,"y": 320},
+      "cityLevel": 3,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Negotin",
@@ -894,7 +1116,9 @@
       "label_path": ":/resources/Project/Negotin.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1660,"y": 252}
+      "position": {"x":1660,"y": 252},
+      "cityLevel": 2,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Zajecar",
@@ -902,7 +1126,9 @@
       "label_path": ":/resources/Project/Zajecar.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1755,"y": 438}
+      "position": {"x":1755,"y": 438},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Kladovo",
@@ -910,7 +1136,9 @@
       "label_path": ":/resources/Project/Kladovo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1817,"y": 227}
+      "position": {"x":1817,"y": 227},
+      "cityLevel": 1,
+      "terrain_type" : "FIELD"
     },
     {
       "label": "Bihac",
@@ -918,7 +1146,9 @@
       "label_path": ":/resources/Project/Bihac.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":62,"y": 96}
+      "position": {"x":62,"y": 96},
+      "cityLevel": 1,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Grahovo",
@@ -926,7 +1156,9 @@
       "label_path": ":/resources/Project/Grahovo.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":122,"y": 221}
+      "position": {"x":122,"y": 221},
+      "cityLevel": 1,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Livno",
@@ -934,7 +1166,9 @@
       "label_path": ":/resources/Project/Livno.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":251,"y": 443}
+      "position": {"x":251,"y": 443},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Mostar",
@@ -942,7 +1176,9 @@
       "label_path": ":/resources/Project/Mostar.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":292,"y": 498}
+      "position": {"x":292,"y": 498},
+      "cityLevel": 3,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Trebinje",
@@ -950,7 +1186,9 @@
       "label_path": ":/resources/Project/Trebinje.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":450,"y": 686}
+      "position": {"x":450,"y": 686},
+      "cityLevel": 3,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Cetinje",
@@ -958,7 +1196,9 @@
       "label_path": ":/resources/Project/Cetinje.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":759,"y": 777}
+      "position": {"x":759,"y": 777},
+      "cityLevel": 2,
+      "terrain_type" : "HILL"
     },
     {
       "label": "Djakovica",
@@ -966,7 +1206,9 @@
       "label_path": ":/resources/Project/Djakovica.png",
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
-      "position": {"x":1039,"y": 839}
+      "position": {"x":1039,"y": 839},
+      "cityLevel": 1,
+      "terrain_type" : "MOUNTAIN"
     }
   ],
   "edges": [
@@ -1003,13 +1245,13 @@
     { "from": 10, "to": 15, "weight": 1.0, "type": "Land" },
     { "from": 10, "to": 11, "weight": 1.0, "type": "Land" },
     { "from": 10, "to": 14, "weight": 1.0, "type": "Land" },
-    { "from": 10, "to": 12, "weight": 1.0, "type": "Land" },  
+    { "from": 10, "to": 12, "weight": 1.0, "type": "Land" },
     { "from": 11, "to": 42, "weight": 1.0, "type": "Land" },
     { "from": 11, "to": 43, "weight": 1.0, "type": "Land" },
     { "from": 11, "to": 16, "weight": 1.0, "type": "Land" },
     { "from": 11, "to": 17, "weight": 1.0, "type": "Land" },
     { "from": 11, "to": 15, "weight": 1.0, "type": "Land" },
-    { "from": 11, "to": 41, "weight": 1.0, "type": "Land" },    
+    { "from": 11, "to": 41, "weight": 1.0, "type": "Land" },
     { "from": 12, "to": 18, "weight": 1.0, "type": "Land" },
     { "from": 12, "to": 13, "weight": 1.0, "type": "Land" },
     { "from": 12, "to": 21, "weight": 1.0, "type": "Land" },
@@ -1287,5 +1529,67 @@
     { "from": 116, "to": 119, "weight": 1.0, "type": "Land" },
     { "from": 116, "to": 120, "weight": 1.0, "type": "Land" },
     { "from": 119, "to": 120, "weight": 1.0, "type": "Land" }
+  ],
+  "regions": [
+    {
+      "regionId": "1",
+      "regionName": "Srpski Pasaluk",
+      "layers": ["Sabac", "Uzice", "Valjevo","Raska","Krusevac","Kragujevac","Valjevo","Beograd","Smederevo","Negotin","Zajecar","Kladovo"]
+    },
+    {
+      "regionId": "2",
+      "regionName": "Bosanski Pasaluk",
+      "layers": ["Kladusa", "Bihac","Novi_Grad","Sanski_Most","Grahovo","Livno","Jajce","Travnik","Banja_Luka","Gradiska","Ves","Brod","Doboj","Shamac","Tuzla","Sarajevo","Bugojno","Visegrad","Sjenica","Srebrenica","Novi_Pazar","Zvornik","Bijeljina"]
+    },
+    {
+      "regionId": "3",
+      "regionName": "Hercegovacki",
+      "layers": ["Mostar","Trebinje","Focha"]
+    },
+    {
+      "regionId": "4",
+      "regionName": "Janinski",
+      "layers": ["Larissa", "Vlore","Prikhala","Sarande","Janina"]
+    },
+    {
+      "regionId": "5",
+      "regionName": "Solunski",
+      "layers": ["Ossa","Rapsani","Khaterini","Edessa","Kiklis","Solun","Chalkidiki","Serres","Delta","Kavala","BlagoevGrad","Sandaski"]
+    },
+    {
+      "regionId": "6",
+      "regionName": "Manastirski",
+      "layers": ["Durres","Tirane","Lezhe","Skodra","Djakovica","Pristina","Prizren","Kumanovo","Skopje","Kratovo","Shtip","Veles","Monastir","Ohrid","Kichevo-1","Prilep"]
+    },
+    {
+      "regionId": "7",
+      "regionName": "Cetinjski",
+      "layers": ["Cetinje"]
+    },
+    {
+      "regionId": "8",
+      "regionName": "Silistra",
+      "layers": ["Silistra","Constanta","Babadag","Nikopoli","Ruse","Plevna","Veliko_Tarnovo","Varna","Kavarna","Shumen"]
+    },
+    {
+      "regionId": "9",
+      "regionName": "Niski",
+      "layers": ["Nis","Vranje","Sofija","Kostendil"]
+    },
+    {
+      "regionId": "10",
+      "regionName": "Edirne",
+      "layers": ["Istanbul","Corlu","Gelibolu","Alexandropoli","Xanthi","Rhodope","Pazardzhik","Plovdiv","Stara_Zagora","Sliven","Burgas","Elhovo","Edirne","KrumovGrad","Daddia","KrumovGrad","Kirkareli"]
+    },
+    {
+      "regionId": "11",
+      "regionName": "Wallachia",
+      "layers": ["Turnu_Severin","Turnu_Magurele","Negotin","Bran","Focsani","Braila","Calafat","Calarasi","Slatina","Giurgiu","Bucharest","Ployeshti","Pitesti","Kraiova"]
+    },
+    {
+      "regionId": "12",
+      "regionName": "Vidin",
+      "layers": ["Vidin","Lom","Oryhaovo"]
+    }
   ]
 }

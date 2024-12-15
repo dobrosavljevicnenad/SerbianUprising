@@ -1,12 +1,50 @@
 #include "zoomablegraphicsview.h"
 
 ZoomableGraphicsView::ZoomableGraphicsView(QWidget* parent)
-    : QGraphicsView(parent), horizontalDirection(0), verticalDirection(0) {
+    : QGraphicsView(parent), horizontalDirection(0), verticalDirection(0), edgeScrollSpeed(50), edgeScrollTimer(new QTimer(this)) {
+    setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOff);
+    setFrameStyle(QFrame::NoFrame);
+    setMouseTracking(true);
     movementTimer = new QTimer(this);
     connect(movementTimer, &QTimer::timeout, this, &ZoomableGraphicsView::moveView);
     movementTimer->start(30);
+    connect(edgeScrollTimer, &QTimer::timeout, this, &ZoomableGraphicsView::scrollOnEdge);
+    edgeScrollTimer->start(16);
 }
 
+void ZoomableGraphicsView::mouseMoveEvent(QMouseEvent* event) {
+    cursorPos = event->pos();
+    QGraphicsView::mouseMoveEvent(event);
+}
+
+void ZoomableGraphicsView::scrollOnEdge() {
+    if (!scene()) return;
+
+    QRect viewRect = viewport()->rect();
+    int cursorX = cursorPos.x();
+    int cursorY = cursorPos.y();
+
+    qreal scrollX = 0;
+    qreal scrollY = 0;
+
+    if (cursorX <= 30) {
+        scrollX = -edgeScrollSpeed * (30 - cursorX) / 30.0;
+    } else if (cursorX >= viewRect.width() - 30) {
+        scrollX = edgeScrollSpeed * (cursorX - (viewRect.width() - 30)) / 30.0;
+    }
+
+    if (cursorY <= 30) {
+        scrollY = -edgeScrollSpeed * (30 - cursorY) / 30.0;
+    } else if (cursorY >= viewRect.height() - 30) {
+        scrollY = edgeScrollSpeed * (cursorY - (viewRect.height() - 30)) / 30.0;
+    }
+
+    if (scrollX != 0 || scrollY != 0) {
+        QPointF currentCenter = mapToScene(viewport()->rect().center());
+        centerOn(currentCenter + QPointF(scrollX, scrollY));
+    }
+}
 
 void ZoomableGraphicsView::wheelEvent(QWheelEvent *event) {
     constexpr double scaleFactor = 1.15;
@@ -23,8 +61,10 @@ void ZoomableGraphicsView::wheelEvent(QWheelEvent *event) {
             scale(scaleFactor, scaleFactor);
         }
     } else {
-        if (currentWidth * 1.0 / scaleFactor > minZoomWidth &&
-            currentHeight * 1.0 / scaleFactor > minZoomHeight) {
+        double newWidth = currentWidth * scaleFactor;
+        double newHeight = currentHeight * scaleFactor;
+
+        if (newWidth <= minZoomWidth && newHeight <= minZoomHeight) {
             scale(1.0 / scaleFactor, 1.0 / scaleFactor);
         } else {
             fitInView(0, 0, minZoomWidth, minZoomHeight, Qt::KeepAspectRatio);
@@ -78,4 +118,3 @@ void ZoomableGraphicsView::moveView() {
         verticalScrollBar()->setValue(verticalScrollBar()->value() + verticalDirection);
     }
 }
-
