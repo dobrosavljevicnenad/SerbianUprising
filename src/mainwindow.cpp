@@ -33,9 +33,9 @@ MainWindow::MainWindow(QWidget *parent)
         gameManager = new GameManager(scene);
         gameManager->initializeMap();
 
-        //setupFixedWidgets();
-
         layoutContainer = new QWidget(view->viewport());
+        layoutContainer->setStyleSheet("background-color: rgba(0, 0, 0, 128);"
+                                       "border-radius: 15px;");
         QVBoxLayout *mainLayout = new QVBoxLayout();
 
         mainLayout->setSpacing(5);
@@ -140,18 +140,53 @@ MainWindow::MainWindow(QWidget *parent)
             );
         mainLayout->addWidget(moveList, 0, Qt::AlignCenter);
 
+        QPushButton* toggleButton = new QPushButton("⮝", layoutContainer);
+        toggleButton->setFixedSize(40, 40);
+        toggleButton->setStyleSheet(
+            "QPushButton { "
+            "   background-color: lightGray; "
+            "   border-radius: 10px; "
+            "} "
+            "QPushButton:hover { "
+            "   background-color: darkGray; "
+            "} "
+            "QPushButton:pressed { "
+            "   background-color: black; "
+            "   color: white; "
+            "}"
+            );
+
+        mainLayout->addWidget(toggleButton, 0, Qt::AlignCenter);
+
         layoutContainer->setLayout(mainLayout);
+        layoutContainer->setGeometry(10, 10, 250, 520);
 
-        // Set the initial position of layoutContainer
-        layoutContainer->setGeometry(10, 10, 250, 400);
+        QList<QWidget*> layoutWidgets = {headerLabel, infoButton, moveButton, armyButton, endTurnButton, changePlayerButton, moveList};
 
-        // Add player change button
+        connect(toggleButton, &QPushButton::clicked, this, [=]() {
+            static bool isExpanded = true;
 
+            if (isExpanded) {
+                for (auto* widget : layoutWidgets) {
+                    widget->hide();
+                }
+                layoutContainer->setFixedSize(toggleButton->width() + 10, toggleButton->height() + 10);
+                layoutContainer->setStyleSheet("background-color: transparent");
+                toggleButton->setText("⮟");
+            } else {
+                for (auto* widget : layoutWidgets) {
+                    widget->show();
+                }
+                layoutContainer->setFixedSize(250, 520);
+                layoutContainer->setStyleSheet("background-color: rgba(0, 0, 0, 128);"
+                                               "border-radius: 15px;");
+                toggleButton->setText("⮝");
+            }
+            isExpanded = !isExpanded;
+        });
 
-        // Initial move list
         moveList->addItem(QString("Player %1 on turn:").arg(gameManager->turn.getCurrentPlayerId()));
 
-        // Connect signals
         connect(gameManager, &GameManager::layerClicked, this, &MainWindow::onLayerClicked);
         connect(changePlayerButton, &QPushButton::clicked, this, &MainWindow::onChangePlayerClicked);
         connect(endTurnButton, &QPushButton::clicked, this, &MainWindow::onEndTurnClicked);
@@ -160,7 +195,6 @@ MainWindow::MainWindow(QWidget *parent)
         connect(moveButton, &QToolButton::clicked, this, &MainWindow::onMoveButtonClicked);
         connect(armyButton, &QToolButton::clicked, this, &MainWindow::onPlaceButtonClicked);
 
-        // Connect scrollbars to reposition the widgets dynamically
         connect(view->horizontalScrollBar(), &QScrollBar::valueChanged, this, [this]() { repositionFixedWidgets(); });
         connect(view->verticalScrollBar(), &QScrollBar::valueChanged, this, [this]() { repositionFixedWidgets(); });
 
