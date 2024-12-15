@@ -29,6 +29,7 @@ private:
     QGridLayout *gridLayout;                   // Main grid layout for dialog
     QGridLayout *containerLayout;              // Layout for tables inside the container
     QWidget *tablesContainer;                  // Container widget for tables
+    QString getButtonStyle();
 };
 
 #endif // BATTLERESULTSDIALOG_H

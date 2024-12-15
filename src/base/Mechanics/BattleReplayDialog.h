@@ -28,13 +28,17 @@ public:
 public slots:
     void onReplayClicked();
 private:
+    QHBoxLayout *topLayout;
+    QVBoxLayout *centerTopLayout;
     int m_tableIndex; // Store the index to fetch corresponding data
     Results results;
     std::vector<QLabel*> defenderImages;
     std::vector<QLabel*> attackerImages;
     QPushButton* replayButton;
+    QPushButton *closeButton;
     QVBoxLayout* defenderResultLayout;
     QVBoxLayout* attackerResultLayout;
+    QString getButtonStyle();
 };
 
 #endif // BATTLEREPLAYDIALOG_H

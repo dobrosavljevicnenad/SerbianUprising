@@ -7,41 +7,16 @@ BattleReplayDialog::BattleReplayDialog(QWidget *parent, int tableIndex, Results 
     QVBoxLayout *layout = new QVBoxLayout(this);
     replayButton = new QPushButton("Replay", this);
     connect(replayButton, &QPushButton::clicked, this, &BattleReplayDialog::onReplayClicked);
+    setWindowFlags(Qt::FramelessWindowHint);
 
-    replayButton->setStyleSheet(
-        "QPushButton {"
-        "    background-color: #81D4FA;"
-        "    color: black;"
-        "    border: 2px solid #81D4FA;"
-        "    border-radius: 10px;"
-        "    padding: 10px 20px;"
-        "    font-size: 16px;"
-        "}"
-        "QPushButton:hover {"
-        "    background-color: #4FC3F7;"
-        "    border-color: #4FC3F7;"
-        "}"
-        "QPushButton:pressed {"
-        "    background-color: #29B6F6;"
-        "    border-color: #29B6F6;"
-        "}"
-        );
-
-    QHBoxLayout *topLayout = new QHBoxLayout();
-    QVBoxLayout *centerTopLayout = new QVBoxLayout();
+    replayButton->setStyleSheet(getButtonStyle());
+    replayButton->setFixedSize(100, 40);
+    topLayout = new QHBoxLayout();
+    centerTopLayout = new QVBoxLayout();
     centerTopLayout->addWidget(replayButton);
     topLayout->addLayout(centerTopLayout);
     topLayout->setAlignment(Qt::AlignTop);
     centerTopLayout->setAlignment(Qt::AlignCenter);
-    QHBoxLayout *resultsHboxLayout = new QHBoxLayout();
-    centerTopLayout->addLayout(resultsHboxLayout);
-    defenderResultLayout = new QVBoxLayout();
-    attackerResultLayout = new QVBoxLayout();
-    defenderResultLayout->setAlignment(Qt::AlignCenter);
-    attackerResultLayout->setAlignment(Qt::AlignCenter);
-
-    resultsHboxLayout->addLayout(defenderResultLayout);
-    resultsHboxLayout->addLayout(attackerResultLayout);
     layout->addLayout(topLayout);
     QHBoxLayout *soldiersLayout = new QHBoxLayout();
     QVBoxLayout *defenderLayout = new QVBoxLayout();
@@ -170,7 +145,29 @@ QString BattleReplayDialog::getTerrainImage(TerrainType terrainType) {
         return QString(":/resources/OtherMap.png");
     }
 }
+QString BattleReplayDialog::getButtonStyle(){
+    return QString(
+        "QPushButton {"
+        "    background-color: #81D4FA;"
+        "    color: black;"
+        "    border: 2px solid #81D4FA;"
+        "    border-radius: 10px;"
+        "    padding: 10px 20px;"
+        "    font-size: 16px;"
+        "}"
+        "QPushButton:hover {"
+        "    background-color: #4FC3F7;"
+        "    border-color: #4FC3F7;"
+        "}"
+        "QPushButton:pressed {"
+        "    background-color: #29B6F6;"
+        "    border-color: #29B6F6;"
+        "}");
+}
 void BattleReplayDialog::onReplayClicked() {
+    replayButton->setEnabled(false);
+
+
     std::vector<int> fallenDefenders;
     std::vector<int> fallenAttackers;
     std::vector<int> firingAttackers;
@@ -308,6 +305,20 @@ void BattleReplayDialog::onReplayClicked() {
             }
         }
     }
+    closeButton = new QPushButton("Close", this);
+    closeButton->setStyleSheet(getButtonStyle());
+    connect(closeButton, &QPushButton::clicked, this, &QDialog::accept);
+    centerTopLayout->addWidget(closeButton);
+    centerTopLayout->setAlignment(Qt::AlignCenter);
+    QHBoxLayout *resultsHboxLayout = new QHBoxLayout();
+    centerTopLayout->addLayout(resultsHboxLayout);
+    defenderResultLayout = new QVBoxLayout();
+    attackerResultLayout = new QVBoxLayout();
+    defenderResultLayout->setAlignment(Qt::AlignCenter);
+    attackerResultLayout->setAlignment(Qt::AlignCenter);
+
+    resultsHboxLayout->addLayout(defenderResultLayout);
+    resultsHboxLayout->addLayout(attackerResultLayout);
     QLabel *victoryLabel = new QLabel(this);
     QPixmap victoryImage = QPixmap(QString(":/resources/Images/Victory.png"));
     victoryLabel->setPixmap(victoryImage.scaled(300, 100, Qt::IgnoreAspectRatio));
@@ -316,6 +327,7 @@ void BattleReplayDialog::onReplayClicked() {
     QPixmap loseImage = QPixmap(QString(":/resources/Images/Lose.png"));
     loseLabel->setPixmap(loseImage.scaled(300, 80, Qt::IgnoreAspectRatio));
     loseLabel->setAlignment(Qt::AlignCenter);
+    replayButton->hide();
 
     if(results.getWinner()->armyType() == results.getDefenderType()){
 
@@ -326,7 +338,6 @@ void BattleReplayDialog::onReplayClicked() {
         attackerResultLayout->addWidget(victoryLabel);
         if(defenderNumber != 0)defenderResultLayout->addWidget(loseLabel);
     }
-    replayButton->setEnabled(false);
     replayButton->deleteLater();
 
 }

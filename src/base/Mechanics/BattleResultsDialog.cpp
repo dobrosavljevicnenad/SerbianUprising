@@ -10,13 +10,38 @@ BattleResultsDialog::BattleResultsDialog(const std::vector<Results> battleResult
     tablesContainer->setGeometry(265, 255, 606, 262);
     tablesContainer->setStyleSheet("background: transparent;");
 
+    QPushButton *closeButton = new QPushButton("Close", this);
+    closeButton->setStyleSheet(getButtonStyle());
+    connect(closeButton, &QPushButton::clicked, this, &QDialog::accept);
+    closeButton->setFixedSize(100, 40);
+    closeButton->move(this->width() - closeButton->width() - 25, 10);
+
     containerLayout = new QGridLayout(tablesContainer);
     tablesContainer->setLayout(containerLayout);
-
+    setWindowFlags(Qt::FramelessWindowHint);
     setWindowTitle("Battle Results");
     setObjectName("BattleResultsDialog");
     setBackgroundImage(":/resources/Images/Board.png");
     resize(1084, 905);
+}
+QString BattleResultsDialog::getButtonStyle(){
+    return QString(
+        "QPushButton {"
+        "    background-color: #FFD700;"
+        "    color: black;"
+        "    border: 2px solid #FFD700;"
+        "    border-radius: 10px;"
+        "    padding: 10px 20px;"
+        "    font-size: 16px;"
+        "}"
+        "QPushButton:hover {"
+        "    background-color: #FFCC00;"
+        "    border-color: #FFCC00;"
+        "}"
+        "QPushButton:pressed {"
+        "    background-color: #E5B800;"
+        "    border-color: #E5B800;"
+        "}");
 }
 
 void BattleResultsDialog::setBackgroundImage(const QString &imagePath) {
