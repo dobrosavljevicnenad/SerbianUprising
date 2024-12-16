@@ -38,9 +38,11 @@ private:
     QPushButton *fullScreenButton;
     QStackedWidget *stackedWidget;
     QFrame *buttonFrame;
+    QTableWidget *table;
 
     void setupUI();
     void setBackgroundImage();
 
     QWidget *createSettingsMenu();
+    QWidget *createLobbyWindow();
 };
