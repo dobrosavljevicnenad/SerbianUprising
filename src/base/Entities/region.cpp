@@ -14,7 +14,7 @@ bool Region::addLayer(MapLayer* layer, std::unique_ptr<City> layerCity) {
     if (territories.size() < 5) {
         territories.push_back(layer);
         if (layerCity->isCityLayer() && !city) {
-            city = std::move(layerCity); // Only one city per region
+            city = std::move(layerCity);
         }
         return true;
     }

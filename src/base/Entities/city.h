@@ -7,7 +7,7 @@ class City
 {
 public:
     explicit City(bool isCity = false);
-    //~City() = default;
+    ~City() = default;
     bool isCityLayer()const;
     int getBattleFactor()const;
 

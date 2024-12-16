@@ -22,7 +22,7 @@ public:
     Vertex(QPointF position, const std::string &label,
            MapLayer *map_layer, Terrain territory, Army army,
            Player player);
-
+//, City* city, Region* region
     ~Vertex();
     void updateLayerColor();
     unsigned id() const;
@@ -36,6 +36,8 @@ public:
     Army army;
     Player player;
     MapLayer* map_layer;
+    Region* region;
+    City* city;
 
 private:
     static unsigned m_index;

@@ -19,6 +19,7 @@ private:
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
     QLabel* titleLabel;
     QLabel* imageLabel;
+    QLabel* backgroundImageLabel;
     QLabel* troopCountLabel;
     QLabel* ownerLabel;
     QLabel* neighborsLabel;

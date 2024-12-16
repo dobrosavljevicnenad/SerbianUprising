@@ -157,5 +157,9 @@
         <file>resources/border2.png</file>
         <file>resources/init.json</file>
         <file>resources/border1.png</file>
+        <file>resources/mountain.png</file>
+        <file>resources/hills.png</file>
+        <file>resources/forest.png</file>
+        <file>resources/field.png</file>
     </qresource>
 </RCC>

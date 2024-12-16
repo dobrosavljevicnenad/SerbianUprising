@@ -19,6 +19,7 @@ Vertex* Graph::insert_vertex(QPointF position, const std::string &label,
 }
 Vertex* Graph::get_vertex_by_id(nodeID_t id) const {
     auto it = vertices.find(id);
+
     if (it != vertices.end()) {
         return it->second;
     }

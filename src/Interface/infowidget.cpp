@@ -6,8 +6,8 @@ NodeInfoWidget::NodeInfoWidget(QMap<MapLayer*, graph::Vertex*> layerToVertex, QW
     setAttribute(Qt::WA_StyledBackground, true);
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
-    mainLayout->setContentsMargins(30, 30, 30, 30); // Padding inside the border
-    mainLayout->setSpacing(15);
+    mainLayout->setContentsMargins(32, 30, 30, 30); // Padding inside the border
+    mainLayout->setSpacing(5);
 
     QHBoxLayout* titleLayout = new QHBoxLayout();
     titleLayout->setAlignment(Qt::AlignTop);
@@ -28,25 +28,37 @@ NodeInfoWidget::NodeInfoWidget(QMap<MapLayer*, graph::Vertex*> layerToVertex, QW
     titleLayout->addWidget(closeButton, 0, Qt::AlignTop | Qt::AlignRight); // Right aligned close button
 
     mainLayout->addLayout(titleLayout);
-    //QHBoxLayout* picturesLayout = new QHBoxLayout();
+
+    QHBoxLayout* picturesLayout = new QHBoxLayout();
+    picturesLayout->setAlignment(Qt::AlignTop);
+    picturesLayout->setSpacing(4);
+    picturesLayout->setContentsMargins(0, 0, 0, 0);
+
     imageLabel = new QLabel(this);
     imageLabel->setFixedSize(80, 80);
     imageLabel->setStyleSheet("background: transparent;");
-    mainLayout->addWidget(imageLabel, 0, Qt::AlignCenter);
+    picturesLayout->addWidget(imageLabel, 0, Qt::AlignCenter);
+
+    backgroundImageLabel = new QLabel(this);
+    backgroundImageLabel->setFixedSize(210, 80);
+    backgroundImageLabel->setStyleSheet("background: transparent;");
+    picturesLayout->addWidget(backgroundImageLabel, 0, Qt::AlignCenter);
+
+    mainLayout->addLayout(picturesLayout);
 
     troopCountLabel = new QLabel("Troop Count: 10", this);
-    troopCountLabel->setAlignment(Qt::AlignCenter);
+    troopCountLabel->setAlignment(Qt::AlignLeft);
     troopCountLabel->setStyleSheet("color: white;");
     mainLayout->addWidget(troopCountLabel);
 
     ownerLabel = new QLabel("Owner: Player 2", this);
-    ownerLabel->setAlignment(Qt::AlignCenter);
+    ownerLabel->setAlignment(Qt::AlignLeft);
     ownerLabel->setStyleSheet("color: white;");
     mainLayout->addWidget(ownerLabel);
 
     bioLabel = new QLabel("Relief: mountain", this);
     bioLabel->setWordWrap(true);
-    bioLabel->setAlignment(Qt::AlignCenter);
+    bioLabel->setAlignment(Qt::AlignLeft);
     bioLabel->setStyleSheet("color: white;");
     mainLayout->addWidget(bioLabel);
 
@@ -81,6 +93,23 @@ void NodeInfoWidget::updateNodeInfo(MapLayer* layer) {
     }
     QPixmap pixmap = layer->get_m_originalPixmap();
     imageLabel->setPixmap(pixmap.scaled(imageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+
+    if (vertex->terrain.getTerrain() == TerrainType::HILL) {
+        QPixmap hillPixmap(":/resources/hills.png");
+        backgroundImageLabel->setPixmap(hillPixmap.scaled(backgroundImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
+    else if (vertex->terrain.getTerrain() == TerrainType::FIELD) {
+        QPixmap fieldPixmap(":/resources/field.png");
+        backgroundImageLabel->setPixmap(fieldPixmap.scaled(backgroundImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
+    else if (vertex->terrain.getTerrain() == TerrainType::FOREST) {
+        QPixmap forestPixmap(":/resources/forest.png");
+        backgroundImageLabel->setPixmap(forestPixmap.scaled(backgroundImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
+    else {
+        QPixmap mountainPixmap(":/resources/mountain.png");
+        backgroundImageLabel->setPixmap(mountainPixmap.scaled(backgroundImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
+    }
 
     QString relief = QString("Relief: %1\n")
                          .arg(QString::fromStdString(vertex->terrain.to_string(vertex->terrain.getTerrain())));

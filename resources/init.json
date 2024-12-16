@@ -1544,7 +1544,7 @@
     {
       "regionId": "3",
       "regionName": "Hercegovacki",
-      "layers": ["Mostar","Trebinje","Focha"]
+      "layers": ["Mostar","Trebinje","Focha","Cetinje"]
     },
     {
       "regionId": "4",
@@ -1563,31 +1563,26 @@
     },
     {
       "regionId": "7",
-      "regionName": "Cetinjski",
-      "layers": ["Cetinje"]
-    },
-    {
-      "regionId": "8",
       "regionName": "Silistra",
       "layers": ["Silistra","Constanta","Babadag","Nikopoli","Ruse","Plevna","Veliko_Tarnovo","Varna","Kavarna","Shumen"]
     },
     {
-      "regionId": "9",
+      "regionId": "8",
       "regionName": "Niski",
       "layers": ["Nis","Vranje","Sofija","Kostendil"]
     },
     {
-      "regionId": "10",
+      "regionId": "9",
       "regionName": "Edirne",
       "layers": ["Istanbul","Corlu","Gelibolu","Alexandropoli","Xanthi","Rhodope","Pazardzhik","Plovdiv","Stara_Zagora","Sliven","Burgas","Elhovo","Edirne","KrumovGrad","Daddia","KrumovGrad","Kirkareli"]
     },
     {
-      "regionId": "11",
+      "regionId": "10",
       "regionName": "Wallachia",
       "layers": ["Turnu_Severin","Turnu_Magurele","Negotin","Bran","Focsani","Braila","Calafat","Calarasi","Slatina","Giurgiu","Bucharest","Ployeshti","Pitesti","Kraiova"]
     },
     {
-      "regionId": "12",
+      "regionId": "11",
       "regionName": "Vidin",
       "layers": ["Vidin","Lom","Oryhaovo"]
     }
