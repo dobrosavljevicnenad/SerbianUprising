@@ -10,8 +10,8 @@ Graph::~Graph(){
 
 Vertex* Graph::insert_vertex(QPointF position, const std::string &label,
                              MapLayer *map_layer, Terrain territory, Army army,
-                             Player player) {
-    Vertex* vertex = new Vertex(position, label, map_layer, territory, army, player);
+                             Player player, City* city, Region* region) {
+    Vertex* vertex = new Vertex(position, label, map_layer, territory, army, player, city, region);
 
     vertices.emplace(vertex->id(), vertex);
     m_adj_list[vertex] = std::vector<Edge>();

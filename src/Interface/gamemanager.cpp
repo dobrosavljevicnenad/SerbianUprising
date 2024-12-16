@@ -27,13 +27,10 @@ void GameManager::initializeMap(){
     QJsonArray layersArray = rootObj["vertices"].toArray();
 
     std::vector<MapLayer*> layers(layersArray.size());
-    std::vector<Army> armies;
 
     Player player1(1,ArmyType::HAJDUK);
     Player player2(2,ArmyType::JANISSARY);
 
-    std::vector<std::string> labels;
-    std::vector<std::pair<int,int>>positions;
     std::vector<std::pair<int,std::string>>verticesId;
 
     MapLayer *background = new MapLayer(":/resources/Project/Pozadina.png", false);
@@ -76,14 +73,11 @@ void GameManager::initializeMap(){
     scene->addItem(s4);
     scene->addItem(s5);
 
-    std::vector<Terrain> terrains;
-    Terrain defaultTerrain(TerrainType::MOUNTAIN);
 
     for (int i = 0; i <layersArray.size(); ++i) {
         QJsonObject layerObj = layersArray[i].toObject();
 
         std::string label = layerObj.value("label").toString().toStdString();
-        labels.push_back(label);
 
         QString labelPath = layerObj.value("label_path").toString();
         std::string armyType = layerObj.value("army_type").toString().toStdString();
@@ -92,49 +86,39 @@ void GameManager::initializeMap(){
         int id = layerObj.value("id").toInt();
 
         int cityLevel = layerObj.value("cityLevel").toInt();
+        City* city = CityFactory::getCityByLevel(cityLevel);
 
         verticesId.push_back(make_pair(i,label));
         layers[i] = (new MapLayer(labelPath, true));
 
-        std::string terrain = layerObj.value("terrain_type").toString().toStdString();
+        ArmyType type = (armyType == "HAJDUK") ? ArmyType::HAJDUK : ArmyType::JANISSARY;
+        Army army (numOfSoldiers,type);
 
+        std::string terrain = layerObj.value("terrain_type").toString().toStdString();
         TerrainType terrainType;
         if (terrain == "HILL") terrainType = TerrainType::HILL;
         else if (terrain == "FIELD") terrainType = TerrainType::FIELD;
         else if (terrain == "FOREST") terrainType = TerrainType::FOREST;
         else terrainType = TerrainType::MOUNTAIN;
-
         Terrain terrainObj(terrainType);
-        terrains.emplace_back(terrainObj);
 
-        ArmyType type = (armyType == "HAJDUK") ? ArmyType::HAJDUK : ArmyType::JANISSARY;
-        armies.emplace_back(numOfSoldiers,type);
         QJsonObject positionObj = layerObj.value("position").toObject();
-
         int posX = positionObj.value("x").toInt();
         int posY = positionObj.value("y").toInt();
-        positions.push_back(std::make_pair(posX,posY));
 
-    }
-
-    this->layers = layers;
-    //std::cout<<layersArray.size()<<std::endl;
-
-    for (int i = 0; i < layersArray.size(); ++i) {
         layers[i]->setZValue(0);
-        addLayer(layers[i], labels[i], terrains[i], armies[i],
-                 (armies[i].armyType() == ArmyType::HAJDUK)  ? player1 : player2);
-        layers[i]->setPos(baseLayer->pos().x() + positions[i].first,
-                          baseLayer->pos().y() + positions[i].second);
+        addLayer(layers[i], label, terrainObj, army,
+                 (army.armyType() == ArmyType::HAJDUK)  ? player1 : player2, city);
+        layers[i]->setPos(baseLayer->pos().x() + posX,
+                          baseLayer->pos().y() + posY);
         layers[i]->setOpacity(0.95);
-
         connect(layers[i], &MapLayer::layerClicked, this, [this, layers, i]() {
             emit layerClicked(layers[i]);
         });
-
         layers[i]->setTroopCount(layerToVertex[layers[i]]->army.getSoldiers());
     }
 
+    this->layers = layers;
 
     QJsonArray edgesArray = rootObj["edges"].toArray();
 
@@ -154,63 +138,70 @@ void GameManager::initializeMap(){
              edgeType = EdgeType::Land;
         }
 
-
         Vertex* fromVertex = layerToVertex[layers[from-1]];//layer's index starts from 0, but id starts from 1
         Vertex* toVertex = layerToVertex[layers[to-1]];//layer's index starts from 0, but id starts from 1
 
 
         g.insert_edge(fromVertex, toVertex,weight, edgeType);
     }
-
     //inicijalizacija regiona
-
     QJsonArray regionsArray = rootObj["regions"].toArray();
 
-
-    std::vector<Region>regions;
     std::vector<std::pair<int,std::vector<std::string>>>niz_lejera;
     std::vector<std::string>layer_string;
     std::map<int,std::vector<std::string>>regionLayers;
 
-    for(int i = 0;i<regionsArray.size();i++){
-        QJsonObject regionObj = regionsArray[i].toObject();
+    for (const QJsonValue& regionValue : regionsArray) {
+        QJsonObject regionObj = regionValue.toObject();
         std::string regionId = regionObj["regionId"].toString().toStdString();
         std::string regionName = regionObj["regionName"].toString().toStdString();
 
-        regions.emplace_back(Region(regionId,regionName));
+        Region* region = new Region(regionId, regionName);
 
-        QJsonArray layersArray = regionObj["layers"].toArray();
-
-        for(const QJsonValue &layerValue : layersArray){
-            MapLayer *mp ;
-            for(const auto &x : verticesId){
-                if(layerValue.toString().toStdString() == x.second){
-                    mp = layers[x.first];
+        QJsonArray regionLayers = regionObj["layers"].toArray();
+        for (const QJsonValue& regionLayerValue : regionLayers) {
+            std::string layerLabel = regionLayerValue.toString().toStdString();
+            for (MapLayer* layer : layers) {
+                auto vertex = layerToVertex[layer];
+                if (vertex->label() == layerLabel) {
+                    region->addLayer(layer, vertex->city);
+                    vertex->region = region;
                 }
             }
-            regions[i].territories.push_back(mp);
-            layer_string.push_back(layerValue.toString().toStdString());
         }
 
-        niz_lejera.push_back(std::make_pair(i,layer_string));
-        layer_string.clear();
+        regions.push_back(region);
     }
-    /*for(int i = 0;i<regions.size();i++)   {
-        std::cout << "Region ID: " << regions[i].getRegionId() << "\n";
-        std::cout << "Region Name: " << regions[i].getRegionName() << "\n";
-        std::cout<<"Sastoji se od sledecih lejera"  << "\n";
-        for(std::string &x : niz_lejera[i].second){
-            std::cout<<x<< " ";
-        }
-        std::cout<<std::endl;
-        std::cout << "--------------------------\n";
-    }*/
+
     scene->addItem(rivers);
 
+    map = new Map(scene, layerToVertex);
 
     armyManagers[1] = AddArmyManager();
     armyManagers[2] = AddArmyManager();
 }
+
+void GameManager::applyMapMode(MapMode mode) {
+    switch (mode) {
+    case MapMode::Relief:
+        map->setMainMode(false);
+        map->generateReliefMap();
+        break;
+    case MapMode::Regions:
+        map->setMainMode(false);
+        map->generateRegionMap();
+        break;
+    case MapMode::CityLevel:
+        map->setMainMode(false);
+        map->generateCityLevelMap();
+        break;
+    case MapMode::Default:
+        map->setMainMode(true);
+        map->resetMainGameMap();
+        break;
+    }
+}
+
 void GameManager::updateLayersId(int PlayerId) {
     for (auto &layer : layers) {
         if (layer) {
@@ -252,10 +243,10 @@ void GameManager::drawArrow(int playerId, MapLayer* from, MapLayer* to, int numb
 }
 
 
-void GameManager::addLayer(MapLayer* layer, const std::string& label, Terrain terrain, Army army, Player player) {
+void GameManager::addLayer(MapLayer* layer, const std::string& label, Terrain terrain, Army army, Player player, City* city) {
     layer->setArmyColor(army.armyType());
     scene->addItem(layer);
-    auto vertex = g.insert_vertex(layer->troopText->pos(), label, layer, terrain, army, player);
+    auto vertex = g.insert_vertex(layer->troopText->pos(), label, layer, terrain, army, player, city,nullptr);
     layerToVertex[layer] = vertex;
 }
 
@@ -308,5 +299,6 @@ AddArmyManager& GameManager::getArmyManager(int playerId) {
         throw std::invalid_argument("Invalid player ID for ArmyManager");
     }
 }
+
 
 

@@ -164,6 +164,55 @@ MainWindow::MainWindow(QWidget *parent)
         layoutContainer->setLayout(mainLayout);
         layoutContainer->setGeometry(10, 10, 250, 520);
 
+        mapModeContainer = new QWidget(view->viewport());
+        mapModeContainer->setStyleSheet("background-color: rgba(0, 0, 0, 128); border-radius: 10px;");
+
+        QHBoxLayout* mapModeLayout = new QHBoxLayout();
+        mapModeLayout->setSpacing(5);
+        mapModeLayout->setContentsMargins(5, 5, 5, 5);
+
+        // Map Mode Buttons
+        QPushButton* reliefButton = new QPushButton("Relief");
+        QPushButton* regionsButton = new QPushButton("Regions");
+        QPushButton* cityButton = new QPushButton("City");
+        QPushButton* defaultButton = new QPushButton("Main");
+
+        // Button Style
+        QString mapButtonStyle =
+            "QPushButton { background-color: darkGray; color: white; border-radius: 5px; padding: 5px; }"
+            "QPushButton:hover { background-color: gray; }"
+            "QPushButton:pressed { background-color: darkGreen; }";
+
+        reliefButton->setStyleSheet(mapButtonStyle);
+        regionsButton->setStyleSheet(mapButtonStyle);
+        cityButton->setStyleSheet(mapButtonStyle);
+        defaultButton->setStyleSheet(mapButtonStyle);
+
+        // Add buttons to layout
+        mapModeLayout->addWidget(reliefButton,0, Qt::AlignCenter);
+        mapModeLayout->addWidget(regionsButton,0, Qt::AlignCenter);
+        mapModeLayout->addWidget(cityButton,0, Qt::AlignCenter);
+        mapModeLayout->addWidget(defaultButton,0, Qt::AlignCenter);
+
+        mapModeContainer->setLayout(mapModeLayout);
+        // Move to bottom-left corner of the viewport
+
+        // Button Connections
+        connect(reliefButton, &QPushButton::clicked, this, [this]() {
+            gameManager->applyMapMode(GameManager::MapMode::Relief);
+        });
+        connect(regionsButton, &QPushButton::clicked, this, [this]() {
+            gameManager->applyMapMode(GameManager::MapMode::Regions);
+        });
+        connect(cityButton, &QPushButton::clicked, this, [this]() {
+            gameManager->applyMapMode(GameManager::MapMode::CityLevel);
+        });
+        connect(defaultButton, &QPushButton::clicked, this, [this]() {
+            gameManager->applyMapMode(GameManager::MapMode::Default);
+        });
+
+
+
         QList<QWidget*> layoutWidgets = {headerLabel, infoButton, moveButton, armyButton, endTurnButton, changePlayerButton, moveList};
 
         connect(toggleButton, &QPushButton::clicked, this, [=]() {
@@ -223,6 +272,7 @@ void MainWindow::repositionFixedWidgets()
 {
     // Always position layoutContainer relative to the viewport
     layoutContainer->move(view->viewport()->rect().topLeft() + QPoint(10, 10));
+    mapModeContainer->move(view->viewport()->rect().bottomLeft() + QPoint(10, -60));
 }
 
 void MainWindow::onMoveClicked(QListWidgetItem* item) {

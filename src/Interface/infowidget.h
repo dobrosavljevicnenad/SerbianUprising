@@ -24,6 +24,8 @@ private:
     QLabel* ownerLabel;
     QLabel* neighborsLabel;
     QLabel* bioLabel;
+    QLabel* cityLabel;
+    QLabel* regionLabel;
     QPushButton* closeButton;
 };
 

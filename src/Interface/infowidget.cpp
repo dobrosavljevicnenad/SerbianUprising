@@ -6,12 +6,12 @@ NodeInfoWidget::NodeInfoWidget(QMap<MapLayer*, graph::Vertex*> layerToVertex, QW
     setAttribute(Qt::WA_StyledBackground, true);
 
     QVBoxLayout* mainLayout = new QVBoxLayout(this);
-    mainLayout->setContentsMargins(32, 30, 30, 30); // Padding inside the border
-    mainLayout->setSpacing(5);
+    mainLayout->setContentsMargins(32, 0, 32, 100);
+    mainLayout->setSpacing(2);
 
     QHBoxLayout* titleLayout = new QHBoxLayout();
     titleLayout->setAlignment(Qt::AlignTop);
-    titleLayout->setContentsMargins(0, 0, 0, 0);
+    titleLayout->setContentsMargins(0, 32, 0, 0);
 
     titleLabel = new QLabel("Node Information", this);
     titleLabel->setStyleSheet("font-weight: bold; font-size: 16px; color: white;");
@@ -51,6 +51,16 @@ NodeInfoWidget::NodeInfoWidget(QMap<MapLayer*, graph::Vertex*> layerToVertex, QW
     troopCountLabel->setStyleSheet("color: white;");
     mainLayout->addWidget(troopCountLabel);
 
+    cityLabel = new QLabel(this);
+    cityLabel->setAlignment(Qt::AlignLeft);
+    cityLabel->setStyleSheet("color: white;");
+    mainLayout->addWidget(cityLabel);
+
+    regionLabel = new QLabel(this);
+    regionLabel->setAlignment(Qt::AlignLeft);
+    regionLabel->setStyleSheet("color: white;");
+    mainLayout->addWidget(regionLabel);
+
     ownerLabel = new QLabel("Owner: Player 2", this);
     ownerLabel->setAlignment(Qt::AlignLeft);
     ownerLabel->setStyleSheet("color: white;");
@@ -77,15 +87,15 @@ void NodeInfoWidget::updateNodeInfo(MapLayer* layer) {
     if(vertex->army.armyType()== ArmyType::HAJDUK){
         setStyleSheet(
             "NodeInfoWidget { "
-            "   border-image: url(:/resources/border1.png) 30 30 30 30 stretch stretch; "
+            "   border-image: url(:/resources/border1.png) 30 stretch; "
             "   border-width: 4px; "
-            "background-color: rgba(74, 47, 47,180); "
+            "   background-color: rgba(74, 47, 47,180); "
             "   color: white; "
             "}");
     }else{
         setStyleSheet(
             "NodeInfoWidget { "
-            "   border-image: url(:/resources/border1.png) 30 30 30 30 stretch stretch; "
+            "   border-image: url(:/resources/border1.png) 30 stretch; "
             "   border-width: 4px; "
             "   background-color: rgba(3, 66, 5,180); "
             "   color: white; "
@@ -114,4 +124,12 @@ void NodeInfoWidget::updateNodeInfo(MapLayer* layer) {
     QString relief = QString("Relief: %1\n")
                          .arg(QString::fromStdString(vertex->terrain.to_string(vertex->terrain.getTerrain())));
     bioLabel->setText(relief);
+
+    cityLabel->setText(QString("CityLevel: %1").arg(vertex->city->getLevel()));
+
+    if (vertex->region) {
+        regionLabel->setText(QString("Region: %1").arg(QString::fromStdString(vertex->region->getRegionName())));
+    } else {
+        regionLabel->setText("Region: None");
+    }
 }

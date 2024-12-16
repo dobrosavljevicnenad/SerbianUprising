@@ -11,6 +11,7 @@
 #include "../base/Mechanics/addarmymanager.h"
 #include "../base/Entities/region.h"
 #include "../base/Entities/city.h"
+#include "map.h"
 
 #include<QGraphicsScene>
 #include<iostream>
@@ -30,10 +31,13 @@ public:
     GameManager(QGraphicsScene* scene);
     void initializeMap();
 
+    enum class MapMode { Default, Relief, Regions, CityLevel };
+    void applyMapMode(MapMode mode);
+
     void updateLayersGraphics();
     void clearArrows();
     void drawArrow(int playerId, MapLayer* from, MapLayer* to, int number,int actionId);
-    void addLayer(MapLayer* layer, const std::string& label, Terrain terrain, Army army, Player player);
+    void addLayer(MapLayer* layer, const std::string& label, Terrain terrain, Army army, Player player, City* city);
 
     void CreateRegion();
     void transferTroops(MapLayer* from, MapLayer* to, int troops);
@@ -53,6 +57,10 @@ private:
     std::map<int,std::vector<CustomArrowItem*>> arrows;
     QGraphicsScene* scene;
     graph::Graph g;
+    QVector<Region*>regions;
+    Map* map;
+
+    void loadRegions();
 public:
     Turn turn;
 };

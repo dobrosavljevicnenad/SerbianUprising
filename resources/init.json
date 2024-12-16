@@ -401,7 +401,7 @@
       "terrain_type" : "MOUNTAIN"
     },
     {
-      "label": "Negoi",
+      "label": "Negol",
       "id" : 85,
       "label_path": ":/resources/Project/Negoi.png",
       "army_type": "JANISSARY",
@@ -731,7 +731,7 @@
       "terrain_type" : "HILL"
     },
     {
-      "label": "Kichevo-1",
+      "label": "Kastoria",
       "id" : 118,
       "label_path": ":/resources/Project/Kichevo-1.png",
       "army_type": "JANISSARY",
@@ -1534,7 +1534,7 @@
     {
       "regionId": "1",
       "regionName": "Srpski Pasaluk",
-      "layers": ["Sabac", "Uzice", "Valjevo","Raska","Krusevac","Kragujevac","Valjevo","Beograd","Smederevo","Negotin","Zajecar","Kladovo"]
+      "layers": ["Sabac", "Uzice","Negotin", "Valjevo","Raska","Krusevac","Kragujevac","Valjevo","Beograd","Smederevo","Zajecar","Kladovo"]
     },
     {
       "regionId": "2",
@@ -1549,7 +1549,7 @@
     {
       "regionId": "4",
       "regionName": "Janinski",
-      "layers": ["Larissa", "Vlore","Prikhala","Sarande","Janina"]
+      "layers": ["Larissa", "Vlore","Prikhala","Sarande","Janina","Olympus","Kastoria"]
     },
     {
       "regionId": "5",
@@ -1559,7 +1559,7 @@
     {
       "regionId": "6",
       "regionName": "Manastirski",
-      "layers": ["Durres","Tirane","Lezhe","Skodra","Djakovica","Pristina","Prizren","Kumanovo","Skopje","Kratovo","Shtip","Veles","Monastir","Ohrid","Kichevo-1","Prilep"]
+      "layers": ["Durres","Tirane","Lezhe","Skodra","Djakovica","Pristina","Prizren","Kumanovo","Skopje","Kratovo","Shtip","Veles","Monastir","Ohrid","Kichevo","Prilep"]
     },
     {
       "regionId": "7",
@@ -1568,23 +1568,18 @@
     },
     {
       "regionId": "8",
-      "regionName": "Niski",
-      "layers": ["Nis","Vranje","Sofija","Kostendil"]
+      "regionName": "Nish",
+      "layers": ["Nis","Vranje","Sofija","Kostendil","Vidin","Lom","Oryahovo"]
     },
     {
       "regionId": "9",
       "regionName": "Edirne",
-      "layers": ["Istanbul","Corlu","Gelibolu","Alexandropoli","Xanthi","Rhodope","Pazardzhik","Plovdiv","Stara_Zagora","Sliven","Burgas","Elhovo","Edirne","KrumovGrad","Daddia","KrumovGrad","Kirkareli"]
+      "layers": ["Istanbul","Corlu","Gelibolu","Alexandropoli","Xanthi","Rhodope","Pazardzhik","Plovdiv","Stara_Zagora","Sliven","Burgas","Elhovo","Edirne","KrumovGrad","Daddia","KrumovGrad","Kirkareli","Haskovo"]
     },
     {
       "regionId": "10",
       "regionName": "Wallachia",
-      "layers": ["Turnu_Severin","Turnu_Magurele","Negotin","Bran","Focsani","Braila","Calafat","Calarasi","Slatina","Giurgiu","Bucharest","Ployeshti","Pitesti","Kraiova"]
-    },
-    {
-      "regionId": "11",
-      "regionName": "Vidin",
-      "layers": ["Vidin","Lom","Oryhaovo"]
+      "layers": ["TurnuSeverin","TurnuMagurele","Bran","Focsani","Braila","Calafat","Calarasi","Slatina","Giurgiu","Bucharest","Ployeshti","Pitesti","Kraiova","Negol"]
     }
   ]
 }

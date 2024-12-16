@@ -21,8 +21,8 @@ class Vertex {
 public:
     Vertex(QPointF position, const std::string &label,
            MapLayer *map_layer, Terrain territory, Army army,
-           Player player);
-//, City* city, Region* region
+           Player player, City* city, Region* region);
+
     ~Vertex();
     void updateLayerColor();
     unsigned id() const;

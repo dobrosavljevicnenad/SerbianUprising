@@ -21,7 +21,19 @@ void MapLayer::setTroopCount(int count) {
 }
 
 QPixmap MapLayer::get_m_originalPixmap(){
-    return m_originalPixmap;
+    QImage image = pixmap().toImage();
+    for (int y = 0; y < image.height(); ++y) {
+        for (int x = 0; x<image.width(); ++x) {
+            QColor color = image.pixelColor(x,y);
+            if (color.red() < 60 && color.green() < 60 && color.blue() < 60 && color.alpha() > 0) {
+                image.setPixelColor(x, y, QColor(0, 0, 0));
+            } else if (color.alpha() > 0) {
+                image.setPixelColor(x, y, QColorConstants::Gray);
+            }
+        }
+    }
+
+    return QPixmap::fromImage(image);
 }
 
 
@@ -83,7 +95,9 @@ void MapLayer::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
 }
 
 void MapLayer::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
-    setColor(ArmyColor);
+    if (isMainMode) {
+        setColor(ArmyColor);
+    }
     QGraphicsPixmapItem::hoverLeaveEvent(event);
 }
 
@@ -93,7 +107,9 @@ void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     }
     QGraphicsPixmapItem::mousePressEvent(event);
 }
-
+void MapLayer::setMainMode(bool mainMode) {
+    isMainMode = mainMode;
+}
 void MapLayer::setCurrentPlayer(int PlayerId){
     currentPlayer = PlayerId;
 }

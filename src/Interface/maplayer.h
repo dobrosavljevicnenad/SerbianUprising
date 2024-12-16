@@ -27,6 +27,7 @@ public:
     int getTroopCount() const;
     void setCurrentPlayer(int PlayerId);
     QPixmap get_m_originalPixmap();
+    void setMainMode(bool mainMode);
 signals:
     void layerClicked(MapLayer *layer);
 
@@ -40,6 +41,7 @@ protected:
 private:
     int troopCount;
     int currentPlayer;
+    bool isMainMode;
     QPixmap m_originalPixmap;
     QColor ArmyColor;
     QString labelName;

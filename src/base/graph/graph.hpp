@@ -22,7 +22,7 @@ public:
 
     Vertex* insert_vertex(QPointF position, const std::string& label,
                           MapLayer* map_layer, Terrain territory, Army army,
-                          Player player);
+                          Player player, City* city, Region* region);
     bool insert_edge(Vertex* from, Vertex* to, double weight, EdgeType type = EdgeType::Land);
     bool remove_vertex(Vertex* vertex);
     bool remove_edge(Vertex* from, Vertex* to);

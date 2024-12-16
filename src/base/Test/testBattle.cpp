@@ -17,13 +17,13 @@ void test_Battle() {
 
     MapLayer *terrainGornji = new MapLayer(":/resources/gornji.png",true);
 
-    graph::Vertex* v1 = g.insert_vertex(terrainGornji->troopText->pos(), "Gornji_layer",terrainGornji, terrain, army, player1);
+    graph::Vertex* v1 = g.insert_vertex(terrainGornji->troopText->pos(), "Gornji_layer",terrainGornji, terrain, army, player1,nullptr,nullptr);
     MapLayer *terrainDonjiLevi = new MapLayer(":/resources/gornji.png",true);
 
-    graph::Vertex* v2 = g.insert_vertex(terrainDonjiLevi->troopText->pos(), "DonjiLevi",terrainDonjiLevi, terrain, army2, player2);
+    graph::Vertex* v2 = g.insert_vertex(terrainDonjiLevi->troopText->pos(), "DonjiLevi",terrainDonjiLevi, terrain, army2, player2,nullptr,nullptr);
     MapLayer *terrainDonjiDesni = new MapLayer(":/resources/gornji.png",true);
 
-    graph::Vertex* v3 = g.insert_vertex(terrainDonjiDesni->troopText->pos(), "DonjiDesni",terrainDonjiDesni, terrain, army3, player2);
+    graph::Vertex* v3 = g.insert_vertex(terrainDonjiDesni->troopText->pos(), "DonjiDesni",terrainDonjiDesni, terrain, army3, player2,nullptr,nullptr);
 
     g.insert_edge(v1,v2,1.0);
     g.insert_edge(v1,v3,1.0);

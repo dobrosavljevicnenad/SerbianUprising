@@ -38,7 +38,6 @@ public:
     void print_connections(const graph::Graph &g, const graph::Vertex* vertex);
     void repositionFixedWidgets();
 
-
     void setupFixedWidgets();
 
 protected:
@@ -68,6 +67,7 @@ private:
     QMediaPlayer* mediaPlayer;
     QAudioOutput* audioOutput;
     QWidget* layoutContainer;
+    QWidget* mapModeContainer;
     QListWidget* moveList;
     QPushButton* moveButton;
     QPushButton* armyButton;
