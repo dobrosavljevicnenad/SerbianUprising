@@ -309,9 +309,42 @@ Year ClientGameManager::year(){
 }
 
 void ClientGameManager::saveGame() {
-    std::string filePath = "../../resources/saved_game.json";
-    clientGraph->save_to_json(filePath);
+    QString directoryPath = "../../resources/saved_games/";
+
+    QDir dir(directoryPath);
+    if (!dir.exists()) {
+        dir.mkpath(".");
+    }
+
+    int nextFileNumber = 1;
+    QRegularExpression regex("^game(\\d+)\\.json$");
+    for (const QFileInfo& fileInfo : dir.entryInfoList({"game*.json"}, QDir::Files)) {
+        QRegularExpressionMatch match = regex.match(fileInfo.fileName());
+        if (match.hasMatch()) {
+            int fileNumber = match.captured(1).toInt();
+            if (fileNumber >= nextFileNumber) {
+                nextFileNumber = fileNumber + 1;
+            }
+        }
+    }
+
+    QString defaultFileName = QString("game%1.json").arg(nextFileNumber);
+
+    QString filePath = QFileDialog::getSaveFileName(
+        nullptr,
+        "Save Game",
+        directoryPath + defaultFileName,
+        "JSON Files (*.json);;All Files (*)"
+        );
+
+    if (filePath.isEmpty()) {
+        QMessageBox::warning(nullptr, "Save Cancelled", "No file selected. Save operation cancelled.");
+        return;
+    }
+
+    clientGraph->save_to_json(filePath.toStdString());
 }
+
 
 
 void ClientGameManager::loadGame() {

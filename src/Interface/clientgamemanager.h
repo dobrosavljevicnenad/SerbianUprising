@@ -10,6 +10,11 @@
 #include <QJsonArray>
 #include <QFile>
 #include <QDebug>
+#include <QFileDialog>
+#include <QDir>
+#include <QFileInfoList>
+#include <QRegularExpression>
+#include <QMessageBox>
 #include <map>
 #include <qlabel.h>
 #include <qlistwidget.h>

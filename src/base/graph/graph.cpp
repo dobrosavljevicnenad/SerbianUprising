@@ -213,7 +213,6 @@ void Graph::deserialize(const QJsonObject &json) {
 void Graph::save_to_json(const std::string &file_path) const {
     QJsonObject graphJson;
 
-    // Dodavanje vertices u JSON
     QJsonArray verticesArray;
     for (const auto& [id, vertex] : vertices) {
         QJsonObject vertexJson;
@@ -231,7 +230,6 @@ void Graph::save_to_json(const std::string &file_path) const {
     }
     graphJson["vertices"] = verticesArray;
 
-    // Dodavanje edges u JSON
     QJsonArray edgesArray;
     for (const auto& [vertex, edges] : m_adj_list) {
         for (const Edge& edge : edges) {
@@ -246,7 +244,6 @@ void Graph::save_to_json(const std::string &file_path) const {
     }
     graphJson["edges"] = edgesArray;
 
-    // Čuvanje u fajl
     FileManager::saveToFile(QString::fromStdString(file_path), graphJson);
 }
 
