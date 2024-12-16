@@ -41,39 +41,58 @@ void Client::onReadyRead() {
 
     // Split the data by newline to handle multiple messages
     QStringList messages = data.split("\n", Qt::SkipEmptyParts);
-    for (const QString& message : messages) {
+    for (const QString &message : messages) {
         if (message.startsWith("ID:")) {
-            bool ok;
-            int receivedId = message.mid(3).toInt(&ok);
-            if (ok) {
-                id = receivedId;
-                clientGameManager->setId(id);
-                emit idReceived(id);  // Emit the ID signal
-            } else {
-                qWarning() << "Failed to parse ID from server message:" << message;
-            }
+            processIdMessage(message);
         } else if (message == "START_GAME") {
-            emit gameStarted();  // Emit game started signal
+            emit gameStarted();
         } else {
-            QJsonDocument jsonDoc = QJsonDocument::fromJson(message.toUtf8());
-            if (!jsonDoc.isNull() && jsonDoc.isObject()) {
-                QJsonObject jsonObject = jsonDoc.object();
-
-                // Proveravamo tip poruke
-                QString type = jsonObject["type"].toString();
-                if (type == "GAME_DATA") {
-                    QJsonObject gameData = jsonObject["gameData"].toObject();
-                    clientGameManager->processLoadData(gameData);  // Emitujemo signal sa podacima igre
-                    qDebug() << "Received GAME_DATA from server:" << gameData;
-                } else {
-                    clientGameManager->processDataFromServer(jsonObject);
-                }
-            } else {
-                qWarning() << "Failed to parse JSON data from server:" << message;
-            }
+            processJsonMessage(message);
         }
     }
 }
+
+void Client::processIdMessage(const QString &message) {
+    bool ok;
+    int receivedId = message.mid(3).toInt(&ok);
+    if (ok) {
+        id = receivedId;
+        clientGameManager->setId(id);
+        emit idReceived(id);
+    } else {
+        qWarning() << "Failed to parse ID from server message:" << message;
+    }
+}
+
+void Client::processJsonMessage(const QString &message) {
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(message.toUtf8());
+
+    if (jsonDoc.isNull() || !jsonDoc.isObject()) {
+        qWarning() << "Failed to parse JSON data from server:" << message;
+        return;
+    }
+
+    QJsonObject jsonObject = jsonDoc.object();
+    QString type = jsonObject["type"].toString();
+
+    if (type == "GAME_DATA") {
+        processGameData(jsonObject);
+    } else {
+        clientGameManager->processDataFromServer(jsonObject);
+    }
+}
+
+void Client::processGameData(const QJsonObject &jsonObject) {
+    if (!jsonObject.contains("gameData")) {
+        qWarning() << "GAME_DATA message is missing 'gameData'.";
+        return;
+    }
+
+    QJsonObject gameData = jsonObject["gameData"].toObject();
+    clientGameManager->processLoadData(gameData);
+    qDebug() << "Received GAME_DATA from server:" << gameData;
+}
+
 
 
 
