@@ -345,18 +345,31 @@ void ClientGameManager::saveGame() {
     clientGraph->save_to_json(filePath.toStdString());
 }
 
-
-
 void ClientGameManager::loadGame() {
-    QString filePath = "../../resources/saved_game.json";
+    QString directoryPath = "../../resources/saved_games/";
+
+    QString filePath = QFileDialog::getOpenFileName(
+        nullptr,
+        "Load Saved Game",
+        directoryPath,
+        "JSON Files (*.json);;All Files (*)"
+        );
+
+    if (filePath.isEmpty()) {
+        QMessageBox::warning(nullptr, "Load Cancelled", "No file selected. Load operation cancelled.");
+        return;
+    }
+
     if (!fileManager.fileExists(filePath)) {
         qWarning() << "Saved game file does not exist:" << filePath;
+        QMessageBox::critical(nullptr, "Load Failed", "Selected file does not exist:\n" + filePath);
         return;
     }
 
     QJsonObject graphData = fileManager.loadFromFile(filePath);
     if (graphData.isEmpty()) {
         qWarning() << "Failed to load game state. File might be corrupt.";
+        QMessageBox::critical(nullptr, "Load Failed", "Failed to load game state. File might be corrupt.");
         return;
     }
 
@@ -371,5 +384,5 @@ void ClientGameManager::loadGame() {
     }
 
     updateGraphics();
-    qDebug() << "Game state loaded successfully.";
 }
+
