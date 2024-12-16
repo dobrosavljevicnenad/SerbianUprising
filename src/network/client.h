@@ -33,6 +33,7 @@ signals:
 public slots:
     void onReadyRead();
     void sendEndTurnWithActions(const QVector<Action> &actions, int id);
+    void handleLoadGame(const QJsonObject& graphData);
 
 private slots:
     void onGameStarted();

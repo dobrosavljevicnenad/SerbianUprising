@@ -88,13 +88,23 @@ void Server::onReadyRead() {
         qWarning() << "Invalid sender in onReadyRead";
         return;
     }
-    if (socket->bytesAvailable() > 0) {
-        QString data = QString::fromUtf8(socket->readAll()).trimmed();
 
-        if (!data.isEmpty()) {
+    while (socket->bytesAvailable() > 0) {
+        QByteArray rawData = socket->readLine().trimmed(); // Pročitaj jednu liniju (završava se sa '\n')
+
+        if (!rawData.isEmpty()) {
             try {
-                QJsonObject jsonObject = QJsonDocument::fromJson(data.toUtf8()).object();
-                if (jsonObject["type"] == "END_TURN") {
+                QJsonDocument jsonDoc = QJsonDocument::fromJson(rawData);
+                if (jsonDoc.isNull() || !jsonDoc.isObject()) {
+                    qWarning() << "Invalid JSON received:" << rawData;
+                    continue;
+                }
+
+                QJsonObject jsonObject = jsonDoc.object();
+                QString type = jsonObject["type"].toString();
+
+                if (type == "END_TURN") {
+                    // Postojeća logika za END_TURN
                     int id = jsonObject["id"].toInt();
                     QJsonArray actionsArray = jsonObject["actions"].toArray();
                     QVector<Action> actions;
@@ -107,7 +117,7 @@ void Server::onReadyRead() {
 
                     endTurnActions[id] = actions;
 
-                    // Provera da li su oba igraca zavrsila potez
+                    // Provera da li su oba igrača završila potez
                     if (endTurnActions.size() == 2) {
                         auto it = endTurnActions.begin();
                         int p1_id = it.key();
@@ -119,10 +129,21 @@ void Server::onReadyRead() {
                         std::vector<Action> actionsPlayer2(actionsPlayer2QVector.begin(), actionsPlayer2QVector.end());
 
                         serverGameManager->executeActions(actionsPlayer1, p1_id, actionsPlayer2, p2_id);
-                        // cistimo endturn-ove za sledece poteze
+                        // Čistimo END_TURN podatke za sledeći potez
                         endTurnActions.clear();
                     }
+                } else if (type == "LOAD_GAME") {
+                    // Nova logika za LOAD_GAME
+                    qDebug() << "Received LOAD_GAME request.";
 
+                    if (jsonObject.contains("gameData")) {
+                        QJsonObject gameData = jsonObject["gameData"].toObject();
+                        handleLoadGame(gameData); // Prosljeđivanje odgovarajućoj metodi
+                    } else {
+                        qWarning() << "LOAD_GAME request is missing 'gameData'.";
+                    }
+                } else {
+                    qWarning() << "Unknown message type received:" << type;
                 }
             } catch (std::exception &e) {
                 qWarning() << "Failed to parse data:" << e.what();
@@ -130,6 +151,7 @@ void Server::onReadyRead() {
         }
     }
 }
+
 
 void Server::executeActions(const std::vector<Action> &actions) {
     for (const Action &action : actions) {
@@ -176,4 +198,16 @@ void Server::handleSerializedGraph(const QJsonObject& serializedGraph, const QJs
     QString serializedData = QString(QJsonDocument(dataToSend).toJson(QJsonDocument::Compact));
 
     sendData(serializedData);
+}
+
+void Server::handleLoadGame(const QJsonObject &gameData) {
+    QJsonObject response;
+    response["type"] = "GAME_DATA";
+    response["gameData"] = gameData;
+
+    QJsonDocument responseDoc(response);
+    QByteArray responseData = responseDoc.toJson(QJsonDocument::Compact);
+
+    sendData(responseData);
+    qDebug() << "Sent game data to all clients:" << responseData;
 }

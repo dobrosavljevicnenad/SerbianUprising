@@ -373,16 +373,34 @@ void ClientGameManager::loadGame() {
         return;
     }
 
-    clientGraph->deserialize(graphData);
+    emit gameDataLoaded(graphData);
 
-    for (auto &layer : layers) {
-        graph::Vertex *vertex = clientGraph->get_vertex_by_id(layer->getId() + 1);
-        if (vertex) {
-            layerToVertex[layer] = vertex;
-            vertex->map_layer = layer;
-        }
-    }
+    // clientGraph->deserialize(graphData);
 
-    updateGraphics();
+    // for (auto &layer : layers) {
+    //     graph::Vertex *vertex = clientGraph->get_vertex_by_id(layer->getId() + 1);
+    //     if (vertex) {
+    //         layerToVertex[layer] = vertex;
+    //         vertex->map_layer = layer;
+    //     }
+    // }
+
+    // updateGraphics();
 }
 
+void ClientGameManager::processLoadData(const QJsonObject &gameData) {
+    qDebug() << "Processing loaded game data:" << gameData;
+
+    clientGraph->deserialize(gameData);
+
+    // for (auto &layer : layers) {
+    //     graph::Vertex *vertex = clientGraph->get_vertex_by_id(layer->getId() + 1);
+    //     if (vertex) {
+    //         layerToVertex[layer] = vertex;
+    //         vertex->map_layer = layer;
+    //     }
+    // }
+
+    updateGraphics();
+    qDebug() << "Game data successfully processed and applied.";
+}

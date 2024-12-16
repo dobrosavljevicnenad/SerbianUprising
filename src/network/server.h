@@ -22,6 +22,7 @@ public:
     std::vector<Action> actionsPlayer1;
     std::vector<Action> actionsPlayer2;
     void executeActions(const std::vector<Action> &actions);
+    void handleLoadGame(const QJsonObject &gameData); // Prosljeđivanje odgovarajućoj metodi
 ////////////////////////////////////////////////
 signals:
     void startGame();

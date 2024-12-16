@@ -60,8 +60,7 @@ public:
     Year year();
     void saveGame();
     void loadGame();
-
-
+    void processLoadData(const QJsonObject &gameData);
 
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
 
@@ -72,6 +71,7 @@ signals:
     void layerClicked(MapLayer* layer);
     void endTurnActionsReady(const QVector<Action>& actions, int id);
     void gameYearUpdated(QString gameYear);
+    void gameDataLoaded(const QJsonObject& graphData);
 
 
 private:

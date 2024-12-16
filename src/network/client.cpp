@@ -10,7 +10,7 @@ Client::Client(QObject *parent)
     // readyRead i onReadyRead, kada stignu podaci
     // sa server automatski se povezuje sa metodom onReadyRead()
     connect(clientGameManager, &ClientGameManager::endTurnActionsReady, this, &Client::sendEndTurnWithActions);
-
+    connect(clientGameManager, &ClientGameManager::gameDataLoaded, this, &Client::handleLoadGame);
 }
 ClientGameManager* Client::getClientGameManager() const {
     return clientGameManager;
@@ -57,7 +57,17 @@ void Client::onReadyRead() {
         } else {
             QJsonDocument jsonDoc = QJsonDocument::fromJson(message.toUtf8());
             if (!jsonDoc.isNull() && jsonDoc.isObject()) {
-                clientGameManager->processDataFromServer(jsonDoc.object());
+                QJsonObject jsonObject = jsonDoc.object();
+
+                // Proveravamo tip poruke
+                QString type = jsonObject["type"].toString();
+                if (type == "GAME_DATA") {
+                    QJsonObject gameData = jsonObject["gameData"].toObject();
+                    clientGameManager->processLoadData(gameData);  // Emitujemo signal sa podacima igre
+                    qDebug() << "Received GAME_DATA from server:" << gameData;
+                } else {
+                    clientGameManager->processDataFromServer(jsonObject);
+                }
             } else {
                 qWarning() << "Failed to parse JSON data from server:" << message;
             }
@@ -111,6 +121,26 @@ void Client::sendEndTurnWithActions(const QVector<Action> &actions, int id) {
     qDebug() << "Sending JSON to server:" << jsonString;
     m_socket->write(jsonString.toUtf8());
 }
+
+void Client::handleLoadGame(const QJsonObject& graphData) {
+    if (!m_socket || !m_socket->isOpen()) {
+        qWarning() << "Socket is not open. Cannot send game data to server.";
+        return;
+    }
+
+    QJsonObject message;
+    message["type"] = "LOAD_GAME";
+    message["gameData"] = graphData;
+
+    QJsonDocument jsonDoc(message);
+    QByteArray jsonData = jsonDoc.toJson(QJsonDocument::Compact);
+
+    m_socket->write(jsonData + "\n");
+    m_socket->flush();
+
+    qDebug() << "Sent game data to server:" << jsonData;
+}
+
 
 
 
