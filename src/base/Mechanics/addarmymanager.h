@@ -1,12 +1,12 @@
 #ifndef ADDARMYMANAGER_H
 #define ADDARMYMANAGER_H
-
+#include "../graph/graph.hpp"
 class AddArmyManager
 {
 public:
-    AddArmyManager();
+    AddArmyManager(graph::Graph* graph);
 
-    void addTerritory();
+    void addTerritory(Player player);
     void removeTerritory();
     void addRegion();
     void removeRegion();
@@ -16,8 +16,10 @@ public:
     int calculateTotalTroops();
     void decreaseAvailableTroops(int troops);
     void endTurn();
+    int newRecruits(Player player);
 
 private:
+    graph::Graph* graph;
     int territoryCount;
     int regionCount;
     int cityCount;

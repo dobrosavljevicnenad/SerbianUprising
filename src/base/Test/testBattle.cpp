@@ -14,16 +14,17 @@ void test_Battle() {
 
     Player player1(1, ArmyType::HAJDUK);
     Player player2(2, ArmyType::JANISSARY);
+    CultureType culture = CultureType::SERBIAN;
 
     MapLayer *terrainGornji = new MapLayer(0,":/resources/gornji.png",true);
 
-    graph::Vertex* v1 = g.insert_vertex(terrainGornji->troopText->pos(), "Gornji_layer",terrainGornji, terrain, army, player1);
+    graph::Vertex* v1 = g.insert_vertex(terrainGornji->troopText->pos(), "Gornji_layer",terrainGornji, terrain, army, player1, culture);
     MapLayer *terrainDonjiLevi = new MapLayer(1,":/resources/gornji.png",true);
 
-    graph::Vertex* v2 = g.insert_vertex(terrainDonjiLevi->troopText->pos(), "DonjiLevi",terrainDonjiLevi, terrain, army2, player2);
+    graph::Vertex* v2 = g.insert_vertex(terrainDonjiLevi->troopText->pos(), "DonjiLevi",terrainDonjiLevi, terrain, army2, player2, culture);
     MapLayer *terrainDonjiDesni = new MapLayer(3,":/resources/gornji.png",true);
 
-    graph::Vertex* v3 = g.insert_vertex(terrainDonjiDesni->troopText->pos(), "DonjiDesni",terrainDonjiDesni, terrain, army3, player2);
+    graph::Vertex* v3 = g.insert_vertex(terrainDonjiDesni->troopText->pos(), "DonjiDesni",terrainDonjiDesni, terrain, army3, player2, culture);
 
     g.insert_edge(v1,v2,1.0);
     g.insert_edge(v1,v3,1.0);

@@ -21,6 +21,7 @@ ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *paren
     connectSignals();
     gameManager->initializeUI(headerLabel, endTurnButton, moveButton, infoButton,moveList,armyButton);
     connect(gameManager, &ClientGameManager::gameYearUpdated, this, &ClientWindow::updateYearLabel);
+
 }
 
 ClientWindow::~ClientWindow() {
@@ -148,8 +149,6 @@ void ClientWindow::setupUI() {
 void ClientWindow::updateYearLabel(QString newYear) {
     yearDisplayLabel->setText(newYear);
 }
-
-
 void ClientWindow::connectSignals() {
     connect(gameManager, &ClientGameManager::layerClicked, this, &ClientWindow::onLayerClicked);
     connect(endTurnButton, &QPushButton::clicked, this, &ClientWindow::onEndTurnClicked);
@@ -207,6 +206,8 @@ void ClientWindow::onMoveClicked(QListWidgetItem* item) {
             gameManager->layerToVertex[layer]->army.setSoldiers(
             gameManager->layerToVertex[layer]->army.getSoldiers() - troopsToRemove);
             layer->setTroopCount(layer->getTroopCount() - troopsToRemove);
+            gameManager->maxPlaceTroops += troopsToRemove;
+
         }
 
         delete moveList->takeItem(moveList->row(item));
@@ -286,15 +287,19 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer){
     if ( selected_vertex->player.getPlayerId() == currentPlayerId ) {
         AddArmyManager& armyManager = gameManager->getArmyManager();
 
-        int maxTroops = armyManager.calculateTotalTroops();
-
-
         bool ok;
+
+        if(gameManager->maxPlaceTroops == 0){
+            QMessageBox::warning(this, tr("Error"), tr("Not enought avalible soldiers"));
+            selectedLayer = nullptr;
+            return;
+        }
+        std::string message = "Enter the number of soldiers up to " + std::to_string(gameManager->maxPlaceTroops) + " to place: ";
         int troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
-                                               tr("Enter the number of troops to place:"), 0, 0, maxTroops, 1, &ok);
+                                               tr(message.c_str()), 0, 0, gameManager->maxPlaceTroops, 1, &ok);
         if (ok && troopsToAdd > 0) {
             layer->setTroopCount(layer->getTroopCount() + troopsToAdd);
-
+            gameManager->maxPlaceTroops -= troopsToAdd;
             int pid = gameManager->ClientId;
             int source = selected_vertex->id();
             Action newAction(ActionType::PLACE_ARMY, pid, source, 0, troopsToAdd);
@@ -362,7 +367,13 @@ void ClientWindow::clearExplosions()
 }
 
 void ClientWindow::keyPressEvent(QKeyEvent *event) {
-    if (event->key() == Qt::Key_Escape) {
+    if (event->key() == Qt::Key_I) {  // Kada pritisnete 'I', aktivirajte info dugme
+        setActiveButton(infoButton);
+    } else if (event->key() == Qt::Key_M) {  // Kada pritisnete 'M', aktivirajte move dugme
+        setActiveButton(moveButton);
+    } else if (event->key() == Qt::Key_A) {  // Kada pritisnete 'A', aktivirajte army dugme
+        setActiveButton(armyButton);
+    } else if (event->key() == Qt::Key_Escape) {
         showPauseMenu();
     } else {
         QMainWindow::keyPressEvent(event);

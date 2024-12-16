@@ -9,7 +9,7 @@
 #include "../Entities/mergeArmies.h"
 #include "../Entities/player.h"
 #include "../Entities/Terrain.h"
-
+#include "../Entities/Culture.h"
 namespace graph {
 
 //using position_t = std::pair<unsigned, unsigned>;
@@ -20,7 +20,7 @@ public:
 
     Vertex(unsigned id,QPointF position, const std::string &label,
            MapLayer *map_layer, Terrain terrain, Army army,
-           Player player);
+           Player player,CultureType culture);
 
     ~Vertex();
     void updateLayerColor();
@@ -35,6 +35,7 @@ public:
     Army army;
     Player player;
     MapLayer* map_layer;
+    CultureType culture;
 
 private:
     unsigned m_id;

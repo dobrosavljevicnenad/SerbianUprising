@@ -10,8 +10,8 @@ Graph::~Graph(){
 
 Vertex* Graph::insert_vertex(QPointF position, const std::string &label,
                              MapLayer *map_layer, Terrain territory, Army army,
-                             Player player) {
-    Vertex* vertex = new Vertex(m_next_id++,position, label, map_layer, territory, army, player);
+                             Player player, CultureType culture) {
+    Vertex* vertex = new Vertex(m_next_id++,position, label, map_layer, territory, army, player, culture);
 
     vertices.emplace(vertex->id(), vertex);
     m_adj_list[vertex] = std::vector<Edge>();
@@ -153,7 +153,6 @@ QJsonObject Graph::serialize() const {
 
     return graphJson;
 }
-
 void Graph::deserialize(const QJsonObject &json) {
     QJsonArray verticesArray = json["vertices"].toArray();
     if(!initialized){// Deserialize vertices
@@ -163,18 +162,27 @@ void Graph::deserialize(const QJsonObject &json) {
             int armyCount = vertexJson["num_of_soldiers"].toInt(); // Read the number of soldiers
             std::string armyType = vertexJson["army_type"].toString().toStdString(); // Read the army type
             int playerId=0;
+            CultureType culture;
             std::string terrainType = vertexJson["terrain_type"].toString().toStdString();
             if (armyType == "HAJDUK") {
                 playerId = 1;
             } else if (armyType == "JANISSARY") {
                 playerId = 2;
             }
+            // TODO: Deserialize culture data from JSON
+            if (armyType == "HAJDUK") {
+                culture = CultureType::SERBIAN;
+            } else if (armyType == "JANISSARY") {
+                culture = CultureType::TURKISH;
+            }
             insert_vertex(QPointF(0, 0),
                           label,
                           nullptr,
                           Terrain::fromString(terrainType),
                           Army::fromString(armyType, armyCount),
-                          Player::fromJson(playerId, armyType));
+                          Player::fromJson(playerId, armyType),
+                          culture
+                          );
         }
 
         // Deserialize edges

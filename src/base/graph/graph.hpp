@@ -24,7 +24,7 @@ public:
 
     Vertex* insert_vertex(QPointF position, const std::string& label,
                           MapLayer* map_layer, Terrain territory, Army army,
-                          Player player);
+                          Player player, CultureType culture);
     bool insert_edge(Vertex* from, Vertex* to, double weight, EdgeType type = EdgeType::Land);
     bool remove_vertex(Vertex* vertex);
     bool remove_edge(Vertex* from, Vertex* to);
@@ -40,7 +40,6 @@ public:
 
 public:
     std::unordered_map<nodeID_t, Vertex*> vertices;  // Map of vertex IDs to Vertex pointers
-
 private:
     std::unordered_map<Vertex*, std::vector<Edge>> m_adj_list;  // Adjacency list for edges
     unsigned m_next_id=1;  // Next ID for a new vertex

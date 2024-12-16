@@ -1,8 +1,9 @@
 #include "clientgamemanager.h"
 
 ClientGameManager::ClientGameManager(QGraphicsScene* scene,QObject* parent)
-    : QObject(parent),scene(scene),clientGraph(new graph::Graph())
+    : QObject(parent),scene(scene),clientGraph(new graph::Graph()), armyManager(*new AddArmyManager(clientGraph.get()))
 {
+
 }
 
 void ClientGameManager::initializeUI(
@@ -118,12 +119,13 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
                 vertex->map_layer = layer;
             }
         }
-        armyManager = AddArmyManager();
         init = true;
     }
     //qDebug() << "Current Game Date:" << gameYear.getCurrentDateString();
     gameYear.advanceThreeMonths();
     updateGraphics();
+    armyManager.addTerritory(player);
+    maxPlaceTroops = armyManager.calculateTotalTroops();
 }
 
 QVector<QStringList> ClientGameManager::generateBattleResults() {
@@ -238,6 +240,7 @@ void ClientGameManager::removeActionById(int actionId) {
     if (it != buffer.end()) {
         graph::Vertex* cvor = clientGraph->get_vertex_by_id(it->sourceVertexId);
         cvor->army.setSoldiers(cvor->army.getSoldiers() + it->soldiers);
+        std::cout << *it<<std::flush;
         cvor->map_layer->setTroopCount(cvor->army.getSoldiers());
         buffer.erase(it);
         std::cout << "Action with ID " << actionId << " removed for Player " << ClientId << ".\n";
@@ -297,6 +300,16 @@ void ClientGameManager::printExplosion(graph::Vertex *target)
         scene->addItem(explosionLayer);
     }
 
+}
+
+Player ClientGameManager::getPlayer() const
+{
+    return player;
+}
+
+graph::Graph*ClientGameManager::getClientGraph() const
+{
+    return clientGraph.get();
 }
 void ClientGameManager::clearExplosions() {
     for (auto& explosion : explosions) {

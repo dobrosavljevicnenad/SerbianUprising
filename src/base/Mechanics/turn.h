@@ -38,10 +38,10 @@ private:
     graph::Graph& m_graph;                                        // Reference to the game graph
     QMediaPlayer m_mediaPlayer;                                   // Media player for playing sounds
     QAudioOutput m_audioOutput;                                   // Audio output for sound control
-
+    int player1Recruits;
+    int player2Recruits;
     void executePlayerAttacks(int playerId);                      // Execute all actions for a specific player
     void executePlayerMoves(const Action& action, bool& battleMusic);  // Execute an action and handle battle music if necessary
-
     void playBattleMusic();                                       // Play battle music if an attack happens
 
     void executeMoveAction(const Action& action);                 // Handle move actions
