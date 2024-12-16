@@ -53,8 +53,8 @@ public:
     QVector<QStringList> generateBattleResults();
     std::vector<Results> resultsVector;
     Year year();
-    // void saveGame(const QString& savePath);
-    // void loadGame(const QString& loadPath);
+    void saveGame();
+    void loadGame();
 
 
 
@@ -79,6 +79,7 @@ private:
     std::map<int,std::vector<CustomArrowItem*>> arrows;
     Player player;
     Year gameYear;
+    FileManager fileManager;
 
 private://UI
     QLabel* headerLabel;

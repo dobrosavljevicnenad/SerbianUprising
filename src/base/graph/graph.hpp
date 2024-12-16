@@ -7,6 +7,7 @@
 #include <vector>
 #include <QJsonArray>
 #include <QJsonObject>
+#include "../../Interface/filemanager.h"
 // #include "../gui/maplayer.h"
 // #include "../base/Army.h"
 // #include "../base/Battle.h"
@@ -36,6 +37,7 @@ public:
     Vertex* get_vertex_by_id(nodeID_t id) const;
     QJsonObject serialize() const;
     void deserialize(const QJsonObject &json);
+    void save_to_json(const std::string &file_path) const;
     void clear();
 
 public:

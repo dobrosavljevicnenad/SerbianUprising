@@ -308,35 +308,35 @@ Year ClientGameManager::year(){
     return gameYear;
 }
 
-// void ClientGameManager::saveGame(const QString& savePath) {
-//     if (!clientGraph) {
-//         qWarning() << "Graph is null, cannot save game.";
-//         return;
-//     }
+void ClientGameManager::saveGame() {
+    std::string filePath = "../../resources/saved_game.json";
+    clientGraph->save_to_json(filePath);
+}
 
-//     QJsonObject gameState;
-//     gameState["graph"] = clientGraph->serialize();
 
-//     if (FileManager::saveToFile(savePath, gameState)) {
-//         qDebug() << "Game saved successfully to:" << savePath;
-//     } else {
-//         qWarning() << "Failed to save game to:" << savePath;
-//     }
-// }
+void ClientGameManager::loadGame() {
+    QString filePath = "../../resources/saved_game.json";
+    if (!fileManager.fileExists(filePath)) {
+        qWarning() << "Saved game file does not exist:" << filePath;
+        return;
+    }
 
-// void ClientGameManager::loadGame(const QString& loadPath) {
-//     if (!FileManager::fileExists(loadPath)) {
-//         qWarning() << "Save file does not exist:" << loadPath;
-//         return;
-//     }
+    QJsonObject graphData = fileManager.loadFromFile(filePath);
+    if (graphData.isEmpty()) {
+        qWarning() << "Failed to load game state. File might be corrupt.";
+        return;
+    }
 
-//     QJsonObject gameState = FileManager::loadFromFile(loadPath);
-//     if (gameState.contains("graph") && gameState["graph"].isObject()) {
-//         QJsonObject graphData = gameState["graph"].toObject();
-//         clientGraph->deserialize(graphData);
-//         qDebug() << "Game loaded successfully from:" << loadPath;
-//         updateGraphics(); // Update visuals
-//     } else {
-//         qWarning() << "Invalid game state in file:" << loadPath;
-//     }
-// }
+    clientGraph->deserialize(graphData);
+
+    for (auto &layer : layers) {
+        graph::Vertex *vertex = clientGraph->get_vertex_by_id(layer->getId() + 1);
+        if (vertex) {
+            layerToVertex[layer] = vertex;
+            vertex->map_layer = layer;
+        }
+    }
+
+    updateGraphics();
+    qDebug() << "Game state loaded successfully.";
+}

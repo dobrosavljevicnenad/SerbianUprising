@@ -426,8 +426,11 @@ void ClientWindow::showPauseMenu() {
 
     connect(continueButton, &QPushButton::clicked, overlay, &QWidget::deleteLater);
     connect(quitButton, &QPushButton::clicked, this, &QApplication::quit);
-    connect(saveButton, &QPushButton::clicked, this, []() {
-        QMessageBox::information(nullptr, "Save Game", "Game saved successfully!");
+    connect(saveButton, &QPushButton::clicked, this, [this]() {
+        if (gameManager) {
+            gameManager->saveGame();
+            QMessageBox::information(this, "Save Game", "Game saved successfully!");
+        }
     });
     connect(optionsButton, &QPushButton::clicked, this, []() {
         QMessageBox::information(nullptr, "Options", "Options menu under construction.");
