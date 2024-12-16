@@ -76,7 +76,7 @@ void GameManager::initializeMap(){
     scene->addItem(s4);
     scene->addItem(s5);
 
-
+    std::vector<Terrain> terrains;
     Terrain defaultTerrain(TerrainType::MOUNTAIN);
 
     for (int i = 0; i <layersArray.size(); ++i) {
@@ -99,14 +99,13 @@ void GameManager::initializeMap(){
         std::string terrain = layerObj.value("terrain_type").toString().toStdString();
 
         TerrainType terrainType;
+        if (terrain == "HILL") terrainType = TerrainType::HILL;
+        else if (terrain == "FIELD") terrainType = TerrainType::FIELD;
+        else if (terrain == "FOREST") terrainType = TerrainType::FOREST;
+        else terrainType = TerrainType::MOUNTAIN;
 
-        if(terrain == "HILL"){
-            terrainType = TerrainType::HILL;
-        }else if(terrain == "FIELD"){
-            terrainType = TerrainType::FIELD;
-        }else{
-            terrainType = TerrainType::MOUNTAIN;
-        }
+        Terrain terrainObj(terrainType);
+        terrains.emplace_back(terrainObj);
 
         ArmyType type = (armyType == "HAJDUK") ? ArmyType::HAJDUK : ArmyType::JANISSARY;
         armies.emplace_back(numOfSoldiers,type);
@@ -123,7 +122,7 @@ void GameManager::initializeMap(){
 
     for (int i = 0; i < layersArray.size(); ++i) {
         layers[i]->setZValue(0);
-        addLayer(layers[i], labels[i], defaultTerrain, armies[i],
+        addLayer(layers[i], labels[i], terrains[i], armies[i],
                  (armies[i].armyType() == ArmyType::HAJDUK)  ? player1 : player2);
         layers[i]->setPos(baseLayer->pos().x() + positions[i].first,
                           baseLayer->pos().y() + positions[i].second);

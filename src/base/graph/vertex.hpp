@@ -9,6 +9,8 @@
 #include "../Entities/mergeArmies.h"
 #include "../Entities/player.h"
 #include "../Entities/Terrain.h"
+#include "../Entities/city.h"
+#include "../Entities/region.h"
 
 namespace graph {
 

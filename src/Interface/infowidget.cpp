@@ -3,51 +3,55 @@
 NodeInfoWidget::NodeInfoWidget(QMap<MapLayer*, graph::Vertex*> layerToVertex, QWidget* parent)
     : QWidget(parent), layerToVertex(layerToVertex) {
     setWindowFlags(Qt::Tool | Qt::FramelessWindowHint);
-    setStyleSheet("background-color: rgba(0, 0, 0, 153); border-radius: 10px; color: white; padding: 10px;");
+    setAttribute(Qt::WA_StyledBackground, true);
 
-    QVBoxLayout* layout = new QVBoxLayout(this);
+    QVBoxLayout* mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(30, 30, 30, 30); // Padding inside the border
+    mainLayout->setSpacing(15);
 
     QHBoxLayout* titleLayout = new QHBoxLayout();
+    titleLayout->setAlignment(Qt::AlignTop);
+    titleLayout->setContentsMargins(0, 0, 0, 0);
+
     titleLabel = new QLabel("Node Information", this);
-    titleLabel->setStyleSheet("font-weight: bold; font-size: 16px; background-color: rgba(255, 255, 255, 153); padding: 5px;");
+    titleLabel->setStyleSheet("font-weight: bold; font-size: 16px; color: white;");
     titleLabel->setAlignment(Qt::AlignLeft);
-    titleLabel->setStyleSheet("opacity: 0.6;");
 
     closeButton = new QPushButton("X", this);
-    closeButton->setStyleSheet(
-        "QPushButton { "
-        "   background-color: red; "
-        "   border-radius: 5px; "
-        "   color: white; "
-        "} "
-        "QPushButton:hover { "
-        "   background-color: darkRed; "
-        "} "
-        );
     closeButton->setFixedSize(20, 20);
+    closeButton->setStyleSheet(
+        "QPushButton { background-color: red; border-radius: 10px; color: white; } "
+        "QPushButton:hover { background-color: darkRed; }");
     connect(closeButton, &QPushButton::clicked, this, &NodeInfoWidget::hide);
 
-    titleLayout->addWidget(titleLabel);
-    titleLayout->addWidget(closeButton, 0, Qt::AlignRight);
-    layout->addLayout(titleLayout);
+    titleLayout->addWidget(titleLabel, 1);           // Left aligned title
+    titleLayout->addWidget(closeButton, 0, Qt::AlignTop | Qt::AlignRight); // Right aligned close button
 
+    mainLayout->addLayout(titleLayout);
+    //QHBoxLayout* picturesLayout = new QHBoxLayout();
     imageLabel = new QLabel(this);
     imageLabel->setFixedSize(80, 80);
-    imageLabel->setStyleSheet("border: 1px solid white; border-radius: 10px;");
-    layout->addWidget(imageLabel, 0, Qt::AlignCenter);
+    imageLabel->setStyleSheet("background: transparent;");
+    mainLayout->addWidget(imageLabel, 0, Qt::AlignCenter);
 
-    troopCountLabel = new QLabel("Troop Count: 0", this);
-    layout->addWidget(troopCountLabel);
+    troopCountLabel = new QLabel("Troop Count: 10", this);
+    troopCountLabel->setAlignment(Qt::AlignCenter);
+    troopCountLabel->setStyleSheet("color: white;");
+    mainLayout->addWidget(troopCountLabel);
 
-    ownerLabel = new QLabel("Owner: None", this);
-    layout->addWidget(ownerLabel);
+    ownerLabel = new QLabel("Owner: Player 2", this);
+    ownerLabel->setAlignment(Qt::AlignCenter);
+    ownerLabel->setStyleSheet("color: white;");
+    mainLayout->addWidget(ownerLabel);
 
-    bioLabel = new QLabel("Relief: N/A\nExplanation: N/A", this);
+    bioLabel = new QLabel("Relief: mountain", this);
     bioLabel->setWordWrap(true);
-    layout->addWidget(bioLabel);
+    bioLabel->setAlignment(Qt::AlignCenter);
+    bioLabel->setStyleSheet("color: white;");
+    mainLayout->addWidget(bioLabel);
 
-    setLayout(layout);
-    setFixedSize(300, 400);
+    setLayout(mainLayout);
+    setFixedSize(320, 450);
 }
 
 void NodeInfoWidget::updateNodeInfo(MapLayer* layer) {
@@ -58,7 +62,23 @@ void NodeInfoWidget::updateNodeInfo(MapLayer* layer) {
 
     troopCountLabel->setText(QString("Troop Count: %1").arg(layer->getTroopCount()));
     ownerLabel->setText(QString("Owner: Player %1").arg(vertex->player.getPlayerId()));
-
+    if(vertex->army.armyType()== ArmyType::HAJDUK){
+        setStyleSheet(
+            "NodeInfoWidget { "
+            "   border-image: url(:/resources/border1.png) 30 30 30 30 stretch stretch; "
+            "   border-width: 4px; "
+            "background-color: rgba(74, 47, 47,180); "
+            "   color: white; "
+            "}");
+    }else{
+        setStyleSheet(
+            "NodeInfoWidget { "
+            "   border-image: url(:/resources/border1.png) 30 30 30 30 stretch stretch; "
+            "   border-width: 4px; "
+            "   background-color: rgba(3, 66, 5,180); "
+            "   color: white; "
+            "}");
+    }
     QPixmap pixmap = layer->get_m_originalPixmap();
     imageLabel->setPixmap(pixmap.scaled(imageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 

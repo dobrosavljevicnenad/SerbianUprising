@@ -154,5 +154,8 @@
         <file>resources/Project/Xanthi.png</file>
         <file>resources/Project/Zajecar.png</file>
         <file>resources/Project/Zvornik.png</file>
+        <file>resources/border2.png</file>
+        <file>resources/init.json</file>
+        <file>resources/border1.png</file>
     </qresource>
 </RCC>
