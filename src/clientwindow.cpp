@@ -401,6 +401,7 @@ void ClientWindow::showPauseMenu() {
 
     QPushButton *continueButton = new QPushButton("Continue Game");
     QPushButton *saveButton = new QPushButton("Save Game");
+    QPushButton *loadGame = new QPushButton("Load Game");
     QPushButton *optionsButton = new QPushButton("Options");
     QPushButton *quitButton = new QPushButton("Quit Game");
 
@@ -416,11 +417,13 @@ void ClientWindow::showPauseMenu() {
         "} ";
     continueButton->setStyleSheet(buttonStyle);
     saveButton->setStyleSheet(buttonStyle);
+    loadGame->setStyleSheet(buttonStyle);
     optionsButton->setStyleSheet(buttonStyle);
     quitButton->setStyleSheet(buttonStyle);
 
     layout->addWidget(continueButton);
     layout->addWidget(saveButton);
+    layout->addWidget(loadGame);
     layout->addWidget(optionsButton);
     layout->addWidget(quitButton);
 
@@ -430,6 +433,12 @@ void ClientWindow::showPauseMenu() {
         if (gameManager) {
             gameManager->saveGame();
             QMessageBox::information(this, "Save Game", "Game saved successfully!");
+        }
+    });
+    connect(loadGame, &QPushButton::clicked, this, [this](){
+        if (gameManager){
+            gameManager->loadGame();
+            QMessageBox::information(this, "Load Game", "Game loaded successfully!");
         }
     });
     connect(optionsButton, &QPushButton::clicked, this, []() {
