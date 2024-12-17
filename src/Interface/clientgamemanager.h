@@ -63,6 +63,7 @@ public:
     void processLoadData(const QJsonObject &gameData);
 
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
+    int getClientId() const;
 
 private slots:
     void printExplosion(graph::Vertex *target);

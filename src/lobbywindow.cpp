@@ -1,4 +1,5 @@
 #include "lobbywindow.h"
+#include "createlobbywindow.h"
 #include <QVBoxLayout>
 #include <QInputDialog>
 #include <QMessageBox>
@@ -104,55 +105,52 @@ void LobbyWindow::setupUI(){
 void LobbyWindow::connectSignals() {
     connect(createLobbyButton, &QPushButton::clicked, this, &LobbyWindow::onCreateServer);
     connect(joinLobbyButton, &QPushButton::clicked, this, &LobbyWindow::onJoinGame);
-    if (connectionManager) {
-        connect(connectionManager, &ConnectionManager::gameStarted, this, &LobbyWindow::handleGameStart);
-        qDebug() << "Signals connected successfully.";
-    } else {
-        qWarning() << "Failed to connect signals: ConnectionManager is nullptr.";
-    }
 }
 
 void LobbyWindow::onCreateServer() {
-    if (!connectionManager->initializeServer()) {
-        QMessageBox::warning(this, "Error", "Failed to start the server.");
-        return;
-    }
+    CreateLobbyWindow *createLobbyWindow = new CreateLobbyWindow(this);
+    createLobbyWindow->show();
 
-    if (!connectionManager->initializeClient()) {
-        QMessageBox::warning(this, "Error", "Failed to connect the host client.");
-        return;
-    }
+    // if (!connectionManager->initializeServer()) {
+    //     QMessageBox::warning(this, "Error", "Failed to start the server.");
+    //     return;
+    // }
 
-    QDialog *dialog = new QDialog(this);
-    dialog->setWindowTitle("Create Lobby");
+    // if (!connectionManager->initializeClient()) {
+    //     QMessageBox::warning(this, "Error", "Failed to connect the host client.");
+    //     return;
+    // }
 
-    QFormLayout *formLayout = new QFormLayout(dialog);
+    // QDialog *dialog = new QDialog(this);
+    // dialog->setWindowTitle("Create Lobby");
 
-    QLineEdit *gameNameEdit = new QLineEdit(dialog);
-    QLineEdit *playerNameEdit = new QLineEdit(dialog);
+    // QFormLayout *formLayout = new QFormLayout(dialog);
 
-    formLayout->addRow("Game Name", gameNameEdit);
-    formLayout->addRow("Player", playerNameEdit);
+    // QLineEdit *gameNameEdit = new QLineEdit(dialog);
+    // QLineEdit *playerNameEdit = new QLineEdit(dialog);
 
-    QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    connect(buttonBox, &QDialogButtonBox::accepted, dialog, &QDialog::accept);
-    connect(buttonBox, &QDialogButtonBox::rejected, dialog, &QDialog::reject);
+    // formLayout->addRow("Game Name", gameNameEdit);
+    // formLayout->addRow("Player", playerNameEdit);
 
-    formLayout->addWidget(buttonBox);
+    // QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    // connect(buttonBox, &QDialogButtonBox::accepted, dialog, &QDialog::accept);
+    // connect(buttonBox, &QDialogButtonBox::rejected, dialog, &QDialog::reject);
 
-    if (dialog->exec() == QDialog::Accepted) {
-        QString gameName = gameNameEdit->text();
-        QString playerName = playerNameEdit->text();
+    // formLayout->addWidget(buttonBox);
 
-        int row = table->rowCount();
-        table->insertRow(row);
-        table->setItem(row, 0, new QTableWidgetItem(gameName));
-        table->setItem(row, 1, new QTableWidgetItem(playerName));
-        table->setItem(row, 2, new QTableWidgetItem("Join"));
-    }
+    // if (dialog->exec() == QDialog::Accepted) {
+    //     QString gameName = gameNameEdit->text();
+    //     QString playerName = playerNameEdit->text();
 
-    dialog->deleteLater();
-    QMessageBox::information(this, "Server Started", "Waiting for players to join...");
+    //     int row = table->rowCount();
+    //     table->insertRow(row);
+    //     table->setItem(row, 0, new QTableWidgetItem(gameName));
+    //     table->setItem(row, 1, new QTableWidgetItem(playerName));
+    //     table->setItem(row, 2, new QTableWidgetItem("Join"));
+    // }
+
+    // dialog->deleteLater();
+    // QMessageBox::information(this, "Server Started", "Waiting for players to join...");
 
 
 }
@@ -163,29 +161,21 @@ void LobbyWindow::onJoinGame() {
         return;
     }
 
-    int selectedRow = table->currentRow();
-    if (selectedRow == -1) {
-        QMessageBox::warning(this, "No Lobi Selected", "Please select a lobby to join.");
-        return;
-    }
+    // int selectedRow = table->currentRow();
+    // if (selectedRow == -1) {
+    //     QMessageBox::warning(this, "No Lobi Selected", "Please select a lobby to join.");
+    //     return;
+    // }
 
-    QTableWidgetItem *availabilityItem = table->item(selectedRow, 2);
-    if (availabilityItem->text() == "Filled") {
-        QMessageBox::information(this, "Lobi Full", "This lobby is already filled.");
-        return;
-    }
+    // QTableWidgetItem *availabilityItem = table->item(selectedRow, 2);
+    // if (availabilityItem->text() == "Filled") {
+    //     QMessageBox::information(this, "Lobi Full", "This lobby is already filled.");
+    //     return;
+    // }
 
-    availabilityItem->setText("Filled");
+    // availabilityItem->setText("Filled");
 }
 
-
-void LobbyWindow::handleGameStart() {
-    clientManager = connectionManager->getClientManager();
-    qDebug() << "Game is starting."<< clientManager->ClientId;
-    gameWindow = new ClientWindow(clientManager, nullptr);
-    gameWindow->show();
-    close();
-}
 
 void LobbyWindow::returnToMenu()
 {
