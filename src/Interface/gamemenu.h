@@ -45,5 +45,6 @@ private:
     void setBackgroundImage();
 
     QWidget *createSettingsMenu();
+    QWidget *lobbyMenu();
     QWidget *createLobbyWindow();
 };

@@ -19,41 +19,31 @@ LobbyWindow::~LobbyWindow() {
 }
 
 void LobbyWindow::setupUI(){
-    this->setFixedSize(1280, 720);
+    //this->setFixedSize(1280, 720);
     QVBoxLayout *layout = new QVBoxLayout(this);
 
     layout->setContentsMargins(10, 70, 10, 10);
 
-    QPixmap backgroundPixmap(":/resources/pozadina.png");
-    backgroundPixmap = backgroundPixmap.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    QPalette palette;
-    palette.setBrush(QPalette::Window, QBrush(backgroundPixmap));
-    this->setPalette(palette);
-    this->setAutoFillBackground(true);
+    // QPixmap backgroundPixmap(":/resources/pozadina.png");
+    // backgroundPixmap = backgroundPixmap.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    // QPalette palette;
+    // palette.setBrush(QPalette::Window, QBrush(backgroundPixmap));
+    // this->setPalette(palette);
+    // this->setAutoFillBackground(true);
 
-    table = new QTableWidget(this);
-    table->setColumnCount(3);
-    table->setHorizontalHeaderLabels({"Game Name", "Players", "Availability"});
-    table->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    table->resizeRowsToContents();
-    table->setStyleSheet(R"(
-        QTableWidget {
-            background-color: rgba(255, 228, 196, 180);
-            border: 2px solid rgba(255, 215, 0, 150);
-            border-radius: 10px;
-        }
-        QTableWidget::item {
-            padding: 5px;
-        }
-        QHeaderView::section {
-            background-color: rgba(139, 69, 19, 220);
-            color: white;
-            border: none;
-            padding: 5px;
-        }
+
+    buttonFrame = new QFrame(this);
+    buttonFrame->setMinimumWidth(450);
+    buttonFrame->setMinimumHeight(350);
+    buttonFrame->setStyleSheet(R"(
+        background-color: qlineargradient(
+            spread:pad, x1:0, y1:0, x2:1, y2:1,
+            stop:0 rgba(255, 228, 196, 200),
+            stop:1 rgba(139, 69, 19, 220)
+        );
+        border-radius: 10px;
+        border: 2px solid rgba(255, 215, 0, 150);
     )");
-
-    layout->addWidget(table);
 
     backButton = new QPushButton("Main Menu");
     createLobbyButton = new QPushButton("Create Lobby");
@@ -89,71 +79,34 @@ void LobbyWindow::setupUI(){
     createLobbyButton->setFixedSize(400, 100);
     joinLobbyButton->setFixedSize(400, 100);
 
-    QHBoxLayout *buttonLayout = new QHBoxLayout();
-    buttonLayout->addWidget(backButton);
-    buttonLayout->addWidget(createLobbyButton);
-    buttonLayout->addWidget(joinLobbyButton);
+    QVBoxLayout *buttonLayout = new QVBoxLayout(buttonFrame);
+    buttonLayout->setContentsMargins(0, 0, 0, 0);
+    buttonLayout->setSpacing(10);
+    buttonLayout->addStretch();
+    buttonLayout->addWidget(createLobbyButton, 0, Qt::AlignCenter);
+    //buttonLayout->addSpacing(10);
+    buttonLayout->addWidget(joinLobbyButton, 0, Qt::AlignCenter);
+    //buttonLayout->addSpacing(10);
+    buttonLayout->addWidget(backButton, 0, Qt::AlignCenter);
+    buttonLayout->addStretch();
 
-    layout->addLayout(buttonLayout);
 
-    // connect(backButton, &QPushButton::clicked, this, &LobbyWindow::returnToMenu);
-    // connect(createLobbyButton, &QPushButton::clicked, this, &LobbyWindow::onCreateServer);
-    // connect(joinLobbyButton, &QPushButton::clicked, this, &LobbyWindow::onJoinGame);
-    setLayout(layout);
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->addStretch();
+    mainLayout->addWidget(buttonFrame, 0, Qt::AlignCenter);
+    mainLayout->addStretch();
+
+    this->setLayout(mainLayout);
 }
 
 void LobbyWindow::connectSignals() {
-    connect(backButton, &QPushButton::clicked, this, &QWidget::close);
+    connect(backButton, &QPushButton::clicked, this, &LobbyWindow::returnToMenu);
     connect(createLobbyButton, &QPushButton::clicked, this, &LobbyWindow::onCreateServer);
     connect(joinLobbyButton, &QPushButton::clicked, this, &LobbyWindow::onJoinGame);
 }
 
 void LobbyWindow::onCreateServer() {
-    CreateLobbyWindow *createLobbyWindow = new CreateLobbyWindow(this);
-    createLobbyWindow->show();
-
-    // if (!connectionManager->initializeServer()) {
-    //     QMessageBox::warning(this, "Error", "Failed to start the server.");
-    //     return;
-    // }
-
-    // if (!connectionManager->initializeClient()) {
-    //     QMessageBox::warning(this, "Error", "Failed to connect the host client.");
-    //     return;
-    // }
-
-    // QDialog *dialog = new QDialog(this);
-    // dialog->setWindowTitle("Create Lobby");
-
-    // QFormLayout *formLayout = new QFormLayout(dialog);
-
-    // QLineEdit *gameNameEdit = new QLineEdit(dialog);
-    // QLineEdit *playerNameEdit = new QLineEdit(dialog);
-
-    // formLayout->addRow("Game Name", gameNameEdit);
-    // formLayout->addRow("Player", playerNameEdit);
-
-    // QDialogButtonBox *buttonBox = new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
-    // connect(buttonBox, &QDialogButtonBox::accepted, dialog, &QDialog::accept);
-    // connect(buttonBox, &QDialogButtonBox::rejected, dialog, &QDialog::reject);
-
-    // formLayout->addWidget(buttonBox);
-
-    // if (dialog->exec() == QDialog::Accepted) {
-    //     QString gameName = gameNameEdit->text();
-    //     QString playerName = playerNameEdit->text();
-
-    //     int row = table->rowCount();
-    //     table->insertRow(row);
-    //     table->setItem(row, 0, new QTableWidgetItem(gameName));
-    //     table->setItem(row, 1, new QTableWidgetItem(playerName));
-    //     table->setItem(row, 2, new QTableWidgetItem("Join"));
-    // }
-
-    // dialog->deleteLater();
-    // QMessageBox::information(this, "Server Started", "Waiting for players to join...");
-
-
+    emit openCreateLobby();
 }
 
 void LobbyWindow::onJoinGame() {
@@ -161,24 +114,11 @@ void LobbyWindow::onJoinGame() {
         QMessageBox::warning(this, "Error", "Failed to connect to the server.");
         return;
     }
-
-    // int selectedRow = table->currentRow();
-    // if (selectedRow == -1) {
-    //     QMessageBox::warning(this, "No Lobi Selected", "Please select a lobby to join.");
-    //     return;
-    // }
-
-    // QTableWidgetItem *availabilityItem = table->item(selectedRow, 2);
-    // if (availabilityItem->text() == "Filled") {
-    //     QMessageBox::information(this, "Lobi Full", "This lobby is already filled.");
-    //     return;
-    // }
-
-    // availabilityItem->setText("Filled");
 }
 
 
 void LobbyWindow::returnToMenu()
 {
     emit backToMenu();
+    this->close();
 }

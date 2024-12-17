@@ -46,6 +46,9 @@ private:
 private slots:
     void updateArmySelection(const QString &playerArmy);
     void handleGameStart();
+    void returnToMenu();
 
+signals:
+    void backToLobby();
 
 };

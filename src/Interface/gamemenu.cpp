@@ -1,4 +1,5 @@
 #include "gamemenu.h"
+#include "../lobbywindow.h"
 #include <QGraphicsDropShadowEffect>
 #include <QScreen>
 #include <QResizeEvent>
@@ -19,8 +20,7 @@ GameMenu::GameMenu(QWidget *parent) : QWidget(parent) {
     mediaPlayer->play();
 
     connect(newGameButton, &QPushButton::clicked, this, [this]() {
-        LobbyWindow *lobby = new LobbyWindow();
-        lobby->show();
+        stackedWidget->setCurrentIndex(2);
     });
     connect(settingsButton, &QPushButton::clicked, this, &GameMenu::openSettings);
     connect(exitButton, &QPushButton::clicked, this, &GameMenu::exitGame);
@@ -110,6 +110,7 @@ void GameMenu::setupUI() {
     mainMenu->setLayout(menuLayout);
     stackedWidget->addWidget(mainMenu);
     stackedWidget->addWidget(createSettingsMenu());
+    stackedWidget->addWidget(lobbyMenu());
 
     layout->addWidget(stackedWidget);
 
@@ -356,3 +357,12 @@ void GameMenu::keyPressEvent(QKeyEvent *event) {
     QWidget::keyPressEvent(event);
 }
 
+QWidget *GameMenu::lobbyMenu() {
+    LobbyWindow *lobby = new LobbyWindow(this);
+
+    connect(lobby, &LobbyWindow::backToMenu, this, [this]() {
+        stackedWidget->setCurrentIndex(0); // Vrati na glavni meni
+    });
+
+    return lobby;
+}

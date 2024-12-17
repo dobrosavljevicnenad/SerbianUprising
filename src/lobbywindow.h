@@ -30,11 +30,12 @@ private:
     ServerGameManager* serverManager;
     ClientGameManager* clientManager;
 
+    QFrame *buttonFrame;
+
     QPushButton *createLobbyButton;
     QPushButton *joinLobbyButton;
     QPushButton *backButton;
 
-    QTableWidget *table;
 
     void setupUI();
 
@@ -44,6 +45,7 @@ private slots:
     void returnToMenu();
 
 signals:
+    void openCreateLobby();
     void backToMenu();
     void startGame();
 };

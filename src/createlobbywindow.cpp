@@ -17,15 +17,15 @@ CreateLobbyWindow::~CreateLobbyWindow() {
 }
 
 void CreateLobbyWindow::setupUI() {
-    this->setFixedSize(1280, 720);
+    //this->setFixedSize(1280, 720);
     this->setWindowTitle("Create Lobby");
 
-    QPixmap backgroundPixmap(":/resources/pozadina.png");
-    backgroundPixmap = backgroundPixmap.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    QPalette palette;
-    palette.setBrush(QPalette::Window, QBrush(backgroundPixmap));
-    this->setPalette(palette);
-    this->setAutoFillBackground(true);
+    // QPixmap backgroundPixmap(":/resources/pozadina.png");
+    // backgroundPixmap = backgroundPixmap.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    // QPalette palette;
+    // palette.setBrush(QPalette::Window, QBrush(backgroundPixmap));
+    // this->setPalette(palette);
+    // this->setAutoFillBackground(true);
 
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
 
@@ -180,7 +180,7 @@ void CreateLobbyWindow::setupUI() {
 
     setLayout(mainLayout);
 
-    connect(exitButton, &QPushButton::clicked, this, &QWidget::close);
+    connect(exitButton, &QPushButton::clicked, this, &CreateLobbyWindow::returnToMenu);
     connect(armyComboBox, &QComboBox::currentTextChanged, this, &CreateLobbyWindow::updateArmySelection);
     connect(startButton, &QPushButton::clicked, [this]() {
         if (!connectionManager->initializeServer()) {
@@ -229,9 +229,9 @@ void CreateLobbyWindow::loadSavedGames() {
         }
     }
 
-    if (jsonFiles.isEmpty()) {
-        QMessageBox::information(this, "No Saved Games", "No saved games were found in the directory.");
-    }
+    // if (jsonFiles.isEmpty()) {
+    //     QMessageBox::information(this, "No Saved Games", "No saved games were found in the directory.");
+    // }
 }
 
 void CreateLobbyWindow::handleGameStart() {
@@ -250,4 +250,10 @@ void CreateLobbyWindow::handleGameStart() {
     gameWindow = new ClientWindow(clientManager, nullptr);
     gameWindow->show();
     close();
+}
+
+void CreateLobbyWindow::returnToMenu()
+{
+    emit backToLobby();
+    this->close();
 }
