@@ -3,6 +3,7 @@
 #include <QHostAddress>
 #include "../base/Mechanics/Action.h"
 
+// Constructor
 Server::Server(QObject *parent)
     : QObject(parent),
     m_server(new QTcpServer()),
@@ -13,11 +14,12 @@ Server::Server(QObject *parent)
 {
     connect(m_server, &QTcpServer::newConnection, this, &Server::onNewConnection);
     connect(this, &Server::startGame, this, &Server::onGameStartRequested);
-    connect(serverGameManager, &ServerGameManager::serializedGraphReady1, this, &Server::handleSerializedGraphwithoutResult);
-    connect(serverGameManager, &ServerGameManager::serializedGraphReady2, this, &Server::handleSerializedGraph);
 
+    connect(serverGameManager, &ServerGameManager::init_serializedGraphReady, this, &Server::handleSerializedGraph_init);
+    connect(serverGameManager, &ServerGameManager::serializedGraphReady2, this, &Server::handleSerializedGraph);
 }
 
+// Public Methods
 ServerGameManager* Server::getGameManager() {
     return serverGameManager;
 }
@@ -28,10 +30,12 @@ bool Server::startServer(quint16 port)
         qWarning() << "Server could not start on port" << port;
         return false;
     }
+
     qDebug() << "Server started on port" << port;
     return true;
 }
 
+// Slots - Connections
 void Server::onNewConnection() {
     QTcpSocket* newSocket = m_server->nextPendingConnection();
 
@@ -42,33 +46,27 @@ void Server::onNewConnection() {
 
     if (m_clientSocket == nullptr) {
         m_clientSocket = newSocket;
-        connect(m_clientSocket, &QTcpSocket::readyRead, this, &Server::onReadyRead);
-        connect(m_clientSocket, &QTcpSocket::disconnected, this, &Server::onClientDisconnected);
-        qDebug() << "Player 1 connected!";
-        m_clientSocket->write("ID:1\n");
-        m_clientSocket->flush();
-    } else if (m_secondPlayerSocket == nullptr) {
+        setupPlayerSocket(m_clientSocket, "Player 1", "ID:1\n");
+    }
+    else if (m_secondPlayerSocket == nullptr) {
         m_secondPlayerSocket = newSocket;
-        connect(m_secondPlayerSocket, &QTcpSocket::readyRead, this, &Server::onReadyRead);
-        connect(m_secondPlayerSocket, &QTcpSocket::disconnected, this, &Server::onClientDisconnected);
-        qDebug() << "Player 2 connected!";
-        m_secondPlayerSocket->write("ID:2\n");
-        m_secondPlayerSocket->flush();
+        setupPlayerSocket(m_secondPlayerSocket, "Player 2", "ID:2\n");
 
         if (m_clientSocket && m_secondPlayerSocket) {
             qDebug() << "Both players connected. Starting game.";
             broadcast("START_GAME");
-
             emit startGame();
         }
-    } else {
+    }
+    else {
         qWarning() << "Maximum players already connected.";
         newSocket->disconnectFromHost();
     }
 }
-void Server::onGameStartRequested(){
+
+void Server::onGameStartRequested() {
     serverGameManager->startGame();
-    //prosiri logiku emituje ... nesto
+    // prosiri logiku emituje ... nesto
 }
 
 void Server::onReadyRead() {
@@ -103,6 +101,30 @@ void Server::onReadyRead() {
     }
 }
 
+void Server::onClientDisconnected() {
+    if (m_clientSocket && sender() == m_clientSocket) {
+        qDebug() << "Host (Player 1) disconnected!";
+        m_clientSocket = nullptr;
+        emit gameOver("Host left, game over.");
+    }
+    else if (m_secondPlayerSocket && sender() == m_secondPlayerSocket) {
+        qDebug() << "Second player disconnected!";
+        m_secondPlayerSocket = nullptr;
+        m_waitingForSecondPlayer = true;
+        emit gameOver("Second player left, waiting for reconnection.");
+    }
+}
+
+// Private Methods
+void Server::setupPlayerSocket(QTcpSocket* socket, const QString& playerName, const QString& message) {
+    connect(socket, &QTcpSocket::readyRead, this, &Server::onReadyRead);
+    connect(socket, &QTcpSocket::disconnected, this, &Server::onClientDisconnected);
+
+    qDebug() << playerName << "connected!";
+    socket->write(message.toUtf8());
+    socket->flush();
+}
+
 void Server::broadcast(const QString &message) {
     if (m_secondPlayerSocket && m_secondPlayerSocket->state() == QAbstractSocket::ConnectedState) {
         m_secondPlayerSocket->write(message.toUtf8());
@@ -114,40 +136,24 @@ void Server::broadcast(const QString &message) {
     }
 }
 
+void Server::sendData(const QString &data) {
+    if (m_clientSocket) m_clientSocket->write(data.toUtf8());
+    if (m_secondPlayerSocket) m_secondPlayerSocket->write(data.toUtf8());
+}
+
 void Server::executeActions(const std::vector<Action> &actions) {
     for (const Action &action : actions) {
+        // Placeholder for actions
     }
 }
 
-void Server::onClientDisconnected()
-{
-    if (m_clientSocket && sender() == m_clientSocket) {
-        qDebug() << "Host (Player 1) disconnected!";
-        m_clientSocket = nullptr;
-        emit gameOver("Host left, game over.");
-    } else if (m_secondPlayerSocket && sender() == m_secondPlayerSocket) {
-        qDebug() << "Second player disconnected!";
-        m_secondPlayerSocket = nullptr;
-        m_waitingForSecondPlayer = true;  // Now we're waiting for the second player to reconnect
-        emit gameOver("Second player left, waiting for reconnection.");
-    }
-}
-
-void Server::sendData(const QString &data)
-{
-    if (m_clientSocket) {
-        m_clientSocket->write(data.toUtf8());
-    }
-    if (m_secondPlayerSocket) {
-        m_secondPlayerSocket->write(data.toUtf8());
-    }
-}
-
-void Server::handleSerializedGraphwithoutResult(const QJsonObject &serializedGraph) {
+// Handlers
+void Server::handleSerializedGraph_init(const QJsonObject &serializedGraph) {
     QJsonObject dataToSend;
     dataToSend["graph"] = serializedGraph;
+
     QString serializedData = QString(QJsonDocument(dataToSend).toJson(QJsonDocument::Compact));
-    sendData(serializedData); // send to clients
+    sendData(serializedData);
 }
 
 void Server::handleSerializedGraph(const QJsonObject& serializedGraph, const QJsonObject& results) {
@@ -156,7 +162,6 @@ void Server::handleSerializedGraph(const QJsonObject& serializedGraph, const QJs
     dataToSend["results"] = results;
 
     QString serializedData = QString(QJsonDocument(dataToSend).toJson(QJsonDocument::Compact));
-
     sendData(serializedData);
 }
 
@@ -177,6 +182,7 @@ void Server::handleEndTurn(const QJsonObject &jsonObject) {
         auto it = endTurnActions.begin();
         int p1_id = it.key();
         std::vector<Action> actionsPlayer1(it.value().begin(), it.value().end());
+
         ++it;
         int p2_id = it.key();
         std::vector<Action> actionsPlayer2(it.value().begin(), it.value().end());
