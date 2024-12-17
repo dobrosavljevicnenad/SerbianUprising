@@ -279,20 +279,32 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
     }
 }
 
-void ClientWindow::handlePlaceArmy(MapLayer* layer){
+void ClientWindow::handlePlaceArmy(MapLayer* layer) {
     int currentPlayerId = gameManager->ClientId;
     graph::Vertex* selected_vertex = gameManager->layerToVertex[layer];
     qDebug() << selected_vertex->player.getPlayerId() << "=" << gameManager->ClientId;
-    if ( selected_vertex->player.getPlayerId() == currentPlayerId ) {
+
+    if (selected_vertex->player.getPlayerId() == currentPlayerId) {
         AddArmyManager& armyManager = gameManager->getArmyManager();
 
         int maxTroops = armyManager.calculateTotalTroops();
+        int troopsToAdd = 1; // Default: 1 vojnik
+        Qt::KeyboardModifiers modifiers = QApplication::keyboardModifiers();
 
+        // Provera kombinacije tastera
+        if ((modifiers & Qt::ShiftModifier) && (modifiers & Qt::ControlModifier)) {
+            troopsToAdd = maxTroops; // Ctrl + Shift: dodaj maksimum
+        } else if (modifiers & Qt::ControlModifier) {
+            troopsToAdd = std::min(100, maxTroops); // Ctrl: dodaj 100 ili max
+        } else if (modifiers & Qt::ShiftModifier) {
+            troopsToAdd = std::min(10, maxTroops); // Shift: dodaj 10 ili max
+        } else {
+            troopsToAdd = 1; // Običan klik: dodaj 1
+        }
 
-        bool ok;
-        int troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
-                                               tr("Enter the number of troops to place:"), 0, 0, maxTroops, 1, &ok);
-        if (ok && troopsToAdd > 0) {
+        if (troopsToAdd > 0 && maxTroops > 0) {
+            troopsToAdd = std::min(troopsToAdd, maxTroops); // Osiguranje da ne prelazimo max
+
             layer->setTroopCount(layer->getTroopCount() + troopsToAdd);
 
             int pid = gameManager->ClientId;
@@ -301,7 +313,7 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer){
             gameManager->addAction(newAction);
             armyManager.decreaseAvailableTroops(troopsToAdd);
 
-            selected_vertex->army.setSoldiers(selected_vertex->army.getSoldiers()+troopsToAdd);
+            selected_vertex->army.setSoldiers(selected_vertex->army.getSoldiers() + troopsToAdd);
 
             QString moveDescription = QString("Placed %1 troops on %2").arg(troopsToAdd).arg(selected_vertex->id());
             QListWidgetItem* item = new QListWidgetItem(moveDescription);
@@ -312,6 +324,7 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer){
         }
     }
 }
+
 
 
 void ClientWindow::onInfoButtonClicked() {
