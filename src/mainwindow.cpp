@@ -196,6 +196,7 @@ MainWindow::MainWindow(QWidget *parent)
 
         mapModeContainer->setLayout(mapModeLayout);
         // Move to bottom-left corner of the viewport
+        mapModeContainer->move(view->viewport()->rect().bottomLeft() + QPoint(10, -60)); // Adjust position
 
         // Button Connections
         connect(reliefButton, &QPushButton::clicked, this, [this]() {

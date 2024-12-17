@@ -41,7 +41,7 @@ protected:
 private:
     int troopCount;
     int currentPlayer;
-    bool isMainMode;
+    bool isMainMode = true;
     QPixmap m_originalPixmap;
     QColor ArmyColor;
     QString labelName;

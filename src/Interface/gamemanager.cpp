@@ -57,7 +57,7 @@ void GameManager::initializeMap(){
     s4->setOpacity(0.95);
     s5->setOpacity(0.95);
 
-
+    water->setZValue(1);
     background->setZValue(-1);
     baseLayer->setZValue(-1);
 
