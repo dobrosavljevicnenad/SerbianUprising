@@ -103,6 +103,7 @@ void LobbyWindow::setupUI(){
 }
 
 void LobbyWindow::connectSignals() {
+    connect(backButton, &QPushButton::clicked, this, &QWidget::close);
     connect(createLobbyButton, &QPushButton::clicked, this, &LobbyWindow::onCreateServer);
     connect(joinLobbyButton, &QPushButton::clicked, this, &LobbyWindow::onJoinGame);
 }

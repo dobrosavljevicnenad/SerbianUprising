@@ -11,10 +11,16 @@
 GameMenu::GameMenu(QWidget *parent) : QWidget(parent) {
     setupUI();
 
+    mediaPlayer = new QMediaPlayer(this);
+    audioOutput = new QAudioOutput(this);
+    mediaPlayer->setAudioOutput(audioOutput);
+    mediaPlayer->setSource(QUrl::fromLocalFile("../../resources/music/backgroundMusic.mp3"));
+    audioOutput->setVolume(0.5);
+    mediaPlayer->play();
+
     connect(newGameButton, &QPushButton::clicked, this, [this]() {
         LobbyWindow *lobby = new LobbyWindow();
         lobby->show();
-        parentWidget()->close();
     });
     connect(settingsButton, &QPushButton::clicked, this, &GameMenu::openSettings);
     connect(exitButton, &QPushButton::clicked, this, &GameMenu::exitGame);
@@ -203,6 +209,9 @@ QWidget *GameMenu::createSettingsMenu() {
     QSlider *volume = new QSlider(Qt::Horizontal, settingsMenu);
     volume->setRange(0, 100);
     volume->setValue(50);
+    connect(volume, &QSlider::valueChanged, this, [this](int value) {
+        audioOutput->setVolume(value / 100.0);
+    });
 
     QLabel *screenLabel = new QLabel("Display mode", settingsMenu);
     QComboBox *display = new QComboBox(settingsMenu);

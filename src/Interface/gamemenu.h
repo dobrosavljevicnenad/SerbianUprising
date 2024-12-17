@@ -38,7 +38,8 @@ private:
     QPushButton *fullScreenButton;
     QStackedWidget *stackedWidget;
     QFrame *buttonFrame;
-    QTableWidget *table;
+    QMediaPlayer *mediaPlayer;
+    QAudioOutput *audioOutput;
 
     void setupUI();
     void setBackgroundImage();
