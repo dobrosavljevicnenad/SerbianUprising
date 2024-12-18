@@ -9,6 +9,9 @@
 #include "Interface/clientgamemanager.h"
 #include "base/Mechanics/Action.h"
 #include "base/Mechanics/addarmymanager.h"
+#include "./Interface/infowidget.h"
+#include "Interface/Items/zoomablegraphicsview.h"
+
 #include <string>
 class ClientWindow : public QMainWindow {
     Q_OBJECT
@@ -25,7 +28,7 @@ protected:
 
 private:
     MapScene *scene;
-    QGraphicsView *view;
+    ZoomableGraphicsView *view;
     ClientGameManager *gameManager;
     QLabel *headerLabel;
     QLabel *yearDisplayLabel;
@@ -36,14 +39,23 @@ private:
     QPushButton *infoButton;
     QPushButton *endTurnButton;
     QPushButton *activeButton;
-
+    NodeInfoWidget* nodeInfoWidget;
     MapLayer *selectedLayer = nullptr;
+    QWidget* layoutContainer;
+    QWidget* mapModeContainer;
+    QPushButton* reliefButton;
+    QPushButton* regionsButton;
+    QPushButton* cityButton;
+    QPushButton* defaultButton;
+
     //QMediaPlayer* mediaPlayer;
     //QAudioOutput* audioOutput;
 
     void setupUI();
     void connectSignals();
     void showPauseMenu();
+    void repositionFixedWidgets();
+    void setupFixedWidgets();
 
 private slots:
     void onMoveClicked(QListWidgetItem *item);
@@ -57,30 +69,10 @@ private slots:
     void onPlaceButtonClicked();
     void setActiveButton(QPushButton* clickedButton);
     void updateYearLabel(QString year);
+    void handleInfomation(MapLayer* layer);
 
 signals:
     void endTurn_signal(const QVector<Action>& actions, int id);
 };
-/*
-<<<<<<< HEAD
-
-    void highlightLayer(MapLayer *layer);
-
-    void print_connections(const graph::Graph &g, const graph::Vertex* vertex);
-
-private slots:
-    void onLayerClicked(MapLayer *layer);
-    void onMoveClicked(QListWidgetItem* item);
-    void onChangePlayerClicked();
-    void onEndTurnClicked();
-    void updateMoveList(int currentPlayer);
-    void onInfoButtonClicked();
-    void onMoveButtonClicked();
-    void onPlaceButtonClicked();
-    void setActiveButton(QPushButton* clickedButton);
-    void handleMoveArmy(MapLayer* layer);
-    void handlePlaceArmy(MapLayer* layer);
-=======
-*/
 
 #endif // CLIENTWINDOW_H

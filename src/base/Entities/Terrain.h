@@ -29,6 +29,7 @@ public:
     static Terrain fromString(const std::string& type) {
         if (type == "MOUNTAIN") return Terrain(TerrainType::MOUNTAIN);
         if (type == "FOREST") return Terrain(TerrainType::FOREST);
+        if (type == "FIELD") return Terrain(TerrainType::FIELD);
         return Terrain(TerrainType::HILL);
     }
 

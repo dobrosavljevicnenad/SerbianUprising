@@ -16,12 +16,16 @@
 #include <qpushbutton.h>
 #include "../base/Mechanics/addarmymanager.h"
 #include "Items/customarrowitem.h"
+#include "infowidget.h"
 #include "mapscene.h"
 #include "../base/Mechanics/Action.h"
 #include "../base/Entities/player.h"
 #include "../base/Mechanics/Results.h"
 #include "../base/Mechanics/BattleResultsDialog.h"
 #include "../base/Entities/year.h"
+#include "../base/Entities/region.h"
+#include "../base/Entities/city.h"
+#include "map.h"
 
 
 class ClientGameManager : public QObject{
@@ -30,7 +34,11 @@ class ClientGameManager : public QObject{
 
 public:
     explicit ClientGameManager(QGraphicsScene* scene,  QObject* parent = nullptr);
-    void initializeUI(QLabel* headerLabel, QPushButton* endTurnButton, QPushButton* moveButton, QPushButton* infoButton, QListWidget* moveList,QPushButton* armyButton);
+    enum class MapMode { Default, Relief, Regions, CityLevel };
+    void applyMapMode(MapMode mode);
+    void initializeUI(QLabel* headerLabel, QPushButton* endTurnButton, QPushButton* moveButton, QPushButton* infoButton,
+                      QListWidget* moveList,QPushButton* armyButton,QPushButton* reliefButton,QPushButton* regionsButton,
+                      QPushButton*cityButton,QPushButton*defaultButton,NodeInfoWidget* nodeInfoWidget );
     void initializeGraphics();
     void printConnections();
     void processDataFromServer(const QJsonObject& data);
@@ -74,6 +82,9 @@ private:
     std::map<int,std::vector<CustomArrowItem*>> arrows;
     Player player;
     Year gameYear;
+    QVector<Region*>regions;
+    Map* map;
+
 
 private://UI
     QLabel* headerLabel;
@@ -82,6 +93,11 @@ private://UI
     QPushButton *moveButton;
     QPushButton *armyButton;
     QPushButton* infoButton;
+    NodeInfoWidget* nodeInfoWidget;
+    QPushButton* reliefButton;
+    QPushButton* regionsButton;
+    QPushButton* cityButton;
+    QPushButton* defaultButton;
 
 public:
     unsigned TurnId = 1;

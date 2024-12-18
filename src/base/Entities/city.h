@@ -6,13 +6,22 @@
 class City
 {
 public:
-    explicit City(bool isCity = false);
-    //~City() = default;
-    bool isCityLayer()const;
-    int getBattleFactor()const;
+    explicit City(int level = 0, int battleFactor = 0);
+    ~City() = default;
+
+    bool isCityLayer() const;
+    int getBattleFactor() const;
+    int getLevel() const;
 
 private:
-    bool isCity;
+    int level;
+    int battleFactor;
+};
+
+class CityFactory
+{
+public:
+    static City* getCityByLevel(int level);
 };
 
 #endif // CITY_H

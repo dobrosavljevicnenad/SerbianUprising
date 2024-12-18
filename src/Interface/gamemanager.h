@@ -10,6 +10,7 @@ class GameManager
 public:
     GameManager();
 
+
 };
 
 #endif // GAMEMANAGER_H

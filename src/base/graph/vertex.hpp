@@ -10,6 +10,9 @@
 #include "../Entities/player.h"
 #include "../Entities/Terrain.h"
 #include "../Entities/Culture.h"
+#include "../Entities/city.h"
+#include "../Entities/region.h"
+
 namespace graph {
 
 //using position_t = std::pair<unsigned, unsigned>;
@@ -17,11 +20,9 @@ using nodeID_t = unsigned;
 
 class Vertex {
 public:
-
     Vertex(unsigned id,QPointF position, const std::string &label,
            MapLayer *map_layer, Terrain terrain, Army army,
-           Player player,CultureType culture);
-
+           Player player, CultureType culture, City* city, Region* region);
     ~Vertex();
     void updateLayerColor();
     unsigned id() const;
@@ -36,6 +37,8 @@ public:
     Player player;
     MapLayer* map_layer;
     CultureType culture;
+    Region* region;
+    City* city;
 
 private:
     unsigned m_id;

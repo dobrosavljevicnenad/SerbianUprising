@@ -24,7 +24,8 @@ public:
 
     Vertex* insert_vertex(QPointF position, const std::string& label,
                           MapLayer* map_layer, Terrain territory, Army army,
-                          Player player, CultureType culture);
+                          Player player, CultureType culture, City* city, Region* region);
+
     bool insert_edge(Vertex* from, Vertex* to, double weight, EdgeType type = EdgeType::Land);
     bool remove_vertex(Vertex* vertex);
     bool remove_edge(Vertex* from, Vertex* to);
@@ -37,6 +38,7 @@ public:
     QJsonObject serialize() const;
     void deserialize(const QJsonObject &json);
     void clear();
+    graph::Vertex* get_vertex_by_label(const QString& label) const;
 
 public:
     std::unordered_map<nodeID_t, Vertex*> vertices;  // Map of vertex IDs to Vertex pointers

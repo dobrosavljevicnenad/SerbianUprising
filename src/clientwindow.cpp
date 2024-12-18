@@ -19,7 +19,8 @@ ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *paren
     setupGame();
     setupUI();
     connectSignals();
-    gameManager->initializeUI(headerLabel, endTurnButton, moveButton, infoButton,moveList,armyButton);
+    gameManager->initializeUI(headerLabel, endTurnButton, moveButton, infoButton,moveList,
+                              armyButton,reliefButton,regionsButton,cityButton,defaultButton,nodeInfoWidget);
     connect(gameManager, &ClientGameManager::gameYearUpdated, this, &ClientWindow::updateYearLabel);
 
 }
@@ -29,20 +30,31 @@ ClientWindow::~ClientWindow() {
 }
 
 void ClientWindow::setupGame() {
-    view = new QGraphicsView(scene, this);
+    view = new ZoomableGraphicsView(this);
+    view->setScene(scene);
+    view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
+    view->setFocusPolicy(Qt::StrongFocus);
+    view->setFocus();
     setCentralWidget(view);
     gameManager->setScene(scene);
     gameManager->initializeGraphics();
 }
 
 void ClientWindow::setupUI() {
-    QWidget *layoutContainer = new QWidget();
+
+    nodeInfoWidget = new NodeInfoWidget(gameManager->layerToVertex,this);
+    nodeInfoWidget->hide();
+
+    layoutContainer = new QWidget(view->viewport());
+    layoutContainer->setStyleSheet("background-color: rgba(0, 0, 0, 128);"
+                                   "border-radius: 15px;");
     QVBoxLayout *mainLayout = new QVBoxLayout();
 
     mainLayout->setSpacing(5);
     mainLayout->setContentsMargins(2, 2, 2, 2);
 
-    QString turnLabel = QString("Turn %1").arg(gameManager->TurnId);
+    // Header Label
+    QString turnLabel = QString("Turn %1").arg(1);
     headerLabel = new QLabel(turnLabel);
     QFont font = headerLabel->font();
     font.setBold(true);
@@ -52,7 +64,6 @@ void ClientWindow::setupUI() {
     headerLabel->setStyleSheet("color: black; background-color: transparent;");
     mainLayout->addWidget(headerLabel);
 
-    // Novi QLabel za prikaz godine
     QString yearLabel = QString("Year: %1").arg(gameManager->year().getCurrentDateString());
     yearDisplayLabel = new QLabel(yearLabel);
     QFont yearFont = yearDisplayLabel->font();
@@ -63,7 +74,8 @@ void ClientWindow::setupUI() {
     yearDisplayLabel->setStyleSheet("color: darkGreen; background-color: transparent;");
     mainLayout->addWidget(yearDisplayLabel);
 
-    // Red dugmića
+
+    // Buttons Row
     QHBoxLayout *buttonRowLayout = new QHBoxLayout();
     infoButton = new QPushButton("Info");
     moveButton = new QPushButton("Move");
@@ -103,7 +115,7 @@ void ClientWindow::setupUI() {
 
     mainLayout->addLayout(buttonRowLayout);
 
-    // Dugme za završetak poteza
+    // End Turn Button
     endTurnButton = new QPushButton("End Turn");
     endTurnButton->setFixedSize(160, 30);
     endTurnButton->setStyleSheet(
@@ -118,38 +130,124 @@ void ClientWindow::setupUI() {
         "} "
         "QPushButton:pressed { "
         "   background-color: black; "
-        "}");
-
+        "}"
+        );
     mainLayout->addWidget(endTurnButton, 0, Qt::AlignCenter);
 
-    // Lista poteza
-    moveList = new QListWidget();
+    // Move List
+    moveList = new QListWidget(view->viewport());
     moveList->setFixedSize(200, 300);
     moveList->setStyleSheet(
         "QListWidget { "
         "   background-color: darkGray; "
         "   border: 1px solid black; "
         "   border-radius: 5px; "
-        "} "
+        "}"
         );
-    moveList->addItem(QString("Player %1 on turn:").arg(gameManager->ClientId));
+    mainLayout->addWidget(moveList, 0, Qt::AlignCenter);
 
-    mainLayout->addWidget(moveList);
+    QPushButton* toggleButton = new QPushButton("⮝", layoutContainer);
+    toggleButton->setFixedSize(40, 40);
+    toggleButton->setStyleSheet(
+        "QPushButton { "
+        "   background-color: lightGray; "
+        "   border-radius: 10px; "
+        "} "
+        "QPushButton:hover { "
+        "   background-color: darkGray; "
+        "} "
+        "QPushButton:pressed { "
+        "   background-color: black; "
+        "   color: white; "
+        "}"
+        );
+
+    mainLayout->addWidget(toggleButton, 0, Qt::AlignCenter);
+
     layoutContainer->setLayout(mainLayout);
+    layoutContainer->setGeometry(10, 10, 250, 520);
 
-    // Dodavanje u scenu
-    QGraphicsProxyWidget *layoutProxy = scene->addWidget(layoutContainer);
-    layoutProxy->setPos(2, 2);
+    mapModeContainer = new QWidget(view->viewport());
+    mapModeContainer->setStyleSheet("background-color: rgba(0, 0, 0, 128); border-radius: 10px;");
 
-    QGraphicsProxyWidget *moveListProxy = scene->addWidget(moveList);
-    moveListProxy->setPos(scene->width() - moveList->width() - 10, 10);
-    moveListProxy->setZValue(1);
+    QHBoxLayout* mapModeLayout = new QHBoxLayout();
+    mapModeLayout->setSpacing(5);
+    mapModeLayout->setContentsMargins(5, 5, 5, 5);
+
+    // Map Mode Buttons
+    reliefButton = new QPushButton("Relief");
+    regionsButton = new QPushButton("Regions");
+    cityButton = new QPushButton("City");
+    defaultButton = new QPushButton("Main");
+
+    // Button Style
+    QString mapButtonStyle =
+        "QPushButton { background-color: darkGray; color: white; border-radius: 5px; padding: 5px; }"
+        "QPushButton:hover { background-color: gray; }"
+        "QPushButton:pressed { background-color: darkGreen; }";
+
+    reliefButton->setStyleSheet(mapButtonStyle);
+    regionsButton->setStyleSheet(mapButtonStyle);
+    cityButton->setStyleSheet(mapButtonStyle);
+    defaultButton->setStyleSheet(mapButtonStyle);
+
+    // Add buttons to layout
+    mapModeLayout->addWidget(reliefButton,0, Qt::AlignCenter);
+    mapModeLayout->addWidget(regionsButton,0, Qt::AlignCenter);
+    mapModeLayout->addWidget(cityButton,0, Qt::AlignCenter);
+    mapModeLayout->addWidget(defaultButton,0, Qt::AlignCenter);
+
+    mapModeContainer->setLayout(mapModeLayout);
+    // Move to bottom-left corner of the viewport
+    mapModeContainer->move(view->viewport()->rect().bottomLeft() + QPoint(10, -60)); // Adjust position
+
+
+
+    QList<QWidget*> layoutWidgets = {headerLabel, infoButton, moveButton, armyButton, endTurnButton, moveList};
+
+    connect(toggleButton, &QPushButton::clicked, this, [=]() {
+        static bool isExpanded = true;
+
+        if (isExpanded) {
+            for (auto* widget : layoutWidgets) {
+                widget->hide();
+            }
+            layoutContainer->setFixedSize(250, toggleButton->height() + 10);
+            layoutContainer->setStyleSheet("background-color: transparent");
+            toggleButton->setText("⮟");
+        } else {
+            for (auto* widget : layoutWidgets) {
+                widget->show();
+            }
+            layoutContainer->setFixedSize(250, 520);
+            layoutContainer->setStyleSheet("background-color: rgba(0, 0, 0, 128);"
+                                           "border-radius: 15px;");
+            toggleButton->setText("⮝");
+        }
+        isExpanded = !isExpanded;
+    });
+
 }
+
 
 void ClientWindow::updateYearLabel(QString newYear) {
     yearDisplayLabel->setText(newYear);
 }
 void ClientWindow::connectSignals() {
+    connect(reliefButton, &QPushButton::clicked, this, [this]() {
+        gameManager->applyMapMode(ClientGameManager::MapMode::Relief);
+    });
+    connect(regionsButton, &QPushButton::clicked, this, [this]() {
+        gameManager->applyMapMode(ClientGameManager::MapMode::Regions);
+    });
+    connect(cityButton, &QPushButton::clicked, this, [this]() {
+        gameManager->applyMapMode(ClientGameManager::MapMode::CityLevel);
+    });
+    connect(defaultButton, &QPushButton::clicked, this, [this]() {
+        gameManager->applyMapMode(ClientGameManager::MapMode::Default);
+    });
+    connect(view->horizontalScrollBar(), &QScrollBar::valueChanged, this, [this]() { repositionFixedWidgets(); });
+    connect(view->verticalScrollBar(), &QScrollBar::valueChanged, this, [this]() { repositionFixedWidgets(); });
     connect(gameManager, &ClientGameManager::layerClicked, this, &ClientWindow::onLayerClicked);
     connect(endTurnButton, &QPushButton::clicked, this, &ClientWindow::onEndTurnClicked);
     connect(moveList, &QListWidget::itemClicked, this, &ClientWindow::onMoveClicked);
@@ -169,6 +267,12 @@ void ClientWindow::onEndTurnClicked() {
 
     gameManager->EndTurnClicked(actions, clientId);
     gameManager->disableInteractions();
+}
+
+void ClientWindow::repositionFixedWidgets()
+{
+    layoutContainer->move(view->viewport()->rect().topLeft() + QPoint(10, 10));
+    mapModeContainer->move(view->viewport()->rect().bottomLeft() + QPoint(10, -60));
 }
 
 void ClientWindow::processEndTurnClicked(){
@@ -220,10 +324,24 @@ void ClientWindow::onLayerClicked(MapLayer* layer) {
         handleMoveArmy(layer);
     } else if (activeButton == armyButton) {
         handlePlaceArmy(layer);
+    } else if (activeButton == infoButton) {
+        handleInfomation(layer);
     } else {
         QMessageBox::warning(this, tr("Unknown Action"), tr("This action is not supported."));
     }
 
+}
+
+void ClientWindow::handleInfomation(MapLayer* layer){
+    if (layer) {
+        nodeInfoWidget->updateNodeInfo(layer);
+        QPoint bottomRight = view->viewport()->rect().bottomRight();
+        QPoint globalPos = view->mapToGlobal(bottomRight) - QPoint(nodeInfoWidget->width() + 10, nodeInfoWidget->height() + 10);
+        nodeInfoWidget->move(globalPos);
+        nodeInfoWidget->show();
+    } else {
+        QMessageBox::information(this, "Info", "No layer selected!");
+    }
 }
 
 void ClientWindow::handleMoveArmy(MapLayer* layer){

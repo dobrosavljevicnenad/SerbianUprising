@@ -6,14 +6,20 @@ ClientGameManager::ClientGameManager(QGraphicsScene* scene,QObject* parent)
 
 }
 
-void ClientGameManager::initializeUI(
-    QLabel* headerLabel, QPushButton* endTurnButton, QPushButton* moveButton, QPushButton* infoButton, QListWidget* moveList,QPushButton* armyButton) {
+void ClientGameManager::initializeUI(QLabel* headerLabel, QPushButton* endTurnButton, QPushButton* moveButton, QPushButton* infoButton,
+                  QListWidget* moveList,QPushButton* armyButton,QPushButton* reliefButton,QPushButton* regionsButton,
+                  QPushButton*cityButton,QPushButton*defaultButton,NodeInfoWidget* nodeInfoWidget ) {
     this->headerLabel = headerLabel;
     this->endTurnButton = endTurnButton;
     this->moveButton = moveButton;
     this->infoButton = infoButton;
     this->moveList = moveList;
     this->armyButton = armyButton;
+    this->defaultButton = defaultButton;
+    this->regionsButton = regionsButton;
+    this->cityButton = cityButton;
+    this->reliefButton = reliefButton;
+    this->nodeInfoWidget = nodeInfoWidget;
 }
 
 void ClientGameManager::initializeGraphics() {
@@ -36,24 +42,62 @@ void ClientGameManager::initializeGraphics() {
 
     QJsonObject rootObj = doc.object();
 
-    MapLayer* baseLayer = new MapLayer(20,":/resources/Images/base.png", false);
+    MapLayer *background = new MapLayer("background",":/resources/Project/Pozadina.png", false);
+    MapLayer *baseLayer = new MapLayer("baseLayer",":/resources/Project/Slika.png", false);
+    MapLayer *borders = new MapLayer("borders",":/resources/Project/Linije_Granice.png", false);
+    MapLayer *water = new MapLayer("water",":/resources/Project/MORE.png", false);
+    MapLayer *rivers = new MapLayer("rivers",":/resources/Project/Reke_.png", false);
+    MapLayer *relief = new MapLayer("relief",":/resources/Project/reljef.png", false);
+
+
+    MapLayer *s1 = new MapLayer("s1",":/resources/Project/S1.png", false);
+    MapLayer *s2 = new MapLayer("s2",":/resources/Project/S2.png", false);
+    MapLayer *s3 = new MapLayer("s3",":/resources/Project/S3.png", false);
+    MapLayer *s4 = new MapLayer("s4",":/resources/Project/S4.png", false);
+    MapLayer *s5 = new MapLayer("s5",":/resources/Project/S5.png", false);
+
+    s2->setPos(113,0);
+    s3->setPos(0,1088);
+    s4->setPos(958,1802);
+    s5->setPos(2486,1286);
+    s1->setOpacity(0.95);
+    s2->setOpacity(0.95);
+    s3->setOpacity(0.95);
+    s4->setOpacity(0.95);
+    s5->setOpacity(0.95);
+
+    water->setZValue(1);
+    background->setZValue(-1);
     baseLayer->setZValue(-1);
+
+    scene->addItem(background);
     scene->addItem(baseLayer);
+    scene->addItem(relief);
+    scene->addItem(borders);
+    scene->addItem(water);
+
+    scene->addItem(s1);
+    scene->addItem(s2);
+    scene->addItem(s3);
+    scene->addItem(s4);
+    scene->addItem(s5);
 
     QJsonArray layersArray = rootObj["vertices"].toArray();
 
     std::vector<MapLayer*> layers(layersArray.size());
+
     for (int i = 0; i < layersArray.size(); ++i) {
         QJsonObject layerObj = layersArray[i].toObject();
-
+        QString label = layerObj.value("label").toString();
         QString labelPath = layerObj.value("label_path").toString();
         QJsonObject positionObj = layerObj.value("position").toObject();
         int posX = positionObj.value("x").toInt();
         int posY = positionObj.value("y").toInt();
 
-        MapLayer* layer = new MapLayer(i,labelPath, true);
+        MapLayer* layer = new MapLayer(label,labelPath, true);
         layer->setCurrentPlayer(ClientId);
         layer->setZValue(0);
+        layer->setOpacity(0.95);
         layer->setPos(posX, posY);
         scene->addItem(layer);
 
@@ -64,6 +108,54 @@ void ClientGameManager::initializeGraphics() {
     }
 
     this->layers = layers;
+
+    QJsonArray regionsArray = rootObj["regions"].toArray();
+
+    std::map<int,std::vector<std::string>>regionLayers;
+
+    for (const QJsonValue& regionValue : regionsArray) {
+        QJsonObject regionObj = regionValue.toObject();
+        std::string regionId = regionObj["regionId"].toString().toStdString();
+        std::string regionName = regionObj["regionName"].toString().toStdString();
+
+        Region* region = new Region(regionId, regionName);
+
+        QJsonArray regionLayers = regionObj["layers"].toArray();
+        for (const QJsonValue& regionLayerValue : regionLayers) {
+            std::string layerLabel = regionLayerValue.toString().toStdString();
+            for (MapLayer* layer : layers) {
+                if (layer->labelName.toStdString() == layerLabel) {
+                    region->addLayer(layer, nullptr);
+                }
+            }
+        }
+
+        regions.push_back(region);
+    }
+
+    scene->addItem(rivers);
+    map = new Map(scene, layerToVertex);
+}
+
+void ClientGameManager::applyMapMode(MapMode mode) {
+    switch (mode) {
+    case MapMode::Relief:
+        map->setMainMode(false);
+        map->generateReliefMap();
+        break;
+    case MapMode::Regions:
+        map->setMainMode(false);
+        map->generateRegionMap();
+        break;
+    case MapMode::CityLevel:
+        map->setMainMode(false);
+        map->generateCityLevelMap();
+        break;
+    case MapMode::Default:
+        map->setMainMode(true);
+        map->resetMainGameMap();
+        break;
+    }
 }
 
 void ClientGameManager::setScene(MapScene *newScene) {
@@ -77,14 +169,12 @@ void ClientGameManager::setId(int id) {
     ClientId == 1 ? player.setArmyType(ArmyType::HAJDUK) : player.setArmyType(ArmyType::JANISSARY);
 }
 
-void ClientGameManager::printConnections() {
-    clientGraph->print_graph();
-}
-
 void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     if (data.contains("graph") && data["graph"].isObject()) {
         QJsonObject graphData = data["graph"].toObject();
         clientGraph->deserialize(graphData);
+        //
+        clientGraph->print_graph();
     }
     if (data.contains("results") && data["results"].isObject()) {
         QJsonObject resultsObject = data["results"].toObject();
@@ -106,26 +196,44 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     } else {
         qWarning() << "No valid 'results' object found in the data.";
     }
-
     if(init){
         allReset();
         TurnId = TurnId + 1;
+        gameYear.advanceThreeMonths();
         enableInteractions();
     } else if(!init){
         for (auto &layer : layers) {
-            graph::Vertex* vertex = clientGraph->get_vertex_by_id(layer->getId()+1);
+            graph::Vertex* vertex = clientGraph->get_vertex_by_label(layer->labelName);
             if (vertex) {
-                layerToVertex[layer] = vertex;
-                vertex->map_layer = layer;
+                layerToVertex[layer] = vertex; // Update mapping
+                vertex->map_layer = layer;    // Link vertex to layer
+
+                for (auto& region : regions) {
+                    for (auto& regionTerritory : region->getTerritories()) {
+                        if (regionTerritory.first->labelName.toStdString() == vertex->label()) {
+                            region->setCityForLayer(regionTerritory.first, vertex->city);
+                            vertex->region = region;
+                            break;
+                        }
+                    }
+                }
+            } else {
+                qWarning() << "Vertex not found for layer ID:" << layer->getId();
             }
         }
+        //regions=clientGraph->regions;
+        qDebug() << "ovde sam";
+
+        nodeInfoWidget->updateLayerToVertex(layerToVertex);
+        map->updateLayerToVertex(layerToVertex);
+
         init = true;
     }
-    //qDebug() << "Current Game Date:" << gameYear.getCurrentDateString();
-    gameYear.advanceThreeMonths();
+
     updateGraphics();
     armyManager.addTerritory(player);
     maxPlaceTroops = armyManager.calculateTotalTroops();
+
 }
 
 QVector<QStringList> ClientGameManager::generateBattleResults() {
@@ -198,6 +306,7 @@ void ClientGameManager::updateGraphics() {
                 Army army = vertex->army; // Safely access the `army`
                 layer->setArmyColor(army.armyType());
                 layer->setTroopCount(army.getSoldiers());
+                layer->setCurrentPlayer(vertex->player.getPlayerId());
             } else {
                 qWarning() << "Vertex is null for layer:" << layer->getId();
             }
@@ -292,7 +401,7 @@ void ClientGameManager::printExplosion(graph::Vertex *target)
     for(int i = 0; i < expN; i++){
         int x = std::rand() % static_cast<int>(target->map_layer->boundingRect().width() / 2);
         int y = std::rand() % static_cast<int>(target->map_layer->boundingRect().height() / 2);
-        MapLayer *explosionLayer = new MapLayer(150,QString(":/resources/Images/Explosion.png"),false);
+        MapLayer *explosionLayer = new MapLayer("explosionLayer",QString(":/resources/Images/Explosion.png"),false);
         explosions.push_back(explosionLayer);
         explosionLayer->setPos(target->map_layer->pos()+ QPointF(minx+x,miny+y));
         explosionLayer->setZValue(2);
