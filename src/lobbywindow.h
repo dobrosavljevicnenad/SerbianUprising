@@ -7,7 +7,6 @@
 #include <QPushButton>
 #include "network/server.h"
 #include "network/client.h"
-#include "clientwindow.h"
 #include "Interface/servergamemanager.h"
 #include "Interface/clientgamemanager.h"
 #include "network/connection.h"
@@ -20,33 +19,40 @@ public:
     explicit LobbyWindow(QWidget *parent = nullptr);
     ~LobbyWindow();
 
-    void connectSignals();
-    void updateLobbyList(const QString &gameName, const QString &playerName);
+    QPushButton* getCreateLobbyButton() const;
 
 
 private:
     ConnectionManager *connectionManager;
-    ClientWindow * gameWindow;
+    //ClientWindow * gameWindow;
 
     ServerGameManager* serverManager;
     ClientGameManager* clientManager;
+
+    QFrame *buttonFrame;
 
     QPushButton *createLobbyButton;
     QPushButton *joinLobbyButton;
     QPushButton *backButton;
 
-    QTableWidget *table;
 
     void setupUI();
+    void connectSignals();
+    void setBackgroundImage();
+
 
 private slots:
     void onCreateServer();
     void onJoinGame();
-    void handleGameStart();
     void returnToMenu();
 
 signals:
+    void openCreateLobby();
     void backToMenu();
     void startGame();
+    void createLobby();
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 };
 

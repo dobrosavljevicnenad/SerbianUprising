@@ -127,11 +127,11 @@ void Server::setupPlayerSocket(QTcpSocket* socket, const QString& playerName, co
 
 void Server::broadcast(const QString &message) {
     if (m_secondPlayerSocket && m_secondPlayerSocket->state() == QAbstractSocket::ConnectedState) {
-        m_secondPlayerSocket->write(message.toUtf8());
+        m_secondPlayerSocket->write(message.toUtf8() + "\n");
         m_secondPlayerSocket->flush();
     }
     if (m_clientSocket && m_clientSocket->state() == QAbstractSocket::ConnectedState) {
-        m_clientSocket->write(message.toUtf8());
+        m_clientSocket->write(message.toUtf8() + "\n");
         m_clientSocket->flush();
     }
 }

@@ -404,3 +404,7 @@ void ClientGameManager::processLoadData(const QJsonObject &gameData) {
     updateGraphics();
     qDebug() << "Game data successfully processed and applied.";
 }
+
+int ClientGameManager::getClientId() const {
+    return ClientId;
+}

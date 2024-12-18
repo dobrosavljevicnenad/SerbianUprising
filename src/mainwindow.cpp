@@ -1,37 +1,47 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "clientwindow.h"
+#include <QPixmap>
+#include <QPalette>
+
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), gameMenu(nullptr), lobbyWindow(nullptr) {
+    : QMainWindow(parent), ui(new Ui::MainWindow), gameMenu(new GameMenu(this)),
+    lobbyWindow(new LobbyWindow(this)),
+    createLobbyWindow(new CreateLobbyWindow(this)),
+    stackedWidget(new QStackedWidget(this))  {
+
     ui->setupUi(this);
 
-    setupMenu();
+    stackedWidget->addWidget(gameMenu);
+    stackedWidget->addWidget(lobbyWindow);
+    stackedWidget->addWidget(createLobbyWindow);
+
+    setCentralWidget(stackedWidget);
+    stackedWidget->setCurrentWidget(gameMenu);
+    stackedWidget->resize(gameMenu->size());
+
+
+    connect(gameMenu, &GameMenu::newGame, this, &MainWindow::showLobbyWindow);
+    connect(gameMenu, &GameMenu::exitGame, this, &MainWindow::close);
+    connect(lobbyWindow, &LobbyWindow::createLobby, this, &MainWindow::showCreateLobbyWindow);
+    connect(lobbyWindow, &LobbyWindow::backToMenu, this, &MainWindow::showGameMenu);
+    connect(createLobbyWindow, &CreateLobbyWindow::backToLobby, this, &MainWindow::showLobbyWindow);
 }
 
 MainWindow::~MainWindow() {
     delete ui;
 }
 
-void MainWindow::setupMenu() {
-    gameMenu = new GameMenu(this);
-    setCentralWidget(gameMenu);
+void MainWindow::showGameMenu() {
+    stackedWidget->setCurrentWidget(gameMenu);
+}
 
-    // Connect GameMenu signals
-    connect(gameMenu, &GameMenu::startGame, this, [this]() {
-        lobbyWindow = new LobbyWindow();
-        lobbyWindow->show();
-        this->close(); // Close MainWindow when entering lobby
-    });
+void MainWindow::showLobbyWindow() {
+    stackedWidget->setCurrentWidget(lobbyWindow);
+}
 
-    connect(gameMenu, &GameMenu::exitGame, this, &MainWindow::close);
-
-    connect(gameMenu, &GameMenu::fullScreenClicked, this, [this]() {
-        if (isFullScreen()) {
-            showNormal();
-        } else {
-            showFullScreen();
-        }
-    });
+void MainWindow::showCreateLobbyWindow() {
+    stackedWidget->setCurrentWidget(createLobbyWindow);
 }
 
