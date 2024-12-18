@@ -26,6 +26,8 @@ private:
     void setupUI();
     void loadSavedGames();
     void setupConnections();
+    void setBackgroundImage();
+
 
     QLabel *player1ArmyLabel;
     QLabel *player2ArmyLabel;
@@ -42,13 +44,14 @@ private:
     ConnectionManager *connectionManager;
     ClientWindow *gameWindow;
 
+signals:
+    void backToLobby();
 
 private slots:
     void updateArmySelection(const QString &playerArmy);
     void handleGameStart();
-    void returnToMenu();
 
-signals:
-    void backToLobby();
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 
 };

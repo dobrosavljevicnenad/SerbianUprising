@@ -19,13 +19,16 @@ GameMenu::GameMenu(QWidget *parent) : QWidget(parent) {
     audioOutput->setVolume(0.5);
     mediaPlayer->play();
 
-    connect(newGameButton, &QPushButton::clicked, this, [this]() {
-        stackedWidget->setCurrentIndex(2);
-    });
+    connect(newGameButton, &QPushButton::clicked, this, &GameMenu::newGame);
     connect(settingsButton, &QPushButton::clicked, this, &GameMenu::openSettings);
-    connect(exitButton, &QPushButton::clicked, this, &GameMenu::exitGame);
+    connect(exitButton, &QPushButton::clicked, this, &GameMenu::onExitButtonClicked);
     connect(fullScreenButton, &QPushButton::clicked, this, &GameMenu::fullScreenClicked);
-
+    connect(muteButton, &QPushButton::clicked, this, [this]() {
+        static bool isMuted = false;
+        isMuted = !isMuted;
+        audioOutput->setMuted(isMuted);
+        muteButton->setText(isMuted ? "🔊" : "🔇");
+    });
 }
 
 GameMenu::~GameMenu() {}
@@ -54,7 +57,8 @@ void GameMenu::setupUI() {
     newGameButton = new QPushButton("NEW GAME", this);
     settingsButton = new QPushButton("SETTINGS", this);
     exitButton = new QPushButton("EXIT", this);
-    fullScreenButton = new QPushButton("⤄", this);
+    fullScreenButton = new QPushButton("⛶", this);
+    muteButton = new QPushButton("🔇", this);
 
     QString buttonStyle = R"(
     QPushButton {
@@ -89,6 +93,9 @@ void GameMenu::setupUI() {
     fullScreenButton->setFixedSize(40, 40);
     fullScreenButton->setStyleSheet("font-size: 14px; background-color: #F44336; color: white; border-radius: 5px;}"
                                     "QPushButton::hover {font-size: 20px; padding: 7px;}");
+    muteButton->setFixedSize(40, 40);
+    muteButton->setStyleSheet("font-size: 14px; background-color: #2196F3; color: white; border-radius: 5px;}"
+                              "QPushButton::hover {font-size: 20px; padding: 7px;}");
 
 
     QVBoxLayout *buttonLayout = new QVBoxLayout(buttonFrame);
@@ -101,7 +108,6 @@ void GameMenu::setupUI() {
     //buttonLayout->addSpacing(10);
     buttonLayout->addWidget(exitButton, 0, Qt::AlignCenter);
     buttonLayout->addStretch();
-    //buttonLayout->setAlignment(Qt::AlignCenter);
 
     stackedWidget = new QStackedWidget(this);
     QWidget *mainMenu = new QWidget(this);
@@ -109,17 +115,15 @@ void GameMenu::setupUI() {
     menuLayout->addWidget(buttonFrame, 0, Qt::AlignCenter);
     mainMenu->setLayout(menuLayout);
     stackedWidget->addWidget(mainMenu);
-    stackedWidget->addWidget(createSettingsMenu());
-    stackedWidget->addWidget(lobbyMenu());
+
+    QWidget *settingsMenu = createSettingsMenu();
+    stackedWidget->addWidget(settingsMenu);
 
     layout->addWidget(stackedWidget);
 
-    // layout->addStretch();
-    // layout->addLayout(buttonLayout);
-    // layout->addStretch();
-
     QHBoxLayout *bottomLayout = new QHBoxLayout();
     bottomLayout->addStretch();
+    bottomLayout->addWidget(muteButton);
     bottomLayout->addWidget(fullScreenButton);
     layout->addLayout(bottomLayout);
 
@@ -357,12 +361,6 @@ void GameMenu::keyPressEvent(QKeyEvent *event) {
     QWidget::keyPressEvent(event);
 }
 
-QWidget *GameMenu::lobbyMenu() {
-    LobbyWindow *lobby = new LobbyWindow(this);
-
-    connect(lobby, &LobbyWindow::backToMenu, this, [this]() {
-        stackedWidget->setCurrentIndex(0); // Vrati na glavni meni
-    });
-
-    return lobby;
+void GameMenu::onExitButtonClicked() {
+    emit exitGame();
 }

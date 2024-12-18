@@ -25,21 +25,18 @@ private:
     GameMenu *gameMenu;
     LobbyWindow *lobbyWindow;
     CreateLobbyWindow *createLobbyWindow;
-
     QStackedWidget *stackedWidget;
 
     ServerGameManager* serverManager;
     ClientGameManager* clientManager;
 
-
     void setupMenu();
-    void setupConnections();
 
 private slots:
-    void onBackToMenu();
-    void onStartGame();
-    void onBackToLobby();
-    void onOpenCreateLobby();
+    void showGameMenu();
+    void showLobbyWindow();
+    void showCreateLobbyWindow();
+
 };
 
 #endif // MAINWINDOW_H

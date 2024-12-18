@@ -19,8 +19,7 @@ public:
     explicit LobbyWindow(QWidget *parent = nullptr);
     ~LobbyWindow();
 
-    void connectSignals();
-    void updateLobbyList(const QString &gameName, const QString &playerName);
+    QPushButton* getCreateLobbyButton() const;
 
 
 private:
@@ -38,6 +37,9 @@ private:
 
 
     void setupUI();
+    void connectSignals();
+    void setBackgroundImage();
+
 
 private slots:
     void onCreateServer();
@@ -48,5 +50,9 @@ signals:
     void openCreateLobby();
     void backToMenu();
     void startGame();
+    void createLobby();
+
+protected:
+    void resizeEvent(QResizeEvent *event) override;
 };
 

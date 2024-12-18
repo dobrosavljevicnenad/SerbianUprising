@@ -19,22 +19,12 @@ LobbyWindow::~LobbyWindow() {
 }
 
 void LobbyWindow::setupUI(){
-    //this->setFixedSize(1280, 720);
-    QVBoxLayout *layout = new QVBoxLayout(this);
+    QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
-    layout->setContentsMargins(10, 70, 10, 10);
-
-    // QPixmap backgroundPixmap(":/resources/pozadina.png");
-    // backgroundPixmap = backgroundPixmap.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-    // QPalette palette;
-    // palette.setBrush(QPalette::Window, QBrush(backgroundPixmap));
-    // this->setPalette(palette);
-    // this->setAutoFillBackground(true);
-
+    setBackgroundImage();
 
     buttonFrame = new QFrame(this);
-    buttonFrame->setMinimumWidth(450);
-    buttonFrame->setMinimumHeight(350);
+    buttonFrame->setFixedSize(450, 350);
     buttonFrame->setStyleSheet(R"(
         background-color: qlineargradient(
             spread:pad, x1:0, y1:0, x2:1, y2:1,
@@ -45,9 +35,9 @@ void LobbyWindow::setupUI(){
         border: 2px solid rgba(255, 215, 0, 150);
     )");
 
-    backButton = new QPushButton("Main Menu");
-    createLobbyButton = new QPushButton("Create Lobby");
-    joinLobbyButton = new QPushButton("Join Lobby");
+    backButton = new QPushButton("BACK");
+    createLobbyButton = new QPushButton("CREATE LOBBY");
+    joinLobbyButton = new QPushButton("JOIN LOBBY");
 
     QString buttonStyle = R"(
         QPushButton {
@@ -84,14 +74,11 @@ void LobbyWindow::setupUI(){
     buttonLayout->setSpacing(10);
     buttonLayout->addStretch();
     buttonLayout->addWidget(createLobbyButton, 0, Qt::AlignCenter);
-    //buttonLayout->addSpacing(10);
     buttonLayout->addWidget(joinLobbyButton, 0, Qt::AlignCenter);
-    //buttonLayout->addSpacing(10);
     buttonLayout->addWidget(backButton, 0, Qt::AlignCenter);
     buttonLayout->addStretch();
 
-
-    QVBoxLayout *mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->addStretch();
     mainLayout->addWidget(buttonFrame, 0, Qt::AlignCenter);
     mainLayout->addStretch();
@@ -99,9 +86,24 @@ void LobbyWindow::setupUI(){
     this->setLayout(mainLayout);
 }
 
+void LobbyWindow::setBackgroundImage() {
+    QPixmap backgroundPixmap(":/resources/pozadina.png");
+    backgroundPixmap = backgroundPixmap.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+    QPalette palette;
+    palette.setBrush(QPalette::Window, QBrush(backgroundPixmap));
+    this->setPalette(palette);
+    this->setAutoFillBackground(true);
+}
+
+void LobbyWindow::resizeEvent(QResizeEvent *event) {
+    QWidget::resizeEvent(event);
+    setBackgroundImage();
+}
+
+
 void LobbyWindow::connectSignals() {
     connect(backButton, &QPushButton::clicked, this, &LobbyWindow::returnToMenu);
-    connect(createLobbyButton, &QPushButton::clicked, this, &LobbyWindow::onCreateServer);
+    connect(createLobbyButton, &QPushButton::clicked, this, &LobbyWindow::createLobby);
     connect(joinLobbyButton, &QPushButton::clicked, this, &LobbyWindow::onJoinGame);
 }
 
@@ -121,4 +123,8 @@ void LobbyWindow::returnToMenu()
 {
     emit backToMenu();
     this->close();
+}
+
+QPushButton* LobbyWindow::getCreateLobbyButton() const {
+    return createLobbyButton;
 }
