@@ -35,7 +35,7 @@ public:
     MapLayer* get_layer_for_vertex(const Vertex* vertex) const;
     void print_graph() const;
     Vertex* get_vertex_by_id(nodeID_t id) const;
-    QJsonObject serialize() const;
+    QJsonObject serialize(QJsonObject graphJson);
     void deserialize(const QJsonObject &json);
     void clear();
     graph::Vertex* get_vertex_by_label(const QString& label) const;
@@ -46,6 +46,7 @@ private:
     std::unordered_map<Vertex*, std::vector<Edge>> m_adj_list;  // Adjacency list for edges
     unsigned m_next_id=1;  // Next ID for a new vertex
     bool initialized = false;
+    bool initializedSer = false;
 };
 
 } // namespace graph

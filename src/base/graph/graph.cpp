@@ -132,50 +132,31 @@ graph::Vertex* Graph::get_vertex_by_label(const QString& label) const {
     return nullptr; // Vraća nullptr ako ne pronađe
 }
 
-QJsonObject Graph::serialize() const {
-    QJsonObject graphJson;
+QJsonObject Graph::serialize(QJsonObject graphJson){
+    if(!initializedSer){
+        initializedSer=true;
+        return graphJson;
 
-    // Serialize vertices
-    QJsonArray verticesArray;
-    for (const auto& [id, vertex] : vertices) {
-        QJsonObject vertexJson;
-        vertexJson["id"] = static_cast<int>(vertex->id());
-        vertexJson["label"] = QString::fromStdString(vertex->label());
-        vertexJson["num_of_soldiers"] = vertex->army.getSoldiers();
-        vertexJson["army_type"] = QString::fromStdString(vertex->army.to_string(vertex->army.armyType()));
-        vertexJson["terrain_type"] = QString::fromStdString(vertex->terrain.to_string(vertex->terrain.getTerrain()));
+    } else{
+        QJsonArray verticesArray;
 
-        // Include cityLevel
-        vertexJson["cityLevel"] = vertex->city ? vertex->city->getLevel() : 0;
+        for (const auto& [id, vertex] : vertices) {
+            QJsonObject vertexJson;
 
-        // Include region info
-        if (vertex->region) {
-            vertexJson["regionName"] = QString::fromStdString(vertex->region->getRegionName());
-            vertexJson["regionId"] = QString::fromStdString(vertex->region->getRegionId());
-        } else {
-            vertexJson["regionName"] = "";
-            vertexJson["regionId"] = "";
+            vertexJson["id"] = static_cast<int>(id);  // ID čvora
+            vertexJson["label"] = QString::fromStdString(vertex->label());  // Labela čvora
+            vertexJson["num_of_soldiers"] = vertex->army.getSoldiers();  // Broj vojnika
+            vertexJson["army_type"] = QString::fromStdString(vertex->army.to_string(vertex->army.armyType()));
+            vertexJson["player_id"] = vertex->player.getPlayerId();  // ID igrača
+
+            verticesArray.append(vertexJson);
         }
 
-        verticesArray.push_front(vertexJson);
-    }
-    graphJson["vertices"] = verticesArray;
+        graphJson["vertices"] = verticesArray;
 
-    // Serialize edges
-    QJsonArray edgesArray;
-    for (const auto& [vertex, edges] : m_adj_list) {
-        for (const Edge& edge : edges) {
-            QJsonObject edgeJson;
-            edgeJson["from"] = static_cast<int>(edge.from());
-            edgeJson["to"] = static_cast<int>(edge.to());
-            edgeJson["weight"] = edge.weight();
-            edgeJson["type"] = QString::fromStdString(edge.to_string());
-            edgesArray.push_back(edgeJson);
-        }
+        return graphJson;
     }
-    graphJson["edges"] = edgesArray;
 
-    return graphJson;
 }
 
 
@@ -229,23 +210,17 @@ void Graph::deserialize(const QJsonObject &json) {
                 insert_edge(fromVertex, toVertex, weight, edgeType);
             }
         }
-        initialized=true;
+        initialized = true;
     } else {
         for (const QJsonValue& value : verticesArray) {
             QJsonObject vertexJson = value.toObject();
-            std::string label = vertexJson["label"].toString().toStdString(); // Extract label
+            unsigned id = vertexJson["id"].toInt(); // Read the vertex ID
             int armyCount = vertexJson["num_of_soldiers"].toInt();
             std::string armyType = vertexJson["army_type"].toString().toStdString();
             int playerId = (armyType == "HAJDUK") ? 1 : (armyType == "JANISSARY" ? 2 : 0);
 
-            // Find the vertex ID using the label
-            for (auto& [id, vertex] : vertices) {
-                if (vertex->label() == label) {
-                    vertex->player = Player::fromJson(playerId, armyType);
-                    vertex->army = Army::fromString(armyType, armyCount);
-                    break; // Stop searching once the vertex is found
-                }
-            }
+            vertices[id]->player = Player::fromJson(playerId, armyType);
+            vertices[id]->army = Army::fromString(armyType, armyCount);
         }
     }
 }

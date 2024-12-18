@@ -375,10 +375,7 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
             int source = selected_vertex->id();
             int target = vertex->id();
 
-            std::string sourceLabel = selected_vertex->label();
-            std::string targetLabel = vertex->label();
-
-            Action newAction(type, pid, source, target, troopsToTransfer, sourceLabel, targetLabel);
+            Action newAction(type, pid, source, target, troopsToTransfer);
 
             selected_vertex->army.setSoldiers(maxTroops - troopsToTransfer);
             selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
@@ -424,10 +421,8 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer){
             gameManager->maxPlaceTroops -= troopsToAdd;
             int pid = gameManager->ClientId;
             int source = selected_vertex->id();
-            std::string sourceLabel = selected_vertex->label();
-            std::string targetLabel = "";
 
-            Action newAction(ActionType::PLACE_ARMY, pid, source, 0, troopsToAdd, sourceLabel, targetLabel);
+            Action newAction(ActionType::PLACE_ARMY, pid, source, 0, troopsToAdd);
             gameManager->addAction(newAction);
             armyManager.decreaseAvailableTroops(troopsToAdd);
 
