@@ -40,19 +40,40 @@ void ServerGameManager::startGame() {
 }
 
 void ServerGameManager::executeActions(const std::vector<Action> &actions1, int p1_id, const std::vector<Action> &actions2, int p2_id){
-    for (const Action& action : actions1) {
+
+    for (const Action& actionRef : actions1) {
         try {
-            //std::cout << action;
-            turn.addAction(p1_id, action);
+            Action action = actionRef;
+
+            for (auto vertex : graph->vertices) {
+                if (action.sourceVertexLabel == vertex.second->label()) {
+                    action.sourceVertexId = vertex.first; // Update Source ID
+                }
+                if (action.targetVertexLabel == vertex.second->label()) {
+                    action.targetVertexId = vertex.first; // Update Target ID
+                }
+            }
+
+            turn.addAction(p1_id, action); // Add the updated action
         } catch (const std::exception& e) {
             std::cerr << "Error adding action: " << e.what() << "\n";
         }
     }
 
-    for (const Action& action : actions2) {
+    for (const Action& actionRef : actions2) {
         try {
-            //std::cout << action;
-            turn.addAction(p2_id, action);
+            Action action = actionRef;
+
+            for (auto vertex : graph->vertices) {
+                if (action.sourceVertexLabel == vertex.second->label()) {
+                    action.sourceVertexId = vertex.first; // Update Source ID
+                }
+                if (action.targetVertexLabel == vertex.second->label()) {
+                    action.targetVertexId = vertex.first; // Update Target ID
+                }
+            }
+
+            turn.addAction(p2_id, action); // Add the updated action
         } catch (const std::exception& e) {
             std::cerr << "Error adding action: " << e.what() << "\n";
         }

@@ -233,13 +233,19 @@ void Graph::deserialize(const QJsonObject &json) {
     } else {
         for (const QJsonValue& value : verticesArray) {
             QJsonObject vertexJson = value.toObject();
-            unsigned id = vertexJson["id"].toInt();
+            std::string label = vertexJson["label"].toString().toStdString(); // Extract label
             int armyCount = vertexJson["num_of_soldiers"].toInt();
             std::string armyType = vertexJson["army_type"].toString().toStdString();
             int playerId = (armyType == "HAJDUK") ? 1 : (armyType == "JANISSARY" ? 2 : 0);
 
-            vertices[id]->player = Player::fromJson(playerId, armyType);
-            vertices[id]->army = Army::fromString(armyType, armyCount);
+            // Find the vertex ID using the label
+            for (auto& [id, vertex] : vertices) {
+                if (vertex->label() == label) {
+                    vertex->player = Player::fromJson(playerId, armyType);
+                    vertex->army = Army::fromString(armyType, armyCount);
+                    break; // Stop searching once the vertex is found
+                }
+            }
         }
     }
 }

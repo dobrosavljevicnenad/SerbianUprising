@@ -16,10 +16,15 @@ struct Action {
     int sourceVertexId;    // Source vertex ID (for MOVE_ARMY or ATTACK)
     int targetVertexId;    // Target vertex ID (for MOVE_ARMY or ATTACK)
     int soldiers;          // Number of soldiers involved in the action
+    std::string sourceVertexLabel;  // New: Source Vertex Label
+    std::string targetVertexLabel;
 
-    Action(ActionType type, int playerId, int source, int target, int soldiers)
-        : id(nextId++), type(type), playerId(playerId), sourceVertexId(source),
-        targetVertexId(target), soldiers(soldiers) {}
+    Action(ActionType type, int playerId, int source, int target, int soldiers,
+           const std::string& sourceLabel, const std::string& targetLabel)
+        : id(nextId++), type(type), playerId(playerId),
+        sourceVertexId(source), targetVertexId(target),
+        sourceVertexLabel(sourceLabel), targetVertexLabel(targetLabel),
+        soldiers(soldiers) {}
 
     friend std::ostream& operator<<(std::ostream& os, const Action& action) {
         os << "Action ID: " << action.id
@@ -38,6 +43,8 @@ struct Action {
         json["playerId"] = playerId;
         json["sourceVertexId"] = sourceVertexId;
         json["targetVertexId"] = targetVertexId;
+        json["sourceVertexLabel"] = QString::fromStdString(sourceVertexLabel);
+        json["targetVertexLabel"] = QString::fromStdString(targetVertexLabel);
         json["soldiers"] = soldiers;
         return QString(QJsonDocument(json).toJson(QJsonDocument::Compact));
     }
@@ -51,30 +58,45 @@ struct Action {
 
         QJsonObject json = jsonDoc.object();
         QStringList missingFields;
+
+        // Check required fields
         if (!json.contains("type")) missingFields << "type";
         if (!json.contains("playerId")) missingFields << "playerId";
         if (!json.contains("sourceVertexId")) missingFields << "sourceVertexId";
         if (!json.contains("targetVertexId")) missingFields << "targetVertexId";
         if (!json.contains("soldiers")) missingFields << "soldiers";
+        if (!json.contains("sourceVertexLabel")) missingFields << "sourceVertexLabel";
+        if (!json.contains("targetVertexLabel")) missingFields << "targetVertexLabel";
 
         if (!missingFields.isEmpty()) {
             throw std::invalid_argument(
-                QString("Missing required fields in Action JSON: %1").arg(missingFields.join(", ")).toStdString()
-                );
+                QString("Missing required fields in Action JSON: %1")
+                    .arg(missingFields.join(", "))
+                    .toStdString());
         }
 
         try {
+            std::string sourceLabel = json["sourceVertexLabel"].toString().toStdString();
+            std::string targetLabel = json["targetVertexLabel"].toString().toStdString();
+
+            // Create and return the Action object
             Action action(static_cast<ActionType>(json["type"].toInt()),
                           json["playerId"].toInt(),
                           json["sourceVertexId"].toInt(),
                           json["targetVertexId"].toInt(),
-                          json["soldiers"].toInt());
+                          json["soldiers"].toInt(),
+                          sourceLabel,
+                          targetLabel);
+
             action.id = json["id"].toInt(0); // Optional, default to 0 if not present
             return action;
-        } catch (...) {
-            throw std::invalid_argument("Invalid field types in Action JSON");
+
+        } catch (const std::exception &e) {
+            throw std::invalid_argument(
+                QString("Invalid field types in Action JSON: %1").arg(e.what()).toStdString());
         }
     }
+
 };
 
 static std::atomic<int> nextId;

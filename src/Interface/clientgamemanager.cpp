@@ -172,9 +172,10 @@ void ClientGameManager::setId(int id) {
 void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     if (data.contains("graph") && data["graph"].isObject()) {
         QJsonObject graphData = data["graph"].toObject();
+        qDebug() << graphData;
         clientGraph->deserialize(graphData);
         //
-        clientGraph->print_graph();
+        //clientGraph->print_graph();
     }
     if (data.contains("results") && data["results"].isObject()) {
         QJsonObject resultsObject = data["results"].toObject();
