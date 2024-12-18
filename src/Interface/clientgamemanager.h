@@ -106,5 +106,6 @@ public:
     QVector<Action> actionBuffer;
     graph::Graph*getClientGraph() const;
     Player getPlayer() const;
+    void removePlaceAction(int actionId);
 };
 #endif // CLIENTGAMEMANAGER_H

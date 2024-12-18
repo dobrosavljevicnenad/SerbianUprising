@@ -358,6 +358,25 @@ void ClientGameManager::removeActionById(int actionId) {
         std::cerr << "Action with ID " << actionId << " not found for Player " << ClientId << ".\n";
     }
 }
+void ClientGameManager::removePlaceAction(int actionId) {
+    auto& buffer = actionBuffer;
+
+    auto it = std::find_if(buffer.begin(), buffer.end(),
+                           [actionId](const Action& action) {
+                               return action.id == actionId;
+                           });
+
+    if (it != buffer.end()) {
+        graph::Vertex* cvor = clientGraph->get_vertex_by_id(it->sourceVertexId);
+        cvor->army.setSoldiers(cvor->army.getSoldiers() - it->soldiers);
+        std::cout << *it<<std::flush;
+        cvor->map_layer->setTroopCount(cvor->army.getSoldiers());
+        buffer.erase(it);
+        std::cout << "Action with ID " << actionId << " removed for Player " << ClientId << ".\n";
+    } else {
+        std::cerr << "Action with ID " << actionId << " not found for Player " << ClientId << ".\n";
+    }
+}
 
 void ClientGameManager::removeArrowByActionId(int actionId) {
     for (auto& [playerId, arrowList] : arrows) {

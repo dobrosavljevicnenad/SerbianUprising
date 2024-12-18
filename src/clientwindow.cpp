@@ -310,14 +310,9 @@ void ClientWindow::onMoveClicked(QListWidgetItem* item) {
         if (layer) {
             AddArmyManager& armyManager = gameManager->getArmyManager();
             armyManager.decreaseAvailableTroops(-troopsToRemove);
-            gameManager->layerToVertex[layer]->army.setSoldiers(
-            gameManager->layerToVertex[layer]->army.getSoldiers() - troopsToRemove);
-            layer->setTroopCount(layer->getTroopCount() - troopsToRemove);
-            //NE SMANJUJE TROOPCOUNT NA LAJERU kada nije zakomentarisan kod ispod ali radi
-            //ne brise action kada je ovaj kod ispod zakomentarisan ali smanjuje troopcount na layeru
             QVariant data = item->data(Qt::UserRole + 3);
             int actionId = data.toInt();
-            gameManager->removeActionById(actionId);
+            gameManager->removePlaceAction(actionId);
         }
 
         delete moveList->takeItem(moveList->row(item));
