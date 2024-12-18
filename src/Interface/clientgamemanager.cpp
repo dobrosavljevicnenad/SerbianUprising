@@ -233,7 +233,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
 
     updateGraphics();
     armyManager.addTerritory(player);
-    maxPlaceTroops = armyManager.calculateTotalTroops();
+    armyManager.calculateTotalTroops();
 
 }
 

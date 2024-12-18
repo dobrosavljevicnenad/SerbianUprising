@@ -17,13 +17,14 @@ public:
     void decreaseAvailableTroops(int troops);
     void endTurn();
     int newRecruits(Player player);
+    int totalTroops = 5;
+
 
 private:
     graph::Graph* graph;
     int territoryCount;
     int regionCount;
     int cityCount;
-    int totalTroops = 5;
     int territoryBonus = 1;
     int regionMultiplier = 2;
     int cityBonus = 5;
