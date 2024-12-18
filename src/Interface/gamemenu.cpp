@@ -43,7 +43,6 @@ void GameMenu::setupUI() {
     buttonFrame = new QFrame(this);
     buttonFrame->setMinimumWidth(450);
     buttonFrame->setMinimumHeight(350);
-    //buttonFrame->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     buttonFrame->setStyleSheet(R"(
         background-color: qlineargradient(
             spread:pad, x1:0, y1:0, x2:1, y2:1,
@@ -94,7 +93,7 @@ void GameMenu::setupUI() {
     fullScreenButton->setStyleSheet("font-size: 14px; background-color: #F44336; color: white; border-radius: 5px;}"
                                     "QPushButton::hover {font-size: 20px; padding: 7px;}");
     muteButton->setFixedSize(40, 40);
-    muteButton->setStyleSheet("font-size: 14px; background-color: #2196F3; color: white; border-radius: 5px;}"
+    muteButton->setStyleSheet("font-size: 14px; background-color: #FFB300; color: white; border-radius: 5px;}"
                               "QPushButton::hover {font-size: 20px; padding: 7px;}");
 
 
@@ -103,9 +102,7 @@ void GameMenu::setupUI() {
     buttonLayout->setSpacing(10);
     buttonLayout->addStretch();
     buttonLayout->addWidget(newGameButton, 0, Qt::AlignCenter);
-    //buttonLayout->addSpacing(10);
     buttonLayout->addWidget(settingsButton, 0, Qt::AlignCenter);
-    //buttonLayout->addSpacing(10);
     buttonLayout->addWidget(exitButton, 0, Qt::AlignCenter);
     buttonLayout->addStretch();
 
@@ -186,13 +183,6 @@ void GameMenu::resizeEvent(QResizeEvent *event) {
     newGameButton->setStyleSheet(buttonStyle);
     settingsButton->setStyleSheet(buttonStyle);
     exitButton->setStyleSheet(buttonStyle);
-
-    // if(newGameButton->size() != QSize(400, 100)){
-    //     QSize buttonSize(screenWidth / 2, 50);
-    //     newGameButton->setFixedSize(buttonSize);
-    //     settingsButton->setFixedSize(buttonSize);
-    //     exitButton->setFixedSize(buttonSize);
-    // }
 
     stackedWidget->layout()->setContentsMargins(10*scale, 70*scale, 10*scale, 10*scale);
 }
@@ -337,7 +327,6 @@ QWidget *GameMenu::createSettingsMenu() {
 
     layout->addWidget(scrollArea);
     layout->addSpacing(10);
-    //layout->addWidget(back, 0, Qt::AlignCenter);
 
     settingsMenu->setMinimumWidth(400);
     settingsMenu->setFixedHeight(400);

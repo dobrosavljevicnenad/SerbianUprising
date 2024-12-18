@@ -4,14 +4,6 @@
 #include <QPixmap>
 #include <QPalette>
 
-// void setWidgetBackground(QWidget *widget, const QString &imagePath) {
-//     QPixmap backgroundPixmap(":/resources/pozadina.png");
-//     backgroundPixmap = backgroundPixmap.scaled(widget->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-//     QPalette palette;
-//     palette.setBrush(QPalette::Window, QBrush(backgroundPixmap));
-//     widget->setPalette(palette);
-//     widget->setAutoFillBackground(true);
-// }
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), gameMenu(new GameMenu(this)),
@@ -28,16 +20,6 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(stackedWidget);
     stackedWidget->setCurrentWidget(gameMenu);
     stackedWidget->resize(gameMenu->size());
-
-    // stackedWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
-    // stackedWidget->resize(gameMenu->size());
-
-    // lobbyWindow->resize(gameMenu->size());
-    // createLobbyWindow->resize(gameMenu->size());
-
-    // setWidgetBackground(gameMenu, ":/resources/pozadina.png");
-    // setWidgetBackground(lobbyWindow, ":/resources/pozadina.png");
-    // setWidgetBackground(createLobbyWindow, ":/resources/pozadina.png");
 
 
     connect(gameMenu, &GameMenu::newGame, this, &MainWindow::showLobbyWindow);
