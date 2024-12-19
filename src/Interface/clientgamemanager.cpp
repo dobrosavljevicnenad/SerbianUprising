@@ -235,8 +235,24 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
 
         init = true;
     }
-
     updateGraphics();
+    for (auto &layer : layers) {
+        auto ver =layerToVertex[layer];
+        if(ver->player.getPlayerId() != ClientId){
+            layer->setTroopTextVisible(false);
+            layer->setColor(layer->getFogColor());
+            for (auto &vertex : clientGraph->neighbors(ver)){
+                if(vertex->player.getPlayerId() == ClientId){
+                    layer->setTroopTextVisible(true);
+                    layer->setColor(layer->getArmyColor());
+                    break;
+                }
+            }
+        }
+        else{
+            layer->setTroopTextVisible(true);
+        }
+    }
     armyManager.addTerritory(player);
     armyManager.calculateTotalTroops();
 

@@ -62,9 +62,11 @@ void MapLayer::setArmyColor(ArmyType armyType) {
     switch (armyType) {
     case ArmyType::HAJDUK:
         ArmyColor = QColor(198,54,60,255);
+        FogColor = QColor(204, 86, 91, 245);
         break;
     case ArmyType::JANISSARY:
         ArmyColor = QColor(0,149,48,255);
+        FogColor = QColor(44, 153, 79, 245);
         break;
     default:
         ArmyColor = QColor(255, 255, 255);
@@ -96,10 +98,17 @@ void MapLayer::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
         }
     }
 }
-
+void MapLayer::setTroopTextVisible(bool visible) {
+    if (troopText) {
+        troopText->setVisible(visible);
+    }
+}
 void MapLayer::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {
     if (isMainMode) {
-        setColor(ArmyColor);
+        if(troopText->isVisible())
+            setColor(ArmyColor);
+        else
+            setColor(FogColor);
     }
     QGraphicsPixmapItem::hoverLeaveEvent(event);
 }
@@ -109,6 +118,11 @@ void MapLayer::mousePressEvent(QGraphicsSceneMouseEvent *event) {
         emit layerClicked(this);
     }
     QGraphicsPixmapItem::mousePressEvent(event);
+}
+
+QColor MapLayer::getFogColor() const
+{
+    return FogColor;
 }
 void MapLayer::setMainMode(bool mainMode) {
     isMainMode = mainMode;

@@ -23,12 +23,16 @@ public:
     void setTroopCount(int count);
     void setColor(const QColor &newColor);
     void setArmyColor(ArmyType armyType);
+    void setTroopTextVisible(bool visible);
+
     QGraphicsTextItem *troopText;
     int getTroopCount() const;
     void setCurrentPlayer(int PlayerId);
     QPixmap get_m_originalPixmap();
     void setMainMode(bool mainMode);
     int getId();
+    QColor getArmyColor();
+
 signals:
     void layerClicked(MapLayer *layer);
 
@@ -37,7 +41,6 @@ protected:
     void hoverLeaveEvent(QGraphicsSceneHoverEvent *event) override;
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 
-    QColor getArmyColor();
 
 private:
     int id;
@@ -46,10 +49,11 @@ private:
     bool isMainMode = true;
     QPixmap m_originalPixmap;
     QColor ArmyColor;
+    QColor FogColor;
 
 public:
     QString labelName;
-
+    QColor getFogColor() const;
 };
 
 #endif // MAPLAYER_H
