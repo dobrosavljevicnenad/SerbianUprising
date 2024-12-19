@@ -176,5 +176,6 @@
         <file>resources/hills.png</file>
         <file>resources/forest.png</file>
         <file>resources/field.png</file>
+        <file>resources/Images/FogOfWar.png</file>
     </qresource>
 </RCC>

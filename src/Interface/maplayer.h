@@ -54,6 +54,7 @@ private:
 public:
     QString labelName;
     QColor getFogColor() const;
+    void setFogOfWar(const QColor &newColor);
 };
 
 #endif // MAPLAYER_H

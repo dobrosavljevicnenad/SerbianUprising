@@ -142,6 +142,7 @@ void ClientGameManager::applyMapMode(MapMode mode) {
     case MapMode::Default:
         map->setMainMode(true);
         map->resetMainGameMap();
+        updateFog();
         break;
     }
 }
@@ -222,23 +223,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
         init = true;
     }
     updateGraphics();
-    for (auto &layer : layers) {
-        auto ver =layerToVertex[layer];
-        if(ver->player.getPlayerId() != ClientId){
-            layer->setTroopTextVisible(false);
-            layer->setColor(layer->getFogColor());
-            for (auto &vertex : clientGraph->neighbors(ver)){
-                if(vertex->player.getPlayerId() == ClientId){
-                    layer->setTroopTextVisible(true);
-                    layer->setColor(layer->getArmyColor());
-                    break;
-                }
-            }
-        }
-        else{
-            layer->setTroopTextVisible(true);
-        }
-    }
+    updateFog();
     armyManager.addTerritory(player);
     armyManager.calculateTotalTroops();
 
@@ -452,6 +437,36 @@ void ClientGameManager::clearExplosions() {
         scene->removeItem(explosion);
     }
 }
+
+void ClientGameManager::updateFog()
+{
+    for (auto &layer : layers) {
+        auto ver = layerToVertex[layer];
+        bool playerIsClient = ver->player.getPlayerId() == ClientId;
+
+        if (!playerIsClient) {
+            layer->setTroopTextVisible(false);
+            QColor fogColor = layer->getFogColor();
+            layer->setFogOfWar(fogColor);
+
+            bool hasClientNeighbor = false;
+            for (auto &vertex : clientGraph->neighbors(ver)) {
+                if (vertex->player.getPlayerId() == ClientId) {
+                    hasClientNeighbor = true;
+                    break;
+                }
+            }
+
+            if (hasClientNeighbor) {
+                layer->setTroopTextVisible(true);
+                layer->setColor(layer->getArmyColor());
+            }
+        } else {
+            layer->setTroopTextVisible(true);
+        }
+    }
+}
+
 
 Year ClientGameManager::year(){
     return gameYear;

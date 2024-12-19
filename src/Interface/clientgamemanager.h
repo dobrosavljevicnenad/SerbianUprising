@@ -57,6 +57,7 @@ public:
     void disableInteractions();
     void enableInteractions();
     void clearExplosions();
+    void updateFog();
     QVector<QStringList> generateBattleResults();
     std::vector<Results> resultsVector;
     Year year();
