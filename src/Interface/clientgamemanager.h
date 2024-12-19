@@ -39,7 +39,7 @@ public:
     void initializeUI(QLabel* headerLabel, QPushButton* endTurnButton, QPushButton* moveButton, QPushButton* infoButton,
                       QListWidget* moveList,QPushButton* armyButton,QPushButton* reliefButton,QPushButton* regionsButton,
                       QPushButton*cityButton,QPushButton*cultureButton,QPushButton*defaultButton,NodeInfoWidget* nodeInfoWidget );
-    void initializeGraphics();
+    void initializeGraphics(QJsonObject graphData);
     void printConnections();
     void processDataFromServer(const QJsonObject& data);
     void updateGraphics();

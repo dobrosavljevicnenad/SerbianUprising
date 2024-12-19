@@ -37,7 +37,6 @@ void ClientWindow::setupGame() {
     view->setFocus();
     setCentralWidget(view);
     gameManager->setScene(scene);
-    gameManager->initializeGraphics();
 }
 
 void ClientWindow::setupUI() {

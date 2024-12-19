@@ -118,7 +118,7 @@
     "num_of_soldiers": 10,
     "position": {"x":683,"y": 561},
     "cityLevel": 1,
-    "culture": "TURKISH",
+    "culture": "SERBIAN",
     "terrain_type" : "MOUNTAIN"
   },
   {
@@ -205,7 +205,7 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":563,"y": 74},
-    "cityLevel": 2,
+    "cityLevel": 1,
     "culture": "SERBIAN",
     "terrain_type" : "HILL"
   },
@@ -216,7 +216,7 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":649,"y": 66},
-    "cityLevel": 2,
+    "cityLevel": 1,
     "culture": "SERBIAN",
     "terrain_type" : "FIELD"
   },
@@ -238,7 +238,7 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":849,"y": 158},
-    "cityLevel": 3,
+    "cityLevel": 1,
     "culture": "SERBIAN",
     "terrain_type" : "FIELD"
   },
@@ -249,7 +249,7 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":966,"y": 139},
-    "cityLevel": 2,
+    "cityLevel": 1,
     "culture": "SERBIAN",
     "terrain_type" : "FIELD"
   },
@@ -282,7 +282,7 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":1140,"y": 322},
-    "cityLevel": 2,
+    "cityLevel": 1,
     "culture": "SERBIAN",
     "terrain_type" : "FOREST"
   },
@@ -326,7 +326,7 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":1635,"y": 631},
-    "cityLevel": 3,
+    "cityLevel": 2,
     "culture": "SERBIAN",
     "terrain_type" : "FOREST"
   },
@@ -337,7 +337,7 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":1398,"y": 651},
-    "cityLevel": 3,
+    "cityLevel": 1,
     "culture": "SERBIAN",
     "terrain_type" : "HILL"
   },
@@ -359,7 +359,7 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":1472,"y": 895},
-    "cityLevel": 3,
+    "cityLevel": 2,
     "culture": "SERBIAN",
     "terrain_type" : "HILL"
   },
@@ -381,7 +381,7 @@
     "army_type": "HAJDUK",
     "num_of_soldiers": 10,
     "position": {"x":1417,"y": 320},
-    "cityLevel": 3,
+    "cityLevel": 2,
     "culture": "SERBIAN",
     "terrain_type" : "HILL"
   },
@@ -403,7 +403,7 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":1755,"y": 438},
-    "cityLevel": 2,
+    "cityLevel": 1,
     "culture": "SERBIAN",
     "terrain_type" : "HILL"
   },
@@ -436,7 +436,7 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":251,"y": 443},
-    "cityLevel": 2,
+    "cityLevel": 1,
     "culture": "TURKISH",
     "terrain_type" : "HILL"
   },
@@ -458,7 +458,7 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":450,"y": 686},
-    "cityLevel": 3,
+    "cityLevel": 2,
     "culture": "SERBIAN",
     "terrain_type" : "HILL"
   },
@@ -491,8 +491,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":1148,"y": 1804},
-      "cityLevel": 1,
-      "culture": "TURKISH",
+      "cityLevel": 3,
+      "culture": "GREEK",
       "terrain_type": "MOUNTAIN"
     },
     {
@@ -513,8 +513,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":1553,"y": 1811},
-      "cityLevel": 2,
-      "culture": "TURKISH",
+      "cityLevel": 1,
+      "culture": "GREEK",
       "terrain_type" : "HILL"
     },
     {
@@ -557,7 +557,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":1770,"y": 1655},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "GREEK",
       "terrain_type" : "FOREST"
     },
@@ -568,7 +568,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":943,"y": 1462},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "TURKISH",
       "terrain_type" : "HILL"
     },
@@ -590,7 +590,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":1112,"y": 1299},
-      "cityLevel": 3,
+      "cityLevel": 2,
       "culture": "TURKISH",
       "terrain_type" : "FOREST"
     },
@@ -601,7 +601,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":987,"y": 1278},
-      "cityLevel":3,
+      "cityLevel":2,
       "culture": "TURKISH",
       "terrain_type" : "HILL"
     },
@@ -623,7 +623,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":1880,"y": 1531},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "GREEK",
       "terrain_type" : "FIELD"
     },
@@ -645,7 +645,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":1982,"y": 1539},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "GREEK",
       "terrain_type" : "FOREST"
     },
@@ -656,7 +656,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":1664,"y": 1363},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "GREEK",
       "terrain_type" : "HILL"
     },
@@ -667,7 +667,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":1459,"y": 1371},
-      "cityLevel": 1,
+      "cityLevel": 3,
       "culture": "TURKISH",
       "terrain_type" : "MOUNTAIN"
     },
@@ -689,8 +689,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":2278,"y": 1285},
-      "cityLevel": 3,
-      "culture": "GREEK",
+      "cityLevel": 2,
+      "culture": "TURKISH",
       "terrain_type" : "HILL"
     },
     {
@@ -700,7 +700,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":2519,"y": 1248},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "TURKISH",
       "terrain_type" : "FOREST"
     },
@@ -712,7 +712,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2753,"y": 1274},
       "cityLevel": 2,
-      "culture": "GREEK",
+      "culture": "TURKISH",
       "terrain_type" : "FIELD"
     },
     {
@@ -722,8 +722,8 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":1850,"y": 1241},
-      "cityLevel": 2,
-      "culture": "GREEK",
+      "cityLevel": 1,
+      "culture": "TURKISH",
       "terrain_type" : "FOREST"
     },
     {
@@ -734,7 +734,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2118,"y": 1177},
       "cityLevel": 1,
-      "culture": "BULGARIAN",
+      "culture": "TURKISH",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -745,7 +745,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2311,"y": 1094},
       "cityLevel": 1,
-      "culture": "BULGARIAN",
+      "culture": "TURKISH",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -756,7 +756,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2770,"y": 1157},
       "cityLevel": 1,
-      "culture": "BULGARIAN",
+      "culture": "TURKISH",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -766,7 +766,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":2994,"y": 1188},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "TURKISH",
       "terrain_type" : "FOREST"
     },
@@ -777,7 +777,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":3131,"y": 1213},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "TURKISH",
       "terrain_type" : "FIELD"
     },
@@ -799,7 +799,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":3274,"y": 913},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "TURKISH",
       "terrain_type" : "FOREST"
     },
@@ -821,7 +821,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":2972,"y": 916},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "BULGARIAN",
       "terrain_type" : "FIELD"
     },
@@ -854,7 +854,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":3464,"y": 474},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "BULGARIAN",
       "terrain_type" : "FOREST"
     },
@@ -876,7 +876,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":2852,"y": 303},
-      "cityLevel": 2,
+      "cityLevel": 3,
       "culture": "BULGARIAN",
       "terrain_type" : "FIELD"
     },
@@ -887,7 +887,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":3363,"y": 0},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "ROMANIAN",
       "terrain_type" : "FOREST"
     },
@@ -931,7 +931,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":2158,"y": 0},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "ROMANIAN",
       "terrain_type" : "HILL"
     },
@@ -953,7 +953,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":1877,"y": 207},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "ROMANIAN",
       "terrain_type" : "FIELD"
     },
@@ -964,7 +964,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":2083,"y": 318},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "ROMANIAN",
       "terrain_type" : "FIELD"
     },
@@ -975,7 +975,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":3097,"y": 146},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "ROMANIAN",
       "terrain_type" : "FIELD"
     },
@@ -997,7 +997,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":2483,"y": 143},
-      "cityLevel": 3,
+      "cityLevel": 1,
       "culture": "ROMANIAN",
       "terrain_type" : "FIELD"
     },
@@ -1008,7 +1008,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":2158,"y": 170},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "ROMANIAN",
       "terrain_type" : "FOREST"
     },
@@ -1074,7 +1074,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":1979,"y":526},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "BULGARIAN",
       "terrain_type" : "FOREST"
     },
@@ -1096,7 +1096,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":2685,"y":501},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "BULGARIAN",
       "terrain_type" : "FIELD"
     },
@@ -1107,7 +1107,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":2928,"y":551},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "BULGARIAN",
       "terrain_type" : "HILL"
     },
@@ -1140,7 +1140,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":1863,"y":719},
-      "cityLevel": 1,
+      "cityLevel": 3,
       "culture": "BULGARIAN",
       "terrain_type" : "MOUNTAIN"
     },
@@ -1151,7 +1151,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":2369,"y":704},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "BULGARIAN",
       "terrain_type" : "HILL"
     },
@@ -1162,7 +1162,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":2588,"y":833},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "BULGARIAN",
       "terrain_type" : "FIELD"
     },
@@ -1173,7 +1173,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":2776,"y":996},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "BULGARIAN",
       "terrain_type" : "FIELD"
     },
@@ -1207,7 +1207,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1991,"y":1053},
       "cityLevel": 1,
-      "culture": "BULGARIAN",
+      "culture": "TURKISH",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -1228,7 +1228,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":1010,"y":1001},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "TURKISH",
       "terrain_type" : "FOREST"
     },
@@ -1261,7 +1261,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":1734,"y":1186},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "TURKISH",
       "terrain_type" : "HILL"
     },
@@ -1305,7 +1305,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":1472,"y":1038},
-      "cityLevel": 1,
+      "cityLevel": 2,
       "culture": "TURKISH",
       "terrain_type" : "FOREST"
     },
@@ -1316,7 +1316,7 @@
       "army_type": "JANISSARY",
       "num_of_soldiers": 10,
       "position": {"x":1698,"y":954},
-      "cityLevel": 2,
+      "cityLevel": 1,
       "culture": "TURKISH",
       "terrain_type" : "HILL"
     },
