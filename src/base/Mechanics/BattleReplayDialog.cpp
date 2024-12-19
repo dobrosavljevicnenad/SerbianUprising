@@ -1,4 +1,5 @@
 #include "BattleReplayDialog.h"
+#include <qevent.h>
 
 
 BattleReplayDialog::BattleReplayDialog(QWidget *parent, int tableIndex, Results results)
@@ -7,7 +8,7 @@ BattleReplayDialog::BattleReplayDialog(QWidget *parent, int tableIndex, Results 
     QVBoxLayout *layout = new QVBoxLayout(this);
     replayButton = new QPushButton("Replay", this);
     connect(replayButton, &QPushButton::clicked, this, &BattleReplayDialog::onReplayClicked);
-    setWindowFlags(Qt::FramelessWindowHint);
+    //setWindowFlags(Qt::FramelessWindowHint);
 
     replayButton->setStyleSheet(getButtonStyle());
     replayButton->setFixedSize(100, 40);
@@ -90,7 +91,13 @@ BattleReplayDialog::BattleReplayDialog(QWidget *parent, int tableIndex, Results 
                                  "border-image: url(%1);}").arg(getTerrainImage(results.getTerrain()));
     setStyleSheet(styleSheet);
 }
-
+void BattleReplayDialog::keyPressEvent(QKeyEvent *event)  {
+    if (event->key() == Qt::Key_Escape) {
+        emit reject();
+    } else {
+        QDialog::keyPressEvent(event);
+    }
+}
 QPixmap BattleReplayDialog::getSoldierImage(ArmyType armyType) {
     switch(armyType) {
     case ArmyType::HAJDUK:
@@ -181,7 +188,7 @@ void BattleReplayDialog::onReplayClicked() {
     while(std::difftime(std::time(0),start)<1) {
         QCoreApplication::processEvents();
     }
-        if(defenderNumber != 0 && attackerNumber != 0){
+    if(defenderNumber != 0 && attackerNumber != 0){
         for(auto round : results.getRounds()){
             std::srand(static_cast<unsigned>(std::time(nullptr)));
             int firingDef = (std::ceil(static_cast<double>(round.defenderHits)/10));
@@ -307,7 +314,7 @@ void BattleReplayDialog::onReplayClicked() {
     }
     closeButton = new QPushButton("Close", this);
     closeButton->setStyleSheet(getButtonStyle());
-    connect(closeButton, &QPushButton::clicked, this, &QDialog::accept);
+    connect(closeButton, &QPushButton::clicked, this, &QDialog::reject);
     centerTopLayout->addWidget(closeButton);
     centerTopLayout->setAlignment(Qt::AlignCenter);
     QHBoxLayout *resultsHboxLayout = new QHBoxLayout();

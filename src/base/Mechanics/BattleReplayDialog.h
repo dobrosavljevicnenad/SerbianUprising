@@ -39,6 +39,7 @@ private:
     QVBoxLayout* defenderResultLayout;
     QVBoxLayout* attackerResultLayout;
     QString getButtonStyle();
+    void keyPressEvent(QKeyEvent *event);
 };
 
 #endif // BATTLEREPLAYDIALOG_H

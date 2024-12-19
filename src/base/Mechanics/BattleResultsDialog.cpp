@@ -12,7 +12,7 @@ BattleResultsDialog::BattleResultsDialog(const std::vector<Results> battleResult
 
     QPushButton *closeButton = new QPushButton("Close", this);
     closeButton->setStyleSheet(getButtonStyle());
-    connect(closeButton, &QPushButton::clicked, this, &QDialog::accept);
+    connect(closeButton, &QPushButton::clicked, this, &QDialog::reject);
     closeButton->setFixedSize(100, 40);
     closeButton->move(this->width() - closeButton->width() - 25, 10);
 

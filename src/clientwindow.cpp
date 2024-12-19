@@ -265,7 +265,10 @@ void ClientWindow::onEndTurnClicked() {
         qWarning() << "Game manager is not available!";
         return;
     }
-
+    if(gameManager->getArmyManager().totalTroops != 0){
+        QMessageBox::warning(nullptr, "Army", "Deploy all army first!");
+        return;
+    }
     QVector<Action> actions = gameManager->actionBuffer;
     int clientId = gameManager->ClientId;
 
@@ -311,10 +314,9 @@ void ClientWindow::onMoveClicked(QListWidgetItem* item) {
         if (layer) {
             AddArmyManager& armyManager = gameManager->getArmyManager();
             armyManager.decreaseAvailableTroops(-troopsToRemove);
-            gameManager->layerToVertex[layer]->army.setSoldiers(
-            gameManager->layerToVertex[layer]->army.getSoldiers() - troopsToRemove);
-            layer->setTroopCount(layer->getTroopCount() - troopsToRemove);
-            gameManager->maxPlaceTroops += troopsToRemove;
+            QVariant data = item->data(Qt::UserRole + 3);
+            int actionId = data.toInt();
+            gameManager->removePlaceAction(actionId);
         }
 
         delete moveList->takeItem(moveList->row(item));
@@ -410,17 +412,16 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer){
 
         bool ok;
 
-        if(gameManager->maxPlaceTroops == 0){
+        if(armyManager.totalTroops == 0){
             QMessageBox::warning(this, tr("Error"), tr("Not enought avalible soldiers"));
             selectedLayer = nullptr;
             return;
         }
-        std::string message = "Enter the number of soldiers up to " + std::to_string(gameManager->maxPlaceTroops) + " to place: ";
+        std::string message = "Enter the number of soldiers up to " + std::to_string(armyManager.totalTroops) + " to place: ";
         int troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
-                                               tr(message.c_str()), 0, 0, gameManager->maxPlaceTroops, 1, &ok);
+                                               tr(message.c_str()), 0, 0, armyManager.totalTroops, 1, &ok);
         if (ok && troopsToAdd > 0) {
             layer->setTroopCount(layer->getTroopCount() + troopsToAdd);
-            gameManager->maxPlaceTroops -= troopsToAdd;
             int pid = gameManager->ClientId;
             int source = selected_vertex->id();
 
@@ -435,6 +436,8 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer){
             item->setData(Qt::UserRole, QVariant::fromValue(selected_vertex->id()));
             item->setData(Qt::UserRole + 1, QVariant(troopsToAdd));
             item->setData(Qt::UserRole + 2, "Place");
+            item->setData(Qt::UserRole + 3, newAction.id);
+
             moveList->addItem(item);
         }
     }

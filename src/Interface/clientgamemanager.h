@@ -105,8 +105,8 @@ public:
     int ClientId;
     BattleResultsDialog *dialog;
     QVector<Action> actionBuffer;
-    int maxPlaceTroops = 0;
     graph::Graph*getClientGraph() const;
     Player getPlayer() const;
+    void removePlaceAction(int actionId);
 };
 #endif // CLIENTGAMEMANAGER_H
