@@ -34,11 +34,11 @@ class ClientGameManager : public QObject{
 
 public:
     explicit ClientGameManager(QGraphicsScene* scene,  QObject* parent = nullptr);
-    enum class MapMode { Default, Relief, Regions, CityLevel };
+    enum class MapMode { Default, Relief, Regions,Culture, CityLevel };
     void applyMapMode(MapMode mode);
     void initializeUI(QLabel* headerLabel, QPushButton* endTurnButton, QPushButton* moveButton, QPushButton* infoButton,
                       QListWidget* moveList,QPushButton* armyButton,QPushButton* reliefButton,QPushButton* regionsButton,
-                      QPushButton*cityButton,QPushButton*defaultButton,NodeInfoWidget* nodeInfoWidget );
+                      QPushButton*cityButton,QPushButton*cultureButton,QPushButton*defaultButton,NodeInfoWidget* nodeInfoWidget );
     void initializeGraphics();
     void printConnections();
     void processDataFromServer(const QJsonObject& data);
@@ -98,6 +98,7 @@ private://UI
     QPushButton* regionsButton;
     QPushButton* cityButton;
     QPushButton* defaultButton;
+    QPushButton* cultureButton;
 
 public:
     unsigned TurnId = 1;

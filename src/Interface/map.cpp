@@ -26,6 +26,25 @@ void Map::generateRegionMap() {
     scene->update();
 }
 
+void Map::generateCultureMap() {
+    for (const auto& [layer, vertex] : layerToVertex) {
+        QColor color = getColorForCulture(vertex->culture); // Assuming vertex has `culture` property
+        layer->setColor(color);
+    }
+    scene->update();
+}
+
+QColor Map::getColorForCulture(CultureType culture) {
+    switch (culture) {
+    case CultureType::TURKISH: return QColor(255, 215, 0);     // Gold
+    case CultureType::SERBIAN: return QColor(139, 69, 19);      // SaddleBrown
+    case CultureType::GREEK: return QColor(0, 128, 255);    // Light Blue
+    case CultureType::ROMANIAN: return QColor(255, 0, 255);    // Magenta
+    case CultureType::BULGARIAN: return QColor(0, 128, 0);     // Dark Green
+    default: return QColor(Qt::white); // Fallback color
+    }
+}
+
 void Map::updateLayerToVertex(const QMap<MapLayer*, graph::Vertex*>& newLayerToVertex) {
     // Clear the existing std::map
     layerToVertex.clear();

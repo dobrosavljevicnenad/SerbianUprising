@@ -8,7 +8,7 @@ ClientGameManager::ClientGameManager(QGraphicsScene* scene,QObject* parent)
 
 void ClientGameManager::initializeUI(QLabel* headerLabel, QPushButton* endTurnButton, QPushButton* moveButton, QPushButton* infoButton,
                   QListWidget* moveList,QPushButton* armyButton,QPushButton* reliefButton,QPushButton* regionsButton,
-                  QPushButton*cityButton,QPushButton*defaultButton,NodeInfoWidget* nodeInfoWidget ) {
+                  QPushButton*cityButton,QPushButton*cultureButton,QPushButton*defaultButton,NodeInfoWidget* nodeInfoWidget ) {
     this->headerLabel = headerLabel;
     this->endTurnButton = endTurnButton;
     this->moveButton = moveButton;
@@ -18,6 +18,7 @@ void ClientGameManager::initializeUI(QLabel* headerLabel, QPushButton* endTurnBu
     this->defaultButton = defaultButton;
     this->regionsButton = regionsButton;
     this->cityButton = cityButton;
+    this->cultureButton = cultureButton;
     this->reliefButton = reliefButton;
     this->nodeInfoWidget = nodeInfoWidget;
 }
@@ -146,6 +147,10 @@ void ClientGameManager::applyMapMode(MapMode mode) {
     case MapMode::Regions:
         map->setMainMode(false);
         map->generateRegionMap();
+        break;
+    case MapMode::Culture:
+        map->setMainMode(false);
+        map->generateCultureMap();
         break;
     case MapMode::CityLevel:
         map->setMainMode(false);

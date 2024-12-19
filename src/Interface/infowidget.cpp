@@ -46,6 +46,22 @@ NodeInfoWidget::NodeInfoWidget(QMap<MapLayer*, graph::Vertex*> layerToVertex, QW
 
     mainLayout->addLayout(picturesLayout);
 
+    bioLabel = new QLabel("Relief: mountain", this);
+    bioLabel->setWordWrap(true);
+    bioLabel->setAlignment(Qt::AlignLeft);
+    bioLabel->setStyleSheet("color: white;");
+    mainLayout->addWidget(bioLabel);
+
+    regionLabel = new QLabel(this);
+    regionLabel->setAlignment(Qt::AlignLeft);
+    regionLabel->setStyleSheet("color: white;");
+    mainLayout->addWidget(regionLabel);
+
+    cultureLabel = new QLabel("Owner: Player 2", this);
+    cultureLabel->setAlignment(Qt::AlignLeft);
+    cultureLabel->setStyleSheet("color: white;");
+    mainLayout->addWidget(cultureLabel);
+
     troopCountLabel = new QLabel("Troop Count: 10", this);
     troopCountLabel->setAlignment(Qt::AlignLeft);
     troopCountLabel->setStyleSheet("color: white;");
@@ -56,21 +72,8 @@ NodeInfoWidget::NodeInfoWidget(QMap<MapLayer*, graph::Vertex*> layerToVertex, QW
     cityLabel->setStyleSheet("color: white;");
     mainLayout->addWidget(cityLabel);
 
-    regionLabel = new QLabel(this);
-    regionLabel->setAlignment(Qt::AlignLeft);
-    regionLabel->setStyleSheet("color: white;");
-    mainLayout->addWidget(regionLabel);
 
-    ownerLabel = new QLabel("Owner: Player 2", this);
-    ownerLabel->setAlignment(Qt::AlignLeft);
-    ownerLabel->setStyleSheet("color: white;");
-    mainLayout->addWidget(ownerLabel);
 
-    bioLabel = new QLabel("Relief: mountain", this);
-    bioLabel->setWordWrap(true);
-    bioLabel->setAlignment(Qt::AlignLeft);
-    bioLabel->setStyleSheet("color: white;");
-    mainLayout->addWidget(bioLabel);
 
     setLayout(mainLayout);
     setFixedSize(320, 450);
@@ -87,7 +90,7 @@ void NodeInfoWidget::updateNodeInfo(MapLayer* layer) {
     titleLabel->setText(QString::fromStdString(vertex->label()));
 
     troopCountLabel->setText(QString("Troop Count: %1").arg(layer->getTroopCount()));
-    ownerLabel->setText(QString("Owner: Player %1").arg(vertex->player.getPlayerId()));
+    cultureLabel->setText(QString("Culture: %1").arg(Culture::toString(vertex->culture)));
     if(vertex->army.armyType()== ArmyType::HAJDUK){
         setStyleSheet(
             "NodeInfoWidget { "

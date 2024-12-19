@@ -7,7 +7,8 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":29,"y": 21},
-    "cityLevel": 2,
+    "cityLevel": 1,
+    "culture": "SERBIAN",
     "terrain_type" : "HILL"
   },
   {
@@ -18,6 +19,7 @@
     "num_of_soldiers": 10,
     "position": {"x":62,"y": 96},
     "cityLevel": 1,
+    "culture": "TURKISH",
     "terrain_type" : "FOREST"
   },
   {
@@ -27,7 +29,8 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":178,"y": 16},
-    "cityLevel": 2,
+    "cityLevel": 1,
+    "culture": "SERBIAN",
     "terrain_type" : "FOREST"
   },
   {
@@ -38,6 +41,7 @@
     "num_of_soldiers": 10,
     "position": {"x":409,"y": 52},
     "cityLevel": 2,
+    "culture": "SERBIAN",
     "terrain_type" : "FIELD"
   },
   {
@@ -47,7 +51,8 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":234,"y": 112},
-    "cityLevel": 2,
+    "cityLevel": 1,
+    "culture": "SERBIAN",
     "terrain_type" : "FOREST"
   },
   {
@@ -58,6 +63,7 @@
     "num_of_soldiers": 10,
     "position": {"x":283,"y": 192},
     "cityLevel": 2,
+    "culture": "TURKISH",
     "terrain_type" : "HILL"
   },
   {
@@ -67,7 +73,8 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":339,"y": 346},
-    "cityLevel": 2,
+    "cityLevel": 1,
+    "culture": "SERBIAN",
     "terrain_type" : "FOREST"
   },
   {
@@ -77,7 +84,8 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":441,"y": 144},
-    "cityLevel": 3,
+    "cityLevel": 2,
+    "culture": "SERBIAN",
     "terrain_type" : "HILL"
   },
   {
@@ -87,7 +95,8 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":465,"y": 245},
-    "cityLevel": 1,
+    "cityLevel": 2,
+    "culture": "TURKISH",
     "terrain_type" : "MOUNTAIN"
   },
   {
@@ -98,6 +107,7 @@
     "num_of_soldiers": 10,
     "position": {"x":558,"y": 377},
     "cityLevel": 3,
+    "culture": "TURKISH",
     "terrain_type" : "HILL"
   },
   {
@@ -108,6 +118,7 @@
     "num_of_soldiers": 10,
     "position": {"x":683,"y": 561},
     "cityLevel": 1,
+    "culture": "TURKISH",
     "terrain_type" : "MOUNTAIN"
   },
   {
@@ -118,6 +129,7 @@
     "num_of_soldiers": 10,
     "position": {"x":728,"y": 227},
     "cityLevel": 2,
+    "culture": "TURKISH",
     "terrain_type" : "FOREST"
   },
   {
@@ -127,7 +139,8 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":849,"y": 269},
-    "cityLevel": 3,
+    "cityLevel": 1,
+    "culture": "SERBIAN",
     "terrain_type" : "FOREST"
   },
   {
@@ -137,7 +150,8 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":867,"y": 363},
-    "cityLevel": 2,
+    "cityLevel": 1,
+    "culture": "SERBIAN",
     "terrain_type" : "FOREST"
   },
   {
@@ -148,6 +162,7 @@
     "num_of_soldiers": 10,
     "position": {"x":855,"y": 451},
     "cityLevel": 1,
+    "culture": "TURKISH",
     "terrain_type" : "MOUNTAIN"
   },
   {
@@ -158,6 +173,7 @@
     "num_of_soldiers": 10,
     "position": {"x":866,"y": 576},
     "cityLevel": 1,
+    "culture": "TURKISH",
     "terrain_type" : "FOREST"
   },
   {
@@ -168,6 +184,7 @@
     "num_of_soldiers": 10,
     "position": {"x":997,"y": 687},
     "cityLevel": 1,
+    "culture": "TURKISH",
     "terrain_type" : "MOUNTAIN"
   },
   {
@@ -178,6 +195,7 @@
     "num_of_soldiers": 10,
     "position": {"x":613,"y": 145},
     "cityLevel": 2,
+    "culture": "TURKISH",
     "terrain_type" : "FOREST"
   },
   {
@@ -188,6 +206,7 @@
     "num_of_soldiers": 10,
     "position": {"x":563,"y": 74},
     "cityLevel": 2,
+    "culture": "SERBIAN",
     "terrain_type" : "HILL"
   },
   {
@@ -197,7 +216,8 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":649,"y": 66},
-    "cityLevel": 3,
+    "cityLevel": 2,
+    "culture": "SERBIAN",
     "terrain_type" : "FIELD"
   },
   {
@@ -207,7 +227,8 @@
     "army_type": "JANISSARY",
     "num_of_soldiers": 10,
     "position": {"x":784,"y": 98},
-    "cityLevel": 2,
+    "cityLevel": 1,
+    "culture": "SERBIAN",
     "terrain_type" : "FIELD"
   },
   {
@@ -218,6 +239,7 @@
     "num_of_soldiers": 10,
     "position": {"x":849,"y": 158},
     "cityLevel": 3,
+    "culture": "SERBIAN",
     "terrain_type" : "FIELD"
   },
   {
@@ -228,6 +250,7 @@
     "num_of_soldiers": 10,
     "position": {"x":966,"y": 139},
     "cityLevel": 2,
+    "culture": "SERBIAN",
     "terrain_type" : "FIELD"
   },
   {
@@ -238,6 +261,7 @@
     "num_of_soldiers": 10,
     "position": {"x":1238,"y": 181},
     "cityLevel": 3,
+    "culture": "SERBIAN",
     "terrain_type" : "HILL"
   },
   {
@@ -248,6 +272,7 @@
     "num_of_soldiers": 10,
     "position": {"x":1441,"y": 187},
     "cityLevel": 2,
+    "culture": "SERBIAN",
     "terrain_type" : "FOREST"
   },
   {
@@ -258,6 +283,7 @@
     "num_of_soldiers": 10,
     "position": {"x":1140,"y": 322},
     "cityLevel": 2,
+    "culture": "SERBIAN",
     "terrain_type" : "FOREST"
   },
   {
@@ -268,6 +294,7 @@
     "num_of_soldiers": 10,
     "position": {"x":990,"y": 395},
     "cityLevel": 1,
+    "culture": "SERBIAN",
     "terrain_type" : "MOUNTAIN"
   },
   {
@@ -278,6 +305,7 @@
     "num_of_soldiers": 10,
     "position": {"x":1199,"y": 502},
     "cityLevel": 1,
+    "culture": "SERBIAN",
     "terrain_type" : "MOUNTAIN"
   },
   {
@@ -288,6 +316,7 @@
     "num_of_soldiers": 10,
     "position": {"x":1480,"y": 501},
     "cityLevel": 2,
+    "culture": "SERBIAN",
     "terrain_type" : "FIELD"
   },
   {
@@ -298,6 +327,7 @@
     "num_of_soldiers": 10,
     "position": {"x":1635,"y": 631},
     "cityLevel": 3,
+    "culture": "SERBIAN",
     "terrain_type" : "FOREST"
   },
   {
@@ -308,6 +338,7 @@
     "num_of_soldiers": 10,
     "position": {"x":1398,"y": 651},
     "cityLevel": 3,
+    "culture": "SERBIAN",
     "terrain_type" : "HILL"
   },
   {
@@ -318,6 +349,7 @@
     "num_of_soldiers": 10,
     "position": {"x":1282,"y": 736},
     "cityLevel": 2,
+    "culture": "TURKISH",
     "terrain_type" : "HILL"
   },
   {
@@ -328,6 +360,7 @@
     "num_of_soldiers": 10,
     "position": {"x":1472,"y": 895},
     "cityLevel": 3,
+    "culture": "SERBIAN",
     "terrain_type" : "HILL"
   },
   {
@@ -338,6 +371,7 @@
     "num_of_soldiers": 10,
     "position": {"x":1213,"y": 899},
     "cityLevel": 1,
+    "culture": "TURKISH",
     "terrain_type" : "MOUNTAIN"
   },
   {
@@ -348,6 +382,7 @@
     "num_of_soldiers": 10,
     "position": {"x":1417,"y": 320},
     "cityLevel": 3,
+    "culture": "SERBIAN",
     "terrain_type" : "HILL"
   },
   {
@@ -358,6 +393,7 @@
     "num_of_soldiers": 10,
     "position": {"x":1660,"y": 252},
     "cityLevel": 2,
+    "culture": "SERBIAN",
     "terrain_type" : "FIELD"
   },
   {
@@ -368,6 +404,7 @@
     "num_of_soldiers": 10,
     "position": {"x":1755,"y": 438},
     "cityLevel": 2,
+    "culture": "SERBIAN",
     "terrain_type" : "HILL"
   },
   {
@@ -378,6 +415,7 @@
     "num_of_soldiers": 10,
     "position": {"x":1817,"y": 227},
     "cityLevel": 1,
+    "culture": "SERBIAN",
     "terrain_type" : "FIELD"
   },
   {
@@ -388,6 +426,7 @@
     "num_of_soldiers": 10,
     "position": {"x":122,"y": 221},
     "cityLevel": 1,
+    "culture": "SERBIAN",
     "terrain_type" : "FOREST"
   },
   {
@@ -398,6 +437,7 @@
     "num_of_soldiers": 10,
     "position": {"x":251,"y": 443},
     "cityLevel": 2,
+    "culture": "TURKISH",
     "terrain_type" : "HILL"
   },
   {
@@ -408,6 +448,7 @@
     "num_of_soldiers": 10,
     "position": {"x":292,"y": 498},
     "cityLevel": 3,
+    "culture": "TURKISH",
     "terrain_type" : "HILL"
   },
   {
@@ -418,6 +459,7 @@
     "num_of_soldiers": 10,
     "position": {"x":450,"y": 686},
     "cityLevel": 3,
+    "culture": "SERBIAN",
     "terrain_type" : "HILL"
   },
   {
@@ -428,6 +470,7 @@
     "num_of_soldiers": 10,
     "position": {"x":759,"y": 777},
     "cityLevel": 2,
+    "culture": "SERBIAN",
     "terrain_type" : "MOUNTAIN"
   },
   {
@@ -438,6 +481,7 @@
     "num_of_soldiers": 10,
     "position": {"x":1039,"y": 839},
     "cityLevel": 1,
+    "culture": "TURKISH",
     "terrain_type" : "MOUNTAIN"
   },
     {
@@ -448,6 +492,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1148,"y": 1804},
       "cityLevel": 1,
+      "culture": "TURKISH",
       "terrain_type": "MOUNTAIN"
     },
     {
@@ -458,6 +503,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1028,"y": 1603},
       "cityLevel": 2,
+      "culture": "TURKISH",
       "terrain_type" : "HILL"
     },
     {
@@ -468,6 +514,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1553,"y": 1811},
       "cityLevel": 2,
+      "culture": "TURKISH",
       "terrain_type" : "HILL"
     },
     {
@@ -478,6 +525,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1809,"y": 1784},
       "cityLevel": 2,
+      "culture": "GREEK",
       "terrain_type" : "FIELD"
     },
     {
@@ -488,6 +536,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1424,"y": 1556},
       "cityLevel": 1,
+      "culture": "GREEK",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -498,6 +547,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1862,"y": 1714},
       "cityLevel": 1,
+      "culture": "GREEK",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -508,6 +558,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1770,"y": 1655},
       "cityLevel": 2,
+      "culture": "GREEK",
       "terrain_type" : "FOREST"
     },
     {
@@ -518,6 +569,7 @@
       "num_of_soldiers": 10,
       "position": {"x":943,"y": 1462},
       "cityLevel": 2,
+      "culture": "TURKISH",
       "terrain_type" : "HILL"
     },
     {
@@ -528,6 +580,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1265,"y": 1353},
       "cityLevel": 1,
+      "culture": "TURKISH",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -538,6 +591,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1112,"y": 1299},
       "cityLevel": 3,
+      "culture": "TURKISH",
       "terrain_type" : "FOREST"
     },
     {
@@ -548,6 +602,7 @@
       "num_of_soldiers": 10,
       "position": {"x":987,"y": 1278},
       "cityLevel":3,
+      "culture": "TURKISH",
       "terrain_type" : "HILL"
     },
     {
@@ -558,6 +613,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1732,"y": 1551},
       "cityLevel":2,
+      "culture": "GREEK",
       "terrain_type" : "HILL"
     },
     {
@@ -568,6 +624,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1880,"y": 1531},
       "cityLevel": 2,
+      "culture": "GREEK",
       "terrain_type" : "FIELD"
     },
     {
@@ -578,6 +635,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1990,"y": 1486},
       "cityLevel": 3,
+      "culture": "TURKISH",
       "terrain_type" : "FIELD"
     },
     {
@@ -588,6 +646,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1982,"y": 1539},
       "cityLevel": 2,
+      "culture": "GREEK",
       "terrain_type" : "FOREST"
     },
     {
@@ -598,6 +657,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1664,"y": 1363},
       "cityLevel": 2,
+      "culture": "GREEK",
       "terrain_type" : "HILL"
     },
     {
@@ -608,6 +668,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1459,"y": 1371},
       "cityLevel": 1,
+      "culture": "TURKISH",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -618,6 +679,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2077,"y": 1377},
       "cityLevel": 2,
+      "culture": "GREEK",
       "terrain_type" : "FIELD"
     },
     {
@@ -628,6 +690,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2278,"y": 1285},
       "cityLevel": 3,
+      "culture": "GREEK",
       "terrain_type" : "HILL"
     },
     {
@@ -638,6 +701,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2519,"y": 1248},
       "cityLevel": 2,
+      "culture": "TURKISH",
       "terrain_type" : "FOREST"
     },
     {
@@ -648,6 +712,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2753,"y": 1274},
       "cityLevel": 2,
+      "culture": "GREEK",
       "terrain_type" : "FIELD"
     },
     {
@@ -658,6 +723,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1850,"y": 1241},
       "cityLevel": 2,
+      "culture": "GREEK",
       "terrain_type" : "FOREST"
     },
     {
@@ -668,6 +734,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2118,"y": 1177},
       "cityLevel": 1,
+      "culture": "BULGARIAN",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -678,6 +745,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2311,"y": 1094},
       "cityLevel": 1,
+      "culture": "BULGARIAN",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -688,6 +756,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2770,"y": 1157},
       "cityLevel": 1,
+      "culture": "BULGARIAN",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -698,6 +767,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2994,"y": 1188},
       "cityLevel": 2,
+      "culture": "TURKISH",
       "terrain_type" : "FOREST"
     },
     {
@@ -708,6 +778,7 @@
       "num_of_soldiers": 10,
       "position": {"x":3131,"y": 1213},
       "cityLevel": 2,
+      "culture": "TURKISH",
       "terrain_type" : "FIELD"
     },
     {
@@ -718,6 +789,7 @@
       "num_of_soldiers": 10,
       "position": {"x":3504,"y": 1189},
       "cityLevel": 3,
+      "culture": "TURKISH",
       "terrain_type" : "HILL"
     },
     {
@@ -728,6 +800,7 @@
       "num_of_soldiers": 10,
       "position": {"x":3274,"y": 913},
       "cityLevel": 2,
+      "culture": "TURKISH",
       "terrain_type" : "FOREST"
     },
     {
@@ -738,6 +811,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2970,"y": 1053},
       "cityLevel": 2,
+      "culture": "TURKISH",
       "terrain_type" : "FIELD"
     },
     {
@@ -748,6 +822,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2972,"y": 916},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -758,6 +833,7 @@
       "num_of_soldiers": 10,
       "position": {"x":3053,"y": 755},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "FOREST"
     },
     {
@@ -768,6 +844,7 @@
       "num_of_soldiers": 10,
       "position": {"x":3200,"y": 500},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "HILL"
     },
     {
@@ -778,6 +855,7 @@
       "num_of_soldiers": 10,
       "position": {"x":3464,"y": 474},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "FOREST"
     },
     {
@@ -788,6 +866,7 @@
       "num_of_soldiers": 10,
       "position": {"x":3415,"y": 184},
       "cityLevel": 2,
+      "culture": "ROMANIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -798,6 +877,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2852,"y": 303},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -808,6 +888,7 @@
       "num_of_soldiers": 10,
       "position": {"x":3363,"y": 0},
       "cityLevel": 2,
+      "culture": "ROMANIAN",
       "terrain_type" : "FOREST"
     },
     {
@@ -818,6 +899,7 @@
       "num_of_soldiers": 10,
       "position": {"x":3088,"y": 0},
       "cityLevel": 2,
+      "culture": "ROMANIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -828,6 +910,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2792,"y": 0},
       "cityLevel": 2,
+      "culture": "ROMANIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -838,6 +921,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2481,"y": 0},
       "cityLevel": 1,
+      "culture": "ROMANIAN",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -848,6 +932,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2158,"y": 0},
       "cityLevel": 2,
+      "culture": "ROMANIAN",
       "terrain_type" : "HILL"
     },
     {
@@ -858,6 +943,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1882,"y": 19},
       "cityLevel": 2,
+      "culture": "ROMANIAN",
       "terrain_type" : "FOREST"
     },
     {
@@ -868,6 +954,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1877,"y": 207},
       "cityLevel": 2,
+      "culture": "ROMANIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -878,6 +965,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2083,"y": 318},
       "cityLevel": 2,
+      "culture": "ROMANIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -888,6 +976,7 @@
       "num_of_soldiers": 10,
       "position": {"x":3097,"y": 146},
       "cityLevel": 2,
+      "culture": "ROMANIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -898,6 +987,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2740,"y": 174},
       "cityLevel": 3,
+      "culture": "ROMANIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -908,6 +998,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2483,"y": 143},
       "cityLevel": 3,
+      "culture": "ROMANIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -918,6 +1009,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2158,"y": 170},
       "cityLevel": 2,
+      "culture": "ROMANIAN",
       "terrain_type" : "FOREST"
     },
     {
@@ -928,6 +1020,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2460,"y": 389},
       "cityLevel": 2,
+      "culture": "ROMANIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -938,6 +1031,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2659,"y": 371},
       "cityLevel": 2,
+      "culture": "ROMANIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -948,6 +1042,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1973,"y": 433},
       "cityLevel": 2,
+      "culture": "ROMANIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -958,6 +1053,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1842,"y": 392},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -968,6 +1064,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1862,"y":513},
       "cityLevel": 1,
+      "culture": "BULGARIAN",
       "terrain_type" : "HILL"
     },
     {
@@ -978,6 +1075,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1979,"y":526},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "FOREST"
     },
     {
@@ -988,6 +1086,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2308,"y":529},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "FOREST"
     },
     {
@@ -998,6 +1097,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2685,"y":501},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -1008,6 +1108,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2928,"y":551},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "HILL"
     },
     {
@@ -1018,6 +1119,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2755,"y":662},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "HILL"
     },
     {
@@ -1028,6 +1130,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2838,"y":780},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "FOREST"
     },
     {
@@ -1038,6 +1141,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1863,"y":719},
       "cityLevel": 1,
+      "culture": "BULGARIAN",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -1048,6 +1152,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2369,"y":704},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "HILL"
     },
     {
@@ -1058,6 +1163,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2588,"y":833},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -1068,6 +1174,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2776,"y":996},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -1078,6 +1185,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2448,"y":849},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "HILL"
     },
     {
@@ -1088,6 +1196,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2196,"y":850},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "FIELD"
     },
     {
@@ -1098,6 +1207,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1991,"y":1053},
       "cityLevel": 1,
+      "culture": "BULGARIAN",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -1108,6 +1218,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1768,"y":851},
       "cityLevel": 2,
+      "culture": "BULGARIAN",
       "terrain_type" : "FOREST"
     },
     {
@@ -1118,6 +1229,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1010,"y":1001},
       "cityLevel": 2,
+      "culture": "TURKISH",
       "terrain_type" : "FOREST"
     },
     {
@@ -1128,6 +1240,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1233,"y":1146},
       "cityLevel": 1,
+      "culture": "TURKISH",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -1138,6 +1251,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1506,"y":1257},
       "cityLevel": 1,
+      "culture": "TURKISH",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -1148,6 +1262,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1734,"y":1186},
       "cityLevel": 2,
+      "culture": "TURKISH",
       "terrain_type" : "HILL"
     },
     {
@@ -1158,6 +1273,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1809,"y":1078},
       "cityLevel": 2,
+      "culture": "TURKISH",
       "terrain_type" : "FOREST"
     },
     {
@@ -1168,6 +1284,7 @@
       "num_of_soldiers": 10,
       "position": {"x":897,"y":933},
       "cityLevel": 2,
+      "culture": "TURKISH",
       "terrain_type" : "FOREST"
     },
     {
@@ -1178,6 +1295,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1279,"y":1495},
       "cityLevel": 1,
+      "culture": "GREEK",
       "terrain_type" : "MOUNTAIN"
     },
     {
@@ -1188,6 +1306,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1472,"y":1038},
       "cityLevel": 1,
+      "culture": "TURKISH",
       "terrain_type" : "FOREST"
     },
     {
@@ -1198,6 +1317,7 @@
       "num_of_soldiers": 10,
       "position": {"x":1698,"y":954},
       "cityLevel": 2,
+      "culture": "TURKISH",
       "terrain_type" : "HILL"
     },
     {
@@ -1208,6 +1328,7 @@
       "num_of_soldiers": 10,
       "position": {"x":2986,"y":1516},
       "cityLevel": 2,
+      "culture": "TURKISH",
       "terrain_type" : "HILL"
     }
   ],

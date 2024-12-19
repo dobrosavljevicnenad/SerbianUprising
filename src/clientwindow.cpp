@@ -20,7 +20,7 @@ ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *paren
     setupUI();
     connectSignals();
     gameManager->initializeUI(headerLabel, endTurnButton, moveButton, infoButton,moveList,
-                              armyButton,reliefButton,regionsButton,cityButton,defaultButton,nodeInfoWidget);
+                              armyButton,reliefButton,regionsButton,cityButton,cultureButton,defaultButton,nodeInfoWidget);
     connect(gameManager, &ClientGameManager::gameYearUpdated, this, &ClientWindow::updateYearLabel);
 
 }
@@ -178,6 +178,7 @@ void ClientWindow::setupUI() {
     reliefButton = new QPushButton("Relief");
     regionsButton = new QPushButton("Regions");
     cityButton = new QPushButton("City");
+    cultureButton = new QPushButton("Culture");
     defaultButton = new QPushButton("Main");
 
     // Button Style
@@ -189,19 +190,19 @@ void ClientWindow::setupUI() {
     reliefButton->setStyleSheet(mapButtonStyle);
     regionsButton->setStyleSheet(mapButtonStyle);
     cityButton->setStyleSheet(mapButtonStyle);
+    cultureButton->setStyleSheet(mapButtonStyle);
     defaultButton->setStyleSheet(mapButtonStyle);
 
     // Add buttons to layout
     mapModeLayout->addWidget(reliefButton,0, Qt::AlignCenter);
     mapModeLayout->addWidget(regionsButton,0, Qt::AlignCenter);
     mapModeLayout->addWidget(cityButton,0, Qt::AlignCenter);
+    mapModeLayout->addWidget(cultureButton,0, Qt::AlignCenter);
     mapModeLayout->addWidget(defaultButton,0, Qt::AlignCenter);
 
     mapModeContainer->setLayout(mapModeLayout);
     // Move to bottom-left corner of the viewport
     mapModeContainer->move(view->viewport()->rect().bottomLeft() + QPoint(10, -60)); // Adjust position
-
-
 
     QList<QWidget*> layoutWidgets = {headerLabel, infoButton, moveButton, armyButton, endTurnButton, moveList};
 
@@ -242,6 +243,9 @@ void ClientWindow::connectSignals() {
     });
     connect(cityButton, &QPushButton::clicked, this, [this]() {
         gameManager->applyMapMode(ClientGameManager::MapMode::CityLevel);
+    });
+    connect(cultureButton, &QPushButton::clicked, this, [this]() {
+        gameManager->applyMapMode(ClientGameManager::MapMode::Culture);
     });
     connect(defaultButton, &QPushButton::clicked, this, [this]() {
         gameManager->applyMapMode(ClientGameManager::MapMode::Default);
@@ -311,7 +315,6 @@ void ClientWindow::onMoveClicked(QListWidgetItem* item) {
             gameManager->layerToVertex[layer]->army.getSoldiers() - troopsToRemove);
             layer->setTroopCount(layer->getTroopCount() - troopsToRemove);
             gameManager->maxPlaceTroops += troopsToRemove;
-
         }
 
         delete moveList->takeItem(moveList->row(item));
@@ -402,7 +405,6 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
 void ClientWindow::handlePlaceArmy(MapLayer* layer){
     int currentPlayerId = gameManager->ClientId;
     graph::Vertex* selected_vertex = gameManager->layerToVertex[layer];
-    qDebug() << selected_vertex->player.getPlayerId() << "=" << gameManager->ClientId;
     if ( selected_vertex->player.getPlayerId() == currentPlayerId ) {
         AddArmyManager& armyManager = gameManager->getArmyManager();
 

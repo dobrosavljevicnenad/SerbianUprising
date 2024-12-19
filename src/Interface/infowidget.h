@@ -23,7 +23,7 @@ private:
     QLabel* imageLabel;
     QLabel* backgroundImageLabel;
     QLabel* troopCountLabel;
-    QLabel* ownerLabel;
+    QLabel* cultureLabel;
     QLabel* neighborsLabel;
     QLabel* bioLabel;
     QLabel* cityLabel;

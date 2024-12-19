@@ -47,6 +47,7 @@ private:
     QPushButton* regionsButton;
     QPushButton* cityButton;
     QPushButton* defaultButton;
+    QPushButton* cultureButton;
 
     //QMediaPlayer* mediaPlayer;
     //QAudioOutput* audioOutput;

@@ -117,8 +117,8 @@ void Graph::print_graph() const {
         << "\n[Terrain]: " << vertex->terrain.to_string(vertex->terrain.getTerrain())
         << "\n[Player]: " << vertex->player.getPlayerId()
         << "\n[city]: " << vertex->city->getLevel()
-        //<< "\n[region]: " << vertex->region->getRegionName()
-        << "\n[culture]: " << vertex->culture
+        << "\n[region]: " << vertex->region->getRegionName()
+        //<< "\n[culture]: " << vertex->culture
         << "\n----------------------" << std::endl;
     }
 }
@@ -171,9 +171,10 @@ void Graph::deserialize(const QJsonObject &json) {
             int armyCount = vertexJson["num_of_soldiers"].toInt();
             std::string armyType = vertexJson["army_type"].toString().toStdString();
             std::string terrainType = vertexJson["terrain_type"].toString().toStdString();
+            QString cultureStr = vertexJson["culture"].toString();
 
             int playerId = (armyType == "HAJDUK") ? 1 : 2;
-            CultureType culture = (armyType == "HAJDUK") ? CultureType::SERBIAN : CultureType::TURKISH;
+            CultureType culture = Culture::fromString(cultureStr);
 
             // City Level and City Initialization
             int cityLevel = vertexJson["cityLevel"].toInt();
