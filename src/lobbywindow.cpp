@@ -105,6 +105,29 @@ void LobbyWindow::connectSignals() {
     connect(backButton, &QPushButton::clicked, this, &LobbyWindow::returnToMenu);
     connect(createLobbyButton, &QPushButton::clicked, this, &LobbyWindow::createLobby);
     connect(joinLobbyButton, &QPushButton::clicked, this, &LobbyWindow::onJoinGame);
+    if (connectionManager) {
+        connect(connectionManager, &ConnectionManager::gameStarted, this, [this](){
+            std::cout << "USAO SAM U HANDLE" << std::endl;
+            clientManager = connectionManager->getClientManager();
+            qDebug() << "Game is starting."<< clientManager->ClientId;
+
+            if (clientManager->ClientId == 1) {
+                qDebug() << "Starting game for Player 1";
+            } else if (clientManager->ClientId == 2) {
+                qDebug() << "Starting game for Player 2";
+            } else {
+                qWarning() << "Unknown Client ID:" << clientManager->ClientId;
+                return;
+            }
+
+            gameWindow = new ClientWindow(clientManager, nullptr);
+            gameWindow->show();
+            close();
+        });
+        qDebug() << "Signals connected successfully.";
+    } else {
+        qWarning() << "Failed to connect signals: ConnectionManager is nullptr.";
+    }
 }
 
 void LobbyWindow::onCreateServer() {

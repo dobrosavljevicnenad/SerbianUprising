@@ -195,6 +195,7 @@ void CreateLobbyWindow::setupUI() {
             qWarning() << "Failed to connect signals: ConnectionManager is nullptr.";
         }
     });
+
 }
 
 void CreateLobbyWindow::updateArmySelection(const QString &player1Army) {
@@ -240,6 +241,7 @@ void CreateLobbyWindow::resizeEvent(QResizeEvent *event) {
 }
 
 void CreateLobbyWindow::handleGameStart() {
+    std::cout << "USAO SAM U HANDLE" << std::endl;
     clientManager = connectionManager->getClientManager();
     qDebug() << "Game is starting."<< clientManager->ClientId;
 

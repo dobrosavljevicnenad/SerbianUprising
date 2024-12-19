@@ -28,7 +28,7 @@ bool ConnectionManager::initializeClient() {
     });
 
     connect(client, &Client::gameStarted, this, &ConnectionManager::gameStarted);
-
+    std::cout << "POVEZANA OBA KLIJENTA" << std::endl;
     return true;
 }
 

@@ -24,7 +24,7 @@ public:
 
 private:
     ConnectionManager *connectionManager;
-    //ClientWindow * gameWindow;
+    ClientWindow * gameWindow;
 
     ServerGameManager* serverManager;
     ClientGameManager* clientManager;
