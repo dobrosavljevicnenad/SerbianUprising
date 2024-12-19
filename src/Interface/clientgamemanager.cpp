@@ -23,25 +23,8 @@ void ClientGameManager::initializeUI(QLabel* headerLabel, QPushButton* endTurnBu
     this->nodeInfoWidget = nodeInfoWidget;
 }
 
-void ClientGameManager::initializeGraphics() {
-    QString filePath = "../../resources/init.json";
-    QFile file(filePath);
-
-    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
-        qWarning() << "Could not open file:" << filePath;
-        return;
-    }
-
-    QByteArray jsonData = file.readAll();
-    file.close();
-
-    QJsonDocument doc = QJsonDocument::fromJson(jsonData);
-    if (doc.isNull() || !doc.isObject()) {
-        qWarning() << "Invalid JSON file format.";
-        return;
-    }
-
-    QJsonObject rootObj = doc.object();
+void ClientGameManager::initializeGraphics(QJsonObject graphData) {
+    QJsonObject rootObj = graphData;
 
     MapLayer *background = new MapLayer("background",":/resources/Project/Pozadina.png", false);
     MapLayer *baseLayer = new MapLayer("baseLayer",":/resources/Project/Slika.png", false);
@@ -177,8 +160,11 @@ void ClientGameManager::setId(int id) {
 void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     if (data.contains("graph") && data["graph"].isObject()) {
         QJsonObject graphData = data["graph"].toObject();
-        qDebug() << graphData;
+
+        //qDebug() << graphData;
         clientGraph->deserialize(graphData);
+        if(!init)
+            initializeGraphics(graphData);
         //
         //clientGraph->print_graph();
     }
