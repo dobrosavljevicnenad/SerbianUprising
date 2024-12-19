@@ -45,6 +45,8 @@ void CreateLobbyWindow::setupUI() {
         }
     )");
 
+    connect(savedGamesTable, &QTableWidget::cellClicked, this, &CreateLobbyWindow::onFileClicked);
+
     QWidget *armyBox = new QWidget();
     armyBox->setStyleSheet(R"(
         background-color: rgba(255, 228, 196, 180);
@@ -152,6 +154,8 @@ void CreateLobbyWindow::setupUI() {
     startButton->setFixedSize(400, 100);
     exitButton->setFixedSize(400, 100);
 
+    connect(loadButton, &QPushButton::clicked, this, &CreateLobbyWindow::onLoadGameClicked);
+
     QVBoxLayout *buttonLayout = new QVBoxLayout();
     buttonLayout->addWidget(loadButton);
     buttonLayout->addWidget(startButton);
@@ -206,7 +210,7 @@ void CreateLobbyWindow::updateArmySelection(const QString &player1Army) {
 }
 
 void CreateLobbyWindow::loadSavedGames() {
-    QDir directory("../Interface/saves/");
+    QDir directory("../../resources/saved_games/");
     QStringList jsonFiles = directory.entryList(QStringList() << "*.json", QDir::Files);
 
     savedGamesTable->setRowCount(0);
@@ -257,4 +261,23 @@ void CreateLobbyWindow::handleGameStart() {
     gameWindow = new ClientWindow(clientManager, nullptr);
     gameWindow->show();
     close();
+}
+
+
+//slots
+void CreateLobbyWindow::onFileClicked(int row, int column) {
+    // Dobijamo ime fajla iz odgovarajuće ćelije
+    QTableWidgetItem *item = savedGamesTable->item(row, column);
+    if (item) {
+        selectedFile = item->text(); // Ime fajla iz ćelije
+        QMessageBox::information(this, "File Clicked", QString("Kliknuo si na \"%1\"").arg(selectedFile));
+    }
+}
+
+void CreateLobbyWindow::onLoadGameClicked() {
+    if (selectedFile.isEmpty()) {
+        QMessageBox::warning(this, "No File Selected", "Niste izabrali nijedan fajl!");
+    } else {
+        QMessageBox::information(this, "Load Game", QString("Loaded map: \"%1\"").arg(selectedFile));
+    }
 }

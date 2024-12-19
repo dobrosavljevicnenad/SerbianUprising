@@ -44,12 +44,16 @@ private:
     ConnectionManager *connectionManager;
     ClientWindow *gameWindow;
 
+    QString selectedFile;
+
 signals:
     void backToLobby();
 
 private slots:
     void updateArmySelection(const QString &playerArmy);
     void handleGameStart();
+    void onFileClicked(int row, int column);
+    void onLoadGameClicked();
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
