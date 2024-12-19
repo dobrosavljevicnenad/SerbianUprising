@@ -6,8 +6,6 @@
 MoveArmy::MoveArmy(Graph& graph) : m_graph(graph), player1Attacks({}) {}
 
 bool MoveArmy::executeAttack(int playerId, std::vector<Vertex*> sources, Vertex* target, std::vector<unsigned> soldiersToMove) {
-    qDebug() << "Size of player1Attacks: " << player1Attacks.size();
-
     while (playerId == 2 && !player1Attacks.empty()) {
         QCoreApplication::processEvents();
     }
@@ -37,8 +35,6 @@ bool MoveArmy::executeAttack(int playerId, std::vector<Vertex*> sources, Vertex*
     connect(battleWorker, &BattleArmiesWorker::battleFinished, this, &MoveArmy::onBattleFinished);
 
     battleWorker->start();
-    qDebug() << "Size of player1Attacks: " << player1Attacks.size();
-
     return true;
 }
 
@@ -82,7 +78,6 @@ void MoveArmy::onMergeCompleted(bool success) {
 
 void MoveArmy::onBattleFinished(int playerId, bool success, Army sentArmy, std::vector<Vertex*> sources,
                                 std::vector<unsigned> soldiersToMove, Vertex* target, unsigned sent, Results results) {
-    qDebug() << "Size of player1Attacks: " << player1Attacks.size();
     emit battleFinished(results);
     if (success) {
         std::cout << "Battle completed successfully.\n";
@@ -113,8 +108,6 @@ void MoveArmy::onBattleFinished(int playerId, bool success, Army sentArmy, std::
     }
     if(playerId == 1 && !player1Attacks.empty())
         player1Attacks.pop_back();
-    qDebug() << "Size of player1Attacks: " << player1Attacks.size();
-
 }
 
 Graph& MoveArmy::getGraph() const {

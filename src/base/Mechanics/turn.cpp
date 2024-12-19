@@ -135,8 +135,7 @@ QString Turn::GetCurrentAction(const Action& action) {
 void Turn::executePlaceAction(const Action& action) {
     Vertex* source = m_graph.get_vertex_by_id(action.sourceVertexId);
     int soldiers = source->army.getSoldiers();
-    if (source->player.getPlayerId() == action.playerId)
-        source->army.setSoldiers(soldiers+action.soldiers);
+    source->army.setSoldiers(soldiers+action.soldiers);
 }
 
 void Turn::executeMoveAction(const Action& action) {
