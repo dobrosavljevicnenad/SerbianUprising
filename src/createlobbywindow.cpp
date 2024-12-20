@@ -246,6 +246,8 @@ void CreateLobbyWindow::resizeEvent(QResizeEvent *event) {
 
 void CreateLobbyWindow::handleGameStart() {
     clientManager = connectionManager->getClientManager();
+    if (selectedFile != nullptr)
+        clientManager->loadGamePath = selectedFile;
 
     qDebug() << "Game is starting."<< clientManager->ClientId;
 
@@ -276,7 +278,6 @@ void CreateLobbyWindow::onFileClicked(int row, int column) {
 
 void CreateLobbyWindow::onLoadGameClicked() {
     if (selectedFile.isEmpty()) {
-        clientManager->message = selectedFile;
         QMessageBox::warning(this, "No File Selected", "Niste izabrali nijedan fajl!");
     } else {
         QMessageBox::information(this, "Load Game", QString("Loaded map: \"%1\"").arg(selectedFile));

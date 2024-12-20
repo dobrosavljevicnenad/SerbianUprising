@@ -64,7 +64,7 @@ void ClientGameManager::initializeGraphics() {
 
     this->layers = layers;
 
-    if (message != nullptr) {
+    if (ClientId == 1 && loadGamePath != nullptr) {
         loadGame();
     }
 }
@@ -350,27 +350,27 @@ void ClientGameManager::saveGame() {
 }
 
 void ClientGameManager::loadGame() {
-    QString directoryPath = "../../resources/saved_games/" + message;
+    QString fullPath = "../../resources/saved_games/" + loadGamePath;
 
-    QString filePath = QFileDialog::getOpenFileName(
-        nullptr,
-        "Load Saved Game",
-        directoryPath,
-        "JSON Files (*.json);;All Files (*)"
-        );
+    // QString filePath = QFileDialog::getOpenFileName(
+    //     nullptr,
+    //     "Load Saved Game",
+    //     directoryPath,
+    //     "JSON Files (*.json);;All Files (*)"
+    //     );
 
-    if (filePath.isEmpty()) {
-        QMessageBox::warning(nullptr, "Load Cancelled", "No file selected. Load operation cancelled.");
-        return;
-    }
+    // if (filePath.isEmpty()) {
+    //     QMessageBox::warning(nullptr, "Load Cancelled", "No file selected. Load operation cancelled.");
+    //     return;
+    // }
 
-    if (!fileManager.fileExists(filePath)) {
-        qWarning() << "Saved game file does not exist:" << filePath;
-        QMessageBox::critical(nullptr, "Load Failed", "Selected file does not exist:\n" + filePath);
-        return;
-    }
+    // if (!fileManager.fileExists(filePath)) {
+    //     qWarning() << "Saved game file does not exist:" << filePath;
+    //     QMessageBox::critical(nullptr, "Load Failed", "Selected file does not exist:\n" + filePath);
+    //     return;
+    // }
 
-    QJsonObject graphData = fileManager.loadFromFile(filePath);
+    QJsonObject graphData = fileManager.loadFromFile(fullPath);
     if (graphData.isEmpty()) {
         qWarning() << "Failed to load game state. File might be corrupt.";
         QMessageBox::critical(nullptr, "Load Failed", "Failed to load game state. File might be corrupt.");

@@ -44,7 +44,7 @@ private:
     ConnectionManager *connectionManager;
     ClientWindow *gameWindow;
 
-    QString selectedFile;
+    QString selectedFile = nullptr;
 
 signals:
     void backToLobby();
