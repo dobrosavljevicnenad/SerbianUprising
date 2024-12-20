@@ -16,7 +16,6 @@ void ClientGameManager::initializeUI(
 }
 
 void ClientGameManager::initializeGraphics() {
-    std::cout << message.toStdString();
     QString filePath = "../../resources/init.json";
     QFile file(filePath);
 
@@ -64,6 +63,10 @@ void ClientGameManager::initializeGraphics() {
     }
 
     this->layers = layers;
+
+    if (message != nullptr) {
+        loadGame();
+    }
 }
 
 void ClientGameManager::setScene(MapScene *newScene) {
@@ -347,7 +350,7 @@ void ClientGameManager::saveGame() {
 }
 
 void ClientGameManager::loadGame() {
-    QString directoryPath = "../../resources/saved_games/";
+    QString directoryPath = "../../resources/saved_games/" + message;
 
     QString filePath = QFileDialog::getOpenFileName(
         nullptr,

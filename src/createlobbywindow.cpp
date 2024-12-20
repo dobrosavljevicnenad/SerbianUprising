@@ -245,9 +245,8 @@ void CreateLobbyWindow::resizeEvent(QResizeEvent *event) {
 }
 
 void CreateLobbyWindow::handleGameStart() {
-    std::cout << "USAO SAM U HANDLE" << std::endl;
     clientManager = connectionManager->getClientManager();
-    clientManager->message = "message";
+
     qDebug() << "Game is starting."<< clientManager->ClientId;
 
     if (clientManager->ClientId == 1) {
@@ -270,13 +269,14 @@ void CreateLobbyWindow::onFileClicked(int row, int column) {
     // Dobijamo ime fajla iz odgovarajuće ćelije
     QTableWidgetItem *item = savedGamesTable->item(row, column);
     if (item) {
-        selectedFile = item->text(); // Ime fajla iz ćelije
+        selectedFile = item->text();
         QMessageBox::information(this, "File Clicked", QString("Kliknuo si na \"%1\"").arg(selectedFile));
     }
 }
 
 void CreateLobbyWindow::onLoadGameClicked() {
     if (selectedFile.isEmpty()) {
+        clientManager->message = selectedFile;
         QMessageBox::warning(this, "No File Selected", "Niste izabrali nijedan fajl!");
     } else {
         QMessageBox::information(this, "Load Game", QString("Loaded map: \"%1\"").arg(selectedFile));
