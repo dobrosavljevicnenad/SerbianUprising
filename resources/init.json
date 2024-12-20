@@ -1702,5 +1702,70 @@
       "regionName": "Wallachia",
       "layers": ["TurnuSeverin","TurnuMagurele","Bran","Focsani","Braila","Calafat","Calarasi","Slatina","Giurgiu","Bucharest","Ployeshti","Pitesti","Kraiova","Negol"]
     }
+  ],
+  "events": [
+    {
+      "type": "BATTLE",
+      "description": "Karadjordje takes on  Cetinje",
+      "outcome": "Cetinje goes to Hajduk army and adds 30 more soldiers to this territory",
+      "outcome_gain_soldiers": 30,
+      "army": "HAJDUK",
+      "territory": "Cetinje",
+      "date": "5-5-1805"
+    },
+    {
+      "type": "PROGRESS",
+      "description": "Progress of territory Beograd",
+      "outcome": "Beograd is progressing and adds 50 more soldiers to hajduk army",
+      "outcome_gain": 10,
+      "territory": ["Beograd"],
+      "army": "HAJDUK",
+      "date": "5-5-1806"
+    },
+    {
+      "type": "UPRISING",
+      "description": "First Serbian uprising",
+      "outcome": "Beggining of war with Turkeys, moral is uprising and all of the Serbian territoris gain more soldiers",
+      "outcome_gain": 30,
+      "territory": ["Sabac", "Uzice", "Valjevo","Raska","Krusevac","Kragujevac","Valjevo","Beograd","Smederevo","Negotin","Zajecar","Kladovo"],
+      "army": "HAJDUK",
+      "date": "5-5-1804"
+    },
+    {
+      "type": "UPRISING",
+      "description": "Second Serbian uprising",
+      "outcome": "Beggining of war with Turkeys, moral is uprising and all of the Serbian territoris gain more soldiers",
+      "outcome_gain": 30,
+      "territory": ["Sabac", "Uzice", "Valjevo","Raska","Krusevac","Kragujevac","Valjevo","Beograd","Smederevo","Negotin","Zajecar","Kladovo"],
+      "army": "HAJDUK",
+      "date": "5-5-1814"
+    },
+    {
+      "type": "ECONOMIC_EVENT",
+      "description": "Serbians starts economic relations with Austria",
+      "outcome": "Beogradski Pasaluk has been progressing",
+      "outcome_gain_soldiers":50,
+      "territory": ["Beograd", "Smederevo"],
+      "army": "HAJDUK",
+      "date": "07-20-1807"
+    },
+    {
+      "type": "NATURAL_DISASTER",
+      "description": "Natural disaster in Turkey",
+      "outcome": "Minus 50 soldiers to JANISSARY army because of Natural disaster",
+      "outcome_gain_soldiers": -50,
+      "territory": "Istanbul",
+      "army": "JANISSARY",
+      "date": "5-5-1810"
+    },
+    {
+      "type": "BATTLE",
+      "description": "Suppresion of first serbian uprising",
+      "outcome": "All serbian territories back to JANISSARY army",
+      "outcome_gain_soldiers": 10,
+      "army": "JANISSARY",
+      "territory": ["Sabac", "Uzice", "Valjevo","Raska","Krusevac","Kragujevac","Valjevo","Beograd","Smederevo","Negotin","Zajecar","Kladovo"],
+      "date": "5-5-1813"
+    }
   ]
 }

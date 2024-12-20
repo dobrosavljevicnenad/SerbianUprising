@@ -3,20 +3,6 @@
         <file>resources/music/Volley.mp3</file>
         <file>resources/music/Janissary.mp3</file>
         <file>resources/music/Hajduk.mp3</file>
-        <file>resources/Images/base.png</file>
-        <file>resources/Images/Layer1.png</file>
-        <file>resources/Images/Layer2.png</file>
-        <file>resources/Images/Layer3.png</file>
-        <file>resources/Images/Layer4.png</file>
-        <file>resources/Images/Layer5.png</file>
-        <file>resources/Images/Layer6.png</file>
-        <file>resources/Images/Layer7.png</file>
-        <file>resources/Images/Layer8.png</file>
-        <file>resources/Images/Layer9.png</file>
-        <file>resources/Images/Layer10.png</file>
-        <file>resources/Images/Layer11.png</file>
-        <file>resources/Images/Layer12.png</file>
-        <file>resources/Images/Layer13.png</file>
         <file>resources/pozadina.png</file>
         <file>resources/button.png</file>
         <file>resources/out.png</file>
@@ -169,7 +155,6 @@
         <file>resources/Project/Xanthi.png</file>
         <file>resources/Project/Zajecar.png</file>
         <file>resources/Project/Zvornik.png</file>
-        <file>resources/border2.png</file>
         <file>resources/init.json</file>
         <file>resources/border1.png</file>
         <file>resources/mountain.png</file>
