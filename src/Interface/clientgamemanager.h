@@ -61,6 +61,7 @@ public:
     void saveGame();
     void loadGame();
     void processLoadData(const QJsonObject &gameData);
+    QString message;
 
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
     int getClientId() const;

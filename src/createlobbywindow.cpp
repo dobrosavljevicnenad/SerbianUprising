@@ -247,6 +247,7 @@ void CreateLobbyWindow::resizeEvent(QResizeEvent *event) {
 void CreateLobbyWindow::handleGameStart() {
     std::cout << "USAO SAM U HANDLE" << std::endl;
     clientManager = connectionManager->getClientManager();
+    clientManager->message = "message";
     qDebug() << "Game is starting."<< clientManager->ClientId;
 
     if (clientManager->ClientId == 1) {

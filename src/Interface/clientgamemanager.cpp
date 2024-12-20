@@ -16,6 +16,7 @@ void ClientGameManager::initializeUI(
 }
 
 void ClientGameManager::initializeGraphics() {
+    std::cout << message.toStdString();
     QString filePath = "../../resources/init.json";
     QFile file(filePath);
 
