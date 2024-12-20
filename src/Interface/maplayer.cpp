@@ -199,6 +199,12 @@ void MapLayer::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
 void MapLayer::setTroopTextVisible(bool visible) {
     if (troopText) {
         troopText->setVisible(visible);
+        if(!visible){
+            troopText->setPlainText(QString::fromStdString("Unknown"));
+        }
+        else{
+            troopText->setPlainText(QString::number(troopCount));
+        }
     }
 }
 void MapLayer::hoverLeaveEvent(QGraphicsSceneHoverEvent *event) {

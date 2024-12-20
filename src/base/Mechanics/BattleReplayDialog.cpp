@@ -8,7 +8,7 @@ BattleReplayDialog::BattleReplayDialog(QWidget *parent, int tableIndex, Results 
     QVBoxLayout *layout = new QVBoxLayout(this);
     replayButton = new QPushButton("Replay", this);
     connect(replayButton, &QPushButton::clicked, this, &BattleReplayDialog::onReplayClicked);
-    //setWindowFlags(Qt::FramelessWindowHint);
+    setWindowFlags(Qt::FramelessWindowHint);
 
     replayButton->setStyleSheet(getButtonStyle());
     replayButton->setFixedSize(100, 40);

@@ -89,7 +89,7 @@ void NodeInfoWidget::updateNodeInfo(MapLayer* layer) {
     auto vertex = layerToVertex[layer];
     titleLabel->setText(QString::fromStdString(vertex->label()));
 
-    troopCountLabel->setText(QString("Troop Count: %1").arg(layer->getTroopCount()));
+    troopCountLabel->setText(QString("Troop Count: %1").arg(layer->troopText->toPlainText()));
     cultureLabel->setText(QString("Culture: %1").arg(Culture::toString(vertex->culture)));
     if(vertex->army.armyType()== ArmyType::HAJDUK){
         setStyleSheet(

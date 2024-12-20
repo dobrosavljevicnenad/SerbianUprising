@@ -30,6 +30,7 @@ private:
     QGridLayout *containerLayout;              // Layout for tables inside the container
     QWidget *tablesContainer;                  // Container widget for tables
     QString getButtonStyle();
+    QPushButton *closeButton;
 };
 
 #endif // BATTLERESULTSDIALOG_H

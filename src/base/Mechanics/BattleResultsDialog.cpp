@@ -10,7 +10,7 @@ BattleResultsDialog::BattleResultsDialog(const std::vector<Results> battleResult
     tablesContainer->setGeometry(265, 255, 606, 262);
     tablesContainer->setStyleSheet("background: transparent;");
 
-    QPushButton *closeButton = new QPushButton("Close", this);
+    closeButton = new QPushButton("Close", this);
     closeButton->setStyleSheet(getButtonStyle());
     connect(closeButton, &QPushButton::clicked, this, &QDialog::reject);
     closeButton->setFixedSize(100, 40);
@@ -174,8 +174,10 @@ void BattleResultsDialog::setResults(const QVector<QStringList> &results) {
 }
 
 void BattleResultsDialog::onTableCellClicked(int tableIndex, Results results) {
+    closeButton->hide();
     BattleReplayDialog *detailsDialog = new BattleReplayDialog(this, tableIndex, results);
     detailsDialog->exec();
+    closeButton->show();
 
     QLayoutItem *child;
     int removedIndex = 0;
