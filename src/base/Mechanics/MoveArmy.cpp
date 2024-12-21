@@ -39,8 +39,6 @@ bool MoveArmy::executeAttack(int playerId, std::vector<Vertex*> sources, Vertex*
         }
     }
 
-    qDebug() << "River: "<< riverAdvantage;
-
     BattleArmiesWorker* battleWorker = new BattleArmiesWorker(*this, playerId, sentArmy, *target, sources, soldiersToMove, sent, riverAdvantage);
     connect(battleWorker, &BattleArmiesWorker::battleFinished, this, &MoveArmy::onBattleFinished);
 

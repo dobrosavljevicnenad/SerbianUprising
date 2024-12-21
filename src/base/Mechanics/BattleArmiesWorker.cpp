@@ -4,10 +4,11 @@
 BattleArmiesWorker::BattleArmiesWorker(MoveArmy& moveArmy, int playerId, Army sentArmy, graph::Vertex& target,
                                        std::vector<graph::Vertex*> sources, std::vector<unsigned> soldiersToMove, unsigned sent, int riverAdvantage)
     : m_moveArmy(moveArmy), playerId(playerId), m_sentArmy(sentArmy), m_target(&target),
-    m_sources(sources), m_soldiersToMove(soldiersToMove), m_sent(sent) {}
+    m_sources(sources), m_soldiersToMove(soldiersToMove), m_sent(sent), riverAdvantage(riverAdvantage) {}
 
 void BattleArmiesWorker::run() {
     Battle battle(m_target->army, m_sentArmy);
+
     battle.setTerrainAdvantage(m_target->terrain.getDefenderAdvantage() + riverAdvantage, m_target->terrain.getAttackerAdvantage());
 
     std::cout << "Battle initiated between attacking army and defender at Vertex "
