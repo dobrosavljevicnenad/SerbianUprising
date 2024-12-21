@@ -406,33 +406,40 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
 void ClientWindow::handlePlaceArmy(MapLayer* layer) {
     int currentPlayerId = gameManager->ClientId;
     graph::Vertex* selected_vertex = gameManager->layerToVertex[layer];
-    qDebug() << selected_vertex->player.getPlayerId() << "=" << gameManager->ClientId;
-
     if (selected_vertex->player.getPlayerId() == currentPlayerId) {
         AddArmyManager& armyManager = gameManager->getArmyManager();
 
-        int maxTroops = armyManager.calculateTotalTroops();
-        int troopsToAdd = 1; // Default: 1 vojnik
-        Qt::KeyboardModifiers modifiers = QApplication::keyboardModifiers();
-
-        // Provera kombinacije tastera
-        if ((modifiers & Qt::ShiftModifier) && (modifiers & Qt::ControlModifier)) {
-            troopsToAdd = maxTroops; // Ctrl + Shift: dodaj maksimum
-        } else if (modifiers & Qt::ControlModifier) {
-            troopsToAdd = std::min(100, maxTroops); // Ctrl: dodaj 100 ili max
-        } else if (modifiers & Qt::ShiftModifier) {
-            troopsToAdd = std::min(10, maxTroops); // Shift: dodaj 10 ili max
-        } else {
-            troopsToAdd = 1; // Običan klik: dodaj 1
+        if (armyManager.totalTroops == 0) {
+            QMessageBox::warning(this, tr("Error"), tr("Not enough available soldiers"));
+            selectedLayer = nullptr;
+            return;
         }
 
-        if (troopsToAdd > 0 && maxTroops > 0) {
-            troopsToAdd = std::min(troopsToAdd, maxTroops); // Osiguranje da ne prelazimo max
+        Qt::KeyboardModifiers modifiers = QApplication::keyboardModifiers();
+        int troopsToAdd = 0;
 
+        if (modifiers == (Qt::ControlModifier | Qt::ShiftModifier)) {
+            troopsToAdd = std::min(100, armyManager.totalTroops);
+        } else if (modifiers == Qt::ShiftModifier) {
+            troopsToAdd = std::min(10, armyManager.totalTroops);
+        } else if (modifiers == Qt::ControlModifier) {
+            troopsToAdd = std::min(1, armyManager.totalTroops);
+        } else {
+            bool ok;
+            std::string message = "Enter the number of soldiers up to " + std::to_string(armyManager.totalTroops) + " to place: ";
+            troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
+                                               tr(message.c_str()), 0, 0, armyManager.totalTroops, 1, &ok);
+            if (!ok || troopsToAdd <= 0) {
+                selectedLayer = nullptr;
+                return;
+            }
+        }
+
+        if (troopsToAdd > 0) {
             layer->setTroopCount(layer->getTroopCount() + troopsToAdd);
-
             int pid = gameManager->ClientId;
             int source = selected_vertex->id();
+
             Action newAction(ActionType::PLACE_ARMY, pid, source, 0, troopsToAdd);
             gameManager->addAction(newAction);
             armyManager.decreaseAvailableTroops(troopsToAdd);
@@ -444,11 +451,12 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer) {
             item->setData(Qt::UserRole, QVariant::fromValue(selected_vertex->id()));
             item->setData(Qt::UserRole + 1, QVariant(troopsToAdd));
             item->setData(Qt::UserRole + 2, "Place");
+            item->setData(Qt::UserRole + 3, newAction.id);
+
             moveList->addItem(item);
         }
     }
 }
-
 
 void ClientWindow::onInfoButtonClicked() {
     setActiveButton(qobject_cast<QPushButton*>(sender()));
