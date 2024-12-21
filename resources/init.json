@@ -379,7 +379,7 @@
     "id" : 35,
     "label_path": ":/resources/Project/Kragujevac.png",
     "army_type": "HAJDUK",
-    "num_of_soldiers": 10,
+    "num_of_soldiers": 300,
     "position": {"x":1417,"y": 320},
     "cityLevel": 2,
     "culture": "SERBIAN",

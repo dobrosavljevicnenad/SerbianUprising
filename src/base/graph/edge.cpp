@@ -20,5 +20,10 @@ std::string Edge::to_string() const {
     }
 }
 
+EdgeType Edge::type() const
+{
+    return m_type;
+}
+
 
 } // namespace graph

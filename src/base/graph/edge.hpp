@@ -26,7 +26,9 @@ public:
       return EdgeType::River;
   }
 
-private:
+  EdgeType type() const;
+
+  private:
   unsigned m_from;
   unsigned m_to;
   double m_weight = 0.0;

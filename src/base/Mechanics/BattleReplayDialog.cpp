@@ -11,7 +11,6 @@ BattleReplayDialog::BattleReplayDialog(QWidget *parent, int tableIndex, Results 
     setWindowFlags(Qt::FramelessWindowHint);
 
     replayButton->setStyleSheet(getButtonStyle());
-    replayButton->setFixedSize(100, 40);
     topLayout = new QHBoxLayout();
     centerTopLayout = new QVBoxLayout();
     centerTopLayout->addWidget(replayButton);
@@ -19,6 +18,51 @@ BattleReplayDialog::BattleReplayDialog(QWidget *parent, int tableIndex, Results 
     topLayout->setAlignment(Qt::AlignTop);
     centerTopLayout->setAlignment(Qt::AlignCenter);
     layout->addLayout(topLayout);
+
+    closeButton = new QPushButton("Close", this);
+    closeButton->setStyleSheet(getButtonStyle());
+    connect(closeButton, &QPushButton::clicked, this, &QDialog::reject);
+    centerTopLayout->addWidget(closeButton);
+    centerTopLayout->setAlignment(Qt::AlignCenter);
+
+    QHBoxLayout *remainingHboxLayout = new QHBoxLayout();
+    centerTopLayout->addLayout(remainingHboxLayout);
+    QWidget *remainingHboxWidget = new QWidget(this);
+    remainingHboxWidget->setLayout(remainingHboxLayout);
+
+    remainingHboxWidget->setStyleSheet("background-color: #81D4FA;");
+
+    centerTopLayout->addWidget(remainingHboxWidget);
+
+    QHBoxLayout *resultsHboxLayout = new QHBoxLayout();
+    centerTopLayout->addLayout(resultsHboxLayout);
+    defenderResultLayout = new QVBoxLayout();
+    attackerResultLayout = new QVBoxLayout();
+    defenderResultLayout->setAlignment(Qt::AlignCenter);
+    attackerResultLayout->setAlignment(Qt::AlignCenter);
+
+    resultsHboxLayout->addLayout(defenderResultLayout);
+    resultsHboxLayout->addLayout(attackerResultLayout);
+
+    remainingAttackersLabel = new QLabel(this);
+    remainingDefendersLabel = new QLabel(this);
+    remainingAttackersLabel->setText(QString("Remaining Attackers: %1").arg(results.getAttackerNumber()));
+    remainingDefendersLabel->setText(QString("Remaining Defenders: %1").arg(results.getDefenderNumber()));
+    remainingAttackersLabel->setAlignment(Qt::AlignCenter);
+    remainingDefendersLabel->setAlignment(Qt::AlignCenter);
+    QFont font;
+    font.setPointSize(14);
+    remainingAttackersLabel->setFont(font);
+    remainingDefendersLabel->setFont(font);
+    QColor palette = QColor("#81D4FA");
+
+    remainingAttackersLabel->setAutoFillBackground(true);
+    remainingAttackersLabel->setPalette(palette);
+    remainingDefendersLabel->setAutoFillBackground(true);
+    remainingDefendersLabel->setPalette(palette);
+
+    remainingHboxLayout->addWidget(remainingDefendersLabel);
+    remainingHboxLayout->addWidget(remainingAttackersLabel);
     QHBoxLayout *soldiersLayout = new QHBoxLayout();
     QVBoxLayout *defenderLayout = new QVBoxLayout();
     QHBoxLayout *dcolumnLayout = new QHBoxLayout();
@@ -85,7 +129,7 @@ BattleReplayDialog::BattleReplayDialog(QWidget *parent, int tableIndex, Results 
     layout->setAlignment(Qt::AlignBottom);
     setLayout(layout);
 
-    resize(800, 800);
+    resize(1084, 905);
     setObjectName("BattleReplayDialog");
     QString styleSheet = QString("QDialog#BattleReplayDialog { "
                                  "border-image: url(%1);}").arg(getTerrainImage(results.getTerrain()));
@@ -276,6 +320,9 @@ void BattleReplayDialog::onReplayClicked() {
                     QPixmap flippedAttackerImage = attackerSoldiersFallenImage.transformed(transform);
                     attackerImages[x]->setPixmap(flippedAttackerImage.scaled(70, 70, Qt::KeepAspectRatio));            }
             }
+            remainingAttackersLabel->setText(QString("Remaining Attackers: %1").arg(round.attackerRemaining));
+            remainingDefendersLabel->setText(QString("Remaining Defenders: %1").arg(round.defenderRemaining));
+
             while (std::difftime(std::time(0), startReplay) < 1) {
                 QCoreApplication::processEvents();
             }
@@ -294,6 +341,7 @@ void BattleReplayDialog::onReplayClicked() {
                     defenderImages[var]->setPixmap(standingSoldierImage.scaled(70, 70, Qt::KeepAspectRatio));
                 }
             }
+
         }
         if(results.getWinner()->armyType() == results.getDefenderType() && results.getRounds()[results.getRounds().size()-1].attackerRemaining> 0){
             for (int var = 0; var < attackerImages.size(); var++) {
@@ -312,20 +360,7 @@ void BattleReplayDialog::onReplayClicked() {
             }
         }
     }
-    closeButton = new QPushButton("Close", this);
-    closeButton->setStyleSheet(getButtonStyle());
-    connect(closeButton, &QPushButton::clicked, this, &QDialog::reject);
-    centerTopLayout->addWidget(closeButton);
-    centerTopLayout->setAlignment(Qt::AlignCenter);
-    QHBoxLayout *resultsHboxLayout = new QHBoxLayout();
-    centerTopLayout->addLayout(resultsHboxLayout);
-    defenderResultLayout = new QVBoxLayout();
-    attackerResultLayout = new QVBoxLayout();
-    defenderResultLayout->setAlignment(Qt::AlignCenter);
-    attackerResultLayout->setAlignment(Qt::AlignCenter);
 
-    resultsHboxLayout->addLayout(defenderResultLayout);
-    resultsHboxLayout->addLayout(attackerResultLayout);
     QLabel *victoryLabel = new QLabel(this);
     QPixmap victoryImage = QPixmap(QString(":/resources/Images/Victory.png"));
     victoryLabel->setPixmap(victoryImage.scaled(300, 100, Qt::IgnoreAspectRatio));

@@ -12,16 +12,16 @@ void Terrain::setDefaultAdvantages(TerrainType terrain) {
         m_defenderAdvantage = 0;
         break;
     case TerrainType::MOUNTAIN:
-        m_attackerAdvantage = -10;
-        m_defenderAdvantage = 20;
+        m_attackerAdvantage = 0;
+        m_defenderAdvantage = 15;
         break;
     case TerrainType::HILL:
-        m_attackerAdvantage = -5;
+        m_attackerAdvantage = 0;
         m_defenderAdvantage = 10;
         break;
     case TerrainType::FOREST:
-        m_attackerAdvantage = 7;
-        m_defenderAdvantage = 15;
+        m_attackerAdvantage = 0;
+        m_defenderAdvantage = 5;
         break;
     default:
         m_attackerAdvantage = 0;

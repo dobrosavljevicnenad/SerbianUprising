@@ -39,6 +39,8 @@ private:
     QVBoxLayout* defenderResultLayout;
     QVBoxLayout* attackerResultLayout;
     QString getButtonStyle();
+    QLabel *remainingAttackersLabel;
+    QLabel *remainingDefendersLabel;
     void keyPressEvent(QKeyEvent *event);
 };
 

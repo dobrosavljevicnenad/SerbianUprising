@@ -11,7 +11,7 @@ class BattleArmiesWorker : public QThread {
     Q_OBJECT
 public:
     BattleArmiesWorker(MoveArmy& moveArmy, int playerId, Army sentArmy, graph::Vertex& target,
-                       std::vector<graph::Vertex*> sources, std::vector<unsigned> soldiersToMove, unsigned sent);
+                       std::vector<graph::Vertex*> sources, std::vector<unsigned> soldiersToMove, unsigned sent, int riverAdvantage);
     Results results;
 
 signals:
@@ -24,7 +24,7 @@ protected:
 private:
     void handleBattleOutcome(Army& winner);
     void updateNeighboringArmy();
-
+    int riverAdvantage;
     MoveArmy& m_moveArmy;
     Army m_sentArmy;
     graph::Vertex* m_target;
