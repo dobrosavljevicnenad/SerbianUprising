@@ -226,6 +226,45 @@ void Graph::deserialize(const QJsonObject &json) {
     }
 }
 
+void Graph::save_to_json(const std::string &file_path) const {
+    QJsonObject graphJson;
+
+    QJsonArray verticesArray;
+    for (const auto& [id, vertex] : vertices) {
+        QJsonObject vertexJson;
+        vertexJson["id"] = static_cast<int>(vertex->id());
+        vertexJson["label"] = QString::fromStdString(vertex->label());
+        vertexJson["label_path"] = QString(":/resources/Images/%1.png").arg(QString::fromStdString(vertex->label()));
+        vertexJson["army_type"] = QString::fromStdString(vertex->army.to_string(vertex->army.armyType()));
+        vertexJson["num_of_soldiers"] = vertex->army.getSoldiers();
+        vertexJson["position"] = QJsonObject{
+            {"x", static_cast<int>(vertex->position().x())},
+            {"y", static_cast<int>(vertex->position().y())}
+        };
+
+        verticesArray.append(vertexJson);
+    }
+    graphJson["vertices"] = verticesArray;
+
+    QJsonArray edgesArray;
+    for (const auto& [vertex, edges] : m_adj_list) {
+        for (const Edge& edge : edges) {
+            QJsonObject edgeJson;
+            edgeJson["from"] = static_cast<int>(edge.from());
+            edgeJson["to"] = static_cast<int>(edge.to());
+            edgeJson["weight"] = edge.weight();
+            edgeJson["type"] = QString::fromStdString(edge.to_string());
+
+            edgesArray.append(edgeJson);
+        }
+    }
+    graphJson["edges"] = edgesArray;
+
+    FileManager::saveToFile(QString::fromStdString(file_path), graphJson);
+}
+
+
+
 }
 
 

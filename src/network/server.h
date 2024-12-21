@@ -18,14 +18,15 @@ public:
     void sendData(const QString &data);
     void broadcast(const QString &message);
     ServerGameManager* getGameManager();
-    ////////////////////////////////////////////////
     std::vector<Action> actionsPlayer1;
     std::vector<Action> actionsPlayer2;
     void executeActions(const std::vector<Action> &actions);
-////////////////////////////////////////////////
+    void handleLoadGame(const QJsonObject &gameData); // Prosljeđivanje odgovarajućoj metodi
+    void handleEndTurn(const QJsonObject &jsonObject);
+    void handleLoadGameRequest(const QJsonObject &jsonObject);
+
 signals:
     void startGame();
-    ///////////////////////////
     void dataReceived(const QString &data);
     void gameStarted();
     void gameOver(const QString &reason);
@@ -36,7 +37,7 @@ private slots:
 
 public slots:
     void onGameStartRequested();
-    void handleSerializedGraphwithoutResult(const QJsonObject &serializedGraph);
+    void handleSerializedGraph_init(const QJsonObject &serializedGraph);
     void handleSerializedGraph(const QJsonObject &serializedGraph, const QJsonObject& Results);
 
 private:
@@ -47,5 +48,7 @@ private:
     ServerGameManager* serverGameManager; // Dedicated game manager
     int turnCounter = 0;
     QMap<int, QVector<Action>> endTurnActions; // cuva akcije po id-u klienta
+    void setupPlayerSocket(QTcpSocket* socket, const QString& playerName, const QString& message);
+
 };
 #endif // SERVER_H

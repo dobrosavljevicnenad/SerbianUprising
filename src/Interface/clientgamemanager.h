@@ -10,6 +10,11 @@
 #include <QJsonArray>
 #include <QFile>
 #include <QDebug>
+#include <QFileDialog>
+#include <QDir>
+#include <QFileInfoList>
+#include <QRegularExpression>
+#include <QMessageBox>
 #include <map>
 #include <qlabel.h>
 #include <qlistwidget.h>
@@ -26,6 +31,7 @@
 #include "../base/Entities/region.h"
 #include "../base/Entities/city.h"
 #include "map.h"
+#include "filemanager.h"
 
 
 class ClientGameManager : public QObject{
@@ -61,6 +67,11 @@ public:
     QVector<QStringList> generateBattleResults();
     std::vector<Results> resultsVector;
     Year year();
+    void saveGame();
+    void loadGame();
+    void processLoadData(const QJsonObject &gameData);
+    QString loadGamePath = nullptr;
+    int getClientId() const;
 
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
 
@@ -71,6 +82,7 @@ signals:
     void layerClicked(MapLayer* layer);
     void endTurnActionsReady(const QVector<Action>& actions, int id);
     void gameYearUpdated(QString gameYear);
+    void gameDataLoaded(const QJsonObject& graphData);
 
 
 private:
@@ -85,6 +97,7 @@ private:
     Year gameYear;
     QVector<Region*>regions;
     Map* map;
+    FileManager fileManager;
 
 
 private://UI

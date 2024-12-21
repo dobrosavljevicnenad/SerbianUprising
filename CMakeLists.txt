@@ -18,7 +18,10 @@ set(PROJECT_SOURCES
         src/mainwindow.cpp
         src/mainwindow.h
         src/mainwindow.ui
-        resources.qrc
+)
+
+qt_add_big_resources(PROJECT_RESOURCES
+    resources.qrc
 )
 
 set(CMAKE_BUILD_TYPE Debug)
@@ -29,8 +32,8 @@ if (QT_VERSION_MAJOR GREATER_EQUAL 6)
     qt_add_executable(Ustanak
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        resources.qrc
-)
+        ${PROJECT_RESOURCES}
+    )
 else()
     add_executable(Ustanak ${PROJECT_SOURCES})
 endif()

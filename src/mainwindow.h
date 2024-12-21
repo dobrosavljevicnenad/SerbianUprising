@@ -2,8 +2,10 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <QStackedWidget>
 #include "Interface/gamemenu.h"
 #include "lobbywindow.h"
+#include "createlobbywindow.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -21,11 +23,19 @@ private:
     Ui::MainWindow *ui;
     GameMenu *gameMenu;
     LobbyWindow *lobbyWindow;
+    CreateLobbyWindow *createLobbyWindow;
+    QStackedWidget *stackedWidget;
 
     ServerGameManager* serverManager;
     ClientGameManager* clientManager;
 
     void setupMenu();
+
+private slots:
+    void showGameMenu();
+    void showLobbyWindow();
+    void showCreateLobbyWindow();
+
 };
 
 #endif // MAINWINDOW_H
