@@ -36,7 +36,7 @@ void ServerGameManager::startGame() {
     QJsonObject serialized_graph = graph->serialize(rootObj);
     //graph->print_graph();
     //graph->print_graph();
-    emit serializedGraphReady1(serialized_graph);
+    emit init_serializedGraphReady(serialized_graph);
 }
 
 void ServerGameManager::executeActions(const std::vector<Action> &actions1, int p1_id, const std::vector<Action> &actions2, int p2_id){

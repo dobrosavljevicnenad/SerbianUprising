@@ -32,7 +32,7 @@ private:
     Turn turn;
 
 signals:
-    void serializedGraphReady1(const QJsonObject &serializedGraph);
+    void init_serializedGraphReady(const QJsonObject &serializedGraph);
     void serializedGraphReady2(const QJsonObject &serializedGraph, const QJsonObject Results);
 };
 

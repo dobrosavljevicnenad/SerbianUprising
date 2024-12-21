@@ -22,6 +22,9 @@ public:
     int getId() const;
     void setId(int newId);
     ClientGameManager* getClientGameManager() const;
+    void processIdMessage(const QString &message);
+    void processJsonMessage(const QString &message);
+    void processGameData(const QJsonObject &jsonObject);
 
 signals:
     void dataReceived(const QString &data);
@@ -33,6 +36,7 @@ signals:
 public slots:
     void onReadyRead();
     void sendEndTurnWithActions(const QVector<Action> &actions, int id);
+    void handleLoadGame(const QJsonObject& graphData);
 
 private slots:
     void onGameStarted();
