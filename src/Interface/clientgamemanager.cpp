@@ -34,10 +34,15 @@ void ClientGameManager::initializeGraphics(QJsonObject graphData) {
 
 
     MapLayer *s1 = new MapLayer("s1",":/resources/Project/S1.png", false);
+    s1->setColor(QColor(237,188,41,255));
     MapLayer *s2 = new MapLayer("s2",":/resources/Project/S2.png", false);
+    s2->setColor(QColor(237,188,41,255));
     MapLayer *s3 = new MapLayer("s3",":/resources/Project/S3.png", false);
+    s3->setColor(QColor(159,124,165,255));
     MapLayer *s4 = new MapLayer("s4",":/resources/Project/S4.png", false);
+    s4->setColor(QColor(126, 149, 104, 255));
     MapLayer *s5 = new MapLayer("s5",":/resources/Project/S5.png", false);
+    s5->setColor(QColor(126, 149, 104, 255));
 
     s2->setPos(113,0);
     s3->setPos(0,1088);

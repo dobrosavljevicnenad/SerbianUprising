@@ -48,8 +48,9 @@ void ClientWindow::setupUI() {
     nodeInfoWidget->hide();
 
     layoutContainer = new QWidget(view->viewport());
-    layoutContainer->setStyleSheet("background-color: rgba(0, 0, 0, 128);"
-                                   "border-radius: 15px;");
+    layoutContainer->setStyleSheet("background-color: rgba(0, 0, 0, 200);"
+                                   "border-radius: 0px;"
+                                   "border-image: url(:/resources/border1.png) 30 stretch;");
     QVBoxLayout *mainLayout = new QVBoxLayout();
 
     mainLayout->setSpacing(5);
@@ -57,13 +58,14 @@ void ClientWindow::setupUI() {
 
     // Header Label
     QString turnLabel = QString("Turn %1").arg(1);
+    mainLayout->setContentsMargins(0, 20, 0, 0);
     headerLabel = new QLabel(turnLabel);
     QFont font = headerLabel->font();
     font.setBold(true);
-    font.setPointSize(12);
+    font.setPointSize(14);
     headerLabel->setFont(font);
     headerLabel->setAlignment(Qt::AlignCenter);
-    headerLabel->setStyleSheet("color: White; background-color: transparent;");
+    headerLabel->setStyleSheet("color: #FFD700; background-color: transparent; border-image: none;");
     mainLayout->addWidget(headerLabel);
 
     // Year Label
@@ -71,10 +73,10 @@ void ClientWindow::setupUI() {
     yearDisplayLabel = new QLabel(yearLabel);
     QFont yearFont = yearDisplayLabel->font();
     yearFont.setBold(true);
-    yearFont.setPointSize(10);
+    yearFont.setPointSize(12);
     yearDisplayLabel->setFont(yearFont);
     yearDisplayLabel->setAlignment(Qt::AlignCenter);
-    yearDisplayLabel->setStyleSheet("color: White; background-color: transparent;");
+    yearDisplayLabel->setStyleSheet("color: #D4AF37; background-color: transparent; border-image: none;");
     mainLayout->addWidget(yearDisplayLabel);
 
 
@@ -86,28 +88,33 @@ void ClientWindow::setupUI() {
 
     QString buttonStyle =
         "QPushButton { "
-        "   background-color: darkGray; "
-        "   border-radius: 20px; "
+        "   background-color: #3A5F0B; "
+        "   border-radius: 15px; "
+        "   color: white;   "
+        "   border: 2px solid #2E4600; "
+        "   font-size: 10pt; "
+        "   padding: 5px;   "
+        "   border-image: none; "
         "} "
         "QPushButton:hover { "
-        "   background-color: Green; "
+        "   background-color: #4F7942; "
         "} "
         "QPushButton:pressed { "
-        "   background-color: darkGreen; "
+        "   background-color: #2E4600; "
         "} ";
 
     infoButton->setStyleSheet(buttonStyle);
     moveButton->setStyleSheet(buttonStyle);
     armyButton->setStyleSheet(
         "QPushButton { "
-        "   background-color: darkGreen; "
-        "   border-radius: 20px; "
+        "   background-color: #2E4600; "
+        "   border-image: none; "
         "} "
         );
 
-    infoButton->setFixedSize(40, 40);
-    moveButton->setFixedSize(40, 40);
-    armyButton->setFixedSize(40, 40);
+    infoButton->setFixedSize(44, 40);
+    moveButton->setFixedSize(44, 40);
+    armyButton->setFixedSize(44, 40);
     this->activeButton = armyButton;
 
     buttonRowLayout->addWidget(infoButton);
@@ -123,17 +130,20 @@ void ClientWindow::setupUI() {
     endTurnButton->setFixedSize(160, 30);
     endTurnButton->setStyleSheet(
         "QPushButton { "
-        "   background-color: black; "
-        "   color: white; "
+        "   background-color: #8B0000; "
         "   border-radius: 10px; "
-        "   padding: 5px; "
+        "   color: white;   "
+        "   border: 2px solid #5A0000; "
+        "   font-size: 11pt; "
+        "   padding: 5px;   "
+        "   border-image: none; "
         "} "
         "QPushButton:hover { "
-        "   background-color: darkGray; "
+        "   background-color: #B22222; "
         "} "
         "QPushButton:pressed { "
-        "   background-color: black; "
-        "}"
+        "   background-color: #5A0000; "
+        "} "
         );
     mainLayout->addWidget(endTurnButton, 0, Qt::AlignCenter);
 
@@ -142,10 +152,20 @@ void ClientWindow::setupUI() {
     moveList->setFixedSize(200, 300);
     moveList->setStyleSheet(
         "QListWidget { "
-        "   background-color: darkGray; "
-        "   border: 1px solid black; "
+        "   background-color: #F5DEB3; "
         "   border-radius: 5px; "
-        "}"
+        "   border: 1px solid #A0522D; "
+        "   color: #000;    "
+        "   font-size: 10pt; "
+        "   border-image: none; "
+        "} "
+        "QListWidget::item:hover { "
+        "   background-color: #FFE4C4; "
+        "} "
+        "QListWidget::item:selected { "
+        "   background-color: #D2B48C;"
+        "   color: black; "
+        "} "
         );
     mainLayout->addWidget(moveList, 0, Qt::AlignCenter);
 
@@ -153,14 +173,18 @@ void ClientWindow::setupUI() {
     toggleButton->setFixedSize(40, 40);
     toggleButton->setStyleSheet(
         "QPushButton { "
-        "   background-color: lightGray; "
-        "   border-radius: 10px; "
+        "   background-color: #D2B48C; "
+        "   border-radius: 20px; "
+        "   border: 2px solid #8B4513;"
+        "   color: black;"
+        "   font-size: 12pt;"
+        "   border-image: none; "
         "} "
         "QPushButton:hover { "
-        "   background-color: darkGray; "
+        "   background-color: #F5DEB3; "
         "} "
         "QPushButton:pressed { "
-        "   background-color: black; "
+        "   background-color: #8B4513; "
         "   color: white; "
         "}"
         );
@@ -171,11 +195,16 @@ void ClientWindow::setupUI() {
     layoutContainer->setGeometry(10, 10, 250, 520);
 
     mapModeContainer = new QWidget(view->viewport());
-    mapModeContainer->setStyleSheet("background-color: rgba(0, 0, 0, 128); border-radius: 10px;");
+    mapModeContainer->setStyleSheet(
+        "background-color: rgba(0, 43, 54, 180); "
+        "border-radius: 10px;"
+        "border-image: url(:/resources/border1.png) 10 stretch;"
+        "padding: 5px;"
+        );
 
     QHBoxLayout* mapModeLayout = new QHBoxLayout();
-    mapModeLayout->setSpacing(5);
-    mapModeLayout->setContentsMargins(5, 5, 5, 5);
+    mapModeLayout->setSpacing(8);
+    mapModeLayout->setContentsMargins(10, 10, 10, 10);
 
     // Map Mode Buttons
     reliefButton = new QPushButton("Relief");
@@ -185,15 +214,33 @@ void ClientWindow::setupUI() {
     defaultButton = new QPushButton("Main");
 
     QString mapButtonStyle =
-        "QPushButton { background-color: darkGray; color: white; border-radius: 5px; padding: 5px; }"
-        "QPushButton:hover { background-color: gray; }"
-        "QPushButton:pressed { background-color: darkGreen; }";
+        "QPushButton { "
+        "   background-color: #2E4600; "
+        "   border-image: none; "
+        "   color: white; "
+        "   border-radius: 10px; "
+        "   border: 2px solid #1B3400;"
+        "   padding: 5px 10px; "
+        "   font-size: 10pt; "
+        "} "
+        "QPushButton:hover { "
+        "   background-color: #4F7942; "
+        "} "
+        "QPushButton:pressed { "
+        "   background-color: #8B0000; "
+        "}";
 
     reliefButton->setStyleSheet(mapButtonStyle);
     regionsButton->setStyleSheet(mapButtonStyle);
     cityButton->setStyleSheet(mapButtonStyle);
     cultureButton->setStyleSheet(mapButtonStyle);
     defaultButton->setStyleSheet(mapButtonStyle);
+
+    reliefButton->setFixedSize(80, 40);
+    regionsButton->setFixedSize(80, 40);
+    cityButton->setFixedSize(80, 40);
+    cultureButton->setFixedSize(80, 40);
+    defaultButton->setFixedSize(80, 40);
 
     mapModeLayout->addWidget(reliefButton,0, Qt::AlignCenter);
     mapModeLayout->addWidget(regionsButton,0, Qt::AlignCenter);
@@ -202,6 +249,7 @@ void ClientWindow::setupUI() {
     mapModeLayout->addWidget(defaultButton,0, Qt::AlignCenter);
 
     mapModeContainer->setLayout(mapModeLayout);
+    mapModeContainer->move(view->viewport()->rect().bottomLeft() + QPoint(10, -(mapModeContainer->height()+10)));
 
     QList<QWidget*> layoutWidgets = {headerLabel, infoButton, moveButton, armyButton, endTurnButton, moveList, yearDisplayLabel};
 
@@ -212,7 +260,7 @@ void ClientWindow::setupUI() {
             for (auto* widget : layoutWidgets) {
                 widget->hide();
             }
-            layoutContainer->setFixedSize(250, toggleButton->height() + 10);
+            layoutContainer->setFixedSize(250, toggleButton->height() + 20);
             layoutContainer->setStyleSheet("background-color: transparent");
             toggleButton->setText("⮟");
         } else {
@@ -221,7 +269,8 @@ void ClientWindow::setupUI() {
             }
             layoutContainer->setFixedSize(250, 520);
             layoutContainer->setStyleSheet("background-color: rgba(0, 0, 0, 128);"
-                                           "border-radius: 15px;");
+                                           "border-radius: 15px;"
+                                           "border-image: url(:/resources/border1.png) 30 stretch;");
             toggleButton->setText("⮝");
         }
         isExpanded = !isExpanded;
@@ -503,21 +552,25 @@ void ClientWindow::onPlaceButtonClicked() {
 void ClientWindow::setActiveButton(QPushButton* clickedButton) {
     QString defaultStyle =
         "QPushButton { "
-        "   background-color: darkGray; "
-        "   border-radius: 20px; "
+        "   background-color: #3A5F0B; "
+        "   border-radius: 15px; "
+        "   color: white;   "
+        "   border: 2px solid #2E4600; "
+        "   font-size: 10pt; "
+        "   padding: 5px;   "
+        "   border-image: none; "
         "} "
         "QPushButton:hover { "
-        "   background-color: Green; "
+        "   background-color: #4F7942; "
         "} "
         "QPushButton:pressed { "
-        "   background-color: darkGreen; "
+        "   background-color: #2E4600; "
         "} ";
 
     QString activeStyle =
         "QPushButton { "
-        "   background-color: Green; "
-        "   color: white; "
-        "   border-radius: 20px; "
+        "   background-color: #2E4600; "
+        "   border-image: none; "
         "} ";
 
     if (activeButton) {

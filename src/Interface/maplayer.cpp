@@ -14,6 +14,7 @@ MapLayer::MapLayer(QString labelName, const QString &imagePath,bool enableHover 
     troopText->setPos(boundingRect().width() / 2 - troopText->boundingRect().width() / 2,
                       boundingRect().height() / 2 - troopText->boundingRect().height() / 2);
     troopText->setZValue(1);
+    troopText->setZValue(999);
 }
 
 void MapLayer::setTroopCount(int count) {
