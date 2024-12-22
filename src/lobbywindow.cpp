@@ -95,11 +95,6 @@ void LobbyWindow::setBackgroundImage() {
     this->setAutoFillBackground(true);
 }
 
-void LobbyWindow::resizeEvent(QResizeEvent *event) {
-    QWidget::resizeEvent(event);
-    setBackgroundImage();
-}
-
 
 void LobbyWindow::connectSignals() {
     connect(backButton, &QPushButton::clicked, this, &LobbyWindow::returnToMenu);
@@ -122,7 +117,16 @@ void LobbyWindow::connectSignals() {
 
             gameWindow = new ClientWindow(clientManager, nullptr);
             gameWindow->show();
-            close();
+
+            this->close();
+
+            QWidget *parent = this->parentWidget();
+            while (parent != nullptr) {
+                QWidget *nextParent = parent->parentWidget();
+                parent->close();
+                parent = nextParent;
+            }
+
         });
         qDebug() << "Signals connected successfully.";
     } else {
@@ -150,4 +154,53 @@ void LobbyWindow::returnToMenu()
 
 QPushButton* LobbyWindow::getCreateLobbyButton() const {
     return createLobbyButton;
+}
+
+void LobbyWindow::resizeEvent(QResizeEvent *event) {
+    QWidget::resizeEvent(event);
+
+    int screenWidth = event->size().width();
+    int screenHeight = event->size().height();
+
+    const int baseWidth = 960;
+    const int baseHeight = 540;
+
+    double scaleX = static_cast<double>(screenWidth) / baseWidth;
+    double scaleY = static_cast<double>(screenHeight) / baseHeight;
+    double scale = qMin(scaleX, scaleY);
+
+    backButton->setFixedSize(400 * scale, 100 * scale);
+    createLobbyButton->setFixedSize(400 * scale, 100 * scale);
+    joinLobbyButton->setFixedSize(400 * scale, 100 * scale);
+
+    buttonFrame->setFixedSize(450 * scale, 350 * scale);
+
+    int fontSize = qMin(static_cast<int>(20 * scale), 30);
+    QString buttonStyle = QString(R"(
+        QPushButton {
+            border: none;
+            background: transparent;
+            background-image: url(:/resources/button.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            font: bold %1px "Serif";
+            text-align: center;
+        }
+        QPushButton:hover {
+            background-image: url(:/resources/button.png);
+            color: #FFD700;
+            font-size: %2px;
+        }
+        QPushButton:pressed {
+            background-image: url(:/resources/button.png);
+            color: #FFA500;
+        }
+    )").arg(fontSize).arg(static_cast<int>(fontSize * 1.1));
+
+    backButton->setStyleSheet(buttonStyle);
+    createLobbyButton->setStyleSheet(buttonStyle);
+    joinLobbyButton->setStyleSheet(buttonStyle);
+
+    setBackgroundImage();
 }

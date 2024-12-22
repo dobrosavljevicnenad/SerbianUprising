@@ -21,7 +21,6 @@ public:
 signals:
     void newGame();
     void exitGame();
-    void fullScreenClicked();
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -30,6 +29,7 @@ protected:
 private slots:
     void openSettings();
     void onExitButtonClicked();
+    void fullScreenClicked();
 
 private:
     QLabel *shadowLabel;

@@ -196,6 +196,16 @@ void GameMenu::setBackgroundImage() {
     this->setAutoFillBackground(true);
 }
 
+void GameMenu::fullScreenClicked() {
+    if (window()->isFullScreen()) {
+        window()->showNormal();
+    } else {
+        window()->showFullScreen();
+    }
+}
+
+
+
 QWidget *GameMenu::createSettingsMenu() {
     QWidget *settingsMenu = new QWidget(this);
     QVBoxLayout *layout = new QVBoxLayout(settingsMenu);
@@ -228,18 +238,19 @@ QWidget *GameMenu::createSettingsMenu() {
         }
     )");
 
+    display->setCurrentIndex(1);
+
     connect(display, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
+        QWidget *mainWindow = this->window();
         switch (index) {
         case 0:
-            this->parentWidget()->resize(960, 540);
+            mainWindow->resize(960, 540);
             break;
         case 1:
-            this->parentWidget()->resize(1600, 900);
+            mainWindow->resize(1600, 900);
             break;
         case 2:
-            if (QWidget *parentWindow = this->parentWidget()) {
-                parentWindow->showFullScreen();
-            }
+            mainWindow->showFullScreen();
             break;
         default:
             break;

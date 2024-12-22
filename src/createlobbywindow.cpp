@@ -179,6 +179,9 @@ void CreateLobbyWindow::setupUI() {
 
     setLayout(mainLayout);
 
+    armyComboBox->setCurrentText("Hajduk");
+    updateArmySelection("Hajduk");
+
     connect(exitButton, &QPushButton::clicked, this, &CreateLobbyWindow::backToLobby);
     connect(armyComboBox, &QComboBox::currentTextChanged, this, &CreateLobbyWindow::updateArmySelection);
     connect(startButton, &QPushButton::clicked, [this]() {
@@ -262,13 +265,20 @@ void CreateLobbyWindow::handleGameStart() {
 
     gameWindow = new ClientWindow(clientManager, nullptr);
     gameWindow->show();
-    close();
+
+    this->close();
+
+    QWidget *parent = this->parentWidget();
+    while (parent != nullptr) {
+        QWidget *nextParent = parent->parentWidget();
+        parent->close();
+        parent = nextParent;
+    }
 }
 
 
 //slots
 void CreateLobbyWindow::onFileClicked(int row, int column) {
-    // Dobijamo ime fajla iz odgovarajuće ćelije
     QTableWidgetItem *item = savedGamesTable->item(row, column);
     if (item) {
         selectedFile = item->text();

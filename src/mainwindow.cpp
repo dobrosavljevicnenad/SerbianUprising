@@ -19,7 +19,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     setCentralWidget(stackedWidget);
     stackedWidget->setCurrentWidget(gameMenu);
-    stackedWidget->resize(gameMenu->size());
+    stackedWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
 
     connect(gameMenu, &GameMenu::newGame, this, &MainWindow::showLobbyWindow);
