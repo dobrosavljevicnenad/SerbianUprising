@@ -495,23 +495,39 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
     }
 }
 
-void ClientWindow::handlePlaceArmy(MapLayer* layer){
+void ClientWindow::handlePlaceArmy(MapLayer* layer) {
     int currentPlayerId = gameManager->ClientId;
     graph::Vertex* selected_vertex = gameManager->layerToVertex[layer];
-    if ( selected_vertex->player.getPlayerId() == currentPlayerId ) {
+    if (selected_vertex->player.getPlayerId() == currentPlayerId) {
         AddArmyManager& armyManager = gameManager->getArmyManager();
 
-        bool ok;
-
-        if(armyManager.totalTroops == 0){
-            QMessageBox::warning(this, tr("Error"), tr("Not enought avalible soldiers"));
+        if (armyManager.totalTroops == 0) {
+            QMessageBox::warning(this, tr("Error"), tr("Not enough available soldiers"));
             selectedLayer = nullptr;
             return;
         }
-        std::string message = "Enter the number of soldiers up to " + std::to_string(armyManager.totalTroops) + " to place: ";
-        int troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
+
+        Qt::KeyboardModifiers modifiers = QApplication::keyboardModifiers();
+        int troopsToAdd = 0;
+
+        if (modifiers == (Qt::ControlModifier | Qt::ShiftModifier)) {
+            troopsToAdd = std::min(100, armyManager.totalTroops);
+        } else if (modifiers == Qt::ShiftModifier) {
+            troopsToAdd = std::min(10, armyManager.totalTroops);
+        } else if (modifiers == Qt::ControlModifier) {
+            troopsToAdd = std::min(1, armyManager.totalTroops);
+        } else {
+            bool ok;
+            std::string message = "Enter the number of soldiers up to " + std::to_string(armyManager.totalTroops) + " to place: ";
+            troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
                                                tr(message.c_str()), 0, 0, armyManager.totalTroops, 1, &ok);
-        if (ok && troopsToAdd > 0) {
+            if (!ok || troopsToAdd <= 0) {
+                selectedLayer = nullptr;
+                return;
+            }
+        }
+
+        if (troopsToAdd > 0) {
             layer->setTroopCount(layer->getTroopCount() + troopsToAdd);
             int pid = gameManager->ClientId;
             int source = selected_vertex->id();
@@ -520,7 +536,7 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer){
             gameManager->addAction(newAction);
             armyManager.decreaseAvailableTroops(troopsToAdd);
 
-            selected_vertex->army.setSoldiers(selected_vertex->army.getSoldiers()+troopsToAdd);
+            selected_vertex->army.setSoldiers(selected_vertex->army.getSoldiers() + troopsToAdd);
 
             QString moveDescription = QString("Placed %1 troops on %2").arg(troopsToAdd).arg(selected_vertex->id());
             QListWidgetItem* item = new QListWidgetItem(moveDescription);
@@ -533,7 +549,6 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer){
         }
     }
 }
-
 
 void ClientWindow::onInfoButtonClicked() {
     setActiveButton(qobject_cast<QPushButton*>(sender()));
@@ -591,7 +606,9 @@ void ClientWindow::clearExplosions()
 }
 
 void ClientWindow::keyPressEvent(QKeyEvent *event) {
-    if (event->key() == Qt::Key_I) {  // Kada pritisnete 'I', aktivirajte info dugme
+    if (event->key() == Qt::Key_Escape) {
+        showPauseMenu();
+    } else if (event->key() == Qt::Key_I) {  // Kada pritisnete 'I', aktivirajte info dugme
         setActiveButton(infoButton);
     } else if (event->key() == Qt::Key_M) {  // Kada pritisnete 'M', aktivirajte move dugme
         setActiveButton(moveButton);
@@ -636,6 +653,7 @@ void ClientWindow::showPauseMenu() {
 
     QPushButton *continueButton = new QPushButton("Continue Game");
     QPushButton *saveButton = new QPushButton("Save Game");
+    QPushButton *loadGame = new QPushButton("Load Game");
     QPushButton *optionsButton = new QPushButton("Options");
     QPushButton *quitButton = new QPushButton("Quit Game");
 
@@ -651,18 +669,29 @@ void ClientWindow::showPauseMenu() {
         "} ";
     continueButton->setStyleSheet(buttonStyle);
     saveButton->setStyleSheet(buttonStyle);
+    loadGame->setStyleSheet(buttonStyle);
     optionsButton->setStyleSheet(buttonStyle);
     quitButton->setStyleSheet(buttonStyle);
 
     layout->addWidget(continueButton);
     layout->addWidget(saveButton);
+    layout->addWidget(loadGame);
     layout->addWidget(optionsButton);
     layout->addWidget(quitButton);
 
     connect(continueButton, &QPushButton::clicked, overlay, &QWidget::deleteLater);
     connect(quitButton, &QPushButton::clicked, this, &QApplication::quit);
-    connect(saveButton, &QPushButton::clicked, this, []() {
-        QMessageBox::information(nullptr, "Save Game", "Game saved successfully!");
+    connect(saveButton, &QPushButton::clicked, this, [this]() {
+        if (gameManager) {
+            gameManager->saveGame();
+            QMessageBox::information(this, "Save Game", "Game saved successfully!");
+        }
+    });
+    connect(loadGame, &QPushButton::clicked, this, [this](){
+        if (gameManager){
+            gameManager->loadGame();
+            QMessageBox::information(this, "Load Game", "Game loaded successfully!");
+        }
     });
     connect(optionsButton, &QPushButton::clicked, this, []() {
         QMessageBox::information(nullptr, "Options", "Options menu under construction.");

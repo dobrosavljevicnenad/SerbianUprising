@@ -24,7 +24,6 @@ private:
     int regionCount;
     int cityCount;
     int territoryBonus = 1;
-    int regionMultiplier = 2;
     int cityBonus = 5;
 };
 

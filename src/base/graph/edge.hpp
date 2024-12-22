@@ -32,7 +32,7 @@ public:
 
   }
 
-private:
+  private:
   unsigned m_from;
   unsigned m_to;
   double m_weight = 0.0;

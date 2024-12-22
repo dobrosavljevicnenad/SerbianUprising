@@ -31,7 +31,15 @@ bool MoveArmy::executeAttack(int playerId, std::vector<Vertex*> sources, Vertex*
     if(playerId == 1)
         player1Attacks.push_back(1);
     unsigned sent = sentArmy.getSoldiers();
-    BattleArmiesWorker* battleWorker = new BattleArmiesWorker(*this, playerId, sentArmy, *target, sources, soldiersToMove, sent);
+    int riverAdvantage = 0;
+    for (auto& it : m_graph.adj_list()[target]) {
+        if (it.type() == graph::EdgeType::River &&
+            std::find(sources.begin(), sources.end(), m_graph.get_vertex_by_id(it.to())) != sources.end()) {
+            riverAdvantage = 5;
+        }
+    }
+
+    BattleArmiesWorker* battleWorker = new BattleArmiesWorker(*this, playerId, sentArmy, *target, sources, soldiersToMove, sent, riverAdvantage);
     connect(battleWorker, &BattleArmiesWorker::battleFinished, this, &MoveArmy::onBattleFinished);
 
     battleWorker->start();

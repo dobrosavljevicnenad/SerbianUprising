@@ -69,8 +69,6 @@ void AddArmyManager::updateRegionOwnership(unsigned clientId, const QVector<Regi
 int AddArmyManager::calculateTotalTroops(){
     totalTroops += territoryCount * territoryBonus;
 
-    totalTroops *= (regionMultiplier * regionCount > 0 ? regionMultiplier * regionCount : 1);
-
     totalTroops += cityCount * cityBonus;
 
     return totalTroops;

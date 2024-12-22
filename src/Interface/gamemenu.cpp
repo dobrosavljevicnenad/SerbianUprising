@@ -1,4 +1,5 @@
 #include "gamemenu.h"
+#include "../lobbywindow.h"
 #include <QGraphicsDropShadowEffect>
 #include <QScreen>
 #include <QResizeEvent>
@@ -12,15 +13,23 @@ GameMenu::GameMenu(QWidget *parent) : QWidget(parent) {
 
     setupUI();
 
-    connect(newGameButton, &QPushButton::clicked, this, [this]() {
-        LobbyWindow *lobby = new LobbyWindow();
-        lobby->show();
-        parentWidget()->close();
-    });
-    connect(settingsButton, &QPushButton::clicked, this, &GameMenu::openSettings);
-    connect(exitButton, &QPushButton::clicked, this, &GameMenu::exitGame);
-    connect(fullScreenButton, &QPushButton::clicked, this, &GameMenu::fullScreenClicked);
+    mediaPlayer = new QMediaPlayer(this);
+    audioOutput = new QAudioOutput(this);
+    mediaPlayer->setAudioOutput(audioOutput);
+    mediaPlayer->setSource(QUrl::fromLocalFile("../../resources/music/backgroundMusic.mp3"));
+    audioOutput->setVolume(0.5);
+    mediaPlayer->play();
 
+    connect(newGameButton, &QPushButton::clicked, this, &GameMenu::newGame);
+    connect(settingsButton, &QPushButton::clicked, this, &GameMenu::openSettings);
+    connect(exitButton, &QPushButton::clicked, this, &GameMenu::onExitButtonClicked);
+    connect(fullScreenButton, &QPushButton::clicked, this, &GameMenu::fullScreenClicked);
+    connect(muteButton, &QPushButton::clicked, this, [this]() {
+        static bool isMuted = false;
+        isMuted = !isMuted;
+        audioOutput->setMuted(isMuted);
+        muteButton->setText(isMuted ? "🔊" : "🔇");
+    });
 }
 
 GameMenu::~GameMenu() {}
@@ -35,7 +44,6 @@ void GameMenu::setupUI() {
     buttonFrame = new QFrame(this);
     buttonFrame->setMinimumWidth(450);
     buttonFrame->setMinimumHeight(350);
-    //buttonFrame->setSizePolicy(QSizePolicy::Fixed, QSizePolicy::Expanding);
     buttonFrame->setStyleSheet(R"(
         background-color: qlineargradient(
             spread:pad, x1:0, y1:0, x2:1, y2:1,
@@ -49,7 +57,8 @@ void GameMenu::setupUI() {
     newGameButton = new QPushButton("NEW GAME", this);
     settingsButton = new QPushButton("SETTINGS", this);
     exitButton = new QPushButton("EXIT", this);
-    fullScreenButton = new QPushButton("⤄", this);
+    fullScreenButton = new QPushButton("⛶", this);
+    muteButton = new QPushButton("🔇", this);
 
     QString buttonStyle = R"(
     QPushButton {
@@ -84,6 +93,9 @@ void GameMenu::setupUI() {
     fullScreenButton->setFixedSize(40, 40);
     fullScreenButton->setStyleSheet("font-size: 14px; background-color: #F44336; color: white; border-radius: 5px;}"
                                     "QPushButton::hover {font-size: 20px; padding: 7px;}");
+    muteButton->setFixedSize(40, 40);
+    muteButton->setStyleSheet("font-size: 14px; background-color: #FFB300; color: white; border-radius: 5px;}"
+                              "QPushButton::hover {font-size: 20px; padding: 7px;}");
 
 
     QVBoxLayout *buttonLayout = new QVBoxLayout(buttonFrame);
@@ -91,12 +103,9 @@ void GameMenu::setupUI() {
     buttonLayout->setSpacing(10);
     buttonLayout->addStretch();
     buttonLayout->addWidget(newGameButton, 0, Qt::AlignCenter);
-    //buttonLayout->addSpacing(10);
     buttonLayout->addWidget(settingsButton, 0, Qt::AlignCenter);
-    //buttonLayout->addSpacing(10);
     buttonLayout->addWidget(exitButton, 0, Qt::AlignCenter);
     buttonLayout->addStretch();
-    //buttonLayout->setAlignment(Qt::AlignCenter);
 
     stackedWidget = new QStackedWidget(this);
     QWidget *mainMenu = new QWidget(this);
@@ -104,16 +113,15 @@ void GameMenu::setupUI() {
     menuLayout->addWidget(buttonFrame, 0, Qt::AlignCenter);
     mainMenu->setLayout(menuLayout);
     stackedWidget->addWidget(mainMenu);
-    stackedWidget->addWidget(createSettingsMenu());
+
+    QWidget *settingsMenu = createSettingsMenu();
+    stackedWidget->addWidget(settingsMenu);
 
     layout->addWidget(stackedWidget);
 
-    // layout->addStretch();
-    // layout->addLayout(buttonLayout);
-    // layout->addStretch();
-
     QHBoxLayout *bottomLayout = new QHBoxLayout();
     bottomLayout->addStretch();
+    bottomLayout->addWidget(muteButton);
     bottomLayout->addWidget(fullScreenButton);
     layout->addLayout(bottomLayout);
 
@@ -177,13 +185,6 @@ void GameMenu::resizeEvent(QResizeEvent *event) {
     settingsButton->setStyleSheet(buttonStyle);
     exitButton->setStyleSheet(buttonStyle);
 
-    // if(newGameButton->size() != QSize(400, 100)){
-    //     QSize buttonSize(screenWidth / 2, 50);
-    //     newGameButton->setFixedSize(buttonSize);
-    //     settingsButton->setFixedSize(buttonSize);
-    //     exitButton->setFixedSize(buttonSize);
-    // }
-
     stackedWidget->layout()->setContentsMargins(10*scale, 70*scale, 10*scale, 10*scale);
 }
 
@@ -196,6 +197,16 @@ void GameMenu::setBackgroundImage() {
     this->setAutoFillBackground(true);
 }
 
+void GameMenu::fullScreenClicked() {
+    if (window()->isFullScreen()) {
+        window()->showNormal();
+    } else {
+        window()->showFullScreen();
+    }
+}
+
+
+
 QWidget *GameMenu::createSettingsMenu() {
     QWidget *settingsMenu = new QWidget(this);
     QVBoxLayout *layout = new QVBoxLayout(settingsMenu);
@@ -204,6 +215,9 @@ QWidget *GameMenu::createSettingsMenu() {
     QSlider *volume = new QSlider(Qt::Horizontal, settingsMenu);
     volume->setRange(0, 100);
     volume->setValue(50);
+    connect(volume, &QSlider::valueChanged, this, [this](int value) {
+        audioOutput->setVolume(value / 100.0);
+    });
 
     QLabel *screenLabel = new QLabel("Display mode", settingsMenu);
     QComboBox *display = new QComboBox(settingsMenu);
@@ -225,18 +239,19 @@ QWidget *GameMenu::createSettingsMenu() {
         }
     )");
 
+    display->setCurrentIndex(1);
+
     connect(display, QOverload<int>::of(&QComboBox::currentIndexChanged), this, [=](int index) {
+        QWidget *mainWindow = this->window();
         switch (index) {
         case 0:
-            this->parentWidget()->resize(960, 540);
+            mainWindow->resize(960, 540);
             break;
         case 1:
-            this->parentWidget()->resize(1600, 900);
+            mainWindow->resize(1600, 900);
             break;
         case 2:
-            if (QWidget *parentWindow = this->parentWidget()) {
-                parentWindow->showFullScreen();
-            }
+            mainWindow->showFullScreen();
             break;
         default:
             break;
@@ -324,7 +339,6 @@ QWidget *GameMenu::createSettingsMenu() {
 
     layout->addWidget(scrollArea);
     layout->addSpacing(10);
-    //layout->addWidget(back, 0, Qt::AlignCenter);
 
     settingsMenu->setMinimumWidth(400);
     settingsMenu->setFixedHeight(400);
@@ -348,3 +362,6 @@ void GameMenu::keyPressEvent(QKeyEvent *event) {
     QWidget::keyPressEvent(event);
 }
 
+void GameMenu::onExitButtonClicked() {
+    emit exitGame();
+}

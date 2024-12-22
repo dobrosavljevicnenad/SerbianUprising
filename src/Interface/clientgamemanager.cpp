@@ -123,6 +123,9 @@ void ClientGameManager::initializeGraphics(QJsonObject graphData) {
 
     scene->addItem(rivers);
     map = new Map(scene, layerToVertex);
+    if (ClientId == 1 && loadGamePath != nullptr) {
+        loadGame();
+    }
 }
 
 void ClientGameManager::applyMapMode(MapMode mode) {
@@ -512,4 +515,106 @@ void ClientGameManager::updateFog()
 Year ClientGameManager::year(){
     return gameYear;
 }
+
+void ClientGameManager::saveGame() {
+    QString directoryPath = "../../resources/saved_games/";
+
+    QDir dir(directoryPath);
+    if (!dir.exists()) {
+        dir.mkpath(".");
+    }
+
+    int nextFileNumber = 1;
+    QRegularExpression regex("^game(\\d+)\\.json$");
+    for (const QFileInfo& fileInfo : dir.entryInfoList({"game*.json"}, QDir::Files)) {
+        QRegularExpressionMatch match = regex.match(fileInfo.fileName());
+        if (match.hasMatch()) {
+            int fileNumber = match.captured(1).toInt();
+            if (fileNumber >= nextFileNumber) {
+                nextFileNumber = fileNumber + 1;
+            }
+        }
+    }
+
+    QString defaultFileName = QString("game%1.json").arg(nextFileNumber);
+
+    QString filePath = QFileDialog::getSaveFileName(
+        nullptr,
+        "Save Game",
+        directoryPath + defaultFileName,
+        "JSON Files (*.json);;All Files (*)"
+        );
+
+    if (filePath.isEmpty()) {
+        QMessageBox::warning(nullptr, "Save Cancelled", "No file selected. Save operation cancelled.");
+        return;
+    }
+
+    clientGraph->save_to_json(filePath.toStdString());
+}
+
+void ClientGameManager::loadGame() {
+    QString fullPath = "../../resources/saved_games/" + loadGamePath;
+
+    // QString filePath = QFileDialog::getOpenFileName(
+    //     nullptr,
+    //     "Load Saved Game",
+    //     directoryPath,
+    //     "JSON Files (*.json);;All Files (*)"
+    //     );
+
+    // if (filePath.isEmpty()) {
+    //     QMessageBox::warning(nullptr, "Load Cancelled", "No file selected. Load operation cancelled.");
+    //     return;
+    // }
+
+    // if (!fileManager.fileExists(filePath)) {
+    //     qWarning() << "Saved game file does not exist:" << filePath;
+    //     QMessageBox::critical(nullptr, "Load Failed", "Selected file does not exist:\n" + filePath);
+    //     return;
+    // }
+
+    QJsonObject graphData = fileManager.loadFromFile(fullPath);
+    if (graphData.isEmpty()) {
+        qWarning() << "Failed to load game state. File might be corrupt.";
+        QMessageBox::critical(nullptr, "Load Failed", "Failed to load game state. File might be corrupt.");
+        return;
+    }
+
+    emit gameDataLoaded(graphData);
+
+    // clientGraph->deserialize(graphData);
+
+    // for (auto &layer : layers) {
+    //     graph::Vertex *vertex = clientGraph->get_vertex_by_id(layer->getId() + 1);
+    //     if (vertex) {
+    //         layerToVertex[layer] = vertex;
+    //         vertex->map_layer = layer;
+    //     }
+    // }
+
+    // updateGraphics();
+}
+
+void ClientGameManager::processLoadData(const QJsonObject &gameData) {
+    qDebug() << "Processing loaded game data:" << gameData;
+
+    clientGraph->deserialize(gameData);
+
+    // for (auto &layer : layers) {
+    //     graph::Vertex *vertex = clientGraph->get_vertex_by_id(layer->getId() + 1);
+    //     if (vertex) {
+    //         layerToVertex[layer] = vertex;
+    //         vertex->map_layer = layer;
+    //     }
+    // }
+
+    updateGraphics();
+    qDebug() << "Game data successfully processed and applied.";
+}
+
+int ClientGameManager::getClientId() const {
+    return ClientId;
+}
+
 

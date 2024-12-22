@@ -2,6 +2,7 @@
 
 #include "../lobbywindow.h"
 
+
 #include <QWidget>
 #include <QStackedWidget>
 #include <QPushButton>
@@ -18,9 +19,8 @@ public:
     ~GameMenu();
 
 signals:
-    void startGame();
+    void newGame();
     void exitGame();
-    void fullScreenClicked();
 
 protected:
     void resizeEvent(QResizeEvent *event) override;
@@ -28,6 +28,8 @@ protected:
 
 private slots:
     void openSettings();
+    void onExitButtonClicked();
+    void fullScreenClicked();
 
 private:
     QLabel *shadowLabel;
@@ -36,11 +38,18 @@ private:
     QPushButton *settingsButton;
     QPushButton *exitButton;
     QPushButton *fullScreenButton;
+    QPushButton *muteButton;
     QStackedWidget *stackedWidget;
     QFrame *buttonFrame;
+    QMediaPlayer *mediaPlayer;
+    QAudioOutput *audioOutput;
+
+    LobbyWindow *lobbyWindow;
 
     void setupUI();
     void setBackgroundImage();
 
     QWidget *createSettingsMenu();
+    QWidget *lobbyMenu();
+    QWidget *createLobby();
 };
