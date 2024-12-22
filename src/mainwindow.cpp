@@ -5,8 +5,9 @@
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent), ui(new Ui::MainWindow), gameMenu(nullptr), lobbyWindow(nullptr) {
     ui->setupUi(this);
-
     setupMenu();
+
+    this->showMaximized();
 }
 
 MainWindow::~MainWindow() {
@@ -16,12 +17,13 @@ MainWindow::~MainWindow() {
 void MainWindow::setupMenu() {
     gameMenu = new GameMenu(this);
     setCentralWidget(gameMenu);
-
+    this->showMaximized();
     // Connect GameMenu signals
     connect(gameMenu, &GameMenu::startGame, this, [this]() {
         lobbyWindow = new LobbyWindow();
+        lobbyWindow->showMaximized();
         lobbyWindow->show();
-        this->close(); // Close MainWindow when entering lobby
+        this->close();
     });
 
     connect(gameMenu, &GameMenu::exitGame, this, &MainWindow::close);

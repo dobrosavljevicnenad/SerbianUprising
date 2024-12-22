@@ -16,13 +16,14 @@ ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *paren
     selectedLayer(nullptr),
     moveList(new QListWidget())
 {
+    this->showMaximized();
+
     setupGame();
     setupUI();
     connectSignals();
     gameManager->initializeUI(headerLabel, endTurnButton, moveButton, infoButton,moveList,
                               armyButton,reliefButton,regionsButton,cityButton,cultureButton,defaultButton,nodeInfoWidget);
     connect(gameManager, &ClientGameManager::gameYearUpdated, this, &ClientWindow::updateYearLabel);
-
 }
 
 ClientWindow::~ClientWindow() {
@@ -35,8 +36,10 @@ void ClientWindow::setupGame() {
     view->setTransformationAnchor(QGraphicsView::AnchorUnderMouse);
     view->setFocusPolicy(Qt::StrongFocus);
     view->setFocus();
+    view->updateGeometry();
     setCentralWidget(view);
     gameManager->setScene(scene);
+
 }
 
 void ClientWindow::setupUI() {
@@ -60,9 +63,10 @@ void ClientWindow::setupUI() {
     font.setPointSize(12);
     headerLabel->setFont(font);
     headerLabel->setAlignment(Qt::AlignCenter);
-    headerLabel->setStyleSheet("color: black; background-color: transparent;");
+    headerLabel->setStyleSheet("color: White; background-color: transparent;");
     mainLayout->addWidget(headerLabel);
 
+    // Year Label
     QString yearLabel = QString("Year: %1").arg(gameManager->year().getCurrentDateString());
     yearDisplayLabel = new QLabel(yearLabel);
     QFont yearFont = yearDisplayLabel->font();
@@ -70,7 +74,7 @@ void ClientWindow::setupUI() {
     yearFont.setPointSize(10);
     yearDisplayLabel->setFont(yearFont);
     yearDisplayLabel->setAlignment(Qt::AlignCenter);
-    yearDisplayLabel->setStyleSheet("color: darkGreen; background-color: transparent;");
+    yearDisplayLabel->setStyleSheet("color: White; background-color: transparent;");
     mainLayout->addWidget(yearDisplayLabel);
 
 
@@ -180,7 +184,6 @@ void ClientWindow::setupUI() {
     cultureButton = new QPushButton("Culture");
     defaultButton = new QPushButton("Main");
 
-    // Button Style
     QString mapButtonStyle =
         "QPushButton { background-color: darkGray; color: white; border-radius: 5px; padding: 5px; }"
         "QPushButton:hover { background-color: gray; }"
@@ -192,7 +195,6 @@ void ClientWindow::setupUI() {
     cultureButton->setStyleSheet(mapButtonStyle);
     defaultButton->setStyleSheet(mapButtonStyle);
 
-    // Add buttons to layout
     mapModeLayout->addWidget(reliefButton,0, Qt::AlignCenter);
     mapModeLayout->addWidget(regionsButton,0, Qt::AlignCenter);
     mapModeLayout->addWidget(cityButton,0, Qt::AlignCenter);
@@ -200,10 +202,8 @@ void ClientWindow::setupUI() {
     mapModeLayout->addWidget(defaultButton,0, Qt::AlignCenter);
 
     mapModeContainer->setLayout(mapModeLayout);
-    // Move to bottom-left corner of the viewport
-    mapModeContainer->move(view->viewport()->rect().bottomLeft() + QPoint(10, -60)); // Adjust position
 
-    QList<QWidget*> layoutWidgets = {headerLabel, infoButton, moveButton, armyButton, endTurnButton, moveList};
+    QList<QWidget*> layoutWidgets = {headerLabel, infoButton, moveButton, armyButton, endTurnButton, moveList, yearDisplayLabel};
 
     connect(toggleButton, &QPushButton::clicked, this, [=]() {
         static bool isExpanded = true;
@@ -261,7 +261,7 @@ void ClientWindow::connectSignals() {
 
 void ClientWindow::onEndTurnClicked() {
     if (!gameManager) {
-        qWarning() << "Game manager is not available!";
+        qDebug() << "Game manager is not available!";
         return;
     }
     if(gameManager->getArmyManager().totalTroops != 0){
@@ -277,8 +277,11 @@ void ClientWindow::onEndTurnClicked() {
 
 void ClientWindow::repositionFixedWidgets()
 {
-    layoutContainer->move(view->viewport()->rect().topLeft() + QPoint(10, 10));
-    mapModeContainer->move(view->viewport()->rect().bottomLeft() + QPoint(10, -60));
+
+    QRect viewportRect = view->viewport()->rect();
+
+    layoutContainer->move(viewportRect.topLeft() + QPoint(10, 10));
+    mapModeContainer->move(viewportRect.bottomLeft() + QPoint(10, -(mapModeContainer->height()+10)));
 }
 
 void ClientWindow::processEndTurnClicked(){
@@ -356,6 +359,7 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
             selectedLayer = nullptr;
             return ;
         }
+
     } else {
         if(selectedLayer == layer) {
             QMessageBox::warning(this, tr("Error"), tr("You selected the same layer. Select another layer."));
@@ -370,7 +374,6 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
 
         int troopsToTransfer = QInputDialog::getInt(this, tr("Transfer Troops"), tr("Enter the number of soldiers to transfer:"), 0, 0, maxTroops, 1, &ok);
         if (ok) {
-            //Action
             ActionType type = (selected_vertex->army.armyType() == vertex->army.armyType()) ? ActionType::MOVE_ARMY : ActionType::ATTACK;
             if(selected_vertex == vertex)
                 type = ActionType::PLACE_ARMY;
@@ -384,15 +387,9 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
             selected_vertex->army.setSoldiers(maxTroops - troopsToTransfer);
             selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
 
-
             gameManager->drawArrow(gameManager->ClientId,selectedLayer, layer, troopsToTransfer, newAction.id);
             gameManager->addAction(newAction);
 
-
-            //TODO
-            //ONLY HIGHLIGHT NEIGHBOR PROVINCE WHEN PRESSED AND ALSO
-            //DON'T ALLOW CLICKS ON NOT NEIGHBOUR PROVINCE OF FIRST CLICKED
-            //buffer and textfield
             QString move = gameManager->GetCurrentAction(newAction);
             QListWidgetItem* item = new QListWidgetItem(move);
             item->setData(Qt::UserRole, newAction.id);
@@ -445,6 +442,7 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer){
 
 void ClientWindow::onInfoButtonClicked() {
     setActiveButton(qobject_cast<QPushButton*>(sender()));
+    selectedLayer=nullptr;
 }
 
 void ClientWindow::onMoveButtonClicked() {
@@ -453,6 +451,7 @@ void ClientWindow::onMoveButtonClicked() {
 
 void ClientWindow::onPlaceButtonClicked() {
     setActiveButton(qobject_cast<QPushButton*>(sender()));
+    selectedLayer=nullptr;
 }
 
 void ClientWindow::setActiveButton(QPushButton* clickedButton) {

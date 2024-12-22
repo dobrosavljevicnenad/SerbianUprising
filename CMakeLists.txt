@@ -38,6 +38,11 @@ else()
     add_executable(Ustanak ${PROJECT_SOURCES})
 endif()
 
+#set(CMAKE_JOB_POOLS_LINK large=1)
+#set(CMAKE_JOB_POOL_COMPILE compile=4)
+
+#set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fno-keep-inline-functions")
+#set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} --reduce-memory-overheads --no-keep-memory")
 
 
 target_link_libraries(Ustanak PRIVATE Qt${QT_VERSION_MAJOR}::Widgets Qt${QT_VERSION_MAJOR}::Core Qt${QT_VERSION_MAJOR}::Multimedia)

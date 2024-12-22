@@ -13,7 +13,7 @@ class NodeInfoWidget : public QWidget {
 public:
     explicit NodeInfoWidget(QMap<MapLayer*,graph::Vertex*> layerToVertex, QWidget* parent = nullptr);
 
-    void updateNodeInfo(MapLayer* layer); // Updates the widget with information from a layer
+    void updateNodeInfo(MapLayer* layer);
     void updateLayerToVertex(const QMap<MapLayer*, graph::Vertex*>& newLayerToVertex);
 
 
@@ -29,6 +29,7 @@ private:
     QLabel* cityLabel;
     QLabel* regionLabel;
     QPushButton* closeButton;
+    QLabel* bioTextLabel;
 };
 
 #endif // INFOWIDGET_H

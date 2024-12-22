@@ -96,6 +96,19 @@ std::vector<Vertex*> Graph::neighbors(const Vertex* vertex) const {
     return neighbors;
 }
 
+std::vector<Edge*> Graph::getEdges(const Vertex* vertex) const {
+    std::vector<Edge*> edges;
+
+    auto it = m_adj_list.find(const_cast<Vertex*>(vertex));
+    if (it != m_adj_list.end()) {
+        for (const Edge &edge : it->second) {
+            edges.push_back(const_cast<Edge*>(&edge));
+        }
+    }
+
+    return edges;
+}
+
 bool Graph::is_neighbor(const Vertex* vertex1, const Vertex* vertex2) const {
     auto it = m_adj_list.find(const_cast<Vertex*>(vertex1));
     for (const Edge &edge : it->second) {
@@ -118,7 +131,6 @@ void Graph::print_graph() const {
         << "\n[Player]: " << vertex->player.getPlayerId()
         << "\n[city]: " << vertex->city->getLevel()
         << "\n[region]: " << vertex->region->getRegionName()
-        //<< "\n[culture]: " << vertex->culture
         << "\n----------------------" << std::endl;
     }
 }
@@ -143,11 +155,11 @@ QJsonObject Graph::serialize(QJsonObject graphJson){
         for (const auto& [id, vertex] : vertices) {
             QJsonObject vertexJson;
 
-            vertexJson["id"] = static_cast<int>(id);  // ID čvora
-            vertexJson["label"] = QString::fromStdString(vertex->label());  // Labela čvora
-            vertexJson["num_of_soldiers"] = vertex->army.getSoldiers();  // Broj vojnika
+            vertexJson["id"] = static_cast<int>(id);
+            vertexJson["label"] = QString::fromStdString(vertex->label());
+            vertexJson["num_of_soldiers"] = vertex->army.getSoldiers();
             vertexJson["army_type"] = QString::fromStdString(vertex->army.to_string(vertex->army.armyType()));
-            vertexJson["player_id"] = vertex->player.getPlayerId();  // ID igrača
+            vertexJson["player_id"] = vertex->player.getPlayerId();
 
             verticesArray.append(vertexJson);
         }
@@ -162,11 +174,11 @@ QJsonObject Graph::serialize(QJsonObject graphJson){
 
 void Graph::deserialize(const QJsonObject &json) {
     QJsonArray verticesArray = json["vertices"].toArray();
-    if(!initialized){// Deserialize vertices
+    if(!initialized){
         for (const QJsonValue &value : verticesArray) {
             QJsonObject vertexJson = value.toObject();
 
-            // Basic Data
+            std::string bio = vertexJson["bio"].toString().toStdString();
             std::string label = vertexJson["label"].toString().toStdString();
             int armyCount = vertexJson["num_of_soldiers"].toInt();
             std::string armyType = vertexJson["army_type"].toString().toStdString();
@@ -176,13 +188,11 @@ void Graph::deserialize(const QJsonObject &json) {
             int playerId = (armyType == "HAJDUK") ? 1 : 2;
             CultureType culture = Culture::fromString(cultureStr);
 
-            // City Level and City Initialization
             int cityLevel = vertexJson["cityLevel"].toInt();
             City *city = CityFactory::getCityByLevel(cityLevel);
 
 
-            // Insert Vertex
-            insert_vertex(QPointF(0,0),
+            auto* vertex = insert_vertex(QPointF(0,0),
                           label,
                           nullptr,
                           Terrain::fromString(terrainType),
@@ -190,10 +200,11 @@ void Graph::deserialize(const QJsonObject &json) {
                           Player::fromJson(playerId, armyType),
                           culture,
                           city,
-                          nullptr); // Region initialized later
+                          nullptr);
+
+            vertex->setBio(bio);
         }
 
-        // Deserialize edges
         QJsonArray edgesArray = json["edges"].toArray();
         for (const QJsonValue& value : edgesArray) {
             QJsonObject edgeJson = value.toObject();
@@ -215,7 +226,7 @@ void Graph::deserialize(const QJsonObject &json) {
     } else {
         for (const QJsonValue& value : verticesArray) {
             QJsonObject vertexJson = value.toObject();
-            unsigned id = vertexJson["id"].toInt(); // Read the vertex ID
+            unsigned id = vertexJson["id"].toInt();
             int armyCount = vertexJson["num_of_soldiers"].toInt();
             std::string armyType = vertexJson["army_type"].toString().toStdString();
             int playerId = (armyType == "HAJDUK") ? 1 : (armyType == "JANISSARY" ? 2 : 0);

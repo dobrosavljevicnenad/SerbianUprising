@@ -45,7 +45,7 @@ public:
     void updateGraphics();
     void EndTurnClicked(const QVector<Action>& actions, int id);
     void allReset();
-    void drawArrow(int playerId, MapLayer* from, MapLayer* to, int number,int actionId);
+    void drawArrow(int playerId, MapLayer* from, MapLayer* to, int number,int actionId, QColor color = Qt::white, bool isTemporary = false);
     void addAction(const Action& action);
     QString GetCurrentAction(const Action& action);
     AddArmyManager& getArmyManager();
@@ -61,6 +61,10 @@ public:
     QVector<QStringList> generateBattleResults();
     std::vector<Results> resultsVector;
     Year year();
+    graph::Graph*getClientGraph() const;
+    Player getPlayer() const;
+    void removePlaceAction(int actionId);
+    void clearTemporaryArrows();
 
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
 
@@ -81,6 +85,7 @@ private:
     std::vector<MapLayer*> layers;
     AddArmyManager armyManager;
     std::map<int,std::vector<CustomArrowItem*>> arrows;
+    std::vector<CustomArrowItem*> temporaryArrows;
     Player player;
     Year gameYear;
     QVector<Region*>regions;
@@ -106,8 +111,7 @@ public:
     int ClientId;
     BattleResultsDialog *dialog;
     QVector<Action> actionBuffer;
-    graph::Graph*getClientGraph() const;
-    Player getPlayer() const;
-    void removePlaceAction(int actionId);
+
+    std::vector<std::tuple<graph::Vertex*, graph::Edge*, QColor>> getValidatedEdges(graph::Vertex* vertex);
 };
 #endif // CLIENTGAMEMANAGER_H

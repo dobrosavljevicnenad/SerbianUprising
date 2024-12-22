@@ -2,7 +2,6 @@
 
 Map::Map(QGraphicsScene* scene, const QMap<MapLayer*, graph::Vertex*>& qmapVertex)
     : scene(scene) {
-    // Convert QMap to std::map
     for (auto it = qmapVertex.begin(); it != qmapVertex.end(); ++it) {
         layerToVertex[it.key()] = it.value();
     }
@@ -28,7 +27,7 @@ void Map::generateRegionMap() {
 
 void Map::generateCultureMap() {
     for (const auto& [layer, vertex] : layerToVertex) {
-        QColor color = getColorForCulture(vertex->culture); // Assuming vertex has `culture` property
+        QColor color = getColorForCulture(vertex->culture);
         layer->setColor(color);
     }
     scene->update();
@@ -36,20 +35,18 @@ void Map::generateCultureMap() {
 
 QColor Map::getColorForCulture(CultureType culture) {
     switch (culture) {
-    case CultureType::TURKISH: return QColor(255, 215, 0);     // Gold
-    case CultureType::SERBIAN: return QColor(139, 69, 19);      // SaddleBrown
-    case CultureType::GREEK: return QColor(0, 128, 255);    // Light Blue
-    case CultureType::ROMANIAN: return QColor(255, 0, 255);    // Magenta
-    case CultureType::BULGARIAN: return QColor(0, 128, 0);     // Dark Green
-    default: return QColor(Qt::white); // Fallback color
+    case CultureType::TURKISH: return QColor(255, 215, 0);
+    case CultureType::SERBIAN: return QColor(139, 69, 19);
+    case CultureType::GREEK: return QColor(0, 128, 255);
+    case CultureType::ROMANIAN: return QColor(255, 0, 255);
+    case CultureType::BULGARIAN: return QColor(0, 128, 0);
+    default: return QColor(Qt::white);
     }
 }
 
 void Map::updateLayerToVertex(const QMap<MapLayer*, graph::Vertex*>& newLayerToVertex) {
-    // Clear the existing std::map
     layerToVertex.clear();
 
-    // Convert QMap to std::map
     for (auto it = newLayerToVertex.begin(); it != newLayerToVertex.end(); ++it) {
         layerToVertex[it.key()] = it.value();
     }
@@ -65,14 +62,14 @@ void Map::generateCityLevelMap() {
 
 QColor Map::getColorForCityLevel(const City* city) {
     if (!city) {
-        return QColor(Qt::lightGray); // Default color for non-city layers
+        return QColor(Qt::lightGray);
     }
 
     switch (city->getLevel()) {
-    case 1: return QColor(173, 216, 230); // Light Blue for Level 1
-    case 2: return QColor(100, 149, 237); // Cornflower Blue for Level 2
-    case 3: return QColor(0, 0, 255);     // Blue for Level 3
-    default: return QColor(Qt::gray);     // Fallback color
+    case 1: return QColor(173, 216, 230);
+    case 2: return QColor(100, 149, 237);
+    case 3: return QColor(0, 0, 255);
+    default: return QColor(Qt::gray);
     }
 }
 
@@ -96,16 +93,16 @@ QColor Map::getColorForRelief(TerrainType terrain) {
 
 QColor Map::getColorForRegion(const std::string& regionName) {
     static std::map<std::string, QColor> regionColors = {
-        {"Srpski Pasaluk", QColor(255, 0, 0)},       // Red
-        {"Bosanski Pasaluk", QColor(0, 255, 0)},     // Green
-        {"Hercegovacki", QColor(0, 0, 255)},         // Blue
-        {"Janinski", QColor(255, 165, 0)},           // Orange
-        {"Solunski", QColor(128, 0, 128)},           // Purple
-        {"Manastirski", QColor(0, 255, 255)},        // Cyan
-        {"Silistra", QColor(255, 192, 203)},         // Pink
-        {"Nish", QColor(139, 69, 19)},               // SaddleBrown
-        {"Edirne", QColor(255, 215, 0)},             // Gold
-        {"Wallachia", QColor(0, 128, 128)}           // Teal
+        {"Srpski Pasaluk", QColor(255, 0, 0)},
+        {"Bosanski Pasaluk", QColor(0, 255, 0)},
+        {"Hercegovacki", QColor(0, 0, 255)},
+        {"Janinski", QColor(255, 165, 0)},
+        {"Solunski", QColor(128, 0, 128)},
+        {"Manastirski", QColor(0, 255, 255)},
+        {"Silistra", QColor(255, 192, 203)},
+        {"Nish", QColor(139, 69, 19)},
+        {"Edirne", QColor(255, 215, 0)},
+        {"Wallachia", QColor(0, 128, 128)}
     };
 
     auto it = regionColors.find(regionName);

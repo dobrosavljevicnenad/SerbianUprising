@@ -9,6 +9,7 @@
 #include <QComboBox>
 
 GameMenu::GameMenu(QWidget *parent) : QWidget(parent) {
+
     setupUI();
 
     connect(newGameButton, &QPushButton::clicked, this, [this]() {

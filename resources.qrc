@@ -162,5 +162,6 @@
         <file>resources/forest.png</file>
         <file>resources/field.png</file>
         <file>resources/Images/FogOfWar.png</file>
+        <file>resources/arrow.png</file>
     </qresource>
 </RCC>

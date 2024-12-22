@@ -5,24 +5,24 @@
 
 #include <QGraphicsLineItem>
 #include <QPainter>
-#include <QPen>
-#include <QGraphicsScene>
+#include <QPixmap>
+#include <QColor>
 
 class CustomArrowItem : public QGraphicsLineItem {
 public:
-    CustomArrowItem(const QLineF& line, int actionId,QGraphicsItem* parent = nullptr);
+    CustomArrowItem(const QPointF& from, const QPointF& to, int actionId, QColor color, QGraphicsItem* parent = nullptr);
 
-    QPainterPath shape() const override ;
-
-    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
-
-    void setNumber(int number);
     int getActionId() const;
 
+protected:
+    void paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) override;
 
 private:
-    QGraphicsTextItem* textItem;
+    QPixmap colorizePixmap(const QPixmap& pixmap, const QColor& color);
+
     int actionId;
+    QPixmap arrowPixmap;
+    QColor arrowColor;
 };
 
 #endif // CUSTOMARROWITEM_H

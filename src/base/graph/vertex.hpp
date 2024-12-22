@@ -28,6 +28,8 @@ public:
     unsigned id() const;
     QPointF position() const;
     std::string label() const;
+    void setBio(std::string bio);
+    std::string bio() const;
 
     bool operator==(const Vertex &other) const { return id() == other.id(); }
 
@@ -45,6 +47,7 @@ private:
 
     QPointF m_position;
     std::string m_label;
+    std::string m_bio;
 };
 
 } // namespace graph

@@ -8,6 +8,8 @@ Edge::Edge(Vertex from, Vertex to, double weight, EdgeType type)
 unsigned Edge::from() const { return m_from; }
 unsigned Edge::to() const { return m_to; }
 double Edge::weight() const { return m_weight; }
+EdgeType Edge::type() const {return m_type;}
+
 
 std::string Edge::to_string() const {
     switch (m_type) {
@@ -15,6 +17,8 @@ std::string Edge::to_string() const {
         return "Land";
     case EdgeType::River:
         return "River";
+    case EdgeType::Sea:
+        return "Sea";
     default:
         return "";
     }

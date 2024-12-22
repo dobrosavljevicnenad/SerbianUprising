@@ -32,7 +32,6 @@ private:
     ClientGameManager *gameManager;
     QLabel *headerLabel;
     QLabel *yearDisplayLabel;
-    // UI elements specific to the client
     QListWidget *moveList;
     QPushButton *moveButton;
     QPushButton *armyButton;

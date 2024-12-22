@@ -1,14 +1,13 @@
 #pragma once
 
-#include "../base/graph/graph.hpp"      // Access to vertices
-#include "maplayer.h"                   // Access to MapLayer
+#include "../base/graph/graph.hpp"
+#include "maplayer.h"
 #include <QGraphicsScene>
 #include <map>
-#include <QMap>                         // For QMap compatibility
+#include <QMap>
 
 class Map {
 public:
-    // New constructor that accepts QMap
     explicit Map(QGraphicsScene* scene, const QMap<MapLayer*, graph::Vertex*>& qmapVertex);
 
     ~Map() = default;
@@ -16,7 +15,7 @@ public:
     void generateReliefMap();
     void generateRegionMap();
     void generateOwnerMap();
-    void resetMainGameMap(); // Reset to the main map with original colors
+    void resetMainGameMap();
     void setMainMode(bool mainMode);
 
     void generateCityLevelMap();

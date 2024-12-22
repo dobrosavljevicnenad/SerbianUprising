@@ -25,7 +25,6 @@ public:
     void startGame();
     void executeActions(const std::vector<Action> &actions1, int p1_id, const std::vector<Action> &actions2, int p2_id);
     QVector<QStringList> generateBattleResults();
-    //void processEndTurn();
     QJsonObject rootObj;
 private:
     std::unique_ptr<graph::Graph> graph;

@@ -24,8 +24,8 @@ NodeInfoWidget::NodeInfoWidget(QMap<MapLayer*, graph::Vertex*> layerToVertex, QW
         "QPushButton:hover { background-color: darkRed; }");
     connect(closeButton, &QPushButton::clicked, this, &NodeInfoWidget::hide);
 
-    titleLayout->addWidget(titleLabel, 1);           // Left aligned title
-    titleLayout->addWidget(closeButton, 0, Qt::AlignTop | Qt::AlignRight); // Right aligned close button
+    titleLayout->addWidget(titleLabel, 1);
+    titleLayout->addWidget(closeButton, 0, Qt::AlignTop | Qt::AlignRight);
 
     mainLayout->addLayout(titleLayout);
 
@@ -45,6 +45,19 @@ NodeInfoWidget::NodeInfoWidget(QMap<MapLayer*, graph::Vertex*> layerToVertex, QW
     picturesLayout->addWidget(backgroundImageLabel, 0, Qt::AlignCenter);
 
     mainLayout->addLayout(picturesLayout);
+
+    bioTextLabel = new QLabel("Biography", this);
+    bioTextLabel->setWordWrap(true);
+    bioTextLabel->setAlignment(Qt::AlignLeft);
+    bioTextLabel->setStyleSheet(
+        "color: white; "
+        "font-family: Arial, sans-serif; "
+        "font-size: 11px; "
+        "text-align: center; "
+        "background-color: rgba(0, 0, 0, 0.5); "
+        "padding: 2px;"
+        );
+    mainLayout->addWidget(bioTextLabel);
 
     bioLabel = new QLabel("Relief: mountain", this);
     bioLabel->setWordWrap(true);
@@ -72,25 +85,27 @@ NodeInfoWidget::NodeInfoWidget(QMap<MapLayer*, graph::Vertex*> layerToVertex, QW
     cityLabel->setStyleSheet("color: white;");
     mainLayout->addWidget(cityLabel);
 
-
-
-
     setLayout(mainLayout);
     setFixedSize(320, 450);
 }
 
 void NodeInfoWidget::updateLayerToVertex(const QMap<MapLayer*, graph::Vertex*>& newLayerToVertex) {
-    layerToVertex = newLayerToVertex;  // Update the mapping
+    layerToVertex = newLayerToVertex;
 }
 
 void NodeInfoWidget::updateNodeInfo(MapLayer* layer) {
     if (!layer) return;
 
     auto vertex = layerToVertex[layer];
-    titleLabel->setText(QString::fromStdString(vertex->label()));
+
+    titleLabel->setText(QString::fromStdString(vertex->label()) + " ID:" + QString::number(vertex->id()));
+
+    bioTextLabel->setText(QString::fromStdString(vertex->bio()));
 
     troopCountLabel->setText(QString("Troop Count: %1").arg(layer->troopText->toPlainText()));
+
     cultureLabel->setText(QString("Culture: %1").arg(Culture::toString(vertex->culture)));
+
     if(vertex->army.armyType()== ArmyType::HAJDUK){
         setStyleSheet(
             "NodeInfoWidget { "
@@ -128,7 +143,7 @@ void NodeInfoWidget::updateNodeInfo(MapLayer* layer) {
         backgroundImageLabel->setPixmap(mountainPixmap.scaled(backgroundImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
 
-    QString relief = QString("Relief: %1\n")
+    QString relief = QString("Relief: %1")
                          .arg(QString::fromStdString(vertex->terrain.to_string(vertex->terrain.getTerrain())));
     bioLabel->setText(relief);
 

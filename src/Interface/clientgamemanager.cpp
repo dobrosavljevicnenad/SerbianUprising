@@ -2,9 +2,7 @@
 
 ClientGameManager::ClientGameManager(QGraphicsScene* scene,QObject* parent)
     : QObject(parent),scene(scene),clientGraph(new graph::Graph()), armyManager(*new AddArmyManager(clientGraph.get()))
-{
-
-}
+{}
 
 void ClientGameManager::initializeUI(QLabel* headerLabel, QPushButton* endTurnButton, QPushButton* moveButton, QPushButton* infoButton,
                   QListWidget* moveList,QPushButton* armyButton,QPushButton* reliefButton,QPushButton* regionsButton,
@@ -21,6 +19,7 @@ void ClientGameManager::initializeUI(QLabel* headerLabel, QPushButton* endTurnBu
     this->cultureButton = cultureButton;
     this->reliefButton = reliefButton;
     this->nodeInfoWidget = nodeInfoWidget;
+    moveList->addItem(QString("Player %1 on turn:").arg(ClientId));
 }
 
 void ClientGameManager::initializeGraphics(QJsonObject graphData) {
@@ -161,13 +160,9 @@ void ClientGameManager::setId(int id) {
 void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     if (data.contains("graph") && data["graph"].isObject()) {
         QJsonObject graphData = data["graph"].toObject();
-
-        //qDebug() << graphData;
         clientGraph->deserialize(graphData);
         if(!init)
             initializeGraphics(graphData);
-        //
-        //clientGraph->print_graph();
     }
     if (data.contains("results") && data["results"].isObject()) {
         QJsonObject resultsObject = data["results"].toObject();
@@ -184,10 +179,10 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
                 }
             }
         } else {
-            qWarning() << "No valid 'results' array found inside the 'results' object.";
+            qDebug() << "No valid 'results' array found inside the 'results' object.";
         }
     } else {
-        qWarning() << "No valid 'results' object found in the data.";
+        qDebug() << "No valid 'results' object found in the data.";
     }
     if(init){
         allReset();
@@ -198,8 +193,8 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
         for (auto &layer : layers) {
             graph::Vertex* vertex = clientGraph->get_vertex_by_label(layer->labelName);
             if (vertex) {
-                layerToVertex[layer] = vertex; // Update mapping
-                vertex->map_layer = layer;    // Link vertex to layer
+                layerToVertex[layer] = vertex;
+                vertex->map_layer = layer;
 
                 for (auto& region : regions) {
                     for (auto& regionTerritory : region->getTerritories()) {
@@ -214,9 +209,6 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
                 qWarning() << "Vertex not found for layer ID:" << layer->getId();
             }
         }
-        //regions=clientGraph->regions;
-        qDebug() << "ovde sam";
-
         nodeInfoWidget->updateLayerToVertex(layerToVertex);
         map->updateLayerToVertex(layerToVertex);
 
@@ -301,26 +293,62 @@ void ClientGameManager::updateGraphics() {
                 layer->setTroopCount(army.getSoldiers());
                 layer->setCurrentPlayer(vertex->player.getPlayerId());
             } else {
-                qWarning() << "Vertex is null for layer:" << layer->getId();
+                qDebug() << "Vertex is null for layer:" << layer->getId();
             }
         } else {
-            qWarning() << "Layer not found in layerToVertex map:" << layer->getId();
+            qDebug() << "Layer not found in layerToVertex map:" << layer->getId();
         }
     }
     emit gameYearUpdated(gameYear.getCurrentDateString());
 }
 
-void ClientGameManager::drawArrow(int playerId, MapLayer* from, MapLayer* to, int number, int actionId) {
-    QPointF fromPos = from->pos() + QPointF((from->boundingRect().width() / 2)-5,
+void ClientGameManager::drawArrow(int playerId, MapLayer* from, MapLayer* to, int number, int actionId, QColor color , bool isTemporary) {
+    QPointF fromPos = from->pos() + QPointF((from->boundingRect().width() / 2),
                                             from->boundingRect().height() / 2);
-    QPointF toPos = to->pos() + QPointF((to->boundingRect().width() / 2)+20,
+    QPointF toPos = to->pos() + QPointF((to->boundingRect().width() / 2),
                                         to->boundingRect().height() / 2);
 
-    QLineF line(fromPos, toPos);
-    CustomArrowItem* arrow = new CustomArrowItem(line,actionId);
+    CustomArrowItem* arrow = new CustomArrowItem(fromPos, toPos, actionId, color);
+
+    arrow->setPen(QPen(color, 2));
+
     scene->addItem(arrow);
-    arrow->setNumber(number);
-    arrows[playerId].emplace_back(arrow);
+    if (isTemporary) {
+        temporaryArrows.emplace_back(arrow);
+    } else {
+        arrows[playerId].emplace_back(arrow);
+    }
+}
+
+std::vector<std::tuple<graph::Vertex*, graph::Edge*, QColor>> ClientGameManager::getValidatedEdges(graph::Vertex* vertex) {
+    std::vector<std::tuple<graph::Vertex*, graph::Edge*, QColor>> validatedEdges;
+
+    for (auto& edge : clientGraph->getEdges(vertex)) {
+        graph::Vertex* neighbor = (edge->from() == vertex->id())
+        ? clientGraph->get_vertex_by_id(edge->to())
+        : clientGraph->get_vertex_by_id(edge->from());
+
+        QColor edgeColor;
+        if (edge->type() == graph::EdgeType::Sea) {
+            edgeColor = Qt::blue;
+        } else if (neighbor->player.getPlayerId() == vertex->player.getPlayerId()) {
+            edgeColor = Qt::green;
+        } else {
+            edgeColor = Qt::red;
+        }
+
+        validatedEdges.emplace_back(neighbor, edge, edgeColor);
+    }
+
+    return validatedEdges;
+}
+
+void ClientGameManager::clearTemporaryArrows() {
+    for (CustomArrowItem* arrow : temporaryArrows) {
+        scene->removeItem(arrow);
+        delete arrow;
+    }
+    temporaryArrows.clear();
 }
 
 void ClientGameManager::addAction(const Action& action){

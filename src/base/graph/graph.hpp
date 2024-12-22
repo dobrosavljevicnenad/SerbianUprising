@@ -42,6 +42,7 @@ public:
 
 public:
     std::unordered_map<nodeID_t, Vertex*> vertices;  // Map of vertex IDs to Vertex pointers
+    std::vector<Edge *> getEdges(const Vertex *vertex) const;
 private:
     std::unordered_map<Vertex*, std::vector<Edge>> m_adj_list;  // Adjacency list for edges
     unsigned m_next_id=1;  // Next ID for a new vertex

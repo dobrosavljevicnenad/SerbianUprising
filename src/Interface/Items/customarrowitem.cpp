@@ -1,64 +1,48 @@
 #include "customarrowitem.h"
 
-CustomArrowItem::CustomArrowItem(const QLineF& line,int actionId, QGraphicsItem* parent)
-    : QGraphicsLineItem(line, parent),textItem(nullptr),actionId(actionId) {
-    textItem = new QGraphicsTextItem(this);
-    textItem->setDefaultTextColor(Qt::black);
-    QFont font = textItem->font();
-    font.setPointSize(13);
-    textItem->setFont(font);
-
-    QPointF midpoint = line.pointAt(0.5);
-    textItem->setPos(midpoint);
-}
-
-QPainterPath CustomArrowItem::shape() const {
-    QPainterPath path = QGraphicsLineItem::shape();
-
-    QPolygonF arrowHead;
-    qreal arrowSize = 20;
-    QLineF line = this->line();
-    double angle = std::atan2(-line.dy(), line.dx());
-
-    QPointF arrowP1 = line.p2() - QPointF(std::cos(angle + M_PI / 6) * arrowSize,
-                                          std::sin(angle + M_PI / 6) * arrowSize);
-    QPointF arrowP2 = line.p2() - QPointF(std::cos(angle - M_PI / 6) * arrowSize,
-                                          std::sin(angle - M_PI / 6) * arrowSize);
-
-    arrowHead << line.p2() << arrowP1 << arrowP2;
-
-    path.addPolygon(arrowHead);
-
-    return path;
-}
-
-void CustomArrowItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
-    QGraphicsLineItem::paint(painter, option, widget);
-
-    QPolygonF arrowHead;
-    qreal arrowSize = 15;
-    QLineF line = this->line();
-    double angle = std::atan2(-line.dy(), line.dx());
-
-    QPointF arrowP1 = line.p2() - QPointF(std::cos(angle + M_PI / 6) * arrowSize,
-                                          std::sin(angle + M_PI / 6) * arrowSize);
-    QPointF arrowP2 = line.p2() - QPointF(std::cos(angle - M_PI / 6) * arrowSize,
-                                          std::sin(angle - M_PI / 6) * arrowSize);
-
-    arrowHead << line.p2() << arrowP1 << arrowP2;
-
-    painter->setBrush(Qt::yellow);
-    painter->setPen(Qt::yellow);
-    painter->drawPolygon(arrowHead);
-}
-
-void CustomArrowItem::setNumber(int number) {
-    if (textItem) {
-        textItem->setPlainText(QString::number(number));
-        QLineF line = this->line();
-        QPointF midpoint = line.pointAt(0.5);
-        textItem->setPos(midpoint);
+CustomArrowItem::CustomArrowItem(const QPointF& from, const QPointF& to, int actionId, QColor color, QGraphicsItem* parent)
+    : QGraphicsLineItem(QLineF(from, to), parent), actionId(actionId), arrowPixmap(":/resources/arrow.png"), arrowColor(color) {
+    if (arrowPixmap.isNull()) {
+        qDebug() << "Failed to load arrow image!";
+    } else {
+        arrowPixmap = colorizePixmap(arrowPixmap, arrowColor);
     }
 }
 
-int CustomArrowItem::getActionId()const{ return actionId; }
+QPixmap CustomArrowItem::colorizePixmap(const QPixmap& pixmap, const QColor& color) {
+    QImage image = pixmap.toImage();
+    QPainter imagePainter(&image);
+    imagePainter.setCompositionMode(QPainter::CompositionMode_SourceIn);
+    imagePainter.fillRect(image.rect(), color);
+    imagePainter.end();
+    return QPixmap::fromImage(image);
+}
+
+void CustomArrowItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
+    painter->setRenderHint(QPainter::Antialiasing, true);
+    painter->setOpacity(0.5);
+
+    QLineF line = this->line();
+    double lineLength = line.length();
+    double angle = std::atan2(-line.dy(), line.dx()) * 180.0 / M_PI;
+
+    if (arrowPixmap.isNull()) {
+        return;
+    }
+
+    QSizeF originalSize = arrowPixmap.size();
+    double scaleFactor = lineLength / originalSize.width();
+    double heightFactor = 0.5;
+    QSizeF scaledSize(originalSize.width() * scaleFactor, originalSize.height() * scaleFactor * heightFactor);
+    QRectF arrowRect(-scaledSize.width() / 2, -scaledSize.height() / 2, scaledSize.width(), scaledSize.height());
+
+    painter->save();
+    painter->translate(line.center());
+    painter->rotate(-angle);
+    painter->drawPixmap(arrowRect, arrowPixmap, arrowPixmap.rect());
+    painter->restore();
+}
+
+int CustomArrowItem::getActionId() const {
+    return actionId;
+}

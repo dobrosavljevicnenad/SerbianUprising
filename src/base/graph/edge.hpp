@@ -6,7 +6,8 @@ namespace graph {
 
 enum class EdgeType {
     River,
-    Land
+    Land,
+    Sea
 };
 
 class Edge {
@@ -16,14 +17,19 @@ public:
   unsigned from() const;
   unsigned to() const;
   double weight() const;
+  EdgeType type() const;
 
   std::string to_string() const;
 
   static EdgeType fromString(const std::string& edgeType) {
       if (edgeType == "Land") {
           return EdgeType::Land;
+      } else if (edgeType == "River"){
+          return EdgeType::River;
+      }else{
+          return EdgeType::Sea;
       }
-      return EdgeType::River;
+
   }
 
 private:

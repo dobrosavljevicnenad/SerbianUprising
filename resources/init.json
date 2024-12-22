@@ -9,7 +9,8 @@
     "position": {"x":29,"y": 21},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "HILL"
+    "terrain_type" : "HILL",
+    "bio" : "Kladusa's hilly terrain provides a natural defense, making it suitable for a Serbian stronghold. The Serbian culture thrives here due to its historical ties and strong community presence."
   },
   {
     "label": "Bihac",
@@ -20,7 +21,8 @@
     "position": {"x":62,"y": 96},
     "cityLevel": 1,
     "culture": "TURKISH",
-    "terrain_type" : "FOREST"
+    "terrain_type" : "FOREST",
+    "bio" : "Nestled in a lush forest, Bihac represents the influence of Turkish culture during the Ottoman expansion. The dense woods serve as both a resource and a defensive feature."
   },
   {
     "label": "Novi_Grad",
@@ -31,7 +33,8 @@
     "position": {"x":178,"y": 16},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "FOREST"
+    "terrain_type" : "FOREST",
+    "bio" : "Situated in a forested area, Novi_Grad has long been a hub of Serbian culture, thriving amidst the protective canopy of trees. Its rich history and geographic position make it strategically important."
   },
   {
     "label": "Gradiska",
@@ -42,7 +45,8 @@
     "position": {"x":409,"y": 52},
     "cityLevel": 2,
     "culture": "SERBIAN",
-    "terrain_type" : "FIELD"
+    "terrain_type" : "FIELD",
+    "bio" : "Gradiska lies on fertile fields, reflecting the Serbian tradition of agricultural development. The vast plains have supported the community's growth and resilience."
   },
   {
     "label": "Sanski_Most",
@@ -53,7 +57,8 @@
     "position": {"x":234,"y": 112},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "FOREST"
+    "terrain_type" : "FOREST",
+    "bio" : "Sanski_Most's forest terrain provides abundant natural resources, fostering Serbian cultural traditions tied to the land. Its location also serves as a key regional crossroads."
   },
   {
     "label": "Jajce",
@@ -64,7 +69,8 @@
     "position": {"x":283,"y": 192},
     "cityLevel": 2,
     "culture": "TURKISH",
-    "terrain_type" : "HILL"
+    "terrain_type" : "HILL",
+    "bio" : "Perched on a hill, Jajce showcases Turkish culture's architectural and strategic influence. Its elevated position symbolizes both strength and heritage."
   },
   {
     "label": "Bugojno",
@@ -75,7 +81,8 @@
     "position": {"x":339,"y": 346},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "FOREST"
+    "terrain_type" : "FOREST",
+    "bio" : "Bugojno’s lush forests are home to Serbian traditions deeply connected to the natural environment. Its terrain promotes sustainability and protection for its inhabitants."
   },
   {
     "label": "Banja_Luka",
@@ -86,7 +93,8 @@
     "position": {"x":441,"y": 144},
     "cityLevel": 2,
     "culture": "SERBIAN",
-    "terrain_type" : "HILL"
+    "terrain_type" : "HILL",
+    "bio" : "The hills of Banja_Luka mirror the Serbian resilience, offering natural protection and a strategic vantage point. It’s a center for Serbian culture and political influence."
   },
   {
     "label": "Travnik",
@@ -97,7 +105,8 @@
     "position": {"x":465,"y": 245},
     "cityLevel": 2,
     "culture": "TURKISH",
-    "terrain_type" : "MOUNTAIN"
+    "terrain_type" : "MOUNTAIN",
+    "bio" : "Nestled in the mountains, Travnik reflects Turkish architectural ingenuity and cultural dominance. Its position underscores its strategic and historical importance."
   },
   {
     "label": "Sarajevo",
@@ -108,7 +117,8 @@
     "position": {"x":558,"y": 377},
     "cityLevel": 3,
     "culture": "TURKISH",
-    "terrain_type" : "HILL"
+    "terrain_type" : "HILL",
+    "bio" : "Sarajevo's hilly terrain has historically made it a focal point of Turkish governance and culture. Its elevation and geography support its role as a cultural and political hub."
   },
   {
     "label": "Focha",
@@ -119,7 +129,8 @@
     "position": {"x":683,"y": 561},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "MOUNTAIN"
+    "terrain_type" : "MOUNTAIN",
+    "bio" : "Focha’s mountainous terrain embodies the rugged spirit of Serbian culture, with traditions deeply tied to survival in harsh environments. Its remote location preserves its cultural uniqueness."
   },
   {
     "label": "Tuzla",
@@ -130,7 +141,8 @@
     "position": {"x":728,"y": 227},
     "cityLevel": 2,
     "culture": "TURKISH",
-    "terrain_type" : "FOREST"
+    "terrain_type" : "FOREST",
+    "bio" : "Surrounded by dense forests, Tuzla stands as a bastion of Turkish influence. The terrain supports a rich ecosystem and offers natural resources for development."
   },
   {
     "label": "Zvornik",
@@ -141,7 +153,8 @@
     "position": {"x":849,"y": 269},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "FOREST"
+    "terrain_type" : "FOREST",
+    "bio" : "Zvornik’s forested surroundings echo its Serbian heritage, providing resources and defense for its people. This area has long been a cultural stronghold amidst the greenery."
   },
   {
     "label": "Srebrenica",
@@ -152,7 +165,8 @@
     "position": {"x":867,"y": 363},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "FOREST"
+    "terrain_type" : "FOREST",
+    "bio" : "Located in a dense forest, Srebrenica preserves Serbian traditions tied to the land. Its terrain reflects both the challenges and opportunities of forested living."
   },
   {
     "label": "Visegrad",
@@ -163,7 +177,8 @@
     "position": {"x":855,"y": 451},
     "cityLevel": 1,
     "culture": "TURKISH",
-    "terrain_type" : "MOUNTAIN"
+    "terrain_type" : "MOUNTAIN",
+    "bio" : "Visegrad’s mountainous terrain highlights its strategic value during Turkish rule. The rugged environment fosters resilience and a connection to Turkish traditions."
   },
   {
     "label": "Sjenica",
@@ -174,7 +189,8 @@
     "position": {"x":866,"y": 576},
     "cityLevel": 1,
     "culture": "TURKISH",
-    "terrain_type" : "FOREST"
+    "terrain_type" : "FOREST",
+    "bio" : "Surrounded by forests, Sjenica thrives under Turkish influence, with its traditions blending seamlessly into the lush landscape. The terrain supports the area's agricultural and hunting practices."
   },
   {
     "label": "Novi_Pazar",
@@ -185,7 +201,8 @@
     "position": {"x":997,"y": 687},
     "cityLevel": 1,
     "culture": "TURKISH",
-    "terrain_type" : "MOUNTAIN"
+    "terrain_type" : "MOUNTAIN",
+    "bio" : "Novi_Pazar’s mountainous terrain reinforces its significance in Turkish history. It has served as a cultural and economic crossroads for centuries."
   },
   {
     "label": "Doboj",
@@ -196,7 +213,8 @@
     "position": {"x":613,"y": 145},
     "cityLevel": 2,
     "culture": "TURKISH",
-    "terrain_type" : "FOREST"
+    "terrain_type" : "FOREST",
+    "bio" : "Set in a forested region, Doboj exemplifies Turkish architectural styles and cultural heritage. The area is abundant in resources and offers strategic protection."
   },
   {
     "label": "Ves",
@@ -207,7 +225,8 @@
     "position": {"x":563,"y": 74},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "HILL"
+    "terrain_type" : "HILL",
+    "bio" : "Ves’s hilly terrain makes it a safe haven for Serbian culture. The natural elevation provides a vantage point and enhances its strategic importance."
   },
   {
     "label": "Brod",
@@ -218,7 +237,8 @@
     "position": {"x":649,"y": 66},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "FIELD"
+    "terrain_type" : "FIELD",
+    "bio" : "Located in a fertile field, Brod supports Serbian agricultural practices. Its open terrain fosters growth and connectivity with neighboring regions."
   },
   {
     "label": "Shamac",
@@ -229,7 +249,8 @@
     "position": {"x":784,"y": 98},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "FIELD"
+    "terrain_type" : "FIELD",
+    "bio" : "Shamac’s expansive fields have allowed Serbian culture to flourish. The terrain is ideal for farming and trade routes, emphasizing its economic role."
   },
   {
     "label": "Bijeljina",
@@ -240,7 +261,8 @@
     "position": {"x":849,"y": 158},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "FIELD"
+    "terrain_type" : "FIELD",
+    "bio" : "Nestled in the plains, Bijeljina thrives as a hub for Serbian traditions. The fertile terrain reflects the community’s reliance on agriculture and trade."
   },
   {
     "label": "Sabac",
@@ -251,7 +273,8 @@
     "position": {"x":966,"y": 139},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "FIELD"
+    "terrain_type" : "FIELD",
+    "bio" : "Sabac lies in a flat, open field, symbolizing Serbian strength and agricultural heritage. Its terrain makes it an ideal site for settlement and trade."
   },
   {
     "label": "Beograd",
@@ -262,7 +285,8 @@
     "position": {"x":1238,"y": 181},
     "cityLevel": 3,
     "culture": "SERBIAN",
-    "terrain_type" : "HILL"
+    "terrain_type" : "HILL",
+    "bio" : "Beograd’s hills provide natural defenses and support its role as a cultural epicenter for Serbian traditions. Its strategic location highlights its historical importance."
   },
   {
     "label": "Smederevo",
@@ -273,7 +297,8 @@
     "position": {"x":1441,"y": 187},
     "cityLevel": 2,
     "culture": "SERBIAN",
-    "terrain_type" : "FOREST"
+    "terrain_type" : "FOREST",
+    "bio" : "Smederevo’s forests foster a deep connection to Serbian heritage. The natural surroundings have influenced its culture and community practices for generations."
   },
   {
     "label": "Valjevo",
@@ -284,7 +309,8 @@
     "position": {"x":1140,"y": 322},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "FOREST"
+    "terrain_type" : "FOREST",
+    "bio" : "Valjevo’s forested terrain nurtures Serbian traditions tied to the land. Its rich resources and protective surroundings support its cultural prominence."
   },
   {
     "label": "Uzice",
@@ -295,7 +321,8 @@
     "position": {"x":990,"y": 395},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "MOUNTAIN"
+    "terrain_type" : "MOUNTAIN",
+    "bio" : "Perched in the mountains, Uzice embodies the resilience of Serbian culture. Its rugged terrain offers both protection and isolation, preserving its heritage."
   },
   {
     "label": "Raska",
@@ -306,7 +333,8 @@
     "position": {"x":1199,"y": 502},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "MOUNTAIN"
+    "terrain_type" : "MOUNTAIN",
+    "bio" : "Raska’s mountainous terrain symbolizes its Serbian strength and independence. The area has historically served as a refuge and a cultural stronghold."
   },
   {
     "label": "Krusevac",
@@ -317,7 +345,8 @@
     "position": {"x":1480,"y": 501},
     "cityLevel": 2,
     "culture": "SERBIAN",
-    "terrain_type" : "FIELD"
+    "terrain_type" : "FIELD",
+    "bio" : "Krusevac’s flat fields reflect its role in Serbian agricultural and cultural development. Its open terrain supports trade and sustains its community."
   },
   {
     "label": "Nis",
@@ -328,7 +357,8 @@
     "position": {"x":1635,"y": 631},
     "cityLevel": 2,
     "culture": "SERBIAN",
-    "terrain_type" : "FOREST"
+    "terrain_type" : "FOREST",
+    "bio" : "Nis is surrounded by forests, making it a center for Serbian culture and resource gathering. The terrain fosters a deep connection to nature and tradition."
   },
   {
     "label": "Vranje",
@@ -339,7 +369,8 @@
     "position": {"x":1398,"y": 651},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "HILL"
+    "terrain_type" : "HILL",
+    "bio" : "Vranje’s hilly landscape provides natural defenses and supports Serbian cultural practices. The elevated terrain also offers a strategic advantage."
   },
   {
     "label": "Pristina",
@@ -350,7 +381,8 @@
     "position": {"x":1282,"y": 736},
     "cityLevel": 2,
     "culture": "TURKISH",
-    "terrain_type" : "HILL"
+    "terrain_type" : "HILL",
+    "bio" : "Pristina’s hilly surroundings reflect Turkish architectural and cultural influences. Its strategic location supports its role as a regional hub."
   },
   {
     "label": "Kumanovo",
@@ -361,7 +393,8 @@
     "position": {"x":1472,"y": 895},
     "cityLevel": 2,
     "culture": "SERBIAN",
-    "terrain_type" : "HILL"
+    "terrain_type" : "HILL",
+    "bio" : "Situated in the hills, Kumanovo represents the strength of Serbian culture. Its terrain has historically made it a key defensive and cultural point."
   },
   {
     "label": "Prizren",
@@ -372,7 +405,8 @@
     "position": {"x":1213,"y": 899},
     "cityLevel": 1,
     "culture": "TURKISH",
-    "terrain_type" : "MOUNTAIN"
+    "terrain_type" : "MOUNTAIN",
+    "bio" : "Nestled in the mountains, Prizren showcases Turkish culture’s integration with the rugged terrain. The area thrives as a cultural and economic hub."
   },
   {
     "label": "Kragujevac",
@@ -383,7 +417,8 @@
     "position": {"x":1417,"y": 320},
     "cityLevel": 2,
     "culture": "SERBIAN",
-    "terrain_type" : "HILL"
+    "terrain_type" : "HILL",
+    "bio" : "Kragujevac’s hilly terrain supports its role as a center of Serbian culture and innovation. The elevated landscape reflects the area’s strategic importance."
   },
   {
     "label": "Negotin",
@@ -394,7 +429,8 @@
     "position": {"x":1660,"y": 252},
     "cityLevel": 2,
     "culture": "SERBIAN",
-    "terrain_type" : "FIELD"
+    "terrain_type" : "FIELD",
+    "bio" : "Negotin’s fertile fields provide a strong base for Serbian agricultural practices. The open terrain fosters growth and connectivity with surrounding regions."
   },
   {
     "label": "Zajecar",
@@ -405,7 +441,8 @@
     "position": {"x":1755,"y": 438},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "HILL"
+    "terrain_type" : "HILL",
+    "bio" : "Zajecar’s hilly landscape offers both strategic advantages and a stronghold for Serbian culture. Its rugged surroundings embody resilience and heritage."
   },
   {
     "label": "Kladovo",
@@ -416,7 +453,8 @@
     "position": {"x":1817,"y": 227},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "FIELD"
+    "terrain_type" : "FIELD",
+    "bio" : "Kladovo’s open fields have long supported Serbian agriculture and trade. The flat terrain highlights its economic significance in the region."
   },
   {
     "label": "Grahovo",
@@ -427,7 +465,8 @@
     "position": {"x":122,"y": 221},
     "cityLevel": 1,
     "culture": "SERBIAN",
-    "terrain_type" : "FOREST"
+    "terrain_type" : "FOREST",
+    "bio" : "Surrounded by forests, Grahovo thrives on Serbian traditions tied to the land. The dense woods provide both resources and a natural barrier."
   },
   {
     "label": "Livno",
@@ -438,7 +477,8 @@
     "position": {"x":251,"y": 443},
     "cityLevel": 1,
     "culture": "TURKISH",
-    "terrain_type" : "HILL"
+    "terrain_type" : "HILL",
+    "bio" : "Livno’s hilly terrain reflects Turkish cultural influence and provides strategic protection. Its elevated location is ideal for both defense and settlement."
   },
   {
     "label": "Mostar",
@@ -449,7 +489,8 @@
     "position": {"x":292,"y": 498},
     "cityLevel": 3,
     "culture": "TURKISH",
-    "terrain_type" : "HILL"
+    "terrain_type" : "HILL",
+    "bio" : "Mostar’s hilly terrain mirrors Turkish architectural brilliance and cultural dominance. Its strategic location has made it a key trade and cultural hub."
   },
   {
     "label": "Trebinje",
@@ -460,7 +501,8 @@
     "position": {"x":450,"y": 686},
     "cityLevel": 2,
     "culture": "SERBIAN",
-    "terrain_type" : "HILL"
+    "terrain_type" : "HILL",
+    "bio" : "Trebinje’s hilly surroundings make it a bastion of Serbian culture. The natural terrain provides both defense and a rich environment for growth."
   },
   {
     "label": "Cetinje",
@@ -471,7 +513,8 @@
     "position": {"x":759,"y": 777},
     "cityLevel": 2,
     "culture": "SERBIAN",
-    "terrain_type" : "MOUNTAIN"
+    "terrain_type" : "MOUNTAIN",
+    "bio" : "Nestled in the mountains, Cetinje is a symbol of Serbian cultural resilience. The rugged terrain offers protection and fosters independence."
   },
   {
     "label": "Djakovica",
@@ -482,7 +525,8 @@
     "position": {"x":1039,"y": 839},
     "cityLevel": 1,
     "culture": "TURKISH",
-    "terrain_type" : "MOUNTAIN"
+    "terrain_type" : "MOUNTAIN",
+    "bio" : "Djakovica’s mountainous terrain underscores Turkish traditions and architectural ingenuity. Its location serves as both a stronghold and a cultural center."
   },
     {
       "label": "Janina",
@@ -493,7 +537,8 @@
       "position": {"x":1148,"y": 1804},
       "cityLevel": 3,
       "culture": "GREEK",
-      "terrain_type": "MOUNTAIN"
+      "terrain_type": "MOUNTAIN",
+      "bio" : "Nestled in the mountains, Janina reflects Greek cultural roots and resilience. Its rugged terrain provides a natural fortress for its thriving traditions."
     },
     {
       "label": "Sarande",
@@ -504,7 +549,8 @@
       "position": {"x":1028,"y": 1603},
       "cityLevel": 2,
       "culture": "TURKISH",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Set on hilly terrain, Sarande embodies Turkish cultural and architectural influence. Its elevated position offers both strategic advantage and breathtaking views."
     },
     {
       "label": "Prikhala",
@@ -515,7 +561,8 @@
       "position": {"x":1553,"y": 1811},
       "cityLevel": 1,
       "culture": "GREEK",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Prikhala’s hilly surroundings reflect its Greek heritage and steadfastness. The terrain provides a balance of defense and agricultural potential."
     },
     {
       "label": "Larissa",
@@ -526,7 +573,8 @@
       "position": {"x":1809,"y": 1784},
       "cityLevel": 2,
       "culture": "GREEK",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Situated in the fertile plains, Larissa thrives as a center of Greek culture and agriculture. The open terrain supports trade and connectivity with neighboring regions."
     },
     {
       "label": "Olympus",
@@ -537,7 +585,8 @@
       "position": {"x":1424,"y": 1556},
       "cityLevel": 1,
       "culture": "GREEK",
-      "terrain_type" : "MOUNTAIN"
+      "terrain_type" : "MOUNTAIN",
+      "bio" : "Located in the mountains, Olympus symbolizes Greek mythology and heritage. The rugged terrain fosters a strong connection to nature and spiritual traditions."
     },
     {
       "label": "Ossa",
@@ -548,7 +597,8 @@
       "position": {"x":1862,"y": 1714},
       "cityLevel": 1,
       "culture": "GREEK",
-      "terrain_type" : "MOUNTAIN"
+      "terrain_type" : "MOUNTAIN",
+      "bio" : "Ossa’s mountainous landscape mirrors its Greek cultural depth and resilience. Its natural defenses make it a significant historical stronghold."
     },
     {
       "label": "Rapsani",
@@ -559,7 +609,8 @@
       "position": {"x":1770,"y": 1655},
       "cityLevel": 1,
       "culture": "GREEK",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Rapsani’s forested surroundings nurture Greek traditions and provide abundant natural resources. The dense woods support a harmonious connection to nature."
     },
     {
       "label": "Vlore",
@@ -570,7 +621,8 @@
       "position": {"x":943,"y": 1462},
       "cityLevel": 1,
       "culture": "TURKISH",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Set on hilly terrain, Vlore embodies Turkish influence with a blend of natural beauty and cultural heritage. Its strategic location enhances its prominence."
     },
     {
       "label": "Ohrid",
@@ -581,7 +633,8 @@
       "position": {"x":1265,"y": 1353},
       "cityLevel": 1,
       "culture": "TURKISH",
-      "terrain_type" : "MOUNTAIN"
+      "terrain_type" : "MOUNTAIN",
+      "bio" : "Nestled in the mountains, Ohrid reflects Turkish architectural and cultural richness. Its rugged terrain provides both defense and isolation, preserving its heritage."
     },
     {
       "label": "Tirane",
@@ -592,7 +645,8 @@
       "position": {"x":1112,"y": 1299},
       "cityLevel": 2,
       "culture": "TURKISH",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Surrounded by forests, Tirane thrives as a center of Turkish culture and governance. The wooded terrain supports resource gathering and strategic protection."
     },
     {
       "label": "Durres",
@@ -603,7 +657,8 @@
       "position": {"x":987,"y": 1278},
       "cityLevel":2,
       "culture": "TURKISH",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Durres’s hilly landscape highlights its Turkish cultural influence and maritime significance. The elevated position offers a perfect vantage point for defense and trade."
     },
     {
       "label": "Khaterini",
@@ -614,7 +669,8 @@
       "position": {"x":1732,"y": 1551},
       "cityLevel":2,
       "culture": "GREEK",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Located on hilly terrain, Khaterini represents Greek cultural vibrancy and strength. Its natural elevation has long been a key defensive asset."
     },
     {
       "label": "Delta",
@@ -625,7 +681,8 @@
       "position": {"x":1880,"y": 1531},
       "cityLevel": 1,
       "culture": "GREEK",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Delta’s fertile fields serve as a cornerstone for Greek agriculture and culture. The flat terrain supports expansive trade routes and community growth."
     },
     {
       "label": "Solun",
@@ -636,7 +693,8 @@
       "position": {"x":1990,"y": 1486},
       "cityLevel": 3,
       "culture": "TURKISH",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Situated on the plains, Solun showcases Turkish architectural grandeur and strategic importance. Its open terrain makes it a cultural and economic hub."
     },
     {
       "label": "Chalkidiki",
@@ -647,7 +705,8 @@
       "position": {"x":1982,"y": 1539},
       "cityLevel": 1,
       "culture": "GREEK",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Chalkidiki’s forested surroundings echo its Greek cultural depth. The dense woods provide both resources and a serene connection to nature."
     },
     {
       "label": "Edessa",
@@ -658,7 +717,8 @@
       "position": {"x":1664,"y": 1363},
       "cityLevel": 1,
       "culture": "GREEK",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Edessa’s hilly terrain mirrors its Greek resilience and cultural traditions. The natural elevation provides strategic advantage and a scenic environment."
     },
     {
       "label": "Monastir",
@@ -669,7 +729,8 @@
       "position": {"x":1459,"y": 1371},
       "cityLevel": 3,
       "culture": "TURKISH",
-      "terrain_type" : "MOUNTAIN"
+      "terrain_type" : "MOUNTAIN",
+      "bio" :  "Monastir’s mountainous location reflects Turkish cultural resilience and adaptability. Its rugged terrain supports both defense and isolation."
     },
     {
       "label": "Serres",
@@ -680,7 +741,8 @@
       "position": {"x":2077,"y": 1377},
       "cityLevel": 2,
       "culture": "GREEK",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Serres’s fertile fields emphasize Greek agricultural prosperity and cultural vibrancy. The open terrain fosters trade and connectivity."
     },
     {
       "label": "Kavala",
@@ -691,7 +753,8 @@
       "position": {"x":2278,"y": 1285},
       "cityLevel": 2,
       "culture": "TURKISH",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Set on hilly terrain, Kavala represents Turkish cultural integration and strategic significance. Its elevation provides a blend of defense and aesthetic beauty."
     },
     {
       "label": "Xanthi",
@@ -702,7 +765,8 @@
       "position": {"x":2519,"y": 1248},
       "cityLevel": 1,
       "culture": "TURKISH",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Xanthi’s forested landscape nurtures Turkish traditions while supporting agricultural practices. The dense woods emphasize a harmonious relationship with nature."
     },
     {
       "label": "Alexandropoli",
@@ -713,7 +777,8 @@
       "position": {"x":2753,"y": 1274},
       "cityLevel": 2,
       "culture": "TURKISH",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Located on fertile fields, Alexandropoli thrives under Turkish cultural influence. Its open terrain supports trade and strategic positioning."
     },
     {
       "label": "Kiklis",
@@ -724,7 +789,8 @@
       "position": {"x":1850,"y": 1241},
       "cityLevel": 1,
       "culture": "TURKISH",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Kiklis’s forested surroundings are a testament to Turkish architectural adaptation. The wooded landscape supports both cultural and economic growth."
     },
     {
       "label": "Sandaski",
@@ -735,7 +801,8 @@
       "position": {"x":2118,"y": 1177},
       "cityLevel": 1,
       "culture": "TURKISH",
-      "terrain_type" : "MOUNTAIN"
+      "terrain_type" : "MOUNTAIN",
+      "bio" : "Nestled in the mountains, Sandaski showcases Turkish cultural endurance. The rugged terrain provides a natural refuge and a base for traditions."
     },
     {
       "label": "Rhodope",
@@ -746,7 +813,8 @@
       "position": {"x":2311,"y": 1094},
       "cityLevel": 1,
       "culture": "TURKISH",
-      "terrain_type" : "MOUNTAIN"
+      "terrain_type" : "MOUNTAIN",
+      "bio" : "Rhodope’s mountainous landscape embodies Turkish resilience and integration. The terrain provides both isolation and defense for its communities."
     },
     {
       "label": "KrumovGrad",
@@ -757,7 +825,8 @@
       "position": {"x":2770,"y": 1157},
       "cityLevel": 1,
       "culture": "TURKISH",
-      "terrain_type" : "MOUNTAIN"
+      "terrain_type" : "MOUNTAIN",
+      "bio" : "KrumovGrad’s rugged mountains highlight Turkish cultural adaptability and strength. The terrain provides both resources and strategic advantages."
     },
     {
       "label": "Daddia",
@@ -768,7 +837,8 @@
       "position": {"x":2994,"y": 1188},
       "cityLevel": 1,
       "culture": "TURKISH",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Surrounded by forests, Daddia reflects Turkish cultural harmony with nature. The wooded terrain supports resource gathering and peaceful living."
     },
     {
       "label": "Corlu",
@@ -779,7 +849,8 @@
       "position": {"x":3131,"y": 1213},
       "cityLevel": 1,
       "culture": "TURKISH",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Corlu’s flat fields symbolize Turkish agricultural prosperity and trade. The open terrain fosters a strong economic foundation for the community."
     },
     {
       "label": "Istanbul",
@@ -790,7 +861,8 @@
       "position": {"x":3504,"y": 1189},
       "cityLevel": 3,
       "culture": "TURKISH",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Situated on the hills, Istanbul showcases Turkish cultural grandeur and strategic brilliance. Its elevated location supports its historic role as a cultural and economic hub."
     },
     {
       "label": "Kirkareli",
@@ -801,7 +873,8 @@
       "position": {"x":3274,"y": 913},
       "cityLevel": 1,
       "culture": "TURKISH",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Kirkareli’s forested landscape reflects Turkish cultural integration with nature. The wooded terrain provides both resources and natural protection."
     },
     {
       "label": "Edirne",
@@ -812,7 +885,8 @@
       "position": {"x":2970,"y": 1053},
       "cityLevel": 2,
       "culture": "TURKISH",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Set on fertile plains, Edirne thrives as a center of Turkish cultural and agricultural strength. The open terrain supports connectivity and trade."
     },
     {
       "label": "Elhovo",
@@ -823,7 +897,8 @@
       "position": {"x":2972,"y": 916},
       "cityLevel": 1,
       "culture": "BULGARIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Elhovo’s flat fields highlight Bulgarian cultural roots and agricultural practices. The open terrain reflects the area’s economic and community focus."
     },
     {
       "label": "Burgas",
@@ -834,7 +909,8 @@
       "position": {"x":3053,"y": 755},
       "cityLevel": 2,
       "culture": "BULGARIAN",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Burgas’s forested surroundings nurture Bulgarian traditions and provide resources for growth. The dense woods emphasize harmony with the environment."
     },
     {
       "label": "Varna",
@@ -845,7 +921,8 @@
       "position": {"x":3200,"y": 500},
       "cityLevel": 2,
       "culture": "BULGARIAN",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Located on hilly terrain, Varna represents Bulgarian cultural strength and maritime importance. Its elevation provides a vantage point for defense and trade."
     },
     {
       "label": "Kavarna",
@@ -856,7 +933,8 @@
       "position": {"x":3464,"y": 474},
       "cityLevel": 1,
       "culture": "BULGARIAN",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Kavarna’s forested environment reflects Bulgarian cultural richness and resilience. The wooded terrain fosters both resource gathering and cultural preservation."
     },
     {
       "label": "Constanta",
@@ -867,7 +945,8 @@
       "position": {"x":3415,"y": 184},
       "cityLevel": 2,
       "culture": "ROMANIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Situated on fertile fields, Constanta symbolizes Romanian agricultural strength and cultural integration. The open terrain supports economic development."
     },
     {
       "label": "Silistra",
@@ -878,7 +957,8 @@
       "position": {"x":2852,"y": 303},
       "cityLevel": 3,
       "culture": "BULGARIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Silistra’s fertile plains provide a base for Bulgarian agricultural and cultural prominence. The terrain fosters trade and prosperity for the community."
     },
     {
       "label": "Babadag",
@@ -889,7 +969,8 @@
       "position": {"x":3363,"y": 0},
       "cityLevel": 1,
       "culture": "ROMANIAN",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Set in forested surroundings, Babadag exemplifies Romanian cultural depth and harmony with nature. The wooded terrain supports resource gathering and settlement."
     },
     {
       "label": "Braila",
@@ -900,7 +981,8 @@
       "position": {"x":3088,"y": 0},
       "cityLevel": 2,
       "culture": "ROMANIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Located on fertile fields, Braila represents Romanian agricultural strength and cultural significance. Its open terrain supports connectivity and growth."
     },
     {
       "label": "Focsani",
@@ -911,7 +993,8 @@
       "position": {"x":2792,"y": 0},
       "cityLevel": 2,
       "culture": "ROMANIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Focsani’s expansive plains showcase Romanian agricultural traditions and community resilience. The flat terrain supports economic and cultural growth."
     },
     {
       "label": "Bran",
@@ -922,7 +1005,8 @@
       "position": {"x":2481,"y": 0},
       "cityLevel": 1,
       "culture": "ROMANIAN",
-      "terrain_type" : "MOUNTAIN"
+      "terrain_type" : "MOUNTAIN",
+      "bio" : "Perched in the mountains, Bran reflects Romanian cultural heritage and defensive significance. The rugged terrain provides natural protection and fosters independence."
     },
     {
       "label": "Negol",
@@ -933,7 +1017,8 @@
       "position": {"x":2158,"y": 0},
       "cityLevel": 1,
       "culture": "ROMANIAN",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Negol’s hilly surroundings embody Romanian cultural adaptability and strength. The natural elevation provides a balance of defense and prosperity."
     },
     {
       "label": "TurnuSeverin",
@@ -944,7 +1029,8 @@
       "position": {"x":1882,"y": 19},
       "cityLevel": 2,
       "culture": "ROMANIAN",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "TurnuSeverin’s forested terrain highlights Romanian traditions tied to the land. The wooded landscape fosters both cultural growth and resource abundance."
     },
     {
       "label": "Kraiova",
@@ -955,7 +1041,8 @@
       "position": {"x":1877,"y": 207},
       "cityLevel": 1,
       "culture": "ROMANIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Located on fertile plains, Kraiova thrives as a Romanian agricultural and cultural hub. The flat terrain supports connectivity and trade."
     },
     {
       "label": "Slatina",
@@ -966,7 +1053,8 @@
       "position": {"x":2083,"y": 318},
       "cityLevel": 1,
       "culture": "ROMANIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Slatina’s fertile fields reflect Romanian agricultural richness and cultural vitality. The open terrain emphasizes economic and community development."
     },
     {
       "label": "Calarasi",
@@ -977,7 +1065,8 @@
       "position": {"x":3097,"y": 146},
       "cityLevel": 1,
       "culture": "ROMANIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Situated on the plains, Calarasi represents Romanian agricultural prosperity and cultural strength. The terrain supports connectivity and trade."
     },
     {
       "label": "Bucharest",
@@ -988,7 +1077,8 @@
       "position": {"x":2740,"y": 174},
       "cityLevel": 3,
       "culture": "ROMANIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Bucharest’s fertile fields symbolize Romanian cultural and political significance. The open terrain supports its role as a national and cultural hub."
     },
     {
       "label": "Ployeshti",
@@ -999,7 +1089,8 @@
       "position": {"x":2483,"y": 143},
       "cityLevel": 1,
       "culture": "ROMANIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Ployeshti’s flat fields support Romanian agricultural practices and cultural growth. The open terrain fosters economic and social connectivity."
     },
     {
       "label": "Pitesti",
@@ -1010,7 +1101,8 @@
       "position": {"x":2158,"y": 170},
       "cityLevel": 1,
       "culture": "ROMANIAN",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Pitesti’s forested terrain highlights Romanian cultural harmony with nature. The wooded surroundings provide resources and a serene environment."
     },
     {
       "label": "TurnuMagurele",
@@ -1021,7 +1113,8 @@
       "position": {"x":2460,"y": 389},
       "cityLevel": 2,
       "culture": "ROMANIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "TurnuMagurele’s fertile fields emphasize Romanian agricultural and cultural richness. The flat terrain supports trade and settlement."
     },
     {
       "label": "Giurgiu",
@@ -1032,7 +1125,8 @@
       "position": {"x":2659,"y": 371},
       "cityLevel": 2,
       "culture": "ROMANIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Giurgiu’s expansive plains foster Romanian traditions and economic development. The open terrain highlights its role as a cultural and trade hub."
     },
     {
       "label": "Calafat",
@@ -1043,7 +1137,8 @@
       "position": {"x":1973,"y": 433},
       "cityLevel": 2,
       "culture": "ROMANIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Calafat’s fertile fields reflect Romanian agricultural strength and cultural heritage. The terrain fosters connectivity and growth for its communities."
     },
     {
       "label": "Vidin",
@@ -1054,7 +1149,8 @@
       "position": {"x":1842,"y": 392},
       "cityLevel": 2,
       "culture": "BULGARIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Vidin’s plains support Bulgarian agricultural traditions and cultural significance. The flat terrain highlights its role in trade and connectivity."
     },
     {
       "label": "Lom",
@@ -1065,7 +1161,8 @@
       "position": {"x":1862,"y":513},
       "cityLevel": 1,
       "culture": "BULGARIAN",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Lom’s hilly surroundings represent Bulgarian cultural depth and strategic strength. The natural elevation provides a defensive advantage."
     },
     {
       "label": "Oryahovo",
@@ -1076,7 +1173,8 @@
       "position": {"x":1979,"y":526},
       "cityLevel": 1,
       "culture": "BULGARIAN",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Oryahovo’s forested terrain embodies Bulgarian cultural richness and resilience. The wooded landscape provides both resources and protection."
     },
     {
       "label": "Nikopoli",
@@ -1087,7 +1185,8 @@
       "position": {"x":2308,"y":529},
       "cityLevel": 2,
       "culture": "BULGARIAN",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Nikopoli’s forested environment reflects Bulgarian cultural harmony with nature. The terrain supports resource gathering and community growth."
     },
     {
       "label": "Ruse",
@@ -1098,7 +1197,8 @@
       "position": {"x":2685,"y":501},
       "cityLevel": 1,
       "culture": "BULGARIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Located on fertile fields, Ruse symbolizes Bulgarian agricultural strength and cultural prominence. The open terrain fosters trade and prosperity."
     },
     {
       "label": "Shumen",
@@ -1109,7 +1209,8 @@
       "position": {"x":2928,"y":551},
       "cityLevel": 1,
       "culture": "BULGARIAN",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Shumen’s hilly landscape showcases Bulgarian cultural resilience and strength. The natural terrain provides strategic defense and supports community life."
     },
     {
       "label": "Veliko_Tarnovo",
@@ -1120,7 +1221,8 @@
       "position": {"x":2755,"y":662},
       "cityLevel": 2,
       "culture": "BULGARIAN",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Veliko_Tarnovo’s hilly surroundings embody Bulgarian cultural depth and historical significance. The terrain provides a natural stronghold for traditions."
     },
     {
       "label": "Sliven",
@@ -1131,7 +1233,8 @@
       "position": {"x":2838,"y":780},
       "cityLevel": 2,
       "culture": "BULGARIAN",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Sliven’s forested environment nurtures Bulgarian cultural and economic growth. The wooded terrain supports resource gathering and settlement."
     },
     {
       "label": "Sofija",
@@ -1142,7 +1245,8 @@
       "position": {"x":1863,"y":719},
       "cityLevel": 3,
       "culture": "BULGARIAN",
-      "terrain_type" : "MOUNTAIN"
+      "terrain_type" : "MOUNTAIN",
+      "bio" : "Perched in the mountains, Sofija reflects Bulgarian cultural heritage and defensive strength. The rugged terrain fosters both protection and independence."
     },
     {
       "label": "Plevna",
@@ -1153,7 +1257,8 @@
       "position": {"x":2369,"y":704},
       "cityLevel": 1,
       "culture": "BULGARIAN",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Plevna’s hilly terrain showcases Bulgarian cultural vibrancy and resilience. The natural elevation supports both defense and community growth."
     },
     {
       "label": "Stara_Zagora",
@@ -1164,7 +1269,8 @@
       "position": {"x":2588,"y":833},
       "cityLevel": 1,
       "culture": "BULGARIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Located on the plains, Stara_Zagora represents Bulgarian agricultural prosperity and cultural traditions. The open terrain fosters trade and development."
     },
     {
       "label": "Haskovo",
@@ -1175,7 +1281,8 @@
       "position": {"x":2776,"y":996},
       "cityLevel": 1,
       "culture": "BULGARIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Haskovo’s fertile plains highlight Bulgarian agricultural practices and community resilience. The flat terrain supports growth and connectivity."
     },
     {
       "label": "Plovdiv",
@@ -1186,7 +1293,8 @@
       "position": {"x":2448,"y":849},
       "cityLevel": 2,
       "culture": "BULGARIAN",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Plovdiv’s hilly surroundings represent Bulgarian cultural and economic strength. The elevated terrain provides both strategic and aesthetic benefits."
     },
     {
       "label": "Pazardzhik",
@@ -1197,7 +1305,8 @@
       "position": {"x":2196,"y":850},
       "cityLevel": 2,
       "culture": "BULGARIAN",
-      "terrain_type" : "FIELD"
+      "terrain_type" : "FIELD",
+      "bio" : "Pazardzhik’s fertile fields symbolize Bulgarian agricultural prosperity and community connectivity. The open terrain supports cultural growth."
     },
     {
       "label": "BlagoevGrad",
@@ -1208,7 +1317,8 @@
       "position": {"x":1991,"y":1053},
       "cityLevel": 1,
       "culture": "TURKISH",
-      "terrain_type" : "MOUNTAIN"
+      "terrain_type" : "MOUNTAIN",
+      "bio" : "Set in the mountains, BlagoevGrad highlights Turkish cultural resilience and harmony with nature. The rugged terrain provides natural protection and resources."
     },
     {
       "label": "Kostendil",
@@ -1219,7 +1329,8 @@
       "position": {"x":1768,"y":851},
       "cityLevel": 2,
       "culture": "BULGARIAN",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Kostendil’s forested surroundings nurture Bulgarian cultural strength and resourcefulness. The wooded terrain fosters both growth and community preservation."
     },
     {
       "label": "Lezhe",
@@ -1230,7 +1341,8 @@
       "position": {"x":1010,"y":1001},
       "cityLevel": 1,
       "culture": "TURKISH",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Surrounded by forests, Lezhe highlights Turkish cultural influence and harmony with the natural landscape. Its wooded terrain fosters resources and community growth."
     },
     {
       "label": "Kichevo",
@@ -1241,7 +1353,8 @@
       "position": {"x":1233,"y":1146},
       "cityLevel": 1,
       "culture": "TURKISH",
-      "terrain_type" : "MOUNTAIN"
+      "terrain_type" : "MOUNTAIN",
+      "bio" : "Kichevo’s mountainous location reflects Turkish cultural resilience and strategic significance. The rugged terrain provides natural defenses and isolation."
     },
     {
       "label": "Prilep",
@@ -1252,7 +1365,8 @@
       "position": {"x":1506,"y":1257},
       "cityLevel": 1,
       "culture": "TURKISH",
-      "terrain_type" : "MOUNTAIN"
+      "terrain_type" : "MOUNTAIN",
+      "bio" : "Prilep’s mountainous environment symbolizes Turkish cultural richness and adaptability. The rugged terrain supports both defense and cultural preservation."
     },
     {
       "label": "Veles",
@@ -1263,7 +1377,8 @@
       "position": {"x":1734,"y":1186},
       "cityLevel": 1,
       "culture": "TURKISH",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Veles’s hilly surroundings highlight Turkish cultural influence and strategic importance. Its natural elevation supports defense and community growth."
     },
     {
       "label": "Shtip",
@@ -1274,7 +1389,8 @@
       "position": {"x":1809,"y":1078},
       "cityLevel": 2,
       "culture": "TURKISH",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Shtip’s forested terrain reflects Turkish cultural integration and resourcefulness. The wooded surroundings foster both harmony with nature and economic prosperity."
     },
     {
       "label": "Skodra",
@@ -1285,7 +1401,8 @@
       "position": {"x":897,"y":933},
       "cityLevel": 2,
       "culture": "TURKISH",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Set amidst forests, Skodra thrives under Turkish cultural influence and resource abundance. The wooded terrain supports its economic and cultural vitality."
     },
     {
       "label": "Kastoria",
@@ -1296,7 +1413,8 @@
       "position": {"x":1279,"y":1495},
       "cityLevel": 1,
       "culture": "GREEK",
-      "terrain_type" : "MOUNTAIN"
+      "terrain_type" : "MOUNTAIN",
+      "bio" : "Kastoria’s mountainous surroundings highlight Greek cultural traditions and natural harmony. The rugged terrain provides both protection and scenic beauty."
     },
     {
       "label": "Skopje",
@@ -1307,7 +1425,8 @@
       "position": {"x":1472,"y":1038},
       "cityLevel": 2,
       "culture": "TURKISH",
-      "terrain_type" : "FOREST"
+      "terrain_type" : "FOREST",
+      "bio" : "Skopje’s forested surroundings embody Turkish cultural resilience and resourcefulness. The wooded terrain fosters a blend of natural harmony and strategic importance."
     },
     {
       "label": "Kratovo",
@@ -1318,7 +1437,8 @@
       "position": {"x":1698,"y":954},
       "cityLevel": 1,
       "culture": "TURKISH",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Kratovo’s hilly terrain reflects Turkish cultural adaptability and strength. Its natural elevation supports both defense and community growth."
     },
     {
       "label": "Gelibolu",
@@ -1329,36 +1449,35 @@
       "position": {"x":2986,"y":1516},
       "cityLevel": 2,
       "culture": "TURKISH",
-      "terrain_type" : "HILL"
+      "terrain_type" : "HILL",
+      "bio" : "Located on hilly terrain, Gelibolu showcases Turkish cultural and strategic importance. The elevated position enhances its role as a defensive stronghold."
     }
   ],
   "edges": [
     { "from": 1, "to": 2, "weight": 1.0, "type": "Land" },
-    { "from": 1, "to": 3, "weight": 1.0, "type": "Land" },
-    { "from": 2, "to": 3, "weight": 1.0, "type": "Land" },
+    { "from": 2, "to": 3, "weight": 1.0, "type": "River" },
     { "from": 2, "to": 5, "weight": 1.0, "type": "Land" },
     { "from": 2, "to": 39, "weight": 1.0, "type": "Land" },
     { "from": 3, "to": 5, "weight": 1.0, "type": "River" },
-    { "from": 3, "to": 4, "weight": 1.0, "type": "Land" },
-    { "from": 4, "to": 5, "weight": 1.0, "type": "Land" },
-    { "from": 4, "to": 6, "weight": 1.0, "type": "Land" },
-    { "from": 4, "to": 8, "weight": 1.0, "type": "Land" },
+    { "from": 3, "to": 4, "weight": 1.0, "type": "River" },
+    { "from": 4, "to": 5, "weight": 1.0, "type": "River" },
+    { "from": 4, "to": 8, "weight": 1.0, "type": "River" },
     { "from": 4, "to": 19, "weight": 1.0, "type": "Land" },
     { "from": 5, "to": 39, "weight": 1.0, "type": "Land" },
     { "from": 5, "to": 6, "weight": 1.0, "type": "River" },
-    { "from": 5, "to": 8, "weight": 1.0, "type": "Land" },
+    { "from": 5, "to": 8, "weight": 1.0, "type": "River" },
     { "from": 6, "to": 39, "weight": 1.0, "type": "River" },
     { "from": 6, "to": 8, "weight": 1.0, "type": "Land" },
-    { "from": 6, "to": 9, "weight": 1.0, "type": "Land" },
+    { "from": 6, "to": 9, "weight": 1.0, "type": "River" },
     { "from": 6, "to": 7, "weight": 1.0, "type": "Land" },
-    { "from": 7, "to": 9, "weight": 1.0, "type": "Land" },
+    { "from": 7, "to": 9, "weight": 1.0, "type": "River" },
     { "from": 7, "to": 10, "weight": 1.0, "type": "River" },
-    { "from": 7, "to": 39, "weight": 1.0, "type": "Land" },
+    { "from": 7, "to": 39, "weight": 1.0, "type": "River" },
     { "from": 7, "to": 40, "weight": 1.0, "type": "Land" },
     { "from": 7, "to": 41, "weight": 1.0, "type": "Land" },
-    { "from": 8, "to": 19, "weight": 1.0, "type": "Land" },
-    { "from": 8, "to": 9, "weight": 1.0, "type": "Land" },
-    { "from": 8, "to": 18, "weight": 1.0, "type": "Land" },
+    { "from": 8, "to": 19, "weight": 1.0, "type": "River" },
+    { "from": 8, "to": 9, "weight": 1.0, "type": "River" },
+    { "from": 8, "to": 18, "weight": 1.0, "type": "River" },
     { "from": 9, "to": 12, "weight": 1.0, "type": "Land" },
     { "from": 9, "to": 10, "weight": 1.0, "type": "Land" },
     { "from": 9, "to": 18, "weight": 1.0, "type": "Land" },
@@ -1380,21 +1499,21 @@
     { "from": 13, "to": 14, "weight": 1.0, "type": "Land" },
     { "from": 13, "to": 22, "weight": 1.0, "type": "Land" },
     { "from": 13, "to": 23, "weight": 1.0, "type": "River" },
-    { "from": 14, "to": 15, "weight": 1.0, "type":  "River" },
-    { "from": 14, "to": 23, "weight": 1.0, "type": "Land" },
+    { "from": 14, "to": 15, "weight": 1.0, "type":  "Land" },
+    { "from": 14, "to": 23, "weight": 1.0, "type": "River" },
     { "from": 14, "to": 27, "weight": 1.0, "type": "River" },
     { "from": 15, "to": 27, "weight": 1.0, "type": "River" },
-    { "from": 15, "to": 16, "weight": 1.0, "type": "Land" },
+    { "from": 15, "to": 16, "weight": 1.0, "type": "River" },
     { "from": 16, "to": 17, "weight": 1.0, "type": "River" },
-    { "from": 16, "to": 27, "weight": 1.0, "type": "Land" },
-    { "from": 16, "to": 28, "weight": 1.0, "type": "Land" },
+    { "from": 16, "to": 27, "weight": 1.0, "type": "River" },
+    { "from": 16, "to": 28, "weight": 1.0, "type": "River" },
     { "from": 17, "to": 43, "weight": 1.0, "type": "Land" },
     { "from": 17, "to": 44, "weight": 1.0, "type": "Land" },
-    { "from": 17, "to": 32, "weight": 1.0, "type": "Land" },
-    { "from": 17, "to": 31, "weight": 1.0, "type": "Land" },
-    { "from": 17, "to": 28, "weight": 1.0, "type": "Land" },
-    { "from": 18, "to": 19, "weight": 1.0, "type": "Land" },
-    { "from": 18, "to": 20, "weight": 1.0, "type": "Land" },
+    { "from": 17, "to": 32, "weight": 1.0, "type": "River" },
+    { "from": 17, "to": 31, "weight": 1.0, "type": "River" },
+    { "from": 17, "to": 28, "weight": 1.0, "type": "River" },
+    { "from": 18, "to": 19, "weight": 1.0, "type": "River" },
+    { "from": 18, "to": 20, "weight": 1.0, "type": "River" },
     { "from": 18, "to": 21, "weight": 1.0, "type": "Land" },
     { "from": 19, "to": 20, "weight": 1.0, "type": "River" },
     { "from": 20, "to": 21, "weight": 1.0, "type": "River" },
@@ -1405,47 +1524,45 @@
     { "from": 23, "to": 27, "weight": 1.0, "type": "Land" },
     { "from": 24, "to": 25, "weight": 1.0, "type": "River" },
     { "from": 24, "to": 26, "weight": 1.0, "type": "Land" },
-    { "from": 24, "to": 35, "weight": 1.0, "type": "Land" },
+    { "from": 24, "to": 35, "weight": 1.0, "type": "River" },
     { "from": 25, "to": 35, "weight": 1.0, "type": "Land" },
     { "from": 25, "to": 36, "weight": 1.0, "type": "River" },
-    { "from": 25, "to": 26, "weight": 1.0, "type": "Land" },
     { "from": 26, "to": 27, "weight": 1.0, "type": "Land" },
     { "from": 26, "to": 28, "weight": 1.0, "type": "Land" },
-    { "from": 26, "to": 35, "weight": 1.0, "type": "Land" },
-    { "from": 27, "to": 28, "weight": 1.0, "type": "Land" },
-    { "from": 28, "to": 31, "weight": 1.0, "type": "Land" },
-    { "from": 28, "to": 32, "weight": 1.0, "type": "Land" },
-    { "from": 28, "to": 29, "weight": 1.0, "type": "Land" },
-    { "from": 28, "to": 35, "weight": 1.0, "type": "Land" },
+    { "from": 26, "to": 35, "weight": 1.0, "type": "River" },
+    { "from": 27, "to": 28, "weight": 1.0, "type": "River" },
+    { "from": 28, "to": 31, "weight": 1.0, "type": "River" },
+    { "from": 28, "to": 29, "weight": 1.0, "type": "River" },
+    { "from": 28, "to": 35, "weight": 1.0, "type": "River" },
     { "from": 29, "to": 37, "weight": 1.0, "type": "Land" },
     { "from": 29, "to": 96, "weight": 1.0, "type": "Land" },
     { "from": 29, "to": 97, "weight": 1.0, "type": "Land" },
     { "from": 29, "to": 30, "weight": 1.0, "type": "Land" },
-    { "from": 29, "to": 31, "weight": 1.0, "type": "Land" },
+    { "from": 29, "to": 31, "weight": 1.0, "type": "River" },
     { "from": 29, "to": 35, "weight": 1.0, "type": "Land" },
-    { "from": 30, "to": 31, "weight": 1.0, "type": "Land" },
+    { "from": 30, "to": 31, "weight": 1.0, "type": "River" },
     { "from": 30, "to": 104, "weight": 1.0, "type": "Land" },
     { "from": 30, "to": 98, "weight": 1.0, "type": "Land" },
     { "from": 30, "to": 97, "weight": 1.0, "type": "Land" },
     { "from": 31, "to": 32, "weight": 1.0, "type": "Land" },
     { "from": 31, "to": 33, "weight": 1.0, "type": "Land" },
+    { "from": 31, "to": 111, "weight": 1.0, "type": "Land" },
     { "from": 31, "to": 120, "weight": 1.0, "type": "Land" },
-    { "from": 31, "to": 98, "weight": 1.0, "type": "Land" },
     { "from": 31, "to": 104, "weight": 1.0, "type": "Land" },
     { "from": 32, "to": 44, "weight": 1.0, "type": "Land" },
     { "from": 32, "to": 34, "weight": 1.0, "type": "Land" },
     { "from": 32, "to": 33, "weight": 1.0, "type": "Land" },
     { "from": 33, "to": 119, "weight": 1.0, "type": "River" },
-    { "from": 33, "to": 34, "weight": 1.0, "type": "Land" },
+    { "from": 33, "to": 34, "weight": 1.0, "type": "River" },
     { "from": 33, "to": 120, "weight": 1.0, "type": "Land" },
     { "from": 34, "to": 44, "weight": 1.0, "type": "River" },
     { "from": 34, "to": 113, "weight": 1.0, "type": "River" },
-    { "from": 34, "to": 112, "weight": 1.0, "type": "Land" },
+    { "from": 34, "to": 112, "weight": 1.0, "type": "River" },
     { "from": 34, "to": 119, "weight": 1.0, "type": "River" },
     { "from": 35, "to": 37, "weight": 1.0, "type": "Land" },
     { "from": 35, "to": 36, "weight": 1.0, "type": "Land" },
-    { "from": 36, "to": 87, "weight": 1.0, "type": "Land" },
-    { "from": 36, "to": 38, "weight": 1.0, "type": "River" },
+    { "from": 36, "to": 87, "weight": 1.0, "type": "River" },
+    { "from": 36, "to": 38, "weight": 1.0, "type": "Land" },
     { "from": 36, "to": 37, "weight": 1.0, "type": "Land" },
     { "from": 36, "to": 96, "weight": 1.0, "type": "Land" },
     { "from": 37, "to": 96, "weight": 1.0, "type": "Land" },
@@ -1464,21 +1581,21 @@
     { "from": 45, "to": 49, "weight": 1.0, "type": "Land" },
     { "from": 46, "to": 52, "weight": 1.0, "type": "River" },
     { "from": 46, "to": 49, "weight": 1.0, "type": "Land" },
-    { "from": 46, "to": 53, "weight": 1.0, "type": "Land" },
     { "from": 46, "to": 118, "weight": 1.0, "type": "River" },
     { "from": 47, "to": 48, "weight": 1.0, "type": "Land" },
     { "from": 47, "to": 49, "weight": 1.0, "type": "River" },
-    { "from": 48, "to": 49, "weight": 1.0, "type": "Land" },
+    { "from": 48, "to": 49, "weight": 1.0, "type": "River" },
     { "from": 48, "to": 50, "weight": 1.0, "type": "Land" },
-    { "from": 49, "to": 50, "weight": 1.0, "type": "Land" },
-    { "from": 49, "to": 51, "weight": 1.0, "type": "Land" },
+    { "from": 49, "to": 50, "weight": 1.0, "type": "River" },
+    { "from": 49, "to": 51, "weight": 1.0, "type": "River" },
     { "from": 49, "to": 56, "weight": 1.0, "type": "River" },
     { "from": 49, "to": 118, "weight": 1.0, "type": "Land" },
+    { "from": 49, "to": 60, "weight": 1.0, "type": "Land" },
     { "from": 50, "to": 51, "weight": 1.0, "type": "Land" },
-    { "from": 51, "to": 56, "weight": 1.0, "type": "Land" },
+    { "from": 51, "to": 56, "weight": 1.0, "type": "River" },
     { "from": 52, "to": 55, "weight": 1.0, "type": "Land" },
     { "from": 52, "to": 54, "weight": 1.0, "type": "River" },
-    { "from": 52, "to": 53, "weight": 1.0, "type": "Land" },
+    { "from": 52, "to": 53, "weight": 1.0, "type": "River" },
     { "from": 52, "to": 118, "weight": 1.0, "type": "River" },
     { "from": 53, "to": 61, "weight": 1.0, "type": "Land" },
     { "from": 53, "to": 54, "weight": 1.0, "type": "Land" },
@@ -1489,65 +1606,63 @@
     { "from": 54, "to": 113, "weight": 1.0, "type": "Land" },
     { "from": 55, "to": 112, "weight": 1.0, "type": "Land" },
     { "from": 56, "to": 57, "weight": 1.0, "type": "River" },
-    { "from": 56, "to": 60, "weight": 1.0, "type": "Land" },
+    { "from": 56, "to": 60, "weight": 1.0, "type": "River" },
     { "from": 57, "to": 60, "weight": 1.0, "type": "River" },
-    { "from": 57, "to": 58, "weight": 1.0, "type": "Land" },
+    { "from": 57, "to": 58, "weight": 1.0, "type": "River" },
     { "from": 58, "to": 60, "weight": 1.0, "type": "Land" },
     { "from": 58, "to": 59, "weight": 1.0, "type": "Land" },
     { "from": 58, "to": 66, "weight": 1.0, "type": "Land" },
-    { "from": 58, "to": 62, "weight": 1.0, "type": "Land" },
-    { "from": 59, "to": 62, "weight": 1.0, "type": "Land" },
-    { "from": 60, "to": 66, "weight": 1.0, "type": "Land" },
+    { "from": 58, "to": 62, "weight": 1.0, "type": "River" },
+    { "from": 59, "to": 62, "weight": 1.0, "type": "River" },
+    { "from": 60, "to": 66, "weight": 1.0, "type": "River" },
     { "from": 60, "to": 61, "weight": 1.0, "type": "Land" },
-    { "from": 60, "to": 114, "weight": 1.0, "type": "Land" },
+    { "from": 60, "to": 118, "weight": 1.0, "type": "Land" },
     { "from": 60, "to": 115, "weight": 1.0, "type": "River" },
     { "from": 61, "to": 114, "weight": 1.0, "type": "Land" },
     { "from": 61, "to": 113, "weight": 1.0, "type": "Land" },
     { "from": 61, "to": 118, "weight": 1.0, "type": "Land" },
     { "from": 61, "to": 115, "weight": 1.0, "type": "Land" },
-    { "from": 62, "to": 66, "weight": 1.0, "type": "Land" },
+    { "from": 62, "to": 66, "weight": 1.0, "type": "River" },
     { "from": 62, "to": 67, "weight": 1.0, "type": "River" },
-    { "from": 62, "to": 63, "weight": 1.0, "type": "Land" },
+    { "from": 62, "to": 63, "weight": 1.0, "type": "River" },
     { "from": 63, "to": 67, "weight": 1.0, "type": "Land" },
-    { "from": 63, "to": 64, "weight": 1.0, "type": "Land" },
-    { "from": 63, "to": 68, "weight": 1.0, "type": "Land" },
-    { "from": 64, "to": 65, "weight": 1.0, "type": "Land" },
-    { "from": 64, "to": 67, "weight": 1.0, "type": "Land" },
+    { "from": 63, "to": 64, "weight": 1.0, "type": "River" },
+    { "from": 63, "to": 68, "weight": 1.0, "type": "River" },
+    { "from": 64, "to": 65, "weight": 1.0, "type": "River" },
     { "from": 64, "to": 68, "weight": 1.0, "type": "Land" },
     { "from": 64, "to": 69, "weight": 1.0, "type": "Land" },
-    { "from": 65, "to": 69, "weight": 1.0, "type": "Land" },
+    { "from": 65, "to": 69, "weight": 1.0, "type": "River" },
     { "from": 65, "to": 70, "weight": 1.0, "type": "River" },
-    { "from": 65, "to": 71, "weight": 1.0, "type": "Land" },
+    { "from": 65, "to": 71, "weight": 1.0, "type": "River" },
     { "from": 65, "to": 121, "weight": 1.0, "type": "Land" },
     { "from": 66, "to": 116, "weight": 1.0, "type": "Land" },
-    { "from": 66, "to": 67, "weight": 1.0, "type": "Land" },
+    { "from": 66, "to": 67, "weight": 1.0, "type": "River" },
     { "from": 66, "to": 115, "weight": 1.0, "type": "Land" },
-    { "from": 66, "to": 110, "weight": 1.0, "type": "Land" },
-    { "from": 67, "to": 68, "weight": 1.0, "type": "Land" },
+    { "from": 66, "to": 110, "weight": 1.0, "type": "River" },
+    { "from": 67, "to": 68, "weight": 1.0, "type": "River" },
     { "from": 67, "to": 110, "weight": 1.0, "type": "River" },
     { "from": 68, "to": 69, "weight": 1.0, "type": "Land" },
-    { "from": 68, "to": 110, "weight": 1.0, "type": "Land" },
-    { "from": 66, "to": 107, "weight": 1.0, "type": "Land" },
-    { "from": 68, "to": 108, "weight": 1.0, "type": "Land" },
-    { "from": 68, "to": 109, "weight": 1.0, "type": "Land" },
-    { "from": 69, "to": 74, "weight": 1.0, "type": "Land" },
-    { "from": 69, "to": 70, "weight": 1.0, "type": "Land" },
-    { "from": 69, "to": 107, "weight": 1.0, "type": "Land" },
+    { "from": 68, "to": 110, "weight": 1.0, "type": "River" },
+    { "from": 68, "to": 107, "weight": 1.0, "type": "River" },
+    { "from": 68, "to": 108, "weight": 1.0, "type": "River" },
+    { "from": 68, "to": 109, "weight": 1.0, "type": "River" },
+    { "from": 69, "to": 74, "weight": 1.0, "type": "River" },
+    { "from": 69, "to": 70, "weight": 1.0, "type": "River" },
+    { "from": 69, "to": 107, "weight": 1.0, "type": "River" },
     { "from": 70, "to": 71, "weight": 1.0, "type": "River" },
     { "from": 70, "to": 74, "weight": 1.0, "type": "River" },
     { "from": 71, "to": 72, "weight": 1.0, "type": "Land" },
     { "from": 71, "to": 73, "weight": 1.0, "type": "Land" },
     { "from": 71, "to": 121, "weight": 1.0, "type": "Land" },
     { "from": 71, "to": 74, "weight": 1.0, "type": "Land" },
-    { "from": 72, "to": 72, "weight": 1.0, "type": "Land" },
-    { "from": 73, "to": 76, "weight": 1.0, "type": "Land" },
+    { "from": 72, "to": 73, "weight": 1.0, "type": "Land" },
     { "from": 73, "to": 74, "weight": 1.0, "type": "Land" },
     { "from": 73, "to": 75, "weight": 1.0, "type": "Land" },
-    { "from": 74, "to": 107, "weight": 1.0, "type": "Land" },
+    { "from": 74, "to": 107, "weight": 1.0, "type": "River" },
     { "from": 74, "to": 75, "weight": 1.0, "type": "River" },
     { "from": 75, "to": 76, "weight": 1.0, "type": "Land" },
     { "from": 75, "to": 103, "weight": 1.0, "type": "River" },
-    { "from": 75, "to": 107, "weight": 1.0, "type": "Land" },
+    { "from": 75, "to": 107, "weight": 1.0, "type": "River" },
     { "from": 76, "to": 77, "weight": 1.0, "type": "Land" },
     { "from": 76, "to": 102, "weight": 1.0, "type": "Land" },
     { "from": 76, "to": 103, "weight": 1.0, "type": "Land" },
@@ -1557,9 +1672,8 @@
     { "from": 77, "to": 78, "weight": 1.0, "type": "Land" },
     { "from": 77, "to": 79, "weight": 1.0, "type": "Land" },
     { "from": 78, "to": 79, "weight": 1.0, "type": "Land" },
-    { "from": 78, "to": 80, "weight": 1.0, "type": "Land" },
     { "from": 79, "to": 80, "weight": 1.0, "type": "Land" },
-    { "from": 79, "to": 89, "weight": 1.0, "type": "Land" },
+    { "from": 79, "to": 89, "weight": 1.0, "type": "River" },
     { "from": 79, "to": 81, "weight": 1.0, "type": "Land" },
     { "from": 80, "to": 89, "weight": 1.0, "type": "River" },
     { "from": 80, "to": 90, "weight": 1.0, "type": "River" },
@@ -1571,11 +1685,11 @@
     { "from": 82, "to": 89, "weight": 1.0, "type": "Land" },
     { "from": 82, "to": 83, "weight": 1.0, "type": "Land" },
     { "from": 83, "to": 90, "weight": 1.0, "type": "Land" },
+    { "from": 83, "to": 89, "weight": 1.0, "type": "Land" },
     { "from": 83, "to": 84, "weight": 1.0, "type": "Land" },
     { "from": 83, "to": 91, "weight": 1.0, "type": "Land" },
     { "from": 84, "to": 85, "weight": 1.0, "type": "Land" },
     { "from": 84, "to": 91, "weight": 1.0, "type": "Land" },
-    { "from": 84, "to": 92, "weight": 1.0, "type": "Land" },
     { "from": 85, "to": 86, "weight": 1.0, "type": "Land" },
     { "from": 85, "to": 87, "weight": 1.0, "type": "Land" },
     { "from": 85, "to": 91, "weight": 1.0, "type": "Land" },
@@ -1591,6 +1705,7 @@
     { "from": 88, "to": 93, "weight": 1.0, "type": "Land" },
     { "from": 88, "to": 97, "weight": 1.0, "type": "River" },
     { "from": 88, "to": 98, "weight": 1.0, "type": "River" },
+    { "from": 88, "to": 99, "weight": 1.0, "type": "River" },
     { "from": 89, "to": 90, "weight": 1.0, "type": "Land" },
     { "from": 90, "to": 94, "weight": 1.0, "type": "Land" },
     { "from": 90, "to": 91, "weight": 1.0, "type": "Land" },
@@ -1600,56 +1715,58 @@
     { "from": 92, "to": 93, "weight": 1.0, "type": "Land" },
     { "from": 93, "to": 99, "weight": 1.0, "type": "River" },
     { "from": 93, "to": 94, "weight": 1.0, "type": "Land" },
-    { "from": 93, "to": 98, "weight": 1.0, "type": "Land" },
-    { "from": 93, "to": 100, "weight": 1.0, "type": "Land" },
+    { "from": 93, "to": 100, "weight": 1.0, "type": "River" },
     { "from": 94,"to": 100, "weight": 1.0, "type": "River" },
-    { "from": 94, "to": 99, "weight": 1.0, "type": "Land" },
     { "from": 95, "to": 96, "weight": 1.0, "type": "River" },
-    { "from": 95, "to": 97, "weight": 1.0, "type": "Land" },
+    { "from": 95, "to": 97, "weight": 1.0, "type": "River" },
     { "from": 96, "to": 97, "weight": 1.0, "type": "Land" },
     { "from": 97, "to": 98, "weight": 1.0, "type": "Land" },
-    { "from": 98, "to": 99, "weight": 1.0, "type": "Land" },
+    { "from": 98, "to": 99, "weight": 1.0, "type": "River" },
     { "from": 98, "to": 104, "weight": 1.0, "type": "Land" },
-    { "from": 99, "to": 100, "weight": 1.0, "type": "Land" },
+    { "from": 99, "to": 100, "weight": 1.0, "type": "River" },
     { "from": 99, "to": 104, "weight": 1.0, "type": "River" },
     { "from": 99, "to": 105, "weight": 1.0, "type": "Land" },
     { "from": 100, "to": 101, "weight": 1.0, "type": "Land" },
     { "from": 100, "to": 102, "weight": 1.0, "type": "Land" },
-    { "from": 100, "to": 105, "weight": 1.0, "type": "Land" },
+    { "from": 100, "to": 105, "weight": 1.0, "type": "River" },
     { "from": 101, "to": 102, "weight": 1.0, "type": "Land" },
     { "from": 102, "to": 103, "weight": 1.0, "type": "Land" },
     { "from": 102, "to": 106, "weight": 1.0, "type": "Land" },
     { "from": 102, "to": 105, "weight": 1.0, "type": "Land" },
     { "from": 103, "to": 106, "weight": 1.0, "type": "River" },
-    { "from": 103, "to": 107, "weight": 1.0, "type": "Land" },
-    { "from": 103, "to": 103, "weight": 1.0, "type": "Land" },
+    { "from": 103, "to": 107, "weight": 1.0, "type": "River" },
     { "from": 104, "to": 111, "weight": 1.0, "type": "Land" },
     { "from": 104, "to": 109, "weight": 1.0, "type": "Land" },
-    { "from": 104, "to": 105, "weight": 1.0, "type": "Land" },
+    { "from": 104, "to": 105, "weight": 1.0, "type": "River" },
     { "from": 105, "to": 106, "weight": 1.0, "type": "Land" },
     { "from": 105, "to": 108, "weight": 1.0, "type": "Land" },
     { "from": 105, "to": 109, "weight": 1.0, "type": "Land" },
-    { "from": 106, "to": 108, "weight": 1.0, "type": "Land" },
-    { "from": 106, "to": 107, "weight": 1.0, "type": "Land" },
+    { "from": 106, "to": 108, "weight": 1.0, "type": "River" },
+    { "from": 106, "to": 107, "weight": 1.0, "type": "River" },
     { "from": 107, "to": 108, "weight": 1.0, "type": "Land" },
-    { "from": 108, "to": 109, "weight": 1.0, "type": "Land" },
+    { "from": 108, "to": 109, "weight": 1.0, "type": "River" },
     { "from": 109, "to": 110, "weight": 1.0, "type": "Land" },
     { "from": 109, "to": 111, "weight": 1.0, "type": "Land" },
-    { "from": 110, "to": 116, "weight": 1.0, "type": "Land" },
+    { "from": 110, "to": 116, "weight": 1.0, "type": "River" },
     { "from": 110, "to": 111, "weight": 1.0, "type": "River" },
     { "from": 111, "to": 116, "weight": 1.0, "type": "Land" },
     { "from": 111, "to": 120, "weight": 1.0, "type": "Land" },
-    { "from": 112, "to": 113, "weight": 1.0, "type": "Land" },
+    { "from": 112, "to": 113, "weight": 1.0, "type": "River" },
     { "from": 112, "to": 117, "weight": 1.0, "type": "River" },
-    { "from": 113, "to": 114, "weight": 1.0, "type": "Land" },
+    { "from": 113, "to": 114, "weight": 1.0, "type": "River" },
     { "from": 113, "to": 119, "weight": 1.0, "type": "Land" },
-    { "from": 114, "to": 115, "weight": 1.0, "type": "Land" },
+    { "from": 114, "to": 115, "weight": 1.0, "type": "River" },
     { "from": 114, "to": 119, "weight": 1.0, "type": "Land" },
     { "from": 115, "to": 116, "weight": 1.0, "type": "Land" },
     { "from": 115, "to": 119, "weight": 1.0, "type": "River" },
-    { "from": 116, "to": 119, "weight": 1.0, "type": "Land" },
+    { "from": 116, "to": 119, "weight": 1.0, "type": "River" },
     { "from": 116, "to": 120, "weight": 1.0, "type": "Land" },
-    { "from": 119, "to": 120, "weight": 1.0, "type": "Land" }
+    { "from": 119, "to": 120, "weight": 1.0, "type": "River" },
+    { "from": 72, "to": 58, "weight": 1.0, "type": "Sea" },
+    { "from": 72, "to": 77, "weight": 1.0, "type": "Sea" },
+    { "from": 58, "to": 48, "weight": 1.0, "type": "Sea" },
+    { "from": 45, "to": 55, "weight": 1.0, "type": "Sea" },
+    { "from": 55, "to": 42, "weight": 1.0, "type": "Sea" }
   ],
   "regions": [
     {
