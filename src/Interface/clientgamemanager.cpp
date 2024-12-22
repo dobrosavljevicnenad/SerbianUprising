@@ -361,7 +361,6 @@ std::vector<std::tuple<graph::Vertex*, graph::Edge*, QColor>> ClientGameManager:
 void ClientGameManager::clearTemporaryArrows() {
     for (CustomArrowItem* arrow : temporaryArrows) {
         scene->removeItem(arrow);
-        delete arrow;
     }
     temporaryArrows.clear();
 }
@@ -439,11 +438,11 @@ void ClientGameManager::EndTurnClicked(const QVector<Action>& actions, int id){
 }
 
 void ClientGameManager::clearArrows() {
-    for (auto& [playerId, arrowList] : arrows) {
+    for (auto& [PlayerId, arrowList] : arrows) {
         for (CustomArrowItem* arrow : arrowList) {
             scene->removeItem(arrow);
-            delete arrow;
         }
+        arrowList.clear();
     }
 }
 
