@@ -20,7 +20,7 @@ QPixmap CustomArrowItem::colorizePixmap(const QPixmap& pixmap, const QColor& col
 
 void CustomArrowItem::paint(QPainter* painter, const QStyleOptionGraphicsItem* option, QWidget* widget) {
     painter->setRenderHint(QPainter::Antialiasing, true);
-    painter->setOpacity(0.5);
+    painter->setOpacity(0.4);
 
     QLineF line = this->line();
     double lineLength = line.length();

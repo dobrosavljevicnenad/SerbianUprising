@@ -360,42 +360,86 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
             return ;
         }
 
+        gameManager->clearTemporaryArrows();
+
+        auto validatedEdges = gameManager->getValidatedEdges(selected_vertex);
+        for (const auto& [neighbor, edge, color] : validatedEdges) {
+            MapLayer* neighborLayer = neighbor->map_layer;
+            gameManager->drawArrow(gameManager->ClientId, selectedLayer, neighborLayer, 0, 0, color, true);
+        }
+
     } else {
         if(selectedLayer == layer) {
             QMessageBox::warning(this, tr("Error"), tr("You selected the same layer. Select another layer."));
             selectedLayer = nullptr;
+            gameManager->clearTemporaryArrows();
             return ;
         }
         graph::Vertex* selected_vertex = gameManager->layerToVertex[selectedLayer];
         graph::Vertex* vertex = gameManager->layerToVertex[layer];
 
+        bool isNeighbor = false;
+        graph::Edge* connectingEdge = nullptr;
+        auto validatedEdges = gameManager->getValidatedEdges(selected_vertex);
+        for (const auto& [neighbor, edge, color] : validatedEdges) {
+            if (neighbor == vertex) {
+                isNeighbor = true;
+                connectingEdge = edge;
+                break;
+            }
+        }
+
+        if (!isNeighbor) {
+            QMessageBox::warning(this, tr("Error"), tr("You must select a neighboring node."));
+            return;
+        }
+
+        if (connectingEdge->type() == graph::EdgeType::Sea &&
+            selected_vertex->player.getPlayerId() != vertex->player.getPlayerId()) {
+            QMessageBox::warning(this, tr("Error"), tr("Cannot move across sea to a different player's territory."));
+            return;
+        }
+
         bool ok;
         int maxTroops = selected_vertex->army.getSoldiers();
 
         int troopsToTransfer = QInputDialog::getInt(this, tr("Transfer Troops"), tr("Enter the number of soldiers to transfer:"), 0, 0, maxTroops, 1, &ok);
-        if (ok) {
-            ActionType type = (selected_vertex->army.armyType() == vertex->army.armyType()) ? ActionType::MOVE_ARMY : ActionType::ATTACK;
-            if(selected_vertex == vertex)
-                type = ActionType::PLACE_ARMY;
-
-            int pid = gameManager->ClientId;
-            int source = selected_vertex->id();
-            int target = vertex->id();
-
-            Action newAction(type, pid, source, target, troopsToTransfer);
-
-            selected_vertex->army.setSoldiers(maxTroops - troopsToTransfer);
-            selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
-
-            gameManager->drawArrow(gameManager->ClientId,selectedLayer, layer, troopsToTransfer, newAction.id);
-            gameManager->addAction(newAction);
-
-            QString move = gameManager->GetCurrentAction(newAction);
-            QListWidgetItem* item = new QListWidgetItem(move);
-            item->setData(Qt::UserRole, newAction.id);
-            item->setData(Qt::UserRole + 2, "Move");
-            moveList->addItem(item);
+        if (!ok || troopsToTransfer == 0) {
+            QMessageBox::warning(this, tr("Error"), tr("Transferring 0 troops is not allowed."));
+            selectedLayer = nullptr;
+            gameManager->clearTemporaryArrows();
+            return;
         }
+
+        ActionType type = (selected_vertex->army.armyType() == vertex->army.armyType()) ? ActionType::MOVE_ARMY : ActionType::ATTACK;
+        if (selected_vertex == vertex)
+            type = ActionType::PLACE_ARMY;
+
+        int pid = gameManager->ClientId;
+        int source = selected_vertex->id();
+        int target = vertex->id();
+
+        Action newAction(type, pid, source, target, troopsToTransfer);
+
+        selected_vertex->army.setSoldiers(maxTroops - troopsToTransfer);
+        selectedLayer->setTroopCount(selected_vertex->army.getSoldiers());
+
+        QColor actionColor;
+        if (type == ActionType::ATTACK) {
+            actionColor = Qt::red;
+        } else {
+            actionColor = Qt::green;
+        }
+        gameManager->clearTemporaryArrows();
+        gameManager->drawArrow(gameManager->ClientId, selectedLayer, layer, troopsToTransfer, newAction.id, actionColor);
+        gameManager->addAction(newAction);
+
+        QString move = gameManager->GetCurrentAction(newAction);
+        QListWidgetItem* item = new QListWidgetItem(move);
+        item->setData(Qt::UserRole, newAction.id);
+        item->setData(Qt::UserRole + 2, "Move");
+        moveList->addItem(item);
+
         selectedLayer = nullptr;
     }
 }
@@ -443,6 +487,7 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer){
 void ClientWindow::onInfoButtonClicked() {
     setActiveButton(qobject_cast<QPushButton*>(sender()));
     selectedLayer=nullptr;
+    gameManager->clearTemporaryArrows();
 }
 
 void ClientWindow::onMoveButtonClicked() {
@@ -452,6 +497,7 @@ void ClientWindow::onMoveButtonClicked() {
 void ClientWindow::onPlaceButtonClicked() {
     setActiveButton(qobject_cast<QPushButton*>(sender()));
     selectedLayer=nullptr;
+    gameManager->clearTemporaryArrows();
 }
 
 void ClientWindow::setActiveButton(QPushButton* clickedButton) {

@@ -284,6 +284,7 @@ void ClientGameManager::allReset(){
 }
 
 void ClientGameManager::updateGraphics() {
+    clearTemporaryArrows();
     for (auto &layer : layers) {
         if (layerToVertex.find(layer) != layerToVertex.end()) {
             graph::Vertex *vertex = layerToVertex[layer];
@@ -312,12 +313,17 @@ void ClientGameManager::drawArrow(int playerId, MapLayer* from, MapLayer* to, in
 
     arrow->setPen(QPen(color, 2));
 
+    arrow->setZValue(1000);
+
     scene->addItem(arrow);
     if (isTemporary) {
         temporaryArrows.emplace_back(arrow);
     } else {
         arrows[playerId].emplace_back(arrow);
     }
+
+    QRectF arrowBoundingBox = arrow->boundingRect().translated(arrow->pos());
+    scene->setSceneRect(scene->sceneRect().united(arrowBoundingBox));
 }
 
 std::vector<std::tuple<graph::Vertex*, graph::Edge*, QColor>> ClientGameManager::getValidatedEdges(graph::Vertex* vertex) {
@@ -427,6 +433,7 @@ void ClientGameManager::clearArrows() {
     for (auto& [playerId, arrowList] : arrows) {
         for (CustomArrowItem* arrow : arrowList) {
             scene->removeItem(arrow);
+            delete arrow;
         }
     }
 }
