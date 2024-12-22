@@ -3,7 +3,6 @@
 #include <QHostAddress>
 #include "../base/Mechanics/Action.h"
 
-// Constructor
 Server::Server(QObject *parent)
     : QObject(parent),
     m_server(new QTcpServer()),
@@ -14,7 +13,6 @@ Server::Server(QObject *parent)
 {
     connect(m_server, &QTcpServer::newConnection, this, &Server::onNewConnection);
     connect(this, &Server::startGame, this, &Server::onGameStartRequested);
-
     connect(serverGameManager, &ServerGameManager::init_serializedGraphReady, this, &Server::handleSerializedGraph_init);
     connect(serverGameManager, &ServerGameManager::serializedGraphReady2, this, &Server::handleSerializedGraph);
 }
@@ -47,25 +45,24 @@ void Server::onNewConnection() {
     if (m_clientSocket == nullptr) {
         m_clientSocket = newSocket;
         setupPlayerSocket(m_clientSocket, "Player 1", "ID:1\n");
-    }
-    else if (m_secondPlayerSocket == nullptr) {
+    } else if (m_secondPlayerSocket == nullptr) {
         m_secondPlayerSocket = newSocket;
         setupPlayerSocket(m_secondPlayerSocket, "Player 2", "ID:2\n");
 
+        // if both clients are connected..
         if (m_clientSocket && m_secondPlayerSocket) {
             qDebug() << "Both players connected. Starting game.";
             broadcast("START_GAME");
             emit startGame();
         }
-    }
-    else {
+    } else {
         qWarning() << "Maximum players already connected.";
         newSocket->disconnectFromHost();
     }
 }
+
 void Server::onGameStartRequested() {
     serverGameManager->startGame();
-    // prosiri logiku emituje ... nesto
 }
 
 void Server::onReadyRead() {
@@ -105,8 +102,7 @@ void Server::onClientDisconnected() {
         qDebug() << "Host (Player 1) disconnected!";
         m_clientSocket = nullptr;
         emit gameOver("Host left, game over.");
-    }
-    else if (m_secondPlayerSocket && sender() == m_secondPlayerSocket) {
+    } else if (m_secondPlayerSocket && sender() == m_secondPlayerSocket) {
         qDebug() << "Second player disconnected!";
         m_secondPlayerSocket = nullptr;
         m_waitingForSecondPlayer = true;
@@ -125,7 +121,7 @@ void Server::setupPlayerSocket(QTcpSocket* socket, const QString& playerName, co
 }
 
 void Server::broadcast(const QString &message) {
-    QString serializedMessage = message + "\n\n"; // Dodaj separator
+    QString serializedMessage = message + "\n\n"; // Separator
     if (m_secondPlayerSocket && m_secondPlayerSocket->state() == QAbstractSocket::ConnectedState) {
         m_secondPlayerSocket->write(serializedMessage.toUtf8());
         m_secondPlayerSocket->flush();
@@ -137,7 +133,7 @@ void Server::broadcast(const QString &message) {
 }
 
 void Server::sendData(const QString &data) {
-    QString serializedData = data + "\n\n"; // Dodaj separator
+    QString serializedData = data + "\n\n"; // Separator
     if (m_clientSocket) m_clientSocket->write(serializedData.toUtf8());
     if (m_secondPlayerSocket) m_secondPlayerSocket->write(serializedData.toUtf8());
 }
@@ -154,7 +150,7 @@ void Server::handleSerializedGraph_init(const QJsonObject &serializedGraph) {
     dataToSend["graph"] = serializedGraph;
 
     QString serializedData = QString(QJsonDocument(dataToSend).toJson(QJsonDocument::Compact));
-    sendData(serializedData); // `sendData` već koristi separator
+    sendData(serializedData);
 }
 
 void Server::handleSerializedGraph(const QJsonObject& serializedGraph, const QJsonObject& results) {
@@ -163,7 +159,7 @@ void Server::handleSerializedGraph(const QJsonObject& serializedGraph, const QJs
     dataToSend["results"] = results;
 
     QString serializedData = QString(QJsonDocument(dataToSend).toJson(QJsonDocument::Compact));
-    sendData(serializedData); // `sendData` već koristi separator
+    sendData(serializedData);
 }
 
 void Server::handleEndTurn(const QJsonObject &jsonObject) {

@@ -15,10 +15,6 @@ bool ConnectionManager::initializeServer() {
     return true;
 }
 
-#include <QNetworkInterface>
-#include <QHostAddress>
-#include <iostream>
-
 bool ConnectionManager::initializeClient() {
     QString localIp = getLocalIpAddress();
     std::cout << localIp.toStdString() << std::endl;
@@ -41,7 +37,6 @@ bool ConnectionManager::initializeClient() {
     });
 
     connect(client, &Client::gameStarted, this, &ConnectionManager::gameStarted);
-    std::cout << "POVEZANA OBA KLIJENTA" << std::endl;
     return true;
 }
 

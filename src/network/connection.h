@@ -7,6 +7,9 @@
 #include "../Interface/clientgamemanager.h"
 #include "../Interface/servergamemanager.h"
 #include "../clientwindow.h"
+#include <QNetworkInterface>
+#include <QHostAddress>
+#include <iostream>
 
 class ConnectionManager : public QObject {
     Q_OBJECT
