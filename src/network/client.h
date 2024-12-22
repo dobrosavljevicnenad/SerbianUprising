@@ -4,6 +4,10 @@
 #include <QObject>
 #include <QTcpSocket>
 #include <QString>
+#include <QNetworkAccessManager>
+#include <QNetworkRequest>
+#include <QNetworkReply>
+#include <QJsonDocument>
 #include "../base/Mechanics/Action.h"
 #include "../Interface/clientgamemanager.h"
 #include "../clientwindow.h"
@@ -26,6 +30,8 @@ public:
     void processJsonMessage(const QString &message);
     void processGameData(const QJsonObject &jsonObject);
 
+    void getPublicIp();
+    void onPublicIpReceived(QNetworkReply *reply);
 signals:
     void dataReceived(const QString &data);
     void gameStarted();

@@ -63,7 +63,6 @@ void Server::onNewConnection() {
         newSocket->disconnectFromHost();
     }
 }
-
 void Server::onGameStartRequested() {
     serverGameManager->startGame();
     // prosiri logiku emituje ... nesto
@@ -126,19 +125,21 @@ void Server::setupPlayerSocket(QTcpSocket* socket, const QString& playerName, co
 }
 
 void Server::broadcast(const QString &message) {
+    QString serializedMessage = message + "\n\n"; // Dodaj separator
     if (m_secondPlayerSocket && m_secondPlayerSocket->state() == QAbstractSocket::ConnectedState) {
-        m_secondPlayerSocket->write(message.toUtf8() + "\n");
+        m_secondPlayerSocket->write(serializedMessage.toUtf8());
         m_secondPlayerSocket->flush();
     }
     if (m_clientSocket && m_clientSocket->state() == QAbstractSocket::ConnectedState) {
-        m_clientSocket->write(message.toUtf8() + "\n");
+        m_clientSocket->write(serializedMessage.toUtf8());
         m_clientSocket->flush();
     }
 }
 
 void Server::sendData(const QString &data) {
-    if (m_clientSocket) m_clientSocket->write(data.toUtf8());
-    if (m_secondPlayerSocket) m_secondPlayerSocket->write(data.toUtf8());
+    QString serializedData = data + "\n\n"; // Dodaj separator
+    if (m_clientSocket) m_clientSocket->write(serializedData.toUtf8());
+    if (m_secondPlayerSocket) m_secondPlayerSocket->write(serializedData.toUtf8());
 }
 
 void Server::executeActions(const std::vector<Action> &actions) {
@@ -153,7 +154,7 @@ void Server::handleSerializedGraph_init(const QJsonObject &serializedGraph) {
     dataToSend["graph"] = serializedGraph;
 
     QString serializedData = QString(QJsonDocument(dataToSend).toJson(QJsonDocument::Compact));
-    sendData(serializedData);
+    sendData(serializedData); // `sendData` već koristi separator
 }
 
 void Server::handleSerializedGraph(const QJsonObject& serializedGraph, const QJsonObject& results) {
@@ -162,7 +163,7 @@ void Server::handleSerializedGraph(const QJsonObject& serializedGraph, const QJs
     dataToSend["results"] = results;
 
     QString serializedData = QString(QJsonDocument(dataToSend).toJson(QJsonDocument::Compact));
-    sendData(serializedData);
+    sendData(serializedData); // `sendData` već koristi separator
 }
 
 void Server::handleEndTurn(const QJsonObject &jsonObject) {

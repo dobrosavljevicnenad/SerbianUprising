@@ -16,7 +16,7 @@ bool ConnectionManager::initializeServer() {
 }
 
 bool ConnectionManager::initializeClient() {
-    if (!client->connectToServer("127.0.0.1", 12345)) {
+    if (!client->connectToServer("192.168.1.7", 12345)) {
         qWarning() << "Failed to connect the client to the server.";
         return false;
     }

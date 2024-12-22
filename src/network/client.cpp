@@ -56,9 +56,10 @@ void Client::disconnectFromServer()
 
 void Client::sendData(const QString &data)
 {
-    if (m_socket->state() == QTcpSocket::ConnectedState) {
-        m_socket->write(data.toUtf8());
-    }
+    QByteArray jsonData = data.toUtf8();
+    QByteArray header = QByteArray::number(jsonData.size()) + "\n"; // Dužina poruke u bajtovima
+    m_socket->write(header + jsonData); // Prvo šalje zaglavlje, pa sadržaj
+    m_socket->flush();
 }
 
 void Client::sendEndTurnWithActions(const QVector<Action> &actions, int id)
@@ -77,6 +78,31 @@ void Client::sendEndTurnWithActions(const QVector<Action> &actions, int id)
     QString jsonString = jsonDoc.toJson(QJsonDocument::Compact); // Bez duple serializacije
     qDebug() << "Sending JSON to server:" << jsonString;
     m_socket->write(jsonString.toUtf8());
+}
+
+void Client::getPublicIp()
+{
+    QNetworkAccessManager* manager = new QNetworkAccessManager(this);
+    connect(manager, &QNetworkAccessManager::finished, this, &Client::onPublicIpReceived);
+
+    // Koristi API za dobijanje javne IP adrese
+    QNetworkRequest request(QUrl("https://api.ipify.org/?format=json"));
+    manager->get(request);  // Šaljemo GET zahtev
+}
+
+void Client::onPublicIpReceived(QNetworkReply *reply)
+{
+    if (reply->error() == QNetworkReply::NoError) {
+        QByteArray response = reply->readAll();
+        QJsonDocument doc = QJsonDocument::fromJson(response);
+        QString publicIp = doc.object()["ip"].toString();
+
+        qDebug() << "Public IP address is:" << publicIp;
+        connectToServer(publicIp, 12345);
+    } else {
+        qWarning() << "Failed to get public IP address:" << reply->errorString();
+    }
+    reply->deleteLater();
 }
 
 void Client::handleLoadGame(const QJsonObject& graphData)
@@ -103,26 +129,35 @@ void Client::handleLoadGame(const QJsonObject& graphData)
 
 void Client::onReadyRead()
 {
-    QByteArray rawData = m_socket->readAll();
-    QString data = QString::fromUtf8(rawData).trimmed();
+    static QByteArray buffer; // Bafer za pristigle podatke
+    buffer.append(m_socket->readAll()); // Dodaj nove podatke u bafer
 
-    // Razbijanje podataka po novim linijama za višestruke poruke
-    QStringList messages = data.split("\n", Qt::SkipEmptyParts);
-    for (const QString &message : messages) {
+    // Podeli poruke po separatoru "\n\n"
+    QList<QByteArray> messages = buffer.split('\n\n');
+
+    // Obradi sve kompletne poruke, osim poslednje (možda nije završena)
+    for (int i = 0; i < messages.size() - 1; ++i) {
+        QByteArray message = messages[i].trimmed();
+
+        // Obrada ID poruke
         if (message.startsWith("ID:")) {
-            processIdMessage(message);
+            processIdMessage(QString::fromUtf8(message));
         }
+        // Obrada START_GAME poruke
         else if (message == "START_GAME") {
             emit gameStarted();
         }
+        // Obrada JSON poruke
         else {
-            processJsonMessage(message);
+            processJsonMessage(QString::fromUtf8(message));
         }
     }
+
+    // Poslednji deo ostaje u baferu ako nije kompletan
+    buffer = messages.last();
 }
 
-void Client::processIdMessage(const QString &message)
-{
+void Client::processIdMessage(const QString &message){
     bool ok;
     int receivedId = message.mid(3).toInt(&ok);
     if (ok) {
@@ -136,21 +171,48 @@ void Client::processIdMessage(const QString &message)
 
 void Client::processJsonMessage(const QString &message)
 {
-    QJsonDocument jsonDoc = QJsonDocument::fromJson(message.toUtf8());
-    if (jsonDoc.isNull() || !jsonDoc.isObject()) {
-        qWarning() << "Failed to parse JSON data from server:" << message;
+    qDebug() << "Processing message:" << message;
+
+    QByteArray utf8Data = message.toUtf8();
+
+    // Provera UTF-8 podudarnosti (opciono)
+    if (QString::fromUtf8(utf8Data) != message) {
+        qWarning() << "Message contains non-UTF-8 characters.";
         return;
     }
 
+    QJsonParseError parseError;
+    QJsonDocument jsonDoc = QJsonDocument::fromJson(utf8Data, &parseError);
+
+    // Provera validnosti JSON-a
+    if (parseError.error != QJsonParseError::NoError) {
+        qWarning() << "Failed to parse JSON data from server:"
+                   << parseError.errorString() << "at offset"
+                   << parseError.offset;
+        qDebug() << "Raw data causing error:" << message;
+        return;
+    }
+
+    // Provera da li je JSON objekat
+    if (jsonDoc.isNull() || !jsonDoc.isObject()) {
+        qWarning() << "JSON document is not an object:" << message;
+        return;
+    }
+
+    // Procesiranje JSON objekta
     QJsonObject jsonObject = jsonDoc.object();
     QString type = jsonObject["type"].toString();
 
+    qDebug() << "Message type:" << type;
     if (type == "GAME_DATA") {
+        qDebug() << "Processing GAME_DATA...";
         processGameData(jsonObject);
     } else {
+        qDebug() << "Processing other data for clientGameManager...";
         clientGameManager->processDataFromServer(jsonObject);
     }
 }
+
 
 void Client::processGameData(const QJsonObject &jsonObject)
 {
