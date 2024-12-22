@@ -440,6 +440,8 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
 
         if (!isNeighbor) {
             QMessageBox::warning(this, tr("Error"), tr("You must select a neighboring node."));
+            selectedLayer = nullptr;
+            gameManager->clearTemporaryArrows();
             return;
         }
 

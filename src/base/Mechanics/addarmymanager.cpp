@@ -13,39 +13,56 @@ void AddArmyManager::removeTerritory() {
     }
 }
 
-int AddArmyManager::newRecruits(Player player)
-{
+int AddArmyManager::newRecruits(Player player) {
+    int recruit = 0;
     int recruits = 0;
+
     for (auto vertex : graph->vertices) {
-        if(vertex.second->culture == CultureType::SERBIAN && player.getArmyType() == ArmyType::HAJDUK && ArmyType::HAJDUK == vertex.second->army.armyType())
-            recruits += 5;
-        if(vertex.second->culture != CultureType::SERBIAN && player.getArmyType() == ArmyType::HAJDUK && ArmyType::HAJDUK == vertex.second->army.armyType())
-            recruits += 1;
-        if(vertex.second->culture == CultureType::TURKISH && player.getArmyType() == ArmyType::JANISSARY && ArmyType::JANISSARY == vertex.second->army.armyType())
-            recruits += 3;
-        if(vertex.second->culture != CultureType::TURKISH && player.getArmyType() == ArmyType::JANISSARY && ArmyType::JANISSARY == vertex.second->army.armyType())
-            recruits += 1;
+        recruit = 0;
+        bool isSameCulture = false;
+
+        if (vertex.second->culture == CultureType::SERBIAN && player.getArmyType() == ArmyType::HAJDUK && vertex.second->army.armyType() == ArmyType::HAJDUK) {
+            recruit += 5;
+            isSameCulture = true;
+        } else if (vertex.second->culture != CultureType::SERBIAN && player.getArmyType() == ArmyType::HAJDUK && vertex.second->army.armyType() == ArmyType::HAJDUK) {
+            recruit += 1;
+        } else if (vertex.second->culture == CultureType::TURKISH && player.getArmyType() == ArmyType::JANISSARY && vertex.second->army.armyType() == ArmyType::JANISSARY) {
+            recruit += 3;
+            isSameCulture = true;
+        } else if (vertex.second->culture != CultureType::TURKISH && player.getArmyType() == ArmyType::JANISSARY && vertex.second->army.armyType() == ArmyType::JANISSARY) {
+            recruit += 1;
+        }
+
+
+        Region* region = vertex.second->region;
+        if (region != nullptr) {
+            const std::string& regionId = region->getRegionId();
+            auto it = regionOwnershipStatus.find(regionId);
+            if (it != regionOwnershipStatus.end() && it->second && isSameCulture) {
+                recruit*=2;
+            }
+        }
+        recruits+=recruit;
     }
+
     return recruits;
 }
 
-void AddArmyManager::addRegion() {
-    regionCount++;
-}
+void AddArmyManager::updateRegionOwnership(unsigned clientId, const QVector<Region*>& regions) {
+    regionOwnershipStatus.clear();
 
-void AddArmyManager::removeRegion() {
-    if (regionCount > 0) {
-        regionCount--;
-    }
-}
+    for (const auto& region : regions) {
+        bool isOwned = true;
 
-void AddArmyManager::addCity() {
-    cityCount++;
-}
+        for (const auto& [layer, city] : region->getTerritories()) {
+            graph::Vertex* vertex = graph->get_vertex_by_label(layer->labelName);
+            if (!vertex || vertex->player.getPlayerId() != static_cast<int>(clientId)) {
+                isOwned = false;
+                break;
+            }
+        }
 
-void AddArmyManager::removeCity() {
-    if (cityCount > 0) {
-        cityCount--;
+        regionOwnershipStatus[region->getRegionId()] = isOwned;
     }
 }
 

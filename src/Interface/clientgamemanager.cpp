@@ -221,6 +221,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     }
     updateGraphics();
     updateFog();
+    armyManager.updateRegionOwnership(ClientId, regions);
     armyManager.addTerritory(player);
     armyManager.calculateTotalTroops();
 

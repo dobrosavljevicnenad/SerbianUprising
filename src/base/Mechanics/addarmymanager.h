@@ -8,19 +8,17 @@ public:
 
     void addTerritory(Player player);
     void removeTerritory();
-    void addRegion();
-    void removeRegion();
-    void addCity();
-    void removeCity();
-
+    void addClientId(unsigned clientId);
     int calculateTotalTroops();
     void decreaseAvailableTroops(int troops);
     void endTurn();
     int newRecruits(Player player);
     int totalTroops = 5;
-
+    void updateRegionOwnership(unsigned clientId, const QVector<Region*>& regions);
 
 private:
+
+    std::map<std::string, bool> regionOwnershipStatus;
     graph::Graph* graph;
     int territoryCount;
     int regionCount;
