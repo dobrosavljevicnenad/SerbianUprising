@@ -15,8 +15,21 @@ bool ConnectionManager::initializeServer() {
     return true;
 }
 
+#include <QNetworkInterface>
+#include <QHostAddress>
+#include <iostream>
+
 bool ConnectionManager::initializeClient() {
-    if (!client->connectToServer("192.168.1.7", 12345)) {
+    QString localIp = getLocalIpAddress();
+    std::cout << localIp.toStdString() << std::endl;
+    if (localIp.isEmpty()) {
+        qWarning() << "Could not determine local IP address.";
+        return false;
+    }
+
+    qDebug() << "Local IP address detected:" << localIp;
+
+    if (!client->connectToServer(localIp, 12345)) {
         qWarning() << "Failed to connect the client to the server.";
         return false;
     }
@@ -30,6 +43,16 @@ bool ConnectionManager::initializeClient() {
     connect(client, &Client::gameStarted, this, &ConnectionManager::gameStarted);
     std::cout << "POVEZANA OBA KLIJENTA" << std::endl;
     return true;
+}
+
+QString ConnectionManager::getLocalIpAddress() {
+    const QList<QHostAddress>& allAddresses = QNetworkInterface::allAddresses();
+    for (const QHostAddress& address : allAddresses) {
+        if (address.protocol() == QAbstractSocket::IPv4Protocol && !address.isLoopback()) {
+            return address.toString();
+        }
+    }
+    return QString();
 }
 
 

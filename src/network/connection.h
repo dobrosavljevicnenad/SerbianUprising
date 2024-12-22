@@ -26,5 +26,7 @@ private:
     Server server;                          // Server instance
     Client* client;                          // Client instance
     ClientGameManager *clientManager;       // Client-side manager
+    QString getLocalIpAddress();
+
 };
 #endif // CONNECTION_H
