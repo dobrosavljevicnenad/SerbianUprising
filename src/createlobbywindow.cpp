@@ -211,6 +211,9 @@ void CreateLobbyWindow::updateArmySelection(const QString &player1Army) {
 
     QString player2Army = (player1Army == "Hajduk") ? "Janissary" : "Hajduk";
     player2ArmyLabel->setText("Army: " + player2Army);
+
+    ARMY1 = (player1Army == "Hajduk") ? ArmyType::HAJDUK : ArmyType::JANISSARY;
+    ARMY2 = (player1Army == "Hajduk") ? ArmyType::JANISSARY : ArmyType::HAJDUK;
 }
 
 void CreateLobbyWindow::loadSavedGames() {
@@ -252,6 +255,9 @@ void CreateLobbyWindow::handleGameStart() {
     clientManager = connectionManager->getClientManager();
     if (selectedFile != nullptr)
         clientManager->loadGamePath = selectedFile;
+
+    clientManager->p1_army = ARMY1;
+    clientManager->p2_army = ARMY2;
 
     qDebug() << "Game is starting."<< clientManager->ClientId;
 

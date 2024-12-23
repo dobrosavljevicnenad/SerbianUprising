@@ -46,6 +46,9 @@ private:
 
     QString selectedFile = nullptr;
 
+    ArmyType ARMY1;
+    ArmyType ARMY2;
+
 signals:
     void backToLobby();
 

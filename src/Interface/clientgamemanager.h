@@ -98,7 +98,6 @@ private:
     AddArmyManager armyManager;
     std::map<int,std::vector<CustomArrowItem*>> arrows;
     std::vector<CustomArrowItem*> temporaryArrows;
-    Player player;
     Year gameYear;
     QVector<Region*>regions;
     Map* map;
@@ -126,5 +125,8 @@ public:
     QVector<Action> actionBuffer;
 
     std::vector<std::tuple<graph::Vertex*, graph::Edge*, QColor>> getValidatedEdges(graph::Vertex* vertex);
+    Player player;
+    ArmyType p1_army;
+    ArmyType p2_army;
 };
 #endif // CLIENTGAMEMANAGER_H
