@@ -185,6 +185,7 @@ void CreateLobbyWindow::setupUI() {
     connect(exitButton, &QPushButton::clicked, this, &CreateLobbyWindow::backToLobby);
     connect(armyComboBox, &QComboBox::currentTextChanged, this, &CreateLobbyWindow::updateArmySelection);
     connect(startButton, &QPushButton::clicked, [this]() {
+        QMessageBox::information(this, "Server Info", "Server IP: " + connectionManager->getLocalIpAddress());
         if (!connectionManager->initializeServer()) {
             QMessageBox::warning(this, "Error", "Failed to start the server.");
             return;

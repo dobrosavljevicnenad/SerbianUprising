@@ -21,6 +21,7 @@ public:
     bool initializeServer();                // Set up the server
     bool initializeClient();                // Set up the client
     ClientGameManager* getClientManager();  // Get the initialized ClientGameManager
+    QString getLocalIpAddress();
 
 signals:
     void gameStarted();                     // Emitted when the game starts
@@ -29,7 +30,5 @@ private:
     Server server;                          // Server instance
     Client* client;                          // Client instance
     ClientGameManager *clientManager;       // Client-side manager
-    QString getLocalIpAddress();
-
 };
 #endif // CONNECTION_H
