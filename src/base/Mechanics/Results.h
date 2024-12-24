@@ -42,6 +42,13 @@ public:
 
     std::vector<BattleRound> getRounds() const;
 
+    int defenderAdvantage;
+    int defenderTerrainAdvantage;
+    int defenderRiverCrossingAdvantage;
+    int defenderMoraleAdvantage;
+    int attackerAdvantage;
+    int attackerTerrainAdvantage;
+    int attackerMoraleAdvantage;
 private:
     int defenderNumber;
     int attackerNumber;

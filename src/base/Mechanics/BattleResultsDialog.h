@@ -12,6 +12,7 @@
 #include <QTableWidgetItem>
 #include <QColor>
 #include "BattleReplayDialog.h"
+#include "../graph/graph.hpp"
 
 class BattleResultsDialog : public QDialog {
     Q_OBJECT
@@ -31,6 +32,7 @@ private:
     QWidget *tablesContainer;                  // Container widget for tables
     QString getButtonStyle();
     QPushButton *closeButton;
+    graph::Graph *m_graph;
 };
 
 #endif // BATTLERESULTSDIALOG_H

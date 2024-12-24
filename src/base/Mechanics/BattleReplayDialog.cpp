@@ -1,10 +1,124 @@
 #include "BattleReplayDialog.h"
-#include <qevent.h>
-
 
 BattleReplayDialog::BattleReplayDialog(QWidget *parent, int tableIndex, Results results)
     : QDialog(parent), m_tableIndex(tableIndex), results(results) {
     setWindowTitle("Battle Replay Details");
+
+    QTableWidget* defenderTable = new QTableWidget(this);
+    QTableWidget* attackerTable = new QTableWidget(this);
+    QString tableStyle = "QTableWidget { "
+                         "background-color: transparent; "
+                         "font-size: 12px; "
+                         "font-weight: bold; "
+                         "color: white; "
+                         "margin: 0px; "
+                         "padding: 0px; "
+                         "border: 2px solid black;"
+                         "background-color: rgba(241, 84, 102, 255); }";
+    defenderTable->setStyleSheet(tableStyle);
+    attackerTable->setStyleSheet(tableStyle);
+    QColor defBackgroundColor;
+    QColor ackBackgroundColor;
+
+    if(results.getDefenderType() == ArmyType::HAJDUK){
+        defBackgroundColor = QColor(241, 84, 102, 255);
+        ackBackgroundColor = QColor(109, 210, 72, 255);
+    }
+    else{
+        defBackgroundColor = QColor(109, 210, 72, 255);
+        ackBackgroundColor = QColor(241, 84, 102, 255);
+    }
+    defenderTable->setStyleSheet(QString("QTableWidget { "
+                                         "background-color: rgba(%1, %2, %3, %4); "
+                                         "border: 2px solid black; }")
+                                         .arg(defBackgroundColor.red())
+                                         .arg(defBackgroundColor.green())
+                                         .arg(defBackgroundColor.blue())
+                                         .arg(1));
+    attackerTable->setStyleSheet(QString("QTableWidget { "
+                                         "background-color: rgba(%1, %2, %3, %4); "
+                                         "border: 2px solid black; }")
+                                        .arg(ackBackgroundColor.red())
+                                        .arg(ackBackgroundColor.green())
+                                        .arg(ackBackgroundColor.blue())
+                                        .arg(1));
+    defenderTable->setHorizontalHeaderLabels({"", ""});
+    defenderTable->setVerticalHeaderLabels({"", "", ""});
+    defenderTable->horizontalHeader()->setVisible(false);
+    defenderTable->verticalHeader()->setVisible(false);
+    defenderTable->setShowGrid(false);
+    attackerTable->setHorizontalHeaderLabels({"", ""});
+    attackerTable->setVerticalHeaderLabels({"", "", ""});
+    attackerTable->horizontalHeader()->setVisible(false);
+    attackerTable->verticalHeader()->setVisible(false);
+    attackerTable->setShowGrid(false);
+    defenderTable->setColumnCount(2);
+    attackerTable->setColumnCount(2);
+
+    defenderTable->setRowCount(4);
+    attackerTable->setRowCount(3);
+
+    QStringList defenderAdvantageNames = {
+        "Defender Advantage",
+        "Terrain Advantage",
+        "River Crossing",
+        "Defender Morale"
+    };
+
+    QStringList attackerAdvantageNames = {
+        "Attacker Advantage",
+        "Terrain Advantage",
+        "Attacker Morale"
+    };
+    QList<int> defenderAdvantageValues = {
+        results.defenderAdvantage,
+        results.defenderTerrainAdvantage,
+        results.defenderRiverCrossingAdvantage,
+        results.defenderMoraleAdvantage
+    };
+
+    QList<int> attackerAdvantageValues = {
+        results.attackerAdvantage,
+        results.attackerTerrainAdvantage,
+        results.attackerMoraleAdvantage
+    };
+
+    for (int i = 0; i < defenderAdvantageNames.size(); ++i) {
+        QTableWidgetItem *item = new QTableWidgetItem(defenderAdvantageNames[i]);
+        item->setTextAlignment(Qt::AlignCenter);
+        defenderTable->setItem(i, 0, item);
+
+        item = new QTableWidgetItem(QString::number(defenderAdvantageValues[i]));
+        item->setTextAlignment(Qt::AlignCenter);
+        defenderTable->setItem(i, 1, item);
+    }
+
+    for (int i = 0; i < attackerAdvantageNames.size(); ++i) {
+        QTableWidgetItem *item = new QTableWidgetItem(attackerAdvantageNames[i]);
+        item->setTextAlignment(Qt::AlignCenter);
+        attackerTable->setItem(i, 0, item);
+
+        item = new QTableWidgetItem(QString::number(attackerAdvantageValues[i]));
+        item->setTextAlignment(Qt::AlignCenter);
+        attackerTable->setItem(i, 1, item);
+    }
+    defenderTable->setFixedSize(200,105);
+    attackerTable->setFixedSize(200,80);
+    defenderTable->setColumnWidth(0, 170);
+    defenderTable->setColumnWidth(1, 20);
+    attackerTable->setColumnWidth(0, 170);
+    attackerTable->setColumnWidth(1, 20);
+
+    defenderTable->setRowHeight(0, 22);
+    defenderTable->setRowHeight(1, 22);
+    defenderTable->setRowHeight(2, 22);
+    defenderTable->setRowHeight(3, 22);
+    attackerTable->setRowHeight(0, 22);
+    attackerTable->setRowHeight(1, 22);
+    attackerTable->setRowHeight(2, 22);
+    defenderTable->move(10, 10);
+    attackerTable->move(874, 10);
+    //----------------------------------------------------------------------------
     QVBoxLayout *layout = new QVBoxLayout(this);
     replayButton = new QPushButton("Replay", this);
     connect(replayButton, &QPushButton::clicked, this, &BattleReplayDialog::onReplayClicked);

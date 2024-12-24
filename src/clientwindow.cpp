@@ -365,6 +365,7 @@ void ClientWindow::onMoveClicked(QListWidgetItem* item) {
         if (layer) {
             AddArmyManager& armyManager = gameManager->getArmyManager();
             armyManager.decreaseAvailableTroops(-troopsToRemove);
+            gameManager->layerToVertex[layer]->newRecruits -= troopsToRemove;
             QVariant data = item->data(Qt::UserRole + 3);
             int actionId = data.toInt();
             gameManager->removePlaceAction(actionId);
@@ -518,9 +519,23 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer) {
             troopsToAdd = std::min(1, armyManager.totalTroops);
         } else {
             bool ok;
-            std::string message = "Enter the number of soldiers up to " + std::to_string(armyManager.totalTroops) + " to place: ";
+            int troops = 0;
+            switch (selected_vertex->city->getLevel()) {
+            case 3:
+                troops = std::numeric_limits<int>::max();
+                break;
+            case 2:
+                troops = 50;
+                break;
+            default:
+                troops = 10;
+                break;
+            }
+            troops = std::min(armyManager.totalTroops, troops - selected_vertex->newRecruits);
+            std::string message = "Enter the number of soldiers up to " + std::to_string(troops) + " to place of total " +
+                                  std::to_string(armyManager.totalTroops) + " new free soldiers: ";
             troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
-                                               tr(message.c_str()), 0, 0, armyManager.totalTroops, 1, &ok);
+                                               tr(message.c_str()), 0, 0, troops, 1, &ok);
             if (!ok || troopsToAdd <= 0) {
                 selectedLayer = nullptr;
                 return;
@@ -535,7 +550,7 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer) {
             Action newAction(ActionType::PLACE_ARMY, pid, source, 0, troopsToAdd);
             gameManager->addAction(newAction);
             armyManager.decreaseAvailableTroops(troopsToAdd);
-
+            selected_vertex->newRecruits += troopsToAdd;
             selected_vertex->army.setSoldiers(selected_vertex->army.getSoldiers() + troopsToAdd);
 
             QString moveDescription = QString("Placed %1 troops on %2").arg(troopsToAdd).arg(selected_vertex->id());
