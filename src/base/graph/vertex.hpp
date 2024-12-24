@@ -41,6 +41,7 @@ public:
     CultureType culture;
     Region* region;
     City* city;
+    int newRecruits;
 
 private:
     unsigned m_id;

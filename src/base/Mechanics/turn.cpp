@@ -136,6 +136,7 @@ void Turn::executePlaceAction(const Action& action) {
     Vertex* source = m_graph.get_vertex_by_id(action.sourceVertexId);
     int soldiers = source->army.getSoldiers();
     source->army.setSoldiers(soldiers+action.soldiers);
+    source->newRecruits = 0;
 }
 
 void Turn::executeMoveAction(const Action& action) {

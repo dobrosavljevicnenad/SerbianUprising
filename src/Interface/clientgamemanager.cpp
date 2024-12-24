@@ -235,7 +235,7 @@ QVector<QStringList> ClientGameManager::generateBattleResults() {
 
     for (const auto& battle : resultsVector){
         QStringList row;
-        row.append(QString::number(battle.getTargetVertexId()));
+        row.append(QString::fromStdString(clientGraph->get_vertex_by_id(battle.getTargetVertexId())->label()));
         row.append(QString::number(battle.getDefenderNumber()));
         row.append(QString::number(battle.getAttackerNumber()));
         row.append(QString("%1").arg(battle.getDefenderType() == ArmyType::HAJDUK ? "Hajduk " : "Janissary "));
@@ -435,6 +435,9 @@ QString ClientGameManager::GetCurrentAction(const Action& action) {
 
 void ClientGameManager::EndTurnClicked(const QVector<Action>& actions, int id){
     resultsVector.clear();
+    for (auto& vertex : clientGraph->vertices ) {
+        vertex.second->newRecruits = 0;
+    }
     emit endTurnActionsReady(actions, id);
 }
 
