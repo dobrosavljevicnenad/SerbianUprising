@@ -445,7 +445,6 @@ void ClientGameManager::clearArrows() {
     for (auto& [playerId, arrowList] : arrows) {
         for (CustomArrowItem* arrow : arrowList) {
             scene->removeItem(arrow);
-            delete arrow;
         }
     }
 }

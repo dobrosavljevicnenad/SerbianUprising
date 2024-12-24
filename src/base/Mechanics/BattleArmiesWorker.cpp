@@ -9,7 +9,7 @@ BattleArmiesWorker::BattleArmiesWorker(MoveArmy& moveArmy, int playerId, Army se
 void BattleArmiesWorker::run() {
     Battle battle(m_target->army, m_sentArmy);
 
-    battle.setTerrainAdvantage(m_target->terrain.getDefenderAdvantage() + riverAdvantage, m_target->terrain.getAttackerAdvantage());
+    battle.setTerrainAdvantage(m_target->terrain.getDefenderAdvantage(), riverAdvantage, m_target->terrain.getAttackerAdvantage());
 
     std::cout << "Battle initiated between attacking army and defender at Vertex "
               << m_target->id() << ".\n";
