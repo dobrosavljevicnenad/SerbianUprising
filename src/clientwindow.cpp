@@ -49,9 +49,16 @@ void ClientWindow::setupUI() {
     nodeInfoWidget->hide();
 
     layoutContainer = new QWidget(view->viewport());
-    layoutContainer->setStyleSheet("background-color: rgba(0, 0, 0, 200);"
-                                   "border-radius: 0px;"
-                                   "border-image: url(:/resources/border1.png) 30 stretch;");
+    if(gameManager->ClientId == 1){
+        layoutContainer->setStyleSheet("background-color: rgba(74, 47, 47,190);"
+                                       "border-radius: 0px;"
+                                       "border-image: url(:/resources/border1.png) 30 stretch;");
+    }
+    else{
+        layoutContainer->setStyleSheet("background-color: rgba(3, 66, 5,190);"
+                                       "border-radius: 0px;"
+                                       "border-image: url(:/resources/border1.png) 30 stretch;");
+    }
     QVBoxLayout *mainLayout = new QVBoxLayout();
 
     mainLayout->setSpacing(5);
@@ -195,13 +202,23 @@ void ClientWindow::setupUI() {
     layoutContainer->setLayout(mainLayout);
     layoutContainer->setGeometry(10, 10, 250, 520);
 
-    mapModeContainer = new QWidget(view->viewport());
-    mapModeContainer->setStyleSheet(
-        "background-color: rgba(0, 43, 54, 180); "
-        "border-radius: 10px;"
-        "border-image: url(:/resources/border1.png) 10 stretch;"
-        "padding: 5px;"
-        );
+    mapModeContainer = new QWidget(view->viewport());   
+    if(gameManager->ClientId == 1){
+        mapModeContainer->setStyleSheet(
+            "background-color: rgba(74, 47, 47,190); "
+            "border-radius: 10px;"
+            "border-image: url(:/resources/border1.png) 10 stretch;"
+            "padding: 5px;"
+            );
+    }
+    else{
+        mapModeContainer->setStyleSheet(
+            "background-color: rgba(3, 66, 5,190); "
+            "border-radius: 10px;"
+            "border-image: url(:/resources/border1.png) 10 stretch;"
+            "padding: 5px;"
+            );
+    }
 
     QHBoxLayout* mapModeLayout = new QHBoxLayout();
     mapModeLayout->setSpacing(8);

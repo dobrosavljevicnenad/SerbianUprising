@@ -185,6 +185,9 @@ void CreateLobbyWindow::setupUI() {
     connect(exitButton, &QPushButton::clicked, this, &CreateLobbyWindow::backToLobby);
     connect(armyComboBox, &QComboBox::currentTextChanged, this, &CreateLobbyWindow::updateArmySelection);
     connect(startButton, &QPushButton::clicked, [this]() {
+
+        int armyId = armyComboBox->currentIndex() + 1;
+
         if (!connectionManager->initializeServer()) {
             QMessageBox::warning(this, "Error", "Failed to start the server.");
             return;
@@ -197,6 +200,9 @@ void CreateLobbyWindow::setupUI() {
 
         if (connectionManager) {
             connect(connectionManager, &ConnectionManager::gameStarted, this, &CreateLobbyWindow::handleGameStart);
+
+            connectionManager->sendArmySelection(armyId);
+
             qDebug() << "Signals connected successfully.";
         } else {
             qWarning() << "Failed to connect signals: ConnectionManager is nullptr.";

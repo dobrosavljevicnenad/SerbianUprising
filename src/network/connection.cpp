@@ -32,6 +32,14 @@ bool ConnectionManager::initializeClient() {
     return true;
 }
 
+void ConnectionManager::sendArmySelection(int armyId) {
+    if (client) {
+        client->sendArmySelection(armyId);
+        qDebug() << "Army selection sent to server: " << armyId;
+    } else {
+        qWarning() << "Client is not initialized, unable to send army selection.";
+    }
+}
 
 ClientGameManager* ConnectionManager::getClientManager() {
     return clientManager;

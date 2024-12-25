@@ -54,6 +54,14 @@ void Client::disconnectFromServer()
 
 // -------------------- Slanje podataka --------------------
 
+void Client::sendArmySelection(int armyId) {
+    QByteArray data;
+    QDataStream stream(&data, QIODevice::WriteOnly);
+    stream << armyId;
+    m_socket->write(data);
+    qDebug() << "Army selection sent: " << armyId;
+}
+
 void Client::sendData(const QString &data)
 {
     QByteArray jsonData = data.toUtf8();

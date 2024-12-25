@@ -46,14 +46,19 @@ void Server::onNewConnection() {
 
     if (m_clientSocket == nullptr) {
         m_clientSocket = newSocket;
-        setupPlayerSocket(m_clientSocket, "Player 1", "ID:1\n");
     }
     else if (m_secondPlayerSocket == nullptr) {
         m_secondPlayerSocket = newSocket;
-        setupPlayerSocket(m_secondPlayerSocket, "Player 2", "ID:2\n");
 
         if (m_clientSocket && m_secondPlayerSocket) {
             qDebug() << "Both players connected. Starting game.";
+            if(firstplayerId == 1){
+                setupPlayerSocket(m_clientSocket, "Player 1", "ID:1\n");
+                setupPlayerSocket(m_secondPlayerSocket, "Player 2", "ID:2\n");
+            }else {
+                setupPlayerSocket(m_clientSocket, "Player 1", "ID:2\n");
+                setupPlayerSocket(m_secondPlayerSocket, "Player 2", "ID:1\n");
+            }
             broadcast("START_GAME");
             emit startGame();
         }
@@ -81,6 +86,13 @@ void Server::onReadyRead() {
 
         QJsonParseError parseError;
         QJsonDocument jsonDoc = QJsonDocument::fromJson(rawData, &parseError);
+
+        if (rawData.size() == 1 && QChar(rawData[0]).isDigit()) {
+            int armyId = rawData.toInt();
+            qDebug() << "Received army selection and first player id:" << armyId;
+            firstplayerId = armyId;
+            continue;
+        }
 
         if (parseError.error != QJsonParseError::NoError || !jsonDoc.isObject()) {
             qWarning() << "Invalid JSON received:" << rawData;

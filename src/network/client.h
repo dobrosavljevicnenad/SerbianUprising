@@ -29,6 +29,7 @@ public:
     void processIdMessage(const QString &message);
     void processJsonMessage(const QString &message);
     void processGameData(const QJsonObject &jsonObject);
+    void sendArmySelection(int armyId);
 
     void getPublicIp();
     void onPublicIpReceived(QNetworkReply *reply);

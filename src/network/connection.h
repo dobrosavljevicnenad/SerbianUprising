@@ -18,6 +18,7 @@ public:
     bool initializeServer();                // Set up the server
     bool initializeClient();                // Set up the client
     ClientGameManager* getClientManager();  // Get the initialized ClientGameManager
+    void sendArmySelection(int armyId);
 
 signals:
     void gameStarted();                     // Emitted when the game starts

@@ -49,6 +49,7 @@ private:
     int turnCounter = 0;
     QMap<int, QVector<Action>> endTurnActions; // cuva akcije po id-u klienta
     void setupPlayerSocket(QTcpSocket* socket, const QString& playerName, const QString& message);
+    int firstplayerId;
 
 };
 #endif // SERVER_H
