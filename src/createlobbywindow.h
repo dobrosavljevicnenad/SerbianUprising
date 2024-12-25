@@ -22,12 +22,14 @@ public:
     explicit CreateLobbyWindow(QWidget *parent = nullptr);
     ~CreateLobbyWindow();
 
+    void handleGameStart();
+
 private:
     void setupUI();
     void loadSavedGames();
     void setupConnections();
     void setBackgroundImage();
-
+    void setupMusic();
 
     QLabel *player1ArmyLabel;
     QLabel *player2ArmyLabel;
@@ -46,12 +48,14 @@ private:
 
     QString selectedFile = nullptr;
 
+    ArmyType ARMY1;
+    ArmyType ARMY2;
+
 signals:
     void backToLobby();
 
 private slots:
     void updateArmySelection(const QString &playerArmy);
-    void handleGameStart();
     void onFileClicked(int row, int column);
     void onLoadGameClicked();
 

@@ -1,4 +1,6 @@
 #include "clientgamemanager.h"
+#include <qaudiooutput.h>
+#include <qmediaplayer.h>
 
 ClientGameManager::ClientGameManager(QGraphicsScene* scene,QObject* parent)
     : QObject(parent),scene(scene),clientGraph(new graph::Graph()), armyManager(*new AddArmyManager(clientGraph.get()))
@@ -169,6 +171,22 @@ void ClientGameManager::setId(int id) {
     player = Player();
     player.setPlayerId(ClientId);
     ClientId == 1 ? player.setArmyType(ArmyType::HAJDUK) : player.setArmyType(ArmyType::JANISSARY);
+    if(ClientId == 1){
+        musicPlayer = new QMediaPlayer(this);
+        audioOutput = new QAudioOutput(this);
+        musicPlayer->setAudioOutput(audioOutput);
+        musicPlayer->setSource(QUrl::fromLocalFile("../../resources/music/Janissary.mp3"));
+        audioOutput->setVolume(0.5);
+        musicPlayer->play();
+    }
+    if(ClientId == 2){
+        musicPlayer = new QMediaPlayer(this);
+        audioOutput = new QAudioOutput(this);
+        musicPlayer->setAudioOutput(audioOutput);
+        musicPlayer->setSource(QUrl::fromLocalFile("../../resources/music/Hajduk.mp3"));
+        audioOutput->setVolume(0.5);
+        musicPlayer->play();
+    }
 }
 
 void ClientGameManager::processDataFromServer(const QJsonObject& data) {
@@ -455,6 +473,9 @@ QString ClientGameManager::GetCurrentAction(const Action& action) {
 
 void ClientGameManager::EndTurnClicked(const QVector<Action>& actions, int id){
     resultsVector.clear();
+    for (auto& vertex : clientGraph->vertices ) {
+        vertex.second->newRecruits = 0;
+    }
     emit endTurnActionsReady(actions, id);
 }
 

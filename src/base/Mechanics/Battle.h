@@ -15,7 +15,7 @@ public:
     Battle(Army& defender, Army& attacker);
 
     Results start();
-    void setTerrainAdvantage(int defenderAdvantage, int attackerAdvantage);
+    void setTerrainAdvantage(int defenderAdvantage, int riverAdvantage, int attackerAdvantage);
 
 private:
     Army& m_defender;
@@ -23,7 +23,7 @@ private:
 
     int m_defenderAdvantage = 0;
     int m_attackerAdvantage = 0;
-
+    int m_riverAdvantage = 0;
     int calculateHit(int strength, int terrainAdvantage, int soldiers);
     void printArmyStatus(const Army& army, const std::string& armyName) const;
     bool shouldRetreat(int attackerSoldiers, int defenderSoldiers, bool isAttacker) const;

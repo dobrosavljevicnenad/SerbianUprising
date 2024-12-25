@@ -18,6 +18,7 @@
 #include <map>
 #include <qlabel.h>
 #include <qlistwidget.h>
+#include <qmediaplayer.h>
 #include <qpushbutton.h>
 #include "../base/Mechanics/addarmymanager.h"
 #include "Items/customarrowitem.h"
@@ -81,6 +82,8 @@ public:
 
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
 
+    bool server_closed = false;
+
 private slots:
     void printExplosion(graph::Vertex *target);
 
@@ -102,11 +105,12 @@ private:
     AddArmyManager armyManager;
     std::map<int,std::vector<CustomArrowItem*>> arrows;
     std::vector<CustomArrowItem*> temporaryArrows;
-    Player player;
     Year gameYear;
     QVector<Region*>regions;
     Map* map;
     FileManager fileManager;
+    QMediaPlayer *musicPlayer;
+    QAudioOutput *audioOutput;
 
 
 private://UI
@@ -131,6 +135,8 @@ public:
     QVector<Action> actionBuffer;
 
     std::vector<std::tuple<graph::Vertex*, graph::Edge*, QColor>> getValidatedEdges(graph::Vertex* vertex);
+
     void onLayerHovered(MapLayer *layer);
+    Player player;
 };
 #endif // CLIENTGAMEMANAGER_H

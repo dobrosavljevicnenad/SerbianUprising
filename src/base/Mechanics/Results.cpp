@@ -6,7 +6,7 @@ Results::Results()
 
 void Results::recordRound(int defenderHit, int attackerHit, int defenderRemaining, int attackerRemaining) {
     BattleRound round = {
-        static_cast<int>(rounds.size()) + 1, // Round number
+        static_cast<int>(rounds.size()) + 1,
         defenderHit,
         attackerHit,
         defenderRemaining,
@@ -14,22 +14,18 @@ void Results::recordRound(int defenderHit, int attackerHit, int defenderRemainin
     };
     rounds.push_back(round);
 }
-
 QJsonObject Results::toJson() const {
     QJsonObject json;
 
-    // Serialize simple fields
     json["defenderNumber"] = defenderNumber;
     json["attackerNumber"] = attackerNumber;
     json["targetVertexId"] = targetVertexId;
-    json["defenderType"] = static_cast<int>(defenderType); // Assuming ArmyType is an enum
-    json["attackerType"] = static_cast<int>(attackerType); // Assuming ArmyType is an enum
-    json["terrain"] = static_cast<int>(terrain);          // Assuming TerrainType is an enum
+    json["defenderType"] = static_cast<int>(defenderType);
+    json["attackerType"] = static_cast<int>(attackerType);
+    json["terrain"] = static_cast<int>(terrain);
 
-    // Serialize winner
     json["winner"] = (winner && winner->armyType() == ArmyType::HAJDUK) ? "Hajduk" : "Janissary";
 
-    // Serialize battle rounds
     QJsonArray roundsArray;
     for (const auto& round : rounds) {
         QJsonObject roundJson;
@@ -42,11 +38,17 @@ QJsonObject Results::toJson() const {
     }
     json["rounds"] = roundsArray;
 
+    json["defenderAdvantage"] = defenderAdvantage;
+    json["defenderTerrainAdvantage"] = defenderTerrainAdvantage;
+    json["defenderRiverCrossingAdvantage"] = defenderRiverCrossingAdvantage;
+    json["defenderMoraleAdvantage"] = defenderMoraleAdvantage;
+    json["attackerAdvantage"] = attackerAdvantage;
+    json["attackerTerrainAdvantage"] = attackerTerrainAdvantage;
+    json["attackerMoraleAdvantage"] = attackerMoraleAdvantage;
+
     return json;
 }
-
 void Results::fromJson(const QJsonObject& json) {
-    // Deserialize simple fields
     defenderNumber = json["defenderNumber"].toInt();
     attackerNumber = json["attackerNumber"].toInt();
     targetVertexId = json["targetVertexId"].toInt();
@@ -54,17 +56,15 @@ void Results::fromJson(const QJsonObject& json) {
     attackerType = static_cast<ArmyType>(json["attackerType"].toInt());
     terrain = static_cast<TerrainType>(json["terrain"].toInt());
 
-    // Deserialize winner based on the string value
     QString winnerString = json["winner"].toString();
     if (winnerString == "Hajduk") {
-        winner = new Army(ArmyType::HAJDUK); // Create a new Army object with the corresponding type
+        winner = new Army(ArmyType::HAJDUK);
     } else if (winnerString == "Janissary") {
         winner = new Army(ArmyType::JANISSARY);
     } else {
         winner = nullptr;
     }
 
-    // Deserialize battle rounds
     rounds.clear();
     QJsonArray roundsArray = json["rounds"].toArray();
     for (const auto& roundValue : roundsArray) {
@@ -77,6 +77,14 @@ void Results::fromJson(const QJsonObject& json) {
         round.attackerRemaining = roundJson["attackerRemaining"].toInt();
         rounds.push_back(round);
     }
+
+    defenderAdvantage = json["defenderAdvantage"].toInt();
+    defenderTerrainAdvantage = json["defenderTerrainAdvantage"].toInt();
+    defenderRiverCrossingAdvantage = json["defenderRiverCrossingAdvantage"].toInt();
+    defenderMoraleAdvantage = json["defenderMoraleAdvantage"].toInt();
+    attackerAdvantage = json["attackerAdvantage"].toInt();
+    attackerTerrainAdvantage = json["attackerTerrainAdvantage"].toInt();
+    attackerMoraleAdvantage = json["attackerMoraleAdvantage"].toInt();
 }
 
 void Results::setWinner(Army* winner) {

@@ -8,6 +8,7 @@
 #include<QDebug>
 #include <qapplication.h>
 #include <qgraphicseffect.h>
+#include <QKeyEvent>
 
 ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *parent)
     : QMainWindow(parent),
@@ -25,11 +26,38 @@ ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *paren
                               armyButton,reliefButton,regionsButton,cityButton,cultureButton,
                               defaultButton,nodeInfoWidget,characterWidget);
     connect(gameManager, &ClientGameManager::gameYearUpdated, this, &ClientWindow::updateYearLabel);
+
+    // Dodajte u konstruktor ClientWindow-a nakon connectSignals()
+    QTimer* serverCheckTimer = new QTimer(this);
+    connect(serverCheckTimer, &QTimer::timeout, this, &ClientWindow::checkServerClosed);
+    serverCheckTimer->start(100); // Proverava svakih 100ms
 }
 
 ClientWindow::~ClientWindow() {
     qDebug() << "Destroying ClientWindow...";
 }
+
+void ClientWindow::checkServerClosed() {
+    if (gameManager->server_closed) {
+        freezeUI();
+        showDisconnectPauseMenu();
+        gameManager->server_closed=false;
+    }
+}
+
+// Funkcija za zamrzavanje UI-a
+void ClientWindow::freezeUI() {
+    QList<QWidget*> layoutWidgets = {
+        headerLabel, infoButton, moveButton, armyButton, endTurnButton,
+        moveList, yearDisplayLabel, reliefButton, regionsButton,
+        cityButton, cultureButton, defaultButton
+    };
+
+    for (auto* widget : layoutWidgets) {
+        widget->setEnabled(false); // Onemogućava interakciju
+    }
+}
+
 
 void ClientWindow::setupGame() {
     view = new ZoomableGraphicsView(this);
@@ -401,6 +429,7 @@ void ClientWindow::onMoveClicked(QListWidgetItem* item) {
         if (layer) {
             AddArmyManager& armyManager = gameManager->getArmyManager();
             armyManager.decreaseAvailableTroops(-troopsToRemove);
+            gameManager->layerToVertex[layer]->newRecruits -= troopsToRemove;
             QVariant data = item->data(Qt::UserRole + 3);
             int actionId = data.toInt();
             gameManager->removePlaceAction(actionId);
@@ -554,9 +583,23 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer) {
             troopsToAdd = std::min(1, armyManager.totalTroops);
         } else {
             bool ok;
-            std::string message = "Enter the number of soldiers up to " + std::to_string(armyManager.totalTroops) + " to place: ";
+            int troops = 0;
+            switch (selected_vertex->city->getLevel()) {
+            case 3:
+                troops = std::numeric_limits<int>::max();
+                break;
+            case 2:
+                troops = 50;
+                break;
+            default:
+                troops = 10;
+                break;
+            }
+            troops = std::min(armyManager.totalTroops, troops - selected_vertex->newRecruits);
+            std::string message = "Enter the number of soldiers up to " + std::to_string(troops) + " to place of total " +
+                                  std::to_string(armyManager.totalTroops) + " new free soldiers: ";
             troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
-                                               tr(message.c_str()), 0, 0, armyManager.totalTroops, 1, &ok);
+                                               tr(message.c_str()), 0, 0, troops, 1, &ok);
             if (!ok || troopsToAdd <= 0) {
                 selectedLayer = nullptr;
                 return;
@@ -571,7 +614,7 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer) {
             Action newAction(ActionType::PLACE_ARMY, pid, source, 0, troopsToAdd);
             gameManager->addAction(newAction);
             armyManager.decreaseAvailableTroops(troopsToAdd);
-
+            selected_vertex->newRecruits += troopsToAdd;
             selected_vertex->army.setSoldiers(selected_vertex->army.getSoldiers() + troopsToAdd);
 
             QString moveDescription = QString("Placed %1 troops on %2").arg(troopsToAdd).arg(selected_vertex->id());
@@ -644,16 +687,23 @@ void ClientWindow::clearExplosions()
 }
 
 void ClientWindow::keyPressEvent(QKeyEvent *event) {
-    if (event->key() == Qt::Key_Escape) {
-        showPauseMenu();
-    } else if (event->key() == Qt::Key_I) {  // Kada pritisnete 'I', aktivirajte info dugme
+    if (isPauseMenuActive) {
+        // Ignoriši pritisak tastera ESC dok je pause meni aktivan
+        if (event->key() == Qt::Key_Escape) {
+            event->ignore(); // Ignoriše ESC
+        }
+    } else {
+        // Ako meni nije aktivan, normalno procesiraj ESC
+        if (event->key() == Qt::Key_Escape) {
+            showPauseMenu();
+        }
+    }
+    if (event->key() == Qt::Key_I) {  // Kada pritisnete 'I', aktivirajte info dugme
         setActiveButton(infoButton);
     } else if (event->key() == Qt::Key_M) {  // Kada pritisnete 'M', aktivirajte move dugme
         setActiveButton(moveButton);
     } else if (event->key() == Qt::Key_A) {  // Kada pritisnete 'A', aktivirajte army dugme
         setActiveButton(armyButton);
-    } else if (event->key() == Qt::Key_Escape) {
-        showPauseMenu();
     } else {
         QMainWindow::keyPressEvent(event);
     }
@@ -669,6 +719,9 @@ void ClientWindow::showPauseMenu() {
     overlay->setObjectName("PauseMenuOverlay");
     overlay->setStyleSheet("background-color: rgba(0, 0, 0, 120);");
     overlay->setGeometry(this->rect());
+
+    overlay->setAttribute(Qt::WA_TransparentForMouseEvents, false); // Sprečava da overlay bude transparentan za mišićne događaje
+    overlay->setFocusPolicy(Qt::StrongFocus); // Omogućava da overlay primi fokus
 
     QWidget *menuWidget = new QWidget(overlay);
     menuWidget->setStyleSheet(
@@ -734,6 +787,79 @@ void ClientWindow::showPauseMenu() {
     connect(optionsButton, &QPushButton::clicked, this, []() {
         QMessageBox::information(nullptr, "Options", "Options menu under construction.");
     });
+
+    overlay->show();
+}
+
+// Funkcija za prikaz ESC prozora
+void ClientWindow::showDisconnectPauseMenu() {
+    // Ako već postoji overlay, nemojte ga ponovo dodavati
+    if (findChild<QWidget*>("PauseMenuOverlay")) {
+        return;
+    }
+
+    QWidget *overlay = new QWidget(this);
+    overlay->setObjectName("PauseMenuOverlay");
+    overlay->setStyleSheet("background-color: rgba(0, 0, 0, 120);");
+    overlay->setGeometry(this->rect());
+
+    // Dodajte ove linije
+    overlay->setAttribute(Qt::WA_TransparentForMouseEvents, false); // Sprečava da overlay bude transparentan za mišićne događaje
+    overlay->setFocusPolicy(Qt::StrongFocus); // Omogućava da overlay primi fokus
+
+    QWidget *menuWidget = new QWidget(overlay);
+    menuWidget->setStyleSheet(
+        "background-color: rgba(50, 50, 50, 200); "
+        "border-radius: 10px;"
+        );
+    menuWidget->setFixedSize(300, 350);
+    menuWidget->move((width() - menuWidget->width()) / 2, (height() - menuWidget->height()) / 2);
+
+    QVBoxLayout *layout = new QVBoxLayout(menuWidget);
+
+    QLabel *label = new QLabel("The client has disconnected.");
+    label->setAlignment(Qt::AlignCenter);
+    QFont font = label->font();
+    font.setBold(true);
+    font.setPointSize(14);
+    label->setFont(font);
+    label->setStyleSheet("color: white;");
+    layout->addWidget(label);
+
+    QPushButton *saveButton = new QPushButton("Save Game");
+    QPushButton *optionsButton = new QPushButton("Options");
+    QPushButton *quitButton = new QPushButton("Quit Game");
+
+    QString buttonStyle =
+        "QPushButton { "
+        "   background-color: gray; "
+        "   color: white; "
+        "   border-radius: 10px; "
+        "   padding: 10px; "
+        "} "
+        "QPushButton:hover { "
+        "   background-color: darkGray; "
+        "} ";
+    saveButton->setStyleSheet(buttonStyle);
+    optionsButton->setStyleSheet(buttonStyle);
+    quitButton->setStyleSheet(buttonStyle);
+
+    layout->addWidget(saveButton);
+    layout->addWidget(optionsButton);
+    layout->addWidget(quitButton);
+
+    connect(quitButton, &QPushButton::clicked, this, &QApplication::quit);
+    connect(saveButton, &QPushButton::clicked, this, [this]() {
+        if (gameManager) {
+            gameManager->saveGame();
+            QMessageBox::information(this, "Save Game", "Game saved successfully!");
+        }
+    });
+    connect(optionsButton, &QPushButton::clicked, this, []() {
+        QMessageBox::information(nullptr, "Options", "Options menu under construction.");
+    });
+
+    isPauseMenuActive = true;
 
     overlay->show();
 }

@@ -24,7 +24,7 @@ public:
 
 private:
     ConnectionManager *connectionManager;
-    ClientWindow * gameWindow;
+    ClientWindow *gameWindow;
 
     ServerGameManager* serverManager;
     ClientGameManager* clientManager;
@@ -35,10 +35,13 @@ private:
     QPushButton *joinLobbyButton;
     QPushButton *backButton;
 
+    ArmyType ARMY1;
+    ArmyType ARMY2;
 
     void setupUI();
     void connectSignals();
     void setBackgroundImage();
+
 
 
 private slots:

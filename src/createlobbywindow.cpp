@@ -8,6 +8,7 @@
 CreateLobbyWindow::CreateLobbyWindow(QWidget *parent)
     : QWidget(parent), connectionManager(new ConnectionManager(this))
 {
+
     setupUI();
     loadSavedGames();
 }
@@ -185,9 +186,8 @@ void CreateLobbyWindow::setupUI() {
     connect(exitButton, &QPushButton::clicked, this, &CreateLobbyWindow::backToLobby);
     connect(armyComboBox, &QComboBox::currentTextChanged, this, &CreateLobbyWindow::updateArmySelection);
     connect(startButton, &QPushButton::clicked, [this]() {
-
         int armyId = armyComboBox->currentIndex() + 1;
-
+        QMessageBox::information(this, "Server Info", "Server IP: " + connectionManager->getLocalIpAddress());
         if (!connectionManager->initializeServer()) {
             QMessageBox::warning(this, "Error", "Failed to start the server.");
             return;
@@ -216,6 +216,9 @@ void CreateLobbyWindow::updateArmySelection(const QString &player1Army) {
 
     QString player2Army = (player1Army == "Hajduk") ? "Janissary" : "Hajduk";
     player2ArmyLabel->setText("Army: " + player2Army);
+
+    ARMY1 = (player1Army == "Hajduk") ? ArmyType::HAJDUK : ArmyType::JANISSARY;
+    ARMY2 = (player1Army == "Hajduk") ? ArmyType::JANISSARY : ArmyType::HAJDUK;
 }
 
 void CreateLobbyWindow::loadSavedGames() {
@@ -282,8 +285,6 @@ void CreateLobbyWindow::handleGameStart() {
     }
 }
 
-
-//slots
 void CreateLobbyWindow::onFileClicked(int row, int column) {
     QTableWidgetItem *item = savedGamesTable->item(row, column);
     if (item) {

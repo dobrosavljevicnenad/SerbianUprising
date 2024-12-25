@@ -8,8 +8,9 @@ Battle::Battle(Army& defender, Army& attacker)
     std::srand(static_cast<unsigned>(std::time(nullptr)));
 }
 
-void Battle::setTerrainAdvantage(int defenderAdvantage, int attackerAdvantage) {
+void Battle::setTerrainAdvantage(int defenderAdvantage, int riverAdvantage, int attackerAdvantage) {
     m_defenderAdvantage = defenderAdvantage;
+    m_riverAdvantage = riverAdvantage;
     m_attackerAdvantage = attackerAdvantage;
 }
 
@@ -49,7 +50,13 @@ Results Battle::start() {
     printArmyStatus(m_attacker, (attackerType == ArmyType::HAJDUK ? "Hajduk" : "Janissary"));
 
     results.setArmyTypes(defenderType, attackerType);
-
+    results.attackerAdvantage = m_attacker.strength() + m_attackerAdvantage;
+    results.defenderAdvantage = m_defender.strength() + m_defenderAdvantage + m_riverAdvantage;
+    results.attackerMoraleAdvantage = Strength::instance().getBoost(attackerType);
+    results.defenderMoraleAdvantage = Strength::instance().getBoost(defenderType);
+    results.attackerTerrainAdvantage = m_attackerAdvantage;
+    results.defenderTerrainAdvantage = m_defenderAdvantage;
+    results.defenderRiverCrossingAdvantage = m_riverAdvantage;
     while (m_defender.getSoldiers() > 0 && m_attacker.getSoldiers() > 0) {
         std::time_t start_time = std::time(0);
         //while (std::difftime(std::time(0), start_time) < 0.5) {}

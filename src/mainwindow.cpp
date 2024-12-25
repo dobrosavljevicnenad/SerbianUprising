@@ -42,5 +42,6 @@ void MainWindow::showLobbyWindow() {
 }
 
 void MainWindow::showCreateLobbyWindow() {
+    gameMenu->musicPlayer->stop();
     stackedWidget->setCurrentWidget(createLobbyWindow);
 }

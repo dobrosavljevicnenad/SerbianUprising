@@ -7,6 +7,9 @@
 #include "../Interface/clientgamemanager.h"
 #include "../Interface/servergamemanager.h"
 #include "../clientwindow.h"
+#include <QNetworkInterface>
+#include <QHostAddress>
+#include <iostream>
 
 class ConnectionManager : public QObject {
     Q_OBJECT
@@ -19,6 +22,7 @@ public:
     bool initializeClient();                // Set up the client
     ClientGameManager* getClientManager();  // Get the initialized ClientGameManager
     void sendArmySelection(int armyId);
+    QString getLocalIpAddress();
 
 signals:
     void gameStarted();                     // Emitted when the game starts

@@ -12,6 +12,9 @@
 #include <qpushbutton.h>
 #include <QCoreApplication>
 #include "Results.h"
+#include <qtablewidget.h>
+#include <qevent.h>
+#include <qheaderview.h>
 
 class BattleReplayDialog : public QDialog {
     Q_OBJECT
