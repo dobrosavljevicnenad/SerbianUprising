@@ -163,8 +163,6 @@ void ClientGameManager::setId(int id) {
     player = Player();
     player.setPlayerId(ClientId);
     ClientId == 1 ? player.setArmyType(p1_army) : player.setArmyType(p2_army);
-    player.getArmyType() == ArmyType::HAJDUK ? (std::cout << "HAAAAAJDUK" << std::endl) : (std::cout << "JANICAAAAAR" << std::endl);
-
 }
 
 void ClientGameManager::processDataFromServer(const QJsonObject& data) {

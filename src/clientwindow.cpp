@@ -779,7 +779,7 @@ void ClientWindow::showDisconnectPauseMenu() {
 
     QVBoxLayout *layout = new QVBoxLayout(menuWidget);
 
-    QLabel *label = new QLabel("The server has crashed.");
+    QLabel *label = new QLabel("The client has disconnected.");
     label->setAlignment(Qt::AlignCenter);
     QFont font = label->font();
     font.setBold(true);

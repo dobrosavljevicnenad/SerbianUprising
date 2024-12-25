@@ -17,7 +17,6 @@ bool ConnectionManager::initializeServer() {
 
 bool ConnectionManager::initializeClient() {
     QString localIp = getLocalIpAddress();
-    std::cout << localIp.toStdString() << std::endl;
     if (localIp.isEmpty()) {
         qWarning() << "Could not determine local IP address.";
         return false;

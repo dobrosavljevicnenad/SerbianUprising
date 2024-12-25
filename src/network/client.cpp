@@ -144,8 +144,7 @@ void Client::processMessage(const QByteArray &message) {
         processIdMessage(QString::fromUtf8(message));
     } else if (message == "START_GAME") {
         emit gameStarted();
-    } else if (message == "SERVER_SHUTDOWN"){
-        std::cout << "GASI SE SERVERRR" << std::endl;
+    } else if (message == "CLIENT_SHUTDOWN"){
         clientGameManager->server_closed = true;
     }else {
         processJsonMessage(QString::fromUtf8(message));
