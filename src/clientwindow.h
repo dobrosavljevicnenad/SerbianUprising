@@ -23,6 +23,11 @@ public:
 
     void processEndTurnClicked();
 
+    void checkServerClosed();
+    void freezeUI();
+    void showDisconnectPauseMenu();
+
+
 protected:
     void keyPressEvent(QKeyEvent *event) override;
 
@@ -56,6 +61,9 @@ private:
     void showPauseMenu();
     void repositionFixedWidgets();
     void setupFixedWidgets();
+
+    bool isPauseMenuActive = false;
+
 
 private slots:
     void onMoveClicked(QListWidgetItem *item);

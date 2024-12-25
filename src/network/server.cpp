@@ -17,6 +17,11 @@ Server::Server(QObject *parent)
     connect(serverGameManager, &ServerGameManager::serializedGraphReady2, this, &Server::handleSerializedGraph);
 }
 
+Server::~Server() {
+    std::cout << "GASI SE SERVER OVDE, A UJEDNO I KLIJENT" << std::endl;
+    broadcast("SERVER_SHUTDOWN");
+}
+
 // Public Methods
 ServerGameManager* Server::getGameManager() {
     return serverGameManager;
@@ -99,8 +104,9 @@ void Server::onReadyRead() {
 
 void Server::onClientDisconnected() {
     if (m_clientSocket && sender() == m_clientSocket) {
+        std::cout << "IZLAZI PRVI KLIJENT" << std::endl;
         qDebug() << "Host (Player 1) disconnected!";
-        m_clientSocket = nullptr;
+        m_clientSocket->disconnectFromHost();
         emit gameOver("Host left, game over.");
     } else if (m_secondPlayerSocket && sender() == m_secondPlayerSocket) {
         qDebug() << "Second player disconnected!";

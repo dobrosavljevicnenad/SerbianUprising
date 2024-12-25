@@ -79,6 +79,8 @@ public:
 
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
 
+    bool server_closed = false;
+
 private slots:
     void printExplosion(graph::Vertex *target);
 
