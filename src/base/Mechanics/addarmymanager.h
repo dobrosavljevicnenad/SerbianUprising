@@ -14,6 +14,7 @@ public:
     void endTurn();
     int newRecruits(Player player);
     int totalTroops = 5;
+    int maxTroops = 5;
     void updateRegionOwnership(unsigned clientId, const QVector<Region*>& regions);
 
 private:

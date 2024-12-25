@@ -183,19 +183,21 @@ void MapLayer::hoverEnterEvent(QGraphicsSceneHoverEvent *event) {
         if(currentPlayer == 1){
             if(getArmyColor() == QColor(198,54,60,255)){
                 setColor(QColor(255, 102, 102, 255));
-                QGraphicsPixmapItem::hoverEnterEvent(event);
+                emit layerHovered(this);
             } else {
                 return;
             }
         } else {
             if(getArmyColor() == QColor(0,149,48,255)){
                 setColor(QColor(102, 255, 102, 255));
-                QGraphicsPixmapItem::hoverEnterEvent(event);
+                emit layerHovered(this);
             } else {
                 return;
             }
         }
     }
+
+    QGraphicsPixmapItem::hoverEnterEvent(event);
 }
 void MapLayer::setTroopTextVisible(bool visible) {
     if (troopText) {

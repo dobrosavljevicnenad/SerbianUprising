@@ -71,6 +71,8 @@ int AddArmyManager::calculateTotalTroops(){
 
     totalTroops += cityCount * cityBonus;
 
+    maxTroops = totalTroops;
+
     return totalTroops;
 }
 

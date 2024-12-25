@@ -22,7 +22,8 @@ ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *paren
     setupUI();
     connectSignals();
     gameManager->initializeUI(headerLabel, endTurnButton, moveButton, infoButton,moveList,
-                              armyButton,reliefButton,regionsButton,cityButton,cultureButton,defaultButton,nodeInfoWidget);
+                              armyButton,reliefButton,regionsButton,cityButton,cultureButton,
+                              defaultButton,nodeInfoWidget,characterWidget);
     connect(gameManager, &ClientGameManager::gameYearUpdated, this, &ClientWindow::updateYearLabel);
 }
 
@@ -249,7 +250,16 @@ void ClientWindow::setupUI() {
     mapModeLayout->addWidget(defaultButton,0, Qt::AlignCenter);
 
     mapModeContainer->setLayout(mapModeLayout);
-    mapModeContainer->move(view->viewport()->rect().bottomLeft() + QPoint(10, -(mapModeContainer->height()+10)));
+
+    characterContainer = new QWidget(view->viewport());
+    QVBoxLayout *characterLayout = new QVBoxLayout();
+    characterWidget = new CharacterWidget(gameManager->ClientId);
+    characterLayout->addWidget(characterWidget);
+    characterContainer->setLayout(characterLayout);
+    characterContainer->setFixedSize(456, 246);
+    characterContainer->setContentsMargins(0, 0, 0, 0);
+
+    initrepositionFixedWidgets();
 
     QList<QWidget*> layoutWidgets = {headerLabel, infoButton, moveButton, armyButton, endTurnButton, moveList, yearDisplayLabel};
 
@@ -298,6 +308,7 @@ void ClientWindow::connectSignals() {
     connect(defaultButton, &QPushButton::clicked, this, [this]() {
         gameManager->applyMapMode(ClientGameManager::MapMode::Default);
     });
+
     connect(view->horizontalScrollBar(), &QScrollBar::valueChanged, this, [this]() { repositionFixedWidgets(); });
     connect(view->verticalScrollBar(), &QScrollBar::valueChanged, this, [this]() { repositionFixedWidgets(); });
     connect(gameManager, &ClientGameManager::layerClicked, this, &ClientWindow::onLayerClicked);
@@ -324,11 +335,19 @@ void ClientWindow::onEndTurnClicked() {
     gameManager->disableInteractions();
 }
 
+void ClientWindow::initrepositionFixedWidgets()
+{
+    QRect screenRect = QGuiApplication::primaryScreen()->geometry();
+
+    characterContainer->move(screenRect.width() - characterContainer->width() - 57, -10);
+    mapModeContainer->move(10, screenRect.height() - characterContainer->height()+111);
+}
+
 void ClientWindow::repositionFixedWidgets()
 {
 
     QRect viewportRect = view->viewport()->rect();
-
+    characterContainer->move(view->viewport()->rect().topRight() - QPoint(characterContainer->width()-10, +10));
     layoutContainer->move(viewportRect.topLeft() + QPoint(10, 10));
     mapModeContainer->move(viewportRect.bottomLeft() + QPoint(10, -(mapModeContainer->height()+10)));
 }
@@ -544,6 +563,8 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer) {
             item->setData(Qt::UserRole + 1, QVariant(troopsToAdd));
             item->setData(Qt::UserRole + 2, "Place");
             item->setData(Qt::UserRole + 3, newAction.id);
+
+            characterWidget->setArmyText(armyManager.totalTroops,armyManager.maxTroops);
 
             moveList->addItem(item);
         }

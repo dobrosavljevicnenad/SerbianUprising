@@ -11,6 +11,7 @@
 #include "base/Mechanics/addarmymanager.h"
 #include "./Interface/infowidget.h"
 #include "Interface/Items/zoomablegraphicsview.h"
+#include "Interface/Items/characterwidget.h"
 
 #include <string>
 class ClientWindow : public QMainWindow {
@@ -23,6 +24,7 @@ public:
 
     void processEndTurnClicked();
 
+    void initrepositionFixedWidgets();
 protected:
     void keyPressEvent(QKeyEvent *event) override;
 
@@ -47,6 +49,8 @@ private:
     QPushButton* cityButton;
     QPushButton* defaultButton;
     QPushButton* cultureButton;
+    QWidget *characterContainer;
+    CharacterWidget *characterWidget;
 
     //QMediaPlayer* mediaPlayer;
     //QAudioOutput* audioOutput;
