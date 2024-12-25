@@ -617,7 +617,7 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer) {
             selected_vertex->newRecruits += troopsToAdd;
             selected_vertex->army.setSoldiers(selected_vertex->army.getSoldiers() + troopsToAdd);
 
-            QString moveDescription = QString("Placed %1 troops on %2").arg(troopsToAdd).arg(selected_vertex->id());
+            QString moveDescription = QString("Placed %1 troops on %2").arg(troopsToAdd).arg(QString::fromStdString(selected_vertex->label()));
             QListWidgetItem* item = new QListWidgetItem(moveDescription);
             item->setData(Qt::UserRole, QVariant::fromValue(selected_vertex->id()));
             item->setData(Qt::UserRole + 1, QVariant(troopsToAdd));
@@ -717,29 +717,41 @@ void ClientWindow::showPauseMenu() {
 
     QWidget *overlay = new QWidget(this);
     overlay->setObjectName("PauseMenuOverlay");
-    overlay->setStyleSheet("background-color: rgba(0, 0, 0, 120);");
+    overlay->setStyleSheet("background-color: rgba(0, 0, 0, 180);");
     overlay->setGeometry(this->rect());
-
     overlay->setAttribute(Qt::WA_TransparentForMouseEvents, false); // Sprečava da overlay bude transparentan za mišićne događaje
     overlay->setFocusPolicy(Qt::StrongFocus); // Omogućava da overlay primi fokus
 
     QWidget *menuWidget = new QWidget(overlay);
-    menuWidget->setStyleSheet(
-        "background-color: rgba(50, 50, 50, 200); "
-        "border-radius: 10px;"
-        );
-    menuWidget->setFixedSize(300, 350);
+    if (gameManager->ClientId == 1) {
+        menuWidget->setStyleSheet(
+            "background-color: rgba(74, 47, 47, 220); "
+            "border-image: url(:/resources/border1.png) 40  stretch; "
+            "border-width: 20px; "
+            "padding: 10px; "
+            );
+    } else {
+        menuWidget->setStyleSheet(
+            "background-color: rgba(3, 66, 5, 220); "
+            "border-image: url(:/resources/border1.png) 40  stretch; "
+            "border-width: 20px; "
+            "padding: 10px; "
+            );
+    }
+    menuWidget->setFixedSize(550, 600);
     menuWidget->move((width() - menuWidget->width()) / 2, (height() - menuWidget->height()) / 2);
 
     QVBoxLayout *layout = new QVBoxLayout(menuWidget);
+    layout->setContentsMargins(60, 20, 60, 150);
+    layout->setSpacing(20);
 
-    QLabel *label = new QLabel("Game paused");
+    QLabel *label = new QLabel("Game Paused");
     label->setAlignment(Qt::AlignCenter);
     QFont font = label->font();
     font.setBold(true);
-    font.setPointSize(14);
+    font.setPointSize(16);
     label->setFont(font);
-    label->setStyleSheet("color: white;");
+    label->setStyleSheet("color: #FFD700;border-image: none;background-color:transparent;");
     layout->addWidget(label);
 
     QPushButton *continueButton = new QPushButton("Continue Game");
@@ -750,19 +762,39 @@ void ClientWindow::showPauseMenu() {
 
     QString buttonStyle =
         "QPushButton { "
-        "   background-color: gray; "
-        "   color: white; "
+        "   background-color: #2E4600; "
         "   border-radius: 10px; "
-        "   padding: 10px; "
+        "   border: 2px solid #FFD700; "
+        "   color: white; "
+        "   padding: 10px;"
+        "   border-image: none;"
         "} "
         "QPushButton:hover { "
-        "   background-color: darkGray; "
+        "   background-color: #4F7942; "
+        "} "
+        "QPushButton:pressed { "
+        "   background-color: #2E4600; "
         "} ";
     continueButton->setStyleSheet(buttonStyle);
     saveButton->setStyleSheet(buttonStyle);
     loadGame->setStyleSheet(buttonStyle);
     optionsButton->setStyleSheet(buttonStyle);
     quitButton->setStyleSheet(buttonStyle);
+    quitButton->setStyleSheet(
+        "QPushButton { "
+        "   background-color: #8B0000;"
+        "   border-radius: 10px; "
+        "   border: 2px solid #FFD700; "
+        "   color: white; "
+        "   padding: 10px;"
+        "   border-image: none;"
+        "} "
+        "QPushButton:hover { "
+        "   background-color: #B22222; "
+        "} "
+        "QPushButton:pressed { "
+        "   background-color: #5A0000; "
+        "} ");
 
     layout->addWidget(continueButton);
     layout->addWidget(saveButton);
@@ -808,44 +840,75 @@ void ClientWindow::showDisconnectPauseMenu() {
     overlay->setFocusPolicy(Qt::StrongFocus); // Omogućava da overlay primi fokus
 
     QWidget *menuWidget = new QWidget(overlay);
-    menuWidget->setStyleSheet(
-        "background-color: rgba(50, 50, 50, 200); "
-        "border-radius: 10px;"
-        );
-    menuWidget->setFixedSize(300, 350);
+    if (gameManager->ClientId == 1) {
+        menuWidget->setStyleSheet(
+            "background-color: rgba(74, 47, 47, 220); "
+            "border-image: url(:/resources/border1.png) 40  stretch; "
+            "border-width: 20px; "
+            "padding: 10px; "
+            );
+    } else {
+        menuWidget->setStyleSheet(
+            "background-color: rgba(3, 66, 5, 220); "
+            "border-image: url(:/resources/border1.png) 40  stretch; "
+            "border-width: 20px; "
+            "padding: 10px; "
+            );
+    }
+    menuWidget->setFixedSize(500, 550);
     menuWidget->move((width() - menuWidget->width()) / 2, (height() - menuWidget->height()) / 2);
 
     QVBoxLayout *layout = new QVBoxLayout(menuWidget);
+
+    layout->setContentsMargins(60, 20, 60, 150);
+    layout->setSpacing(20);
 
     QLabel *label = new QLabel("The client has disconnected.");
     label->setAlignment(Qt::AlignCenter);
     QFont font = label->font();
     font.setBold(true);
-    font.setPointSize(14);
+    font.setPointSize(16);
     label->setFont(font);
-    label->setStyleSheet("color: white;");
+    label->setStyleSheet("color: white;border-image: none;background-color:transparent;");
     layout->addWidget(label);
 
     QPushButton *saveButton = new QPushButton("Save Game");
-    QPushButton *optionsButton = new QPushButton("Options");
     QPushButton *quitButton = new QPushButton("Quit Game");
 
     QString buttonStyle =
         "QPushButton { "
-        "   background-color: gray; "
-        "   color: white; "
+        "   background-color: #2E4600; "
         "   border-radius: 10px; "
-        "   padding: 10px; "
+        "   border: 2px solid #FFD700; "
+        "   color: white; "
+        "   padding: 10px;"
+        "   border-image: none;"
         "} "
         "QPushButton:hover { "
-        "   background-color: darkGray; "
+        "   background-color: #4F7942; "
+        "} "
+        "QPushButton:pressed { "
+        "   background-color: #2E4600; "
         "} ";
     saveButton->setStyleSheet(buttonStyle);
-    optionsButton->setStyleSheet(buttonStyle);
     quitButton->setStyleSheet(buttonStyle);
+    quitButton->setStyleSheet(
+        "QPushButton { "
+        "   background-color: #8B0000;"
+        "   border-radius: 10px; "
+        "   border: 2px solid #FFD700; "
+        "   color: white; "
+        "   padding: 10px;"
+        "   border-image: none;"
+        "} "
+        "QPushButton:hover { "
+        "   background-color: #B22222; "
+        "} "
+        "QPushButton:pressed { "
+        "   background-color: #5A0000; "
+        "} ");
 
     layout->addWidget(saveButton);
-    layout->addWidget(optionsButton);
     layout->addWidget(quitButton);
 
     connect(quitButton, &QPushButton::clicked, this, &QApplication::quit);
@@ -854,9 +917,6 @@ void ClientWindow::showDisconnectPauseMenu() {
             gameManager->saveGame();
             QMessageBox::information(this, "Save Game", "Game saved successfully!");
         }
-    });
-    connect(optionsButton, &QPushButton::clicked, this, []() {
-        QMessageBox::information(nullptr, "Options", "Options menu under construction.");
     });
 
     isPauseMenuActive = true;

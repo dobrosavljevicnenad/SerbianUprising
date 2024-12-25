@@ -464,10 +464,10 @@ void ClientGameManager::removeArrowByActionId(int actionId) {
     }
 }
 QString ClientGameManager::GetCurrentAction(const Action& action) {
-    QString moveDescription = QString("%2 troops from Layer %3 to Layer %4")
+    QString moveDescription = QString("%2 troops from %3 to %4")
     .arg(action.soldiers)
-        .arg(action.sourceVertexId)
-        .arg(action.targetVertexId);
+    .arg(QString::fromStdString(clientGraph->get_vertex_by_id(action.sourceVertexId)->label()))
+    .arg(QString::fromStdString(clientGraph->get_vertex_by_id(action.targetVertexId)->label()));
     return moveDescription;
 }
 
