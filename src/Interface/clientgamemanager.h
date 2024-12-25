@@ -18,6 +18,7 @@
 #include <map>
 #include <qlabel.h>
 #include <qlistwidget.h>
+#include <qmediaplayer.h>
 #include <qpushbutton.h>
 #include "../base/Mechanics/addarmymanager.h"
 #include "Items/customarrowitem.h"
@@ -104,6 +105,8 @@ private:
     QVector<Region*>regions;
     Map* map;
     FileManager fileManager;
+    QMediaPlayer *musicPlayer;
+    QAudioOutput *audioOutput;
 
 
 private://UI

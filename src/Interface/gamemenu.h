@@ -17,6 +17,8 @@ class GameMenu : public QWidget
 public:
     explicit GameMenu(QWidget *parent = nullptr);
     ~GameMenu();
+    QMediaPlayer *musicPlayer;
+    QAudioOutput *audioOutput;
 
 signals:
     void newGame();
@@ -41,8 +43,6 @@ private:
     QPushButton *muteButton;
     QStackedWidget *stackedWidget;
     QFrame *buttonFrame;
-    QMediaPlayer *mediaPlayer;
-    QAudioOutput *audioOutput;
 
     LobbyWindow *lobbyWindow;
 

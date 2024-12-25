@@ -8,6 +8,7 @@
 CreateLobbyWindow::CreateLobbyWindow(QWidget *parent)
     : QWidget(parent), connectionManager(new ConnectionManager(this))
 {
+
     setupUI();
     loadSavedGames();
 }
@@ -283,8 +284,6 @@ void CreateLobbyWindow::handleGameStart() {
     }
 }
 
-
-//slots
 void CreateLobbyWindow::onFileClicked(int row, int column) {
     QTableWidgetItem *item = savedGamesTable->item(row, column);
     if (item) {
