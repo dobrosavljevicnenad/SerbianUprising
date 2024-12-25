@@ -1,4 +1,6 @@
 #include "clientgamemanager.h"
+#include <qaudiooutput.h>
+#include <qmediaplayer.h>
 
 ClientGameManager::ClientGameManager(QGraphicsScene* scene,QObject* parent)
     : QObject(parent),scene(scene),clientGraph(new graph::Graph()), armyManager(*new AddArmyManager(clientGraph.get()))
@@ -6,7 +8,8 @@ ClientGameManager::ClientGameManager(QGraphicsScene* scene,QObject* parent)
 
 void ClientGameManager::initializeUI(QLabel* headerLabel, QPushButton* endTurnButton, QPushButton* moveButton, QPushButton* infoButton,
                   QListWidget* moveList,QPushButton* armyButton,QPushButton* reliefButton,QPushButton* regionsButton,
-                  QPushButton*cityButton,QPushButton*cultureButton,QPushButton*defaultButton,NodeInfoWidget* nodeInfoWidget ) {
+                  QPushButton*cityButton,QPushButton*cultureButton,QPushButton*defaultButton,
+                                     NodeInfoWidget* nodeInfoWidget,CharacterWidget *characterWidget ) {
     this->headerLabel = headerLabel;
     this->endTurnButton = endTurnButton;
     this->moveButton = moveButton;
@@ -19,7 +22,10 @@ void ClientGameManager::initializeUI(QLabel* headerLabel, QPushButton* endTurnBu
     this->cultureButton = cultureButton;
     this->reliefButton = reliefButton;
     this->nodeInfoWidget = nodeInfoWidget;
+    this->characterWidget = characterWidget;
     moveList->addItem(QString("Player %1 on turn:").arg(ClientId));
+
+    connect(this, &ClientGameManager::updateCharacterWidget, characterWidget, &CharacterWidget::updateTerritoryInfo);
 }
 
 void ClientGameManager::initializeGraphics(QJsonObject graphData) {
@@ -93,6 +99,8 @@ void ClientGameManager::initializeGraphics(QJsonObject graphData) {
         connect(layers[i], &MapLayer::layerClicked, this, [this, layers, i]() {
             emit layerClicked(layers[i]);
         });
+        connect(layers[i], &MapLayer::layerHovered, this, &ClientGameManager::onLayerHovered);
+
     }
 
     this->layers = layers;
@@ -162,9 +170,23 @@ void ClientGameManager::setId(int id) {
     ClientId = id;
     player = Player();
     player.setPlayerId(ClientId);
-    ClientId == 1 ? player.setArmyType(p1_army) : player.setArmyType(p2_army);
-    player.getArmyType() == ArmyType::HAJDUK ? (std::cout << "HAAAAAJDUK" << std::endl) : (std::cout << "JANICAAAAAR" << std::endl);
-
+    ClientId == 1 ? player.setArmyType(ArmyType::HAJDUK) : player.setArmyType(ArmyType::JANISSARY);
+    if(ClientId == 1){
+        musicPlayer = new QMediaPlayer(this);
+        audioOutput = new QAudioOutput(this);
+        musicPlayer->setAudioOutput(audioOutput);
+        musicPlayer->setSource(QUrl::fromLocalFile("../../resources/music/Janissary.mp3"));
+        audioOutput->setVolume(0.5);
+        musicPlayer->play();
+    }
+    if(ClientId == 2){
+        musicPlayer = new QMediaPlayer(this);
+        audioOutput = new QAudioOutput(this);
+        musicPlayer->setAudioOutput(audioOutput);
+        musicPlayer->setSource(QUrl::fromLocalFile("../../resources/music/Hajduk.mp3"));
+        audioOutput->setVolume(0.5);
+        musicPlayer->play();
+    }
 }
 
 void ClientGameManager::processDataFromServer(const QJsonObject& data) {
@@ -199,6 +221,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
         TurnId = TurnId + 1;
         gameYear.advanceThreeMonths();
         enableInteractions();
+
     } else if(!init){
         for (auto &layer : layers) {
             graph::Vertex* vertex = clientGraph->get_vertex_by_label(layer->labelName);
@@ -229,7 +252,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     armyManager.updateRegionOwnership(ClientId, regions);
     armyManager.addTerritory(player);
     armyManager.calculateTotalTroops();
-
+    characterWidget->setArmyText(armyManager.totalTroops,armyManager.maxTroops);
 }
 
 QVector<QStringList> ClientGameManager::generateBattleResults() {
@@ -247,6 +270,20 @@ QVector<QStringList> ClientGameManager::generateBattleResults() {
         results.append(row);
     }
     return results;
+}
+
+void ClientGameManager::onLayerHovered(MapLayer *layer) {
+    if (layer) {
+        emit updateCharacterWidget(
+            layer->labelName,
+            layer->getTroopCount()
+            );
+    } else {
+        emit updateCharacterWidget(
+            "None",
+            0
+            );
+    }
 }
 
 void ClientGameManager::disableInteractions() {
@@ -363,7 +400,6 @@ std::vector<std::tuple<graph::Vertex*, graph::Edge*, QColor>> ClientGameManager:
 void ClientGameManager::clearTemporaryArrows() {
     for (CustomArrowItem* arrow : temporaryArrows) {
         scene->removeItem(arrow);
-        delete arrow;
     }
     temporaryArrows.clear();
 }
@@ -444,10 +480,11 @@ void ClientGameManager::EndTurnClicked(const QVector<Action>& actions, int id){
 }
 
 void ClientGameManager::clearArrows() {
-    for (auto& [playerId, arrowList] : arrows) {
+    for (auto& [PlayerId, arrowList] : arrows) {
         for (CustomArrowItem* arrow : arrowList) {
             scene->removeItem(arrow);
         }
+        arrowList.clear();
     }
 }
 

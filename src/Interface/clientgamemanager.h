@@ -18,6 +18,7 @@
 #include <map>
 #include <qlabel.h>
 #include <qlistwidget.h>
+#include <qmediaplayer.h>
 #include <qpushbutton.h>
 #include "../base/Mechanics/addarmymanager.h"
 #include "Items/customarrowitem.h"
@@ -30,6 +31,7 @@
 #include "../base/Entities/year.h"
 #include "../base/Entities/region.h"
 #include "../base/Entities/city.h"
+#include "../Interface/Items/characterwidget.h"
 #include "map.h"
 #include "filemanager.h"
 
@@ -44,7 +46,8 @@ public:
     void applyMapMode(MapMode mode);
     void initializeUI(QLabel* headerLabel, QPushButton* endTurnButton, QPushButton* moveButton, QPushButton* infoButton,
                       QListWidget* moveList,QPushButton* armyButton,QPushButton* reliefButton,QPushButton* regionsButton,
-                      QPushButton*cityButton,QPushButton*cultureButton,QPushButton*defaultButton,NodeInfoWidget* nodeInfoWidget );
+                      QPushButton*cityButton,QPushButton*cultureButton,QPushButton*defaultButton,
+                      NodeInfoWidget* nodeInfoWidget, CharacterWidget *characterWidget);
     void initializeGraphics(QJsonObject graphData);
     void printConnections();
     void processDataFromServer(const QJsonObject& data);
@@ -79,6 +82,8 @@ public:
 
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
 
+    bool server_closed = false;
+
 private slots:
     void printExplosion(graph::Vertex *target);
 
@@ -87,6 +92,8 @@ signals:
     void endTurnActionsReady(const QVector<Action>& actions, int id);
     void gameYearUpdated(QString gameYear);
     void gameDataLoaded(const QJsonObject& graphData);
+    void updateCharacterWidget(const QString &territoryName, int troops);
+
 
 
 private:
@@ -102,6 +109,8 @@ private:
     QVector<Region*>regions;
     Map* map;
     FileManager fileManager;
+    QMediaPlayer *musicPlayer;
+    QAudioOutput *audioOutput;
 
 
 private://UI
@@ -117,6 +126,7 @@ private://UI
     QPushButton* cityButton;
     QPushButton* defaultButton;
     QPushButton* cultureButton;
+    CharacterWidget *characterWidget;
 
 public:
     unsigned TurnId = 1;
@@ -125,8 +135,8 @@ public:
     QVector<Action> actionBuffer;
 
     std::vector<std::tuple<graph::Vertex*, graph::Edge*, QColor>> getValidatedEdges(graph::Vertex* vertex);
+
+    void onLayerHovered(MapLayer *layer);
     Player player;
-    ArmyType p1_army;
-    ArmyType p2_army;
 };
 #endif // CLIENTGAMEMANAGER_H

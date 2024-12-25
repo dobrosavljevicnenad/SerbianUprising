@@ -102,7 +102,6 @@ void LobbyWindow::connectSignals() {
     connect(joinLobbyButton, &QPushButton::clicked, this, &LobbyWindow::onJoinGame);
     if (connectionManager) {
         connect(connectionManager, &ConnectionManager::gameStarted, this, [this](){
-            std::cout << "USAO SAM U HANDLE" << std::endl;
             clientManager = connectionManager->getClientManager();
             qDebug() << "Game is starting."<< clientManager->ClientId;
 

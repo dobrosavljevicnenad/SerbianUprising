@@ -55,6 +55,13 @@ void Client::disconnectFromServer() {
 
 // -------------------- Send Data --------------------
 
+void Client::sendArmySelection(int armyId) {
+    QByteArray data = "ARMY:" + QByteArray::number(armyId) + "\n";
+    m_socket->write(data);
+    m_socket->flush();
+    qDebug() << "Army selection sent: " << armyId;
+}
+
 void Client::sendData(const QString &data) {
     QByteArray jsonData = data.toUtf8();
     QByteArray header = QByteArray::number(jsonData.size()) + "\n";
@@ -144,7 +151,9 @@ void Client::processMessage(const QByteArray &message) {
         processIdMessage(QString::fromUtf8(message));
     } else if (message == "START_GAME") {
         emit gameStarted();
-    } else {
+    } else if (message == "CLIENT_SHUTDOWN"){
+        clientGameManager->server_closed = true;
+    }else {
         processJsonMessage(QString::fromUtf8(message));
     }
 }

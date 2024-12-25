@@ -34,6 +34,7 @@ public:
     void processIdMessage(const QString &message);
     void processJsonMessage(const QString &message);
     void processGameData(const QJsonObject &jsonObject);
+    void sendArmySelection(int armyId);
 
 signals:
     void dataReceived(const QString &data);

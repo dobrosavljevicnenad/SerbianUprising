@@ -8,6 +8,7 @@
 #include<QDebug>
 #include <qapplication.h>
 #include <qgraphicseffect.h>
+#include <QKeyEvent>
 
 ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *parent)
     : QMainWindow(parent),
@@ -22,13 +23,41 @@ ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *paren
     setupUI();
     connectSignals();
     gameManager->initializeUI(headerLabel, endTurnButton, moveButton, infoButton,moveList,
-                              armyButton,reliefButton,regionsButton,cityButton,cultureButton,defaultButton,nodeInfoWidget);
+                              armyButton,reliefButton,regionsButton,cityButton,cultureButton,
+                              defaultButton,nodeInfoWidget,characterWidget);
     connect(gameManager, &ClientGameManager::gameYearUpdated, this, &ClientWindow::updateYearLabel);
+
+    // Dodajte u konstruktor ClientWindow-a nakon connectSignals()
+    QTimer* serverCheckTimer = new QTimer(this);
+    connect(serverCheckTimer, &QTimer::timeout, this, &ClientWindow::checkServerClosed);
+    serverCheckTimer->start(100); // Proverava svakih 100ms
 }
 
 ClientWindow::~ClientWindow() {
     qDebug() << "Destroying ClientWindow...";
 }
+
+void ClientWindow::checkServerClosed() {
+    if (gameManager->server_closed) {
+        freezeUI();
+        showDisconnectPauseMenu();
+        gameManager->server_closed=false;
+    }
+}
+
+// Funkcija za zamrzavanje UI-a
+void ClientWindow::freezeUI() {
+    QList<QWidget*> layoutWidgets = {
+        headerLabel, infoButton, moveButton, armyButton, endTurnButton,
+        moveList, yearDisplayLabel, reliefButton, regionsButton,
+        cityButton, cultureButton, defaultButton
+    };
+
+    for (auto* widget : layoutWidgets) {
+        widget->setEnabled(false); // Onemogućava interakciju
+    }
+}
+
 
 void ClientWindow::setupGame() {
     view = new ZoomableGraphicsView(this);
@@ -48,9 +77,16 @@ void ClientWindow::setupUI() {
     nodeInfoWidget->hide();
 
     layoutContainer = new QWidget(view->viewport());
-    layoutContainer->setStyleSheet("background-color: rgba(0, 0, 0, 200);"
-                                   "border-radius: 0px;"
-                                   "border-image: url(:/resources/border1.png) 30 stretch;");
+    if(gameManager->ClientId == 1){
+        layoutContainer->setStyleSheet("background-color: rgba(74, 47, 47,190);"
+                                       "border-radius: 0px;"
+                                       "border-image: url(:/resources/border1.png) 30 stretch;");
+    }
+    else{
+        layoutContainer->setStyleSheet("background-color: rgba(3, 66, 5,190);"
+                                       "border-radius: 0px;"
+                                       "border-image: url(:/resources/border1.png) 30 stretch;");
+    }
     QVBoxLayout *mainLayout = new QVBoxLayout();
 
     mainLayout->setSpacing(5);
@@ -194,13 +230,23 @@ void ClientWindow::setupUI() {
     layoutContainer->setLayout(mainLayout);
     layoutContainer->setGeometry(10, 10, 250, 520);
 
-    mapModeContainer = new QWidget(view->viewport());
-    mapModeContainer->setStyleSheet(
-        "background-color: rgba(0, 43, 54, 180); "
-        "border-radius: 10px;"
-        "border-image: url(:/resources/border1.png) 10 stretch;"
-        "padding: 5px;"
-        );
+    mapModeContainer = new QWidget(view->viewport());   
+    if(gameManager->ClientId == 1){
+        mapModeContainer->setStyleSheet(
+            "background-color: rgba(74, 47, 47,190); "
+            "border-radius: 10px;"
+            "border-image: url(:/resources/border1.png) 10 stretch;"
+            "padding: 5px;"
+            );
+    }
+    else{
+        mapModeContainer->setStyleSheet(
+            "background-color: rgba(3, 66, 5,190); "
+            "border-radius: 10px;"
+            "border-image: url(:/resources/border1.png) 10 stretch;"
+            "padding: 5px;"
+            );
+    }
 
     QHBoxLayout* mapModeLayout = new QHBoxLayout();
     mapModeLayout->setSpacing(8);
@@ -249,7 +295,16 @@ void ClientWindow::setupUI() {
     mapModeLayout->addWidget(defaultButton,0, Qt::AlignCenter);
 
     mapModeContainer->setLayout(mapModeLayout);
-    mapModeContainer->move(view->viewport()->rect().bottomLeft() + QPoint(10, -(mapModeContainer->height()+10)));
+
+    characterContainer = new QWidget(view->viewport());
+    QVBoxLayout *characterLayout = new QVBoxLayout();
+    characterWidget = new CharacterWidget(gameManager->ClientId);
+    characterLayout->addWidget(characterWidget);
+    characterContainer->setLayout(characterLayout);
+    characterContainer->setFixedSize(456, 246);
+    characterContainer->setContentsMargins(0, 0, 0, 0);
+
+    initrepositionFixedWidgets();
 
     QList<QWidget*> layoutWidgets = {headerLabel, infoButton, moveButton, armyButton, endTurnButton, moveList, yearDisplayLabel};
 
@@ -298,6 +353,7 @@ void ClientWindow::connectSignals() {
     connect(defaultButton, &QPushButton::clicked, this, [this]() {
         gameManager->applyMapMode(ClientGameManager::MapMode::Default);
     });
+
     connect(view->horizontalScrollBar(), &QScrollBar::valueChanged, this, [this]() { repositionFixedWidgets(); });
     connect(view->verticalScrollBar(), &QScrollBar::valueChanged, this, [this]() { repositionFixedWidgets(); });
     connect(gameManager, &ClientGameManager::layerClicked, this, &ClientWindow::onLayerClicked);
@@ -324,11 +380,19 @@ void ClientWindow::onEndTurnClicked() {
     gameManager->disableInteractions();
 }
 
+void ClientWindow::initrepositionFixedWidgets()
+{
+    QRect screenRect = QGuiApplication::primaryScreen()->geometry();
+
+    characterContainer->move(screenRect.width() - characterContainer->width() - 57, -10);
+    mapModeContainer->move(10, screenRect.height() - characterContainer->height()+111);
+}
+
 void ClientWindow::repositionFixedWidgets()
 {
 
     QRect viewportRect = view->viewport()->rect();
-
+    characterContainer->move(view->viewport()->rect().topRight() - QPoint(characterContainer->width()-10, +10));
     layoutContainer->move(viewportRect.topLeft() + QPoint(10, 10));
     mapModeContainer->move(viewportRect.bottomLeft() + QPoint(10, -(mapModeContainer->height()+10)));
 }
@@ -560,6 +624,8 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer) {
             item->setData(Qt::UserRole + 2, "Place");
             item->setData(Qt::UserRole + 3, newAction.id);
 
+            characterWidget->setArmyText(armyManager.totalTroops,armyManager.maxTroops);
+
             moveList->addItem(item);
         }
     }
@@ -621,16 +687,23 @@ void ClientWindow::clearExplosions()
 }
 
 void ClientWindow::keyPressEvent(QKeyEvent *event) {
-    if (event->key() == Qt::Key_Escape) {
-        showPauseMenu();
-    } else if (event->key() == Qt::Key_I) {  // Kada pritisnete 'I', aktivirajte info dugme
+    if (isPauseMenuActive) {
+        // Ignoriši pritisak tastera ESC dok je pause meni aktivan
+        if (event->key() == Qt::Key_Escape) {
+            event->ignore(); // Ignoriše ESC
+        }
+    } else {
+        // Ako meni nije aktivan, normalno procesiraj ESC
+        if (event->key() == Qt::Key_Escape) {
+            showPauseMenu();
+        }
+    }
+    if (event->key() == Qt::Key_I) {  // Kada pritisnete 'I', aktivirajte info dugme
         setActiveButton(infoButton);
     } else if (event->key() == Qt::Key_M) {  // Kada pritisnete 'M', aktivirajte move dugme
         setActiveButton(moveButton);
     } else if (event->key() == Qt::Key_A) {  // Kada pritisnete 'A', aktivirajte army dugme
         setActiveButton(armyButton);
-    } else if (event->key() == Qt::Key_Escape) {
-        showPauseMenu();
     } else {
         QMainWindow::keyPressEvent(event);
     }
@@ -646,6 +719,9 @@ void ClientWindow::showPauseMenu() {
     overlay->setObjectName("PauseMenuOverlay");
     overlay->setStyleSheet("background-color: rgba(0, 0, 0, 120);");
     overlay->setGeometry(this->rect());
+
+    overlay->setAttribute(Qt::WA_TransparentForMouseEvents, false); // Sprečava da overlay bude transparentan za mišićne događaje
+    overlay->setFocusPolicy(Qt::StrongFocus); // Omogućava da overlay primi fokus
 
     QWidget *menuWidget = new QWidget(overlay);
     menuWidget->setStyleSheet(
@@ -711,6 +787,79 @@ void ClientWindow::showPauseMenu() {
     connect(optionsButton, &QPushButton::clicked, this, []() {
         QMessageBox::information(nullptr, "Options", "Options menu under construction.");
     });
+
+    overlay->show();
+}
+
+// Funkcija za prikaz ESC prozora
+void ClientWindow::showDisconnectPauseMenu() {
+    // Ako već postoji overlay, nemojte ga ponovo dodavati
+    if (findChild<QWidget*>("PauseMenuOverlay")) {
+        return;
+    }
+
+    QWidget *overlay = new QWidget(this);
+    overlay->setObjectName("PauseMenuOverlay");
+    overlay->setStyleSheet("background-color: rgba(0, 0, 0, 120);");
+    overlay->setGeometry(this->rect());
+
+    // Dodajte ove linije
+    overlay->setAttribute(Qt::WA_TransparentForMouseEvents, false); // Sprečava da overlay bude transparentan za mišićne događaje
+    overlay->setFocusPolicy(Qt::StrongFocus); // Omogućava da overlay primi fokus
+
+    QWidget *menuWidget = new QWidget(overlay);
+    menuWidget->setStyleSheet(
+        "background-color: rgba(50, 50, 50, 200); "
+        "border-radius: 10px;"
+        );
+    menuWidget->setFixedSize(300, 350);
+    menuWidget->move((width() - menuWidget->width()) / 2, (height() - menuWidget->height()) / 2);
+
+    QVBoxLayout *layout = new QVBoxLayout(menuWidget);
+
+    QLabel *label = new QLabel("The client has disconnected.");
+    label->setAlignment(Qt::AlignCenter);
+    QFont font = label->font();
+    font.setBold(true);
+    font.setPointSize(14);
+    label->setFont(font);
+    label->setStyleSheet("color: white;");
+    layout->addWidget(label);
+
+    QPushButton *saveButton = new QPushButton("Save Game");
+    QPushButton *optionsButton = new QPushButton("Options");
+    QPushButton *quitButton = new QPushButton("Quit Game");
+
+    QString buttonStyle =
+        "QPushButton { "
+        "   background-color: gray; "
+        "   color: white; "
+        "   border-radius: 10px; "
+        "   padding: 10px; "
+        "} "
+        "QPushButton:hover { "
+        "   background-color: darkGray; "
+        "} ";
+    saveButton->setStyleSheet(buttonStyle);
+    optionsButton->setStyleSheet(buttonStyle);
+    quitButton->setStyleSheet(buttonStyle);
+
+    layout->addWidget(saveButton);
+    layout->addWidget(optionsButton);
+    layout->addWidget(quitButton);
+
+    connect(quitButton, &QPushButton::clicked, this, &QApplication::quit);
+    connect(saveButton, &QPushButton::clicked, this, [this]() {
+        if (gameManager) {
+            gameManager->saveGame();
+            QMessageBox::information(this, "Save Game", "Game saved successfully!");
+        }
+    });
+    connect(optionsButton, &QPushButton::clicked, this, []() {
+        QMessageBox::information(nullptr, "Options", "Options menu under construction.");
+    });
+
+    isPauseMenuActive = true;
 
     overlay->show();
 }

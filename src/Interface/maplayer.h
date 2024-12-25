@@ -35,6 +35,7 @@ public:
 
 signals:
     void layerClicked(MapLayer *layer);
+    void layerHovered(MapLayer *layer);
 
 protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;

@@ -163,5 +163,7 @@
         <file>resources/field.png</file>
         <file>resources/Images/FogOfWar.png</file>
         <file>resources/arrow.png</file>
+        <file>resources/pasha.png</file>
+        <file>resources/karadjordje.png</file>
     </qresource>
 </RCC>

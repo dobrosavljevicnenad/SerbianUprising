@@ -13,12 +13,12 @@ GameMenu::GameMenu(QWidget *parent) : QWidget(parent) {
 
     setupUI();
 
-    mediaPlayer = new QMediaPlayer(this);
+    musicPlayer = new QMediaPlayer(this);
     audioOutput = new QAudioOutput(this);
-    mediaPlayer->setAudioOutput(audioOutput);
-    mediaPlayer->setSource(QUrl::fromLocalFile("../../resources/music/backgroundMusic.mp3"));
+    musicPlayer->setAudioOutput(audioOutput);
+    musicPlayer->setSource(QUrl::fromLocalFile("../../resources/music/backgroundMusic.mp3"));
     audioOutput->setVolume(0.5);
-    mediaPlayer->play();
+    musicPlayer->play();
 
     connect(newGameButton, &QPushButton::clicked, this, &GameMenu::newGame);
     connect(settingsButton, &QPushButton::clicked, this, &GameMenu::openSettings);

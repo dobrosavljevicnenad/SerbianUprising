@@ -17,7 +17,6 @@ bool ConnectionManager::initializeServer() {
 
 bool ConnectionManager::initializeClient() {
     QString localIp = getLocalIpAddress();
-    std::cout << localIp.toStdString() << std::endl;
     if (localIp.isEmpty()) {
         qWarning() << "Could not determine local IP address.";
         return false;
@@ -40,6 +39,15 @@ bool ConnectionManager::initializeClient() {
     return true;
 }
 
+void ConnectionManager::sendArmySelection(int armyId) {
+    if (client) {
+        client->sendArmySelection(armyId);
+        qDebug() << "Army selection sent to server: " << armyId;
+    } else {
+        qWarning() << "Client is not initialized, unable to send army selection.";
+    }
+}
+
 QString ConnectionManager::getLocalIpAddress() {
     const QList<QHostAddress>& allAddresses = QNetworkInterface::allAddresses();
     for (const QHostAddress& address : allAddresses) {
@@ -49,7 +57,6 @@ QString ConnectionManager::getLocalIpAddress() {
     }
     return QString();
 }
-
 
 ClientGameManager* ConnectionManager::getClientManager() {
     return clientManager;

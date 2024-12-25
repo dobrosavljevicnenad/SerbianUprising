@@ -17,6 +17,10 @@ Server::Server(QObject *parent)
     connect(serverGameManager, &ServerGameManager::serializedGraphReady2, this, &Server::handleSerializedGraph);
 }
 
+Server::~Server() {
+    broadcast("CLIENT_SHUTDOWN");
+}
+
 // Public Methods
 ServerGameManager* Server::getGameManager() {
     return serverGameManager;
@@ -44,14 +48,18 @@ void Server::onNewConnection() {
 
     if (m_clientSocket == nullptr) {
         m_clientSocket = newSocket;
-        setupPlayerSocket(m_clientSocket, "Player 1", "ID:1\n");
-    } else if (m_secondPlayerSocket == nullptr) {
+    }
+    else if (m_secondPlayerSocket == nullptr) {
         m_secondPlayerSocket = newSocket;
-        setupPlayerSocket(m_secondPlayerSocket, "Player 2", "ID:2\n");
-
-        // if both clients are connected..
         if (m_clientSocket && m_secondPlayerSocket) {
             qDebug() << "Both players connected. Starting game.";
+            if(firstplayerId == 1){
+                setupPlayerSocket(m_clientSocket, "Player 1", "ID:1\n");
+                setupPlayerSocket(m_secondPlayerSocket, "Player 2", "ID:2\n");
+            }else {
+                setupPlayerSocket(m_clientSocket, "Player 1", "ID:2\n");
+                setupPlayerSocket(m_secondPlayerSocket, "Player 2", "ID:1\n");
+            }
             broadcast("START_GAME");
             emit startGame();
         }
@@ -79,6 +87,19 @@ void Server::onReadyRead() {
         QJsonParseError parseError;
         QJsonDocument jsonDoc = QJsonDocument::fromJson(rawData, &parseError);
 
+        if (rawData.startsWith("ARMY:")) {
+            rawData = rawData.mid(5);
+            bool ok;
+            int armyId = rawData.toInt(&ok);
+            if (ok) {
+                qDebug() << "Received army selection and first player id:" << armyId;
+                firstplayerId = armyId;
+            } else {
+                qWarning() << "Invalid army ID format received:" << rawData;
+            }
+            continue;
+        }
+
         if (parseError.error != QJsonParseError::NoError || !jsonDoc.isObject()) {
             qWarning() << "Invalid JSON received:" << rawData;
             continue;
@@ -100,9 +121,10 @@ void Server::onReadyRead() {
 void Server::onClientDisconnected() {
     if (m_clientSocket && sender() == m_clientSocket) {
         qDebug() << "Host (Player 1) disconnected!";
-        m_clientSocket = nullptr;
+        m_clientSocket->disconnectFromHost();
         emit gameOver("Host left, game over.");
     } else if (m_secondPlayerSocket && sender() == m_secondPlayerSocket) {
+        broadcast("CLIENT_SHUTDOWN"); // ovde treba Client_shutdown (ali
         qDebug() << "Second player disconnected!";
         m_secondPlayerSocket = nullptr;
         m_waitingForSecondPlayer = true;

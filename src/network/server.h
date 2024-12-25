@@ -16,6 +16,7 @@ class Server : public QObject
 
 public:
     explicit Server(QObject *parent = nullptr);
+    ~Server();
 
     // Public Methods
     bool startServer(quint16 port);
@@ -48,6 +49,7 @@ private slots:
 private:
     // Private Methods
     void setupPlayerSocket(QTcpSocket* socket, const QString& playerName, const QString& message);
+    int firstplayerId = 1;
 
     // Member Variables
     QTcpServer *m_server = nullptr;

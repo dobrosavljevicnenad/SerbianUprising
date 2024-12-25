@@ -8,6 +8,7 @@
 CreateLobbyWindow::CreateLobbyWindow(QWidget *parent)
     : QWidget(parent), connectionManager(new ConnectionManager(this))
 {
+
     setupUI();
     loadSavedGames();
 }
@@ -185,6 +186,7 @@ void CreateLobbyWindow::setupUI() {
     connect(exitButton, &QPushButton::clicked, this, &CreateLobbyWindow::backToLobby);
     connect(armyComboBox, &QComboBox::currentTextChanged, this, &CreateLobbyWindow::updateArmySelection);
     connect(startButton, &QPushButton::clicked, [this]() {
+        int armyId = armyComboBox->currentIndex() + 1;
         QMessageBox::information(this, "Server Info", "Server IP: " + connectionManager->getLocalIpAddress());
         if (!connectionManager->initializeServer()) {
             QMessageBox::warning(this, "Error", "Failed to start the server.");
@@ -198,6 +200,9 @@ void CreateLobbyWindow::setupUI() {
 
         if (connectionManager) {
             connect(connectionManager, &ConnectionManager::gameStarted, this, &CreateLobbyWindow::handleGameStart);
+
+            connectionManager->sendArmySelection(armyId);
+
             qDebug() << "Signals connected successfully.";
         } else {
             qWarning() << "Failed to connect signals: ConnectionManager is nullptr.";
@@ -256,9 +261,6 @@ void CreateLobbyWindow::handleGameStart() {
     if (selectedFile != nullptr)
         clientManager->loadGamePath = selectedFile;
 
-    clientManager->p1_army = ARMY1;
-    clientManager->p2_army = ARMY2;
-
     qDebug() << "Game is starting."<< clientManager->ClientId;
 
     if (clientManager->ClientId == 1) {
@@ -283,8 +285,6 @@ void CreateLobbyWindow::handleGameStart() {
     }
 }
 
-
-//slots
 void CreateLobbyWindow::onFileClicked(int row, int column) {
     QTableWidgetItem *item = savedGamesTable->item(row, column);
     if (item) {
