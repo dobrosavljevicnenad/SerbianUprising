@@ -9,12 +9,15 @@
 #include <QPainter>
 #include <QScrollArea>
 #include <cmath>
+#include <qmediaplayer.h>
 #include <qpushbutton.h>
 #include <QCoreApplication>
 #include "Results.h"
 #include <qtablewidget.h>
 #include <qevent.h>
 #include <qheaderview.h>
+#include <QTimer>
+#include <QAudioOutput>
 
 class BattleReplayDialog : public QDialog {
     Q_OBJECT
@@ -45,6 +48,9 @@ private:
     QLabel *remainingAttackersLabel;
     QLabel *remainingDefendersLabel;
     void keyPressEvent(QKeyEvent *event);
+    void playBattleMusic();
+    QMediaPlayer m_mediaPlayer;                                   // Media player for playing sounds
+    QAudioOutput m_audioOutput;
 };
 
 #endif // BATTLEREPLAYDIALOG_H

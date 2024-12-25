@@ -13,6 +13,8 @@
 #include <QColor>
 #include "BattleReplayDialog.h"
 #include "../graph/graph.hpp"
+#include <iostream>
+#include <QScreen>
 
 class BattleResultsDialog : public QDialog {
     Q_OBJECT

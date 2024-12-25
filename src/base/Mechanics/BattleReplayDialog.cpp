@@ -331,8 +331,7 @@ QString BattleReplayDialog::getButtonStyle(){
 }
 void BattleReplayDialog::onReplayClicked() {
     replayButton->setEnabled(false);
-
-
+    playBattleMusic();
     std::vector<int> fallenDefenders;
     std::vector<int> fallenAttackers;
     std::vector<int> firingAttackers;
@@ -494,8 +493,21 @@ void BattleReplayDialog::onReplayClicked() {
         attackerResultLayout->addWidget(victoryLabel);
         if(defenderNumber != 0)defenderResultLayout->addWidget(loseLabel);
     }
+    m_mediaPlayer.stop();
     replayButton->deleteLater();
 
+}
+void BattleReplayDialog::playBattleMusic() {
+    std::time_t start_music = std::time(0);
+    m_mediaPlayer.setAudioOutput(&m_audioOutput);
+    m_audioOutput.setVolume(1);
+    m_mediaPlayer.setSource(QUrl::fromLocalFile("../../resources/music/Volley.mp3"));
+    m_mediaPlayer.play();
+
+
+    QEventLoop loop;
+    QTimer::singleShot(100, &loop, &QEventLoop::quit);
+    loop.exec();
 }
 BattleReplayDialog::~BattleReplayDialog() {
 }
