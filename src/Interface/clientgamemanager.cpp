@@ -595,61 +595,22 @@ void ClientGameManager::saveGame() {
 void ClientGameManager::loadGame() {
     QString fullPath = "../../resources/saved_games/" + loadGamePath;
 
-    // QString filePath = QFileDialog::getOpenFileName(
-    //     nullptr,
-    //     "Load Saved Game",
-    //     directoryPath,
-    //     "JSON Files (*.json);;All Files (*)"
-    //     );
-
-    // if (filePath.isEmpty()) {
-    //     QMessageBox::warning(nullptr, "Load Cancelled", "No file selected. Load operation cancelled.");
-    //     return;
-    // }
-
-    // if (!fileManager.fileExists(filePath)) {
-    //     qWarning() << "Saved game file does not exist:" << filePath;
-    //     QMessageBox::critical(nullptr, "Load Failed", "Selected file does not exist:\n" + filePath);
-    //     return;
-    // }
-
-    QJsonObject graphData = fileManager.loadFromFile(fullPath);
-    if (graphData.isEmpty()) {
-        qWarning() << "Failed to load game state. File might be corrupt.";
-        CustomMessageBox::showMessage("Failed to load game state. File might be corrupt.");
-        return;
-    }
+    QJsonObject graphData;
+    graphData["fullPath"] = fullPath;
 
     emit gameDataLoaded(graphData);
-
-    // clientGraph->deserialize(graphData);
-
-    // for (auto &layer : layers) {
-    //     graph::Vertex *vertex = clientGraph->get_vertex_by_id(layer->getId() + 1);
-    //     if (vertex) {
-    //         layerToVertex[layer] = vertex;
-    //         vertex->map_layer = layer;
-    //     }
-    // }
-
-    // updateGraphics();
 }
 
 void ClientGameManager::processLoadData(const QJsonObject &gameData) {
-    qDebug() << "Processing loaded game data:" << gameData;
+    // qDebug() << "Processing loaded game data:" << gameData;
 
-    clientGraph->deserialize(gameData);
+    // clientGraph->deserialize(gameData);
 
-    // for (auto &layer : layers) {
-    //     graph::Vertex *vertex = clientGraph->get_vertex_by_id(layer->getId() + 1);
-    //     if (vertex) {
-    //         layerToVertex[layer] = vertex;
-    //         vertex->map_layer = layer;
-    //     }
-    // }
+    // map = new Map(scene, layerToVertex);
 
-    updateGraphics();
-    qDebug() << "Game data successfully processed and applied.";
+    // updateGraphics();
+    // updateFog();
+    // qDebug() << "Game data successfully processed and applied.";
 }
 
 int ClientGameManager::getClientId() const {

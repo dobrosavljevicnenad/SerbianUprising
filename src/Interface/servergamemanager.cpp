@@ -33,6 +33,8 @@ void ServerGameManager::initializeGame() {
 void ServerGameManager::startGame() {
     qDebug() << "Starting game...";
     initializeGame();
+    qDebug() << "loadGamePath pre provere:" << QString::fromUtf8(QJsonDocument(loadGamePath).toJson(QJsonDocument::Compact));
+
     QJsonObject serialized_graph = graph->serialize(rootObj);
     //graph->print_graph();
     emit init_serializedGraphReady(serialized_graph);
@@ -63,4 +65,29 @@ void ServerGameManager::executeActions(const std::vector<Action> &actions1, int 
     QJsonObject Results = turn.serializeResultsVector(battleResults);
 
     emit serializedGraphReady2(serialized_graph,Results);
+}
+
+void ServerGameManager::loadGameData(QJsonObject& gameData){
+    std::cout << "USAO SAM U LOADGAME" << std::endl;
+    QString jsonString = QJsonDocument(gameData).toJson(QJsonDocument::Compact);
+
+    QString filePath = gameData["fullPath"].toString();
+    QFile file(filePath);
+
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Could not open file:" << filePath;
+        return;
+    }
+
+    QByteArray jsonData = file.readAll();
+    file.close();
+
+    QJsonDocument doc = QJsonDocument::fromJson(jsonData);
+    if (doc.isNull() || !doc.isObject()) {
+        qWarning() << "Invalid JSON file format.";
+        return;
+    }
+
+    rootObj = doc.object();
+    graph->deserialize(rootObj);
 }

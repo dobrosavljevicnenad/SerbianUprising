@@ -84,6 +84,8 @@ public:
     QMap<MapLayer*,graph::Vertex*> layerToVertex;
 
     bool server_closed = false;
+    std::vector<MapLayer*> layers;
+    QGraphicsScene* scene;
 
 private slots:
     void printExplosion(graph::Vertex *target);
@@ -100,9 +102,7 @@ signals:
 private:
     bool init = false;
     std::vector<MapLayer*> explosions;
-    QGraphicsScene* scene;
     std::unique_ptr<graph::Graph> clientGraph;
-    std::vector<MapLayer*> layers;
     AddArmyManager armyManager;
     std::map<int,std::vector<CustomArrowItem*>> arrows;
     std::vector<CustomArrowItem*> temporaryArrows;
