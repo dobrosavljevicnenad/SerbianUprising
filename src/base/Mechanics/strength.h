@@ -3,7 +3,7 @@
 #ifndef STRENGTH_H
 #define STRENGTH_H
 
-#include "../Entities/Army.h"
+#include "../Entities/army.h"
 
 enum class ArmyType;
 

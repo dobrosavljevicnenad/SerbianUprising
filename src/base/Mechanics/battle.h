@@ -3,8 +3,8 @@
 #ifndef BATTLE_H
 #define BATTLE_H
 
-#include "../Entities/Army.h"
-#include "Results.h"
+#include "../Entities/army.h"
+#include "results.h"
 #include <ctime>
 #include <iostream>
 #include <cstdlib>

@@ -1,4 +1,4 @@
-#include "AttackTransferDialog.h"
+#include "attacktransferdialog.h"
 
 AttackTransferDialog::AttackTransferDialog(const QString &source, const QString &target,
                                            int sourceArmies, int targetArmies,
@@ -114,4 +114,15 @@ AttackTransferDialog::AttackTransferDialog(const QString &source, const QString 
 
 int AttackTransferDialog::getSelectedArmies() const {
     return slider->value();
+}
+
+AttackTransferDialog::~AttackTransferDialog() {
+    delete sourceLabel;
+    delete targetLabel;
+    delete sourceImageLabel;
+    delete targetImageLabel;
+    delete slider;
+    delete spinBox;
+    delete okButton;
+    delete cancelButton;
 }

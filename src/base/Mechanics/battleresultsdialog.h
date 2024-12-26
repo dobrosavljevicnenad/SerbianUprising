@@ -5,13 +5,13 @@
 #include <QTableWidget>
 #include <QVBoxLayout>
 #include <QLabel>
-#include "Results.h"
+#include "results.h"
 #include <QHeaderView>
 #include <QPushButton>
 #include <QGridLayout>
 #include <QTableWidgetItem>
 #include <QColor>
-#include "BattleReplayDialog.h"
+#include "battlereplaydialog.h"
 #include "../graph/graph.hpp"
 #include <iostream>
 #include <QScreen>

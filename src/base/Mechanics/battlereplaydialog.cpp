@@ -1,4 +1,4 @@
-#include "BattleReplayDialog.h"
+#include "battlereplaydialog.h"
 
 BattleReplayDialog::BattleReplayDialog(QWidget *parent, int tableIndex, Results results)
     : QDialog(parent), m_tableIndex(tableIndex), results(results) {

@@ -3,7 +3,7 @@
 
 #include <string>
 #include "../../Interface/maplayer.h"
-#include "../Entities/Army.h"
+#include "../Entities/army.h"
 #include <vector>
 #include <QWidget>
 #include <QVBoxLayout>

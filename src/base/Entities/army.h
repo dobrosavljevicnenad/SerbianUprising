@@ -3,7 +3,7 @@
 #ifndef ARMY_H
 #define ARMY_H
 
-#include "../Mechanics/Strength.h"
+#include "../Mechanics/strength.h"
 
 #include <string>
 #include <QColor>

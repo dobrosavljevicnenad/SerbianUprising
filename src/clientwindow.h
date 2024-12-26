@@ -7,14 +7,16 @@
 #include <QLabel>
 #include "Interface/mapscene.h"
 #include "Interface/clientgamemanager.h"
-#include "base/Mechanics/Action.h"
+#include "base/Mechanics/action.h"
 #include "base/Mechanics/addarmymanager.h"
 #include "./Interface/infowidget.h"
 #include "Interface/Items/zoomablegraphicsview.h"
 #include "Interface/Items/characterwidget.h"
-#include "Interface/Items/CustomMessageBox.h"
-
+#include "Interface/Items/custommessagebox.h"
+#include "Interface/Items/custominputdialog.h"
+#include "Interface/Items/attacktransferdialog.h"
 #include <string>
+
 class ClientWindow : public QMainWindow {
     Q_OBJECT
 
@@ -52,9 +54,8 @@ private:
     QPushButton* cityButton;
     QPushButton* defaultButton;
     QPushButton* cultureButton;
-    QWidget *characterContainer;
-    CharacterWidget *characterWidget;
-
+    QWidget* characterContainer;
+    CharacterWidget* characterWidget;
     //QMediaPlayer* mediaPlayer;
     //QAudioOutput* audioOutput;
 

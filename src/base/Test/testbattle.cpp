@@ -1,4 +1,4 @@
-#include "testBattle.h"
+#include "testbattle.h"
 #include "../Mechanics/turn.h"
 
 void test_Battle() {

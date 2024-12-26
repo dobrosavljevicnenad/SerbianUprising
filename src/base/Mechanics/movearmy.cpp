@@ -1,6 +1,6 @@
-#include "MoveArmy.h"
-#include "BattleArmiesWorker.h"
-#include "MergeArmiesWorker.h"
+#include "movearmy.h"
+#include "battlearmiesworker.h"
+#include "mergearmiesworker.h"
 #include <algorithm>
 
 MoveArmy::MoveArmy(Graph& graph) : m_graph(graph), player1Attacks({}) {}

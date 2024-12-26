@@ -1,9 +1,8 @@
-#include "CustomMessageBox.h"
+#include "custommessagebox.h"
 
 CustomMessageBox::CustomMessageBox(const QString &message, QWidget *parent)
     : QDialog(parent) {
     setWindowTitle("");
-    setFixedSize(400, 200);
     setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
     setStyleSheet("background-color: #2D2D2D; color: white; border-radius: 10px;");
 
@@ -28,6 +27,7 @@ CustomMessageBox::CustomMessageBox(const QString &message, QWidget *parent)
 
     mainLayout->addLayout(buttonLayout);
     setLayout(mainLayout);
+    adjustSize();
 }
 
 void CustomMessageBox::showMessage(const QString &message, QWidget *parent) {

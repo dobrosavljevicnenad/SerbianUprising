@@ -23,6 +23,7 @@ public:
                                   QWidget *parent = nullptr);
     int getSelectedArmies() const;
 
+    ~AttackTransferDialog();
 private:
     QLabel *sourceLabel;
     QLabel *targetLabel;

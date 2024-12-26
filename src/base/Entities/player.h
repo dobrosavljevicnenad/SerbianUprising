@@ -3,7 +3,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "Army.h"
+#include "army.h"
 
 #include <string>
 

@@ -5,8 +5,8 @@
 #include <QObject>
 #include "../graph/vertex.hpp"
 #include "../graph/graph.hpp"
-#include "Battle.h"
-#include "../Entities/Army.h"
+#include "battle.h"
+#include "../Entities/army.h"
 #include <QCoreApplication>
 using namespace graph;
 

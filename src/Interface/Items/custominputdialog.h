@@ -15,6 +15,7 @@ public:
     QString getInputText() const;
     int getInputInt() const;
 
+    ~CustomInputDialog();
 private:
     QLineEdit* inputLineEdit;
     int maxTroops;

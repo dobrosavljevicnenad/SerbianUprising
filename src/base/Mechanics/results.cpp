@@ -1,4 +1,4 @@
-#include "Results.h"
+#include "results.h"
 #include <iostream>
 
 Results::Results()

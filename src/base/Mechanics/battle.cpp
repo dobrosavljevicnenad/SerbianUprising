@@ -1,4 +1,4 @@
-#include "Battle.h"
+#include "battle.h"
 #include <iostream>
 #include <ctime>
 

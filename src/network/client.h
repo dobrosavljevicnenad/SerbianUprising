@@ -8,7 +8,7 @@
 #include <QNetworkReply>
 #include <QJsonDocument>
 #include <QJsonObject>
-#include "../base/Mechanics/Action.h"
+#include "../base/Mechanics/action.h"
 #include "../Interface/clientgamemanager.h"
 #include "../clientwindow.h"
 

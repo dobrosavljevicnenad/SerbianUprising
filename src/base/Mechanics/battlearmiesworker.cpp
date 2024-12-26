@@ -1,5 +1,5 @@
-#include "BattleArmiesWorker.h"
-#include "Battle.h"
+#include "battlearmiesworker.h"
+#include "battle.h"
 
 BattleArmiesWorker::BattleArmiesWorker(MoveArmy& moveArmy, int playerId, Army sentArmy, graph::Vertex& target,
                                        std::vector<graph::Vertex*> sources, std::vector<unsigned> soldiersToMove, unsigned sent, int riverAdvantage)

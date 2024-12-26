@@ -1,4 +1,4 @@
-#include "CustomInputDialog.h"
+#include "custominputdialog.h"
 #include <QVBoxLayout>
 #include <QLabel>
 #include <QPushButton>
@@ -73,4 +73,7 @@ int CustomInputDialog::getInputInt() const {
     } else {
         return 0;
     }
+}
+CustomInputDialog::~CustomInputDialog() {
+    delete inputLineEdit;
 }

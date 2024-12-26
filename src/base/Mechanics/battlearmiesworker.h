@@ -3,9 +3,9 @@
 
 #include <QThread>
 #include "../graph/vertex.hpp"
-#include "../Entities/Army.h"
-#include "MoveArmy.h"
-#include "Battle.h"
+#include "../Entities/army.h"
+#include "movearmy.h"
+#include "battle.h"
 
 class BattleArmiesWorker : public QThread {
     Q_OBJECT

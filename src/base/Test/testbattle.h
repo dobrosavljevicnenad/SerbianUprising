@@ -3,14 +3,14 @@
 #ifndef TESTBATTLE_H
 #define TESTBATTLE_H
 
-#include "../Entities/Army.h"
-#include "../Mechanics/Battle.h"
-#include "../Mechanics/Strength.h"
-#include "../Entities/Terrain.h"
+#include "../Entities/army.h"
+#include "../Mechanics/battle.h"
+#include "../Mechanics/strength.h"
+#include "../Entities/terrain.h"
 #include "../Entities/player.h"
 #include "../graph/graph.hpp"
 #include<iostream>
-#include "../Mechanics/MoveArmy.h"
+#include "../Mechanics/movearmy.h"
 
 void test_Battle();
 

@@ -1,4 +1,4 @@
-#include "MergeArmiesWorker.h"
+#include "mergearmiesworker.h"
 
 MergeArmiesWorker::MergeArmiesWorker(MoveArmy& moveArmy, Vertex* source, Vertex* target, int soldiersToMove)
     : m_moveArmy(moveArmy), m_source(source), m_target(target), m_soldiersToMove(soldiersToMove) {}

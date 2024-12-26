@@ -1,4 +1,4 @@
-#include "BattleResultsDialog.h"
+#include "battleresultsdialog.h"
 #include <qapplication.h>
 
 BattleResultsDialog::BattleResultsDialog(const std::vector<Results> battleResults, QWidget *parent)

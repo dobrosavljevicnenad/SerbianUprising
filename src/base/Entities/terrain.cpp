@@ -1,4 +1,4 @@
-#include "Terrain.h"
+#include "terrain.h"
 
 Terrain::Terrain(TerrainType terrain) : m_terrain(terrain) {
     setDefaultAdvantages(terrain);

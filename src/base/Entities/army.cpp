@@ -1,4 +1,4 @@
-#include "Army.h"
+#include "army.h"
 
 Army::Army(ArmyType armyType) : m_soldiers(0), m_armyType(armyType) {}
 

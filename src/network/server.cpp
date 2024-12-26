@@ -1,7 +1,7 @@
 #include "server.h"
 #include <QDebug>
 #include <QHostAddress>
-#include "../base/Mechanics/Action.h"
+#include "../base/Mechanics/action.h"
 
 Server::Server(QObject *parent)
     : QObject(parent),
