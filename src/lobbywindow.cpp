@@ -1,11 +1,10 @@
 #include "lobbywindow.h"
 #include "createlobbywindow.h"
 #include <QVBoxLayout>
-#include <QInputDialog>
-#include <QMessageBox>
 #include <QPushButton>
 #include <QFormLayout>
-
+#include "Interface/Items/CustomMessageBox.h"
+#include "Interface/Items/CustomInputDialog.h"
 
 LobbyWindow::LobbyWindow(QWidget *parent)
     : QWidget(parent), connectionManager(new ConnectionManager(this)) {
@@ -138,29 +137,29 @@ void LobbyWindow::onCreateServer() {
 }
 
 void LobbyWindow::onJoinGame() {
-    bool ok;
-    QString ipAddress = QInputDialog::getText(this, tr("Join Game"),
-                                              tr("Enter host IP address:"),
-                                              QLineEdit::Normal,
-                                              "", &ok);
-    if (!ok || ipAddress.isEmpty()) {
-        qWarning() << "IP address entry canceled or empty.";
-        return;
-    }
+    CustomInputDialog dialog("Join Game", "Enter host IP address:", this);
+    if (dialog.exec() == QDialog::Accepted) {
+        QString ipAddress = dialog.getInputText();
+        if (ipAddress.isEmpty()) {
+            qWarning() << "IP address entry canceled or empty.";
+            return;
+        }
 
-    if(ipAddress == connectionManager->getLocalIpAddress())
-        qDebug() << "Successfully connected to host at IP:" << ipAddress;
-    else{
-        QMessageBox::critical(this, tr("Connection Failed"),
-                              tr("Could not connect to the host. Please check the IP address and try again."));
-        return;
-    }
-    if (!connectionManager->initializeClient()) {
-        QMessageBox::warning(this, "Error", "Failed to connect to the server.");
-        return;
+        if (ipAddress == connectionManager->getLocalIpAddress()) {
+            qDebug() << "Successfully connected to host at IP:" << ipAddress;
+        } else {
+            CustomMessageBox("Connection failed: Could not connect to the host. Please check the IP address and try again.", this);
+            return;
+        }
+
+        if (!connectionManager->initializeClient()) {
+            CustomMessageBox("Error: Failed to connect to the server.", this);
+            return;
+        }
+    } else {
+        qWarning() << "Dialog canceled by user.";
     }
 }
-
 
 void LobbyWindow::returnToMenu()
 {

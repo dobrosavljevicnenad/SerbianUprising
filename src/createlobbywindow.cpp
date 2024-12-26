@@ -3,8 +3,7 @@
 #include "lobbywindow.h"
 #include <QHeaderView>
 #include <QFileInfoList>
-#include <QMessageBox>
-
+#include "Interface/Items/CustomMessageBox.h"
 CreateLobbyWindow::CreateLobbyWindow(QWidget *parent)
     : QWidget(parent), connectionManager(new ConnectionManager(this))
 {
@@ -187,14 +186,14 @@ void CreateLobbyWindow::setupUI() {
     connect(armyComboBox, &QComboBox::currentTextChanged, this, &CreateLobbyWindow::updateArmySelection);
     connect(startButton, &QPushButton::clicked, [this]() {
         int armyId = armyComboBox->currentIndex() + 1;
-        QMessageBox::information(this, "Server Info", "Server IP: " + connectionManager->getLocalIpAddress());
+        CustomMessageBox::showMessage(QString("Server IP: %1").arg(connectionManager->getLocalIpAddress()), this);
         if (!connectionManager->initializeServer()) {
-            QMessageBox::warning(this, "Error", "Failed to start the server.");
+            CustomMessageBox::showMessage("Error: Failed to start the server.", this);
             return;
         }
 
         if (!connectionManager->initializeClient()) {
-            QMessageBox::warning(this, "Error", "Failed to connect the host client.");
+            CustomMessageBox::showMessage("Error: Failed to connect the host client.", this);
             return;
         }
 
@@ -289,14 +288,14 @@ void CreateLobbyWindow::onFileClicked(int row, int column) {
     QTableWidgetItem *item = savedGamesTable->item(row, column);
     if (item) {
         selectedFile = item->text();
-        QMessageBox::information(this, "File Clicked", QString("Kliknuo si na \"%1\"").arg(selectedFile));
+        CustomMessageBox::showMessage(QString("Kliknuo si na \"%1\"").arg(selectedFile),this);
     }
 }
 
 void CreateLobbyWindow::onLoadGameClicked() {
     if (selectedFile.isEmpty()) {
-        QMessageBox::warning(this, "No File Selected", "Niste izabrali nijedan fajl!");
+        CustomMessageBox::showMessage("Niste izabrali nijedan fajl!", this);
     } else {
-        QMessageBox::information(this, "Load Game", QString("Loaded map: \"%1\"").arg(selectedFile));
+        CustomMessageBox::showMessage(QString("Load Game: Loaded map: \"%1\"").arg(selectedFile),this);
     }
 }
