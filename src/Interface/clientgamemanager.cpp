@@ -193,6 +193,12 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     if (data.contains("graph") && data["graph"].isObject()) {
         QJsonObject graphData = data["graph"].toObject();
         clientGraph->deserialize(graphData);
+
+        if (graphData.contains("events") && graphData["events"].isArray()) {
+            QJsonArray eventsArray = graphData["events"].toArray();
+            eventHandle.deserializeEvents(eventsArray);
+        }
+
         if(!init)
             initializeGraphics(graphData);
     }
@@ -253,6 +259,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     armyManager.addTerritory(player);
     armyManager.calculateTotalTroops();
     characterWidget->setArmyText(armyManager.totalTroops,armyManager.maxTroops);
+    eventHandle.processEvents(ClientId, gameYear.getCurrentDateString(), *clientGraph);
 }
 
 QVector<QStringList> ClientGameManager::generateBattleResults() {

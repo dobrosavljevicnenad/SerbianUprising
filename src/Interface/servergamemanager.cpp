@@ -27,7 +27,6 @@ void ServerGameManager::initializeGame() {
 
     rootObj = doc.object();
     graph->deserialize(rootObj);
-
 }
 
 void ServerGameManager::startGame() {
