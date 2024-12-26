@@ -33,6 +33,7 @@ private:
 
     QLabel *player1ArmyLabel;
     QLabel *player2ArmyLabel;
+    QLabel *ip;
 
     QTableWidget *savedGamesTable;
     QComboBox *armyComboBox;
