@@ -156,6 +156,9 @@ void LobbyWindow::onJoinGame() {
             CustomMessageBox("Error: Failed to connect to the server.", this);
             return;
         }
+
+        emit stopBackgroundMusic();
+
     } else {
         qWarning() << "Dialog canceled by user.";
     }
