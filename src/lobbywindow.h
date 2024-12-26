@@ -54,6 +54,7 @@ signals:
     void backToMenu();
     void startGame();
     void createLobby();
+    void stopBackgroundMusic();
 
 protected:
     void resizeEvent(QResizeEvent *event) override;

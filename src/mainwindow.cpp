@@ -27,6 +27,13 @@ MainWindow::MainWindow(QWidget *parent)
     connect(lobbyWindow, &LobbyWindow::createLobby, this, &MainWindow::showCreateLobbyWindow);
     connect(lobbyWindow, &LobbyWindow::backToMenu, this, &MainWindow::showGameMenu);
     connect(createLobbyWindow, &CreateLobbyWindow::backToLobby, this, &MainWindow::showLobbyWindow);
+    connect(lobbyWindow, &LobbyWindow::stopBackgroundMusic, this, [this]() {
+        if (gameMenu->musicPlayer) {
+            gameMenu->musicPlayer->stop();
+            delete gameMenu->musicPlayer;
+            gameMenu->musicPlayer = nullptr;
+        }
+    });
 }
 
 MainWindow::~MainWindow() {
@@ -43,5 +50,7 @@ void MainWindow::showLobbyWindow() {
 
 void MainWindow::showCreateLobbyWindow() {
     gameMenu->musicPlayer->stop();
+    delete gameMenu->musicPlayer;
+    gameMenu->musicPlayer = nullptr;
     stackedWidget->setCurrentWidget(createLobbyWindow);
 }
