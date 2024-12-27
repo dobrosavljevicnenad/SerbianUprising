@@ -192,7 +192,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
         QJsonObject graphData = data["graph"].toObject();
         clientGraph->deserialize(graphData);
 
-        if (graphData.contains("events") && graphData["events"].isArray()) {
+        if (graphData.contains("events") && graphData["events"].isArray() && !init) {
             QJsonArray eventsArray = graphData["events"].toArray();
             eventHandle.deserializeEvents(eventsArray,ClientId);
         }

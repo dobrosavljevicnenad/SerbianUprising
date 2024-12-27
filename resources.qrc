@@ -188,5 +188,44 @@
         <file>resources/Images/surge_of_conscription.png</file>
         <file>resources/Images/plague.png</file>
         <file>resources/Images/hero.png</file>
+        <file>resources/Images/tax.png</file>
+        <file>resources/Images/russia_serb.png</file>
+        <file>resources/Images/reorg.png</file>
+        <file>resources/Images/petar1.png</file>
+        <file>resources/Images/orasac.png</file>
+        <file>resources/Images/novi_pazar.png</file>
+        <file>resources/Images/knez.png</file>
+        <file>resources/Images/ivankovac.png</file>
+        <file>resources/Images/istanbul_pad.png</file>
+        <file>resources/Images/greek_otto.png</file>
+        <file>resources/Images/greek.png</file>
+        <file>resources/Images/governing_council.png</file>
+        <file>resources/Images/freedom.png</file>
+        <file>resources/Images/education.png</file>
+        <file>resources/Images/dusan_otto.png</file>
+        <file>resources/Images/dusan.png</file>
+        <file>resources/Images/danube_otto.png</file>
+        <file>resources/Images/danube.png</file>
+        <file>resources/Images/cultural.png</file>
+        <file>resources/Images/call_arms.png</file>
+        <file>resources/Images/bosnia_otto.png</file>
+        <file>resources/Images/bosnia.png</file>
+        <file>resources/Images/belgrade.png</file>
+        <file>resources/Images/albanian_alliance.png</file>
+        <file>resources/Images/wahhabi.png</file>
+        <file>resources/Images/sultan_new_dawn.png</file>
+        <file>resources/Images/selim3.png</file>
+        <file>resources/Images/seeking.png</file>
+        <file>resources/Images/russo_turkish_begins.png</file>
+        <file>resources/Images/new_army.png</file>
+        <file>resources/Images/janicari_beograd.png</file>
+        <file>resources/Images/economy_otto.png</file>
+        <file>resources/Images/caucus.png</file>
+        <file>resources/Images/bucharest.png</file>
+        <file>resources/Images/british_blockade.png</file>
+        <file>resources/Images/break_blockade.png</file>
+        <file>resources/Images/athos.png</file>
+        <file>resources/Images/anatolia.png</file>
+        <file>resources/Images/ally.png</file>
     </qresource>
 </RCC>

@@ -31,11 +31,15 @@ bool Event::canTrigger(int clientId, const QString& currentYear, const graph::Gr
 
     case EventType::MISSION:
         for (const QString& label : territoryTrigger) {
+            qDebug() << label;
             auto vertex = clientGraph.get_vertex_by_label(label);
-            unsigned m_id;
-            if(vertex->army.armyType() == ArmyType::HAJDUK) m_id = 1;
-            else if (vertex->army.armyType() == ArmyType::JANISSARY) m_id = 2;
-            if (vertex && m_id == clientId) {
+            int m_id = 0;
+            if (vertex->army.armyType() == ArmyType::HAJDUK) {
+                m_id = 1;
+            } else if (vertex->army.armyType() == ArmyType::JANISSARY) {
+                m_id = 2;
+            }
+            if (m_id == clientId) {
                 return true;
             }
         }

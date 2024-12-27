@@ -39,6 +39,7 @@ public:
     std::string eventTypeToString(EventType type);
 
     unsigned int id;
+    QString title;
     QString getDate() const;
     EventType getType() const;
     void showEventWindow();
@@ -60,7 +61,6 @@ public:
 private:
     int clientId;
     EventType type;
-    QString title;
     QString image_path;
     QString description;
     QString buttonText;

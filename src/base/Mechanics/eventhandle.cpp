@@ -49,34 +49,34 @@ const QVector<QPair<Event, bool>>& EventHandle::getEvents() const {
 
 void EventHandle::processEvents(int clientId, const QString& currentYear, const graph::Graph& clientGraph) {
     qDebug() << currentYear;
-    QVector<Event> triggerableEvents;
+    QVector<Event> randomEvents;
+    QVector<Event> nonRandomEvents;
+
+    // Separate RANDOM and non-RANDOM events that can be triggered
     for (const auto& eventPair : events) {
         const Event& event = eventPair.first;
         if (!eventPair.second && event.canTrigger(clientId, currentYear, clientGraph)) {
-            triggerableEvents.append(event);
-        }
-    }
-
-    QVector<Event> randomEvents;
-
-    for (const auto& event : triggerableEvents) {
-        if (event.getType() == EventType::RANDOM) {
-            if (shouldSpawnEvent(20)) {
-                randomEvents.append(event);
+            if (event.getType() == EventType::RANDOM) {
+                if (shouldSpawnEvent(20) && currentYear != "01-01-1804") { // Only include RANDOM events that pass the spawn check
+                    randomEvents.append(event);
+                }
+            } else {
+                nonRandomEvents.append(event);
             }
         }
     }
 
+    // Process RANDOM Events
     if (!randomEvents.isEmpty()) {
         int randomIndex = QRandomGenerator::global()->bounded(randomEvents.size());
-        randomEvents[randomIndex].showEventWindow();
+        Event& randomEvent = randomEvents[randomIndex];
+        randomEvent.showEventWindow();
     }
 
-    for (auto& event : triggerableEvents) {
-        if (event.getType() != EventType::RANDOM) {
-            event.showEventWindow();
-            markEventOccurred(event.id);
-        }
+    // Process Non-RANDOM Events
+    for (auto& event : nonRandomEvents) {
+        event.showEventWindow();
+        markEventOccurred(event.id); // Mark each displayed non-RANDOM event as occurred
     }
 }
 
