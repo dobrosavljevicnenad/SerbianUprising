@@ -228,6 +228,11 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
         if(!init)
             initializeGraphics(graphData);
     }
+    if (data.contains("load")){
+        QJsonObject graphData = data["load"].toObject();
+        clientGraph->deserialize(graphData);
+        init = false;
+    }
     if (data.contains("results") && data["results"].isObject()) {
         QJsonObject resultsObject = data["results"].toObject();
         if (resultsObject.contains("results") && resultsObject["results"].isArray()) {

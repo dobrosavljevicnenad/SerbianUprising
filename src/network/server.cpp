@@ -15,6 +15,7 @@ Server::Server(QObject *parent)
     connect(this, &Server::startGame, this, &Server::onGameStartRequested);
     connect(serverGameManager, &ServerGameManager::init_serializedGraphReady, this, &Server::handleSerializedGraph_init);
     connect(serverGameManager, &ServerGameManager::serializedGraphReady2, this, &Server::handleSerializedGraph);
+    connect(serverGameManager, &ServerGameManager::loadGame_serializedGraphReady, this, &Server::handleSerializedGraph_loadGame);
 }
 
 Server::~Server() {
@@ -167,6 +168,16 @@ void Server::executeActions(const std::vector<Action> &actions) {
 }
 
 // Handlers
+
+void Server::handleSerializedGraph_loadGame(QJsonObject& serializedGraph){
+    QJsonObject dataToSend;
+    dataToSend["load"] = serializedGraph;
+
+    QString serializedData = QString(QJsonDocument(dataToSend).toJson(QJsonDocument::Compact));
+    sendData(serializedData);
+}
+
+
 void Server::handleSerializedGraph_init(const QJsonObject &serializedGraph) {
     QJsonObject dataToSend;
     dataToSend["graph"] = serializedGraph;

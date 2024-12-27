@@ -67,5 +67,5 @@ void ServerGameManager::executeActions(const std::vector<Action> &actions1, int 
 void ServerGameManager::processLoadGame(QJsonObject& gameData){
     graph->deserialize(gameData);
     QJsonObject serializedGraph = graph->serialize(QJsonObject());
-    emit init_serializedGraphReady(serializedGraph);
+    emit loadGame_serializedGraphReady(serializedGraph);
 }
