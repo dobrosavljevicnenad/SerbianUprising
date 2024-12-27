@@ -15,6 +15,7 @@ Server::Server(QObject *parent)
     connect(this, &Server::startGame, this, &Server::onGameStartRequested);
     connect(serverGameManager, &ServerGameManager::init_serializedGraphReady, this, &Server::handleSerializedGraph_init);
     connect(serverGameManager, &ServerGameManager::serializedGraphReady2, this, &Server::handleSerializedGraph);
+    connect(serverGameManager, &ServerGameManager::loadGame_serializedGraphReady, this, &Server::handleSerializedGraph_loadGame);
 }
 
 Server::~Server() {
@@ -167,6 +168,16 @@ void Server::executeActions(const std::vector<Action> &actions) {
 }
 
 // Handlers
+
+void Server::handleSerializedGraph_loadGame(QJsonObject& serializedGraph){
+    QJsonObject dataToSend;
+    dataToSend["load"] = serializedGraph;
+
+    QString serializedData = QString(QJsonDocument(dataToSend).toJson(QJsonDocument::Compact));
+    sendData(serializedData);
+}
+
+
 void Server::handleSerializedGraph_init(const QJsonObject &serializedGraph) {
     QJsonObject dataToSend;
     dataToSend["graph"] = serializedGraph;
@@ -175,10 +186,11 @@ void Server::handleSerializedGraph_init(const QJsonObject &serializedGraph) {
     sendData(serializedData);
 }
 
-void Server::handleSerializedGraph(const QJsonObject& serializedGraph, const QJsonObject& results) {
+void Server::handleSerializedGraph(const QJsonObject& serializedGraph, const QJsonObject& results, const QJsonObject& events) {
     QJsonObject dataToSend;
     dataToSend["graph"] = serializedGraph;
     dataToSend["results"] = results;
+    dataToSend["events"] = events;
 
     QString serializedData = QString(QJsonDocument(dataToSend).toJson(QJsonDocument::Compact));
     sendData(serializedData);
@@ -216,6 +228,7 @@ void Server::handleLoadGameRequest(const QJsonObject &jsonObject) {
 
     if (jsonObject.contains("gameData")) {
         QJsonObject gameData = jsonObject["gameData"].toObject();
+        serverGameManager->processLoadGame(gameData);
         handleLoadGame(gameData);
     } else {
         qWarning() << "LOAD_GAME request is missing 'gameData'.";

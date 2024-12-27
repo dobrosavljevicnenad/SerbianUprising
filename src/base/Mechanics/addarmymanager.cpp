@@ -71,6 +71,8 @@ int AddArmyManager::calculateTotalTroops(){
 
     totalTroops += cityCount * cityBonus;
 
+    totalTroops = std::ceil(totalTroops * eventBonus/100);
+
     maxTroops = totalTroops;
 
     return totalTroops;
@@ -83,4 +85,7 @@ void AddArmyManager::decreaseAvailableTroops(int troops) {
 
 void AddArmyManager::endTurn(){
     totalTroops = 5;
+}
+void AddArmyManager::addBonus(int bonus){
+    eventBonus+=bonus;
 }

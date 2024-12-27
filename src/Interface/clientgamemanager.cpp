@@ -219,10 +219,35 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     if (data.contains("graph") && data["graph"].isObject()) {
         QJsonObject graphData = data["graph"].toObject();
         clientGraph->deserialize(graphData);
+
+        if (graphData.contains("events") && graphData["events"].isArray() && !init) {
+            QJsonArray eventsArray = graphData["events"].toArray();
+            eventHandle.deserializeEvents(eventsArray,ClientId);
+        }
+
         if(!init)
             initializeGraphics(graphData);
     }
-    if (data.contains("results") && data["results"].isObject()) {
+    if (data.contains("load")){
+        QJsonObject graphData = data["load"].toObject();
+        clientGraph->deserialize(graphData);
+        init = false;
+    }
+    if (data.contains("events") && data["events"].isObject() && init) {
+        QJsonObject eventsObject = data["events"].toObject();
+        if (eventsObject.contains("events") && eventsObject["events"].isArray()) {
+            QJsonArray eventsArray = eventsObject["events"].toArray();
+            for (const QJsonValue& eventValue : eventsArray) {
+                if (eventValue.isObject()) {
+                    QJsonObject eventObj = eventValue.toObject();
+                    QString title = eventObj["title"].toString();
+                    int clientId = eventObj["id"].toInt();
+                    eventHandle.processSpecificEvent(clientId, title, armyManager, naval);
+                }
+            }
+        }
+    }
+    if (data.contains("results") && data["results"].isObject() && init) {
         QJsonObject resultsObject = data["results"].toObject();
         if (resultsObject.contains("results") && resultsObject["results"].isArray()) {
             QJsonArray resultsArray = resultsObject["results"].toArray();
@@ -279,6 +304,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     armyManager.addTerritory(player);
     armyManager.calculateTotalTroops();
     characterWidget->setArmyText(armyManager.totalTroops,armyManager.maxTroops);
+    eventHandle.processIntroEvents();
 }
 
 QVector<QStringList> ClientGameManager::generateBattleResults() {
@@ -490,10 +516,10 @@ void ClientGameManager::removeArrowByActionId(int actionId) {
     }
 }
 QString ClientGameManager::GetCurrentAction(const Action& action) {
-    QString moveDescription = QString("%2 troops from Layer %3 to Layer %4")
+    QString moveDescription = QString("%2 troops from %3 to %4")
     .arg(action.soldiers)
-        .arg(action.sourceVertexId)
-        .arg(action.targetVertexId);
+    .arg(QString::fromStdString(clientGraph->get_vertex_by_id(action.sourceVertexId)->label()))
+    .arg(QString::fromStdString(clientGraph->get_vertex_by_id(action.targetVertexId)->label()));
     return moveDescription;
 }
 
@@ -640,15 +666,16 @@ void ClientGameManager::loadGame() {
     //     QMessageBox::critical(nullptr, "Load Failed", "Selected file does not exist:\n" + filePath);
     //     return;
     // }
+    if(loadGamePath != "base.json"){
+        QJsonObject graphData = fileManager.loadFromFile(fullPath);
+        if (graphData.isEmpty()) {
+            qWarning() << "Failed to load game state. File might be corrupt.";
+            CustomMessageBox::showMessage("Failed to load game state. File might be corrupt.");
+            return;
+        }
 
-    QJsonObject graphData = fileManager.loadFromFile(fullPath);
-    if (graphData.isEmpty()) {
-        qWarning() << "Failed to load game state. File might be corrupt.";
-        CustomMessageBox::showMessage("Failed to load game state. File might be corrupt.");
-        return;
+        emit gameDataLoaded(graphData);
     }
-
-    emit gameDataLoaded(graphData);
 
     // clientGraph->deserialize(graphData);
 
@@ -666,7 +693,7 @@ void ClientGameManager::loadGame() {
 void ClientGameManager::processLoadData(const QJsonObject &gameData) {
     qDebug() << "Processing loaded game data:" << gameData;
 
-    clientGraph->deserialize(gameData);
+    // clientGraph->deserialize(gameData);
 
     // for (auto &layer : layers) {
     //     graph::Vertex *vertex = clientGraph->get_vertex_by_id(layer->getId() + 1);
@@ -676,7 +703,7 @@ void ClientGameManager::processLoadData(const QJsonObject &gameData) {
     //     }
     // }
 
-    updateGraphics();
+    // updateGraphics();
     qDebug() << "Game data successfully processed and applied.";
 }
 

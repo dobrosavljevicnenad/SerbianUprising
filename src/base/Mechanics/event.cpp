@@ -1,119 +1,176 @@
 #include "event.h"
+#include <qscrollarea.h>
 
 
-Event::Event(EventType type, const std::string& outcome,
-             int outcomeGain, const std::vector<MapLayer*>& territories,
-             Army *army, const std::string& date)
-    : type(type),outcome(outcome), outcomeGain(outcomeGain),
-    territories(territories), army(army), date(date) {}
+Event::Event(unsigned int id,int clientId, EventType type, const QString& title, const QString& imagePath,
+             const QString& description, const QString& buttonText,
+             const QVector<QString>& territoryTrigger, const QString& trigger,
+             int triggerAmount, const QVector<QString>& territoryAffect, const QString& date)
+    :id(id),clientId(clientId), type(type),
+    title(title),
+    image_path(imagePath),
+    description(description),
+    buttonText(buttonText),
+    territoryTrigger(territoryTrigger),
+    trigger(trigger),
+    triggerAmount(triggerAmount),
+    territoryAffect(territoryAffect),
+    date(date) {}
 
 EventType Event::getType() const{return type;}
 
+QString Event::getDate() const {return date;}
 
-std::string Event::getDescription() const {return description;}
 
-std::string Event::getOutcome() const {return outcome;}
 
-int Event::getOutcomeGain() const {return outcomeGain;}
+bool Event::canTrigger(const QString& currentYear, const graph::Graph& clientGraph) const {
+    switch (type) {
+    case EventType::RANDOM:
+        return true;
 
-const std::vector<MapLayer*>& Event::getTerritories() const {return territories;}
+    case EventType::MISSION:
+        for (const QString& label : territoryTrigger) {
+            auto vertex = clientGraph.get_vertex_by_label(label);
+            if (vertex->army.armyType() != ArmyType::HAJDUK) {
+                return false;
+            }
+        }
+        return true;
 
-Army* Event::getArmy() const {return army;}
+    case EventType::HISTORIC:
+        return date == currentYear;
 
-std::string Event::getDate() const {return date;}
-
-QString Event::getPicturePath() const {return picture_path;}
+    default:
+        return false;
+    }
+}
 
 void Event::showEventWindow() {
-
-
     infoWindow = new QWidget;
-    infoWindow->setWindowTitle("Event Details");
-    infoWindow->setMinimumSize(600,400);
+    infoWindow->setWindowFlags(Qt::FramelessWindowHint);
+    infoWindow->setMinimumSize(900, 900);
 
-    infoWindow->setStyleSheet(
-        "background-color: #f0e6d2;"
-        "border: 4px solid #4e3629;"
-        "border-radius: 15px;"
-        );
-
-    QVBoxLayout * layout = new QVBoxLayout(infoWindow);
-
-
-    QString eventType;
-    switch(type){
-        case EventType::BATTLE:
-            eventType = "Battle Event";
-            break;
-        case EventType::PROGRESS:
-            eventType = "Progress Event";
-            break;
-        case EventType:: UPRISING:
-            eventType = "Uprising Event";
-            break;
-        case EventType::ECONOMIC_EVENT:
-            eventType = "Economic event";
-            break;
-        case EventType::NATURAL_DISASTER:
-            eventType = "Natural Disaster";
-            break;
+    if (clientId == 1) {
+        infoWindow->setStyleSheet(
+            "background-color: rgba(74, 47, 47,190); "
+            "border-radius: 10px; "
+            "border-width: 10px;"
+            "border-image: url(:/resources/border1.png) 60 stretch;"
+            );
+    } else {
+        infoWindow->setStyleSheet(
+            "background-color: rgba(3, 66, 5,190); "
+            "border-radius: 10px; "
+            "border-width: 10px;"
+            "border-image: url(:/resources/border1.png) 60 stretch;"
+            );
     }
 
-        typeLabel = new QLabel("<h1 style='color: #d7a13d; font-family: \"SimSun\", serif; font-size: 26px;'>"
-    "Karadjordje zauzima Cetinje</h1>", infoWindow);
-    typeLabel->setAlignment(Qt::AlignCenter);
-    typeLabel->setStyleSheet("border: none");
-    layout->addWidget(typeLabel);
+    QVBoxLayout* mainLayout = new QVBoxLayout(infoWindow);
 
-    QLabel *imageLabel = new QLabel(infoWindow);
-    QPixmap label_image(picture_path);
-    label_image = label_image.scaled(infoWindow->width(),100,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-    imageLabel->setPixmap(label_image);
+    QLabel* titleLabel = new QLabel(title, infoWindow);
+    titleLabel->setAlignment(Qt::AlignCenter);
+    titleLabel->setFixedSize(820, 100);
+    QFont titleFont = titleLabel->font();
+    titleFont.setBold(true);
+    titleFont.setPointSize(30);
+    titleLabel->setFont(titleFont);
+    titleLabel->setStyleSheet("color: #FFD700; background-color: transparent; border-image: none;");
+    mainLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
+
+    QLabel* imageLabel = new QLabel(infoWindow);
+    imageLabel->setFixedSize(820, 450);
+    imageLabel->setStyleSheet("margin: 10px;border-image:none;");
     imageLabel->setAlignment(Qt::AlignCenter);
-    imageLabel->setStyleSheet("margin-bottom: 15px");
-    layout->addWidget(imageLabel);
+    imageLabel->setScaledContents(true);
 
-    outcomeLabel = new QLabel(QString("<p style='color: #6b3f3d; font-size: 16px;'>%1</p>")
-                                  .arg(QString::fromStdString(outcome)), infoWindow);
+    QPixmap labelImage(image_path);
+    labelImage = labelImage.scaled(imageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    imageLabel->setPixmap(labelImage);
+    mainLayout->addWidget(imageLabel, 0, Qt::AlignCenter);
 
-    layout->addWidget(outcomeLabel);
+    QHBoxLayout* descriptionOutcomeLayout = new QHBoxLayout;
 
-    QPushButton *closeButton = new QPushButton("X",infoWindow);
-    layout->addWidget(closeButton);
-    closeButton->setFixedSize(70,50);
-    closeButton->setStyleSheet(        "background-color: #ff6347;"
-                               "border: 1px solid #8b4513;"
-                               "border-radius: 5px;"
-                               "text-align: center;"
-                               "font-size: 14px; padding: 8px;");
+    QLabel* descriptionLabel = new QLabel(description, infoWindow);
+    descriptionLabel->setWordWrap(true);
+    descriptionLabel->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    descriptionLabel->setStyleSheet(
+        "font-size: 12pt; "
+        "color: #D4AF37; "
+        "padding: 10px; "
+        "background-color: rgba(0, 0, 0, 128); "
+        "border-radius: 5px;"
+        "border: 1px solid #A0522D;"
+        "border-image:none;"
+        );
+    descriptionLabel->setFixedSize(656, 200);
+    descriptionOutcomeLayout->addWidget(descriptionLabel, 4);
 
+    QLabel* outcomeLabel = new QLabel("Outcome", infoWindow);
+    outcomeLabel->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    outcomeLabel->setStyleSheet(
+        "font-size: 12pt; "
+        "color: #FFFFFF; "
+        "padding: 10px; "
+        "background-color: rgba(0, 0, 0, 128); "
+        "border-radius: 5px; "
+        "border: 1px solid #A0522D;"
+        "border-image:none;"
 
-    gainLabel = new QLabel(QString("<p style='color: #006400;'>Outcome Gain: %1</p>").arg(outcomeGain), infoWindow);
-    gainLabel->setStyleSheet("boder : none;");
-    layout->addWidget(gainLabel);
+        );
+    outcomeLabel->setFixedSize(164, 200);
+    descriptionOutcomeLayout->addWidget(outcomeLabel, 1);
 
-    territoryCountLabel = new QLabel(QString("<p style='color: #4b0082;'>Territories Affected: %1</p>").arg(territories.size()), infoWindow);
-    layout->addWidget(territoryCountLabel);
+    mainLayout->addLayout(descriptionOutcomeLayout);
 
-    QObject::connect(closeButton, &QPushButton::clicked,infoWindow,&QWidget::close);
+    QPushButton* actionButton = new QPushButton(buttonText, infoWindow);
+    actionButton->setFixedSize(820, 50);
+    actionButton->setStyleSheet(
+        "QPushButton { "
+        "   background-color: #8B0000; "
+        "   border-radius: 10px; "
+        "   color: white;   "
+        "   border: 2px solid #5A0000; "
+        "   font-size: 12pt; "
+        "   padding: 5px;   "
+        "   border-image: none; "
+        "} "
+        "QPushButton:hover { "
+        "   background-color: #B22222; "
+        "} "
+        "QPushButton:pressed { "
+        "   background-color: #5A0000; "
+        "} "
+        );
+    QObject::connect(actionButton, &QPushButton::clicked, infoWindow, &QWidget::close);
+
+    mainLayout->addWidget(actionButton, 0, Qt::AlignCenter);
 
     infoWindow->show();
 
 }
 
-void Event::printEventDetails() const {
-    std::cout << "Event Description: " << description << "\n"
-              << "Type: " << static_cast<int>(type) << "\n"
-              << "Outcome: " << outcome << "\n"
-              << "Outcome Gain: " << outcomeGain << "\n"
-              << "Number of Territories: " << territories.size() << "\n"
-              << "Date: " << date << "\n";
+EventType Event::stringToEventType(const std::string& str) {
+    if (str == "RANDOM") {
+        return EventType::RANDOM;
+    } else if (str == "HISTORIC") {
+        return EventType::HISTORIC;
+    } else if (str == "MISSION") {
+        return EventType::MISSION;
+    } else {
+        throw std::invalid_argument("Unknown EventType string: " + str);
+    }
 }
-EventType stringToEventType(const std::string& str) {
-    if (str == "BATTLE") return EventType::BATTLE;
-    if (str == "PROGRESS") return EventType::PROGRESS;
-    if (str == "UPRISING") return EventType::UPRISING;
-    if (str == "ECONOMIC_EVENT") return EventType::ECONOMIC_EVENT;
-    if (str == "NATURAL_DISASTER") return EventType::NATURAL_DISASTER;
-    throw std::invalid_argument("Invalid EventType string: " + str);
+
+std::string Event::eventTypeToString(EventType type) {
+    switch (type) {
+    case EventType::RANDOM:
+        return "RANDOM";
+    case EventType::HISTORIC:
+        return "HISTORIC";
+    case EventType::MISSION:
+        return "MISSION";
+    default:
+        throw std::invalid_argument("Unknown EventType enum value.");
+    }
 }

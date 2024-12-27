@@ -30,6 +30,7 @@
 #include "../base/Entities/region.h"
 #include "../base/Entities/city.h"
 #include "../Interface/Items/characterwidget.h"
+#include "../base/Mechanics/eventhandle.h"
 #include "map.h"
 #include "filemanager.h"
 #include <qaudiooutput.h>
@@ -134,6 +135,8 @@ private://UI
     CharacterWidget *characterWidget;
 
 public:
+    bool naval = true;
+    EventHandle eventHandle;
     unsigned TurnId = 1;
     int ClientId;
     BattleResultsDialog *dialog;

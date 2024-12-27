@@ -3,7 +3,11 @@
 #include "lobbywindow.h"
 #include <QHeaderView>
 #include <QFileInfoList>
+#include <qmessagebox.h>
 #include "Interface/Items/custommessagebox.h"
+#include <QStandardItemModel>
+
+
 CreateLobbyWindow::CreateLobbyWindow(QWidget *parent)
     : QWidget(parent), connectionManager(new ConnectionManager(this))
 {
@@ -61,6 +65,7 @@ void CreateLobbyWindow::setupUI() {
     armyLabel->setStyleSheet("font: bold 18px 'Serif'; color: brown;");
 
     armyComboBox = new QComboBox(this);
+    armyComboBox->addItem("Select Army");
     armyComboBox->addItems({"Hajduk", "Janissary"});
     armyComboBox->setFixedWidth(250);
     armyComboBox->setStyleSheet(R"(
@@ -77,6 +82,10 @@ void CreateLobbyWindow::setupUI() {
             background-color: rgba(255, 215, 0, 150);
         }
     )");
+
+    QStandardItemModel* model = qobject_cast<QStandardItemModel*>(armyComboBox->model());
+    QStandardItem* firstItem = model->item(0);
+    firstItem->setEnabled(false);
 
     armyBoxLayout->addWidget(armyLabel);
     armyBoxLayout->addWidget(armyComboBox);
@@ -185,49 +194,71 @@ void CreateLobbyWindow::setupUI() {
 
     setLayout(mainLayout);
 
-    armyComboBox->setCurrentText("Hajduk");
-    updateArmySelection("Hajduk");
+    armyComboBox->setCurrentText("Select Army");
+    // updateArmySelection("Select Army");
 
     connect(exitButton, &QPushButton::clicked, this, &CreateLobbyWindow::backToLobby);
     connect(armyComboBox, &QComboBox::currentTextChanged, this, &CreateLobbyWindow::updateArmySelection);
     connect(startButton, &QPushButton::clicked, [this]() {
-        int armyId = armyComboBox->currentIndex() + 1;
-        QString localIp = connectionManager->getLocalIpAddress();
-        CustomMessageBox::showMessage(QString("Server IP: %1").arg(localIp), this);
-        if (!connectionManager->initializeServer()) {
-            CustomMessageBox::showMessage("Error: Failed to start the server.", this);
-            return;
-        }
+        if(isArmySelected){
+            isGameStarted = true;
+            int armyId = armyComboBox->currentIndex() + 1;
+            QString localIp = connectionManager->getLocalIpAddress();
+            CustomMessageBox::showMessage(QString("Server IP: %1").arg(localIp), this);
+            if (!connectionManager->initializeServer()) {
+                CustomMessageBox::showMessage("Error: Failed to start the server.", this);
+                return;
+            }
 
-        if (!connectionManager->initializeClient()) {
-            CustomMessageBox::showMessage("Error: Failed to connect the host client.", this);
-            return;
-        }
+            if (!connectionManager->initializeClient()) {
+                CustomMessageBox::showMessage("Error: Failed to connect the host client.", this);
+                return;
+            }
 
-        ip->setText("IP: " + localIp);
+            ip->setText("IP: " + localIp);
 
-        if (connectionManager) {
-            connect(connectionManager, &ConnectionManager::gameStarted, this, &CreateLobbyWindow::handleGameStart);
+            if (connectionManager) {
+                connect(connectionManager, &ConnectionManager::gameStarted, this, &CreateLobbyWindow::handleGameStart);
 
-            connectionManager->sendArmySelection(armyId);
+                connectionManager->sendArmySelection(armyId);
 
-            qDebug() << "Signals connected successfully.";
+                qDebug() << "Signals connected successfully.";
+            } else {
+                qWarning() << "Failed to connect signals: ConnectionManager is nullptr.";
+            }
         } else {
-            qWarning() << "Failed to connect signals: ConnectionManager is nullptr.";
+            CustomMessageBox::showMessage("Please follow the correct sequence: first select a file, then load the game, and finally select the army.", this);
         }
     });
 
 }
 
 void CreateLobbyWindow::updateArmySelection(const QString &player1Army) {
-    player1ArmyLabel->setText("Army: " + player1Army);
+    if (isGameLoaded && !isGameStarted) {
+        player1ArmyLabel->setText("Army: " + player1Army);
 
-    QString player2Army = (player1Army == "Hajduk") ? "Janissary" : "Hajduk";
-    player2ArmyLabel->setText("Army: " + player2Army);
+        QString player2Army = (player1Army == "Hajduk") ? "Janissary" : "Hajduk";
+        player2ArmyLabel->setText("Army: " + player2Army);
 
-    ARMY1 = (player1Army == "Hajduk") ? ArmyType::HAJDUK : ArmyType::JANISSARY;
-    ARMY2 = (player1Army == "Hajduk") ? ArmyType::JANISSARY : ArmyType::HAJDUK;
+        ARMY1 = (player1Army == "Hajduk") ? ArmyType::HAJDUK : ArmyType::JANISSARY;
+        ARMY2 = (player1Army == "Hajduk") ? ArmyType::JANISSARY : ArmyType::HAJDUK;
+
+        isArmySelected = true;
+        return;
+    }
+
+    if (isGameStarted && armyComboBox->currentIndex() != 0) {
+        CustomMessageBox::showMessage("Game has already started. You cannot choose army anymore.", this);
+        armyComboBox->setCurrentText("Select Army");
+        return;
+    }
+
+    if (!isGameStarted && armyComboBox->currentIndex() != 0) {
+        CustomMessageBox::showMessage("You have to Load Game first.", this);
+        armyComboBox->setCurrentText("Select Army");
+    }
 }
+
 
 void CreateLobbyWindow::loadSavedGames() {
     QDir directory("../../resources/saved_games/");
@@ -295,16 +326,36 @@ void CreateLobbyWindow::handleGameStart() {
 
 void CreateLobbyWindow::onFileClicked(int row, int column) {
     QTableWidgetItem *item = savedGamesTable->item(row, column);
-    if (item) {
+
+    if (item && !isGameLoaded) {
         selectedFile = item->text();
-        CustomMessageBox::showMessage(QString("Kliknuo si na \"%1\"").arg(selectedFile),this);
+        CustomMessageBox::showMessage(QString("You clicked on \"%1\"").arg(selectedFile), this);
+        isFileClicked = true;
+        return;
+    }
+
+    if (item && isGameLoaded) {
+        CustomMessageBox::showMessage(QString("Game is already loaded: \"%1\"").arg(selectedFile), this);
     }
 }
 
+
 void CreateLobbyWindow::onLoadGameClicked() {
     if (selectedFile.isEmpty()) {
-        CustomMessageBox::showMessage("Niste izabrali nijedan fajl!", this);
+        CustomMessageBox::showMessage("No file selected!", this);
+        return;
+    }
+
+    if (isGameStarted) {
+        CustomMessageBox::showMessage("Game has already started.", this);
+        return;
+    }
+
+    if (isGameLoaded) {
+        CustomMessageBox::showMessage("Game is already loaded.", this);
     } else {
-        CustomMessageBox::showMessage(QString("Load Game: Loaded map: \"%1\"").arg(selectedFile),this);
+        CustomMessageBox::showMessage(QString("Load Game: Loaded map: \"%1\"").arg(selectedFile), this);
+        isGameLoaded = true;
     }
 }
+
