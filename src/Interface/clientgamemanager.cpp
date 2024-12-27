@@ -666,7 +666,7 @@ void ClientGameManager::loadGame() {
 void ClientGameManager::processLoadData(const QJsonObject &gameData) {
     qDebug() << "Processing loaded game data:" << gameData;
 
-    clientGraph->deserialize(gameData);
+    // clientGraph->deserialize(gameData);
 
     // for (auto &layer : layers) {
     //     graph::Vertex *vertex = clientGraph->get_vertex_by_id(layer->getId() + 1);
@@ -676,7 +676,7 @@ void ClientGameManager::processLoadData(const QJsonObject &gameData) {
     //     }
     // }
 
-    updateGraphics();
+    // updateGraphics();
     qDebug() << "Game data successfully processed and applied.";
 }
 

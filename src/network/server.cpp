@@ -216,6 +216,7 @@ void Server::handleLoadGameRequest(const QJsonObject &jsonObject) {
 
     if (jsonObject.contains("gameData")) {
         QJsonObject gameData = jsonObject["gameData"].toObject();
+        serverGameManager->processLoadGame(gameData);
         handleLoadGame(gameData);
     } else {
         qWarning() << "LOAD_GAME request is missing 'gameData'.";
