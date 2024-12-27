@@ -25,6 +25,7 @@ CustomInputDialog::CustomInputDialog(const QString& title, const QString& labelT
     inputLineEdit->setStyleSheet("padding: 5px; border: 1px solid #aaa; width: 300px;");
 
     if (maxTroops > 0) {
+        qDebug()<<maxTroops;
         inputLineEdit->setValidator(new QIntValidator(0, maxTroops, this));
     }
 
@@ -58,7 +59,16 @@ CustomInputDialog::CustomInputDialog(const QString& title, const QString& labelT
 
         setGeometry(x, y, width(), height());
     }
-
+    connect(inputLineEdit, &QLineEdit::textChanged, [this]() {
+        if(maxTroops > 0){
+            bool ok;
+            int value = inputLineEdit->text().toInt(&ok);
+            if (ok && value > maxTroops) {
+                qDebug() << "Entered value exceeds maxTroops!";
+                inputLineEdit->setText(QString::number(maxTroops)); // Set the value to maxTroops if exceeds
+            }
+        }
+    });
 }
 
 QString CustomInputDialog::getInputText() const {

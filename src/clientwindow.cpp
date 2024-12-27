@@ -230,7 +230,7 @@ void ClientWindow::setupUI() {
     layoutContainer->setLayout(mainLayout);
     layoutContainer->setGeometry(10, 10, 250, 520);
 
-    mapModeContainer = new QWidget(view->viewport());   
+    mapModeContainer = new QWidget(view->viewport());
     if(gameManager->ClientId == 1){
         mapModeContainer->setStyleSheet(
             "background-color: rgba(74, 47, 47,190); "
@@ -594,28 +594,31 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer) {
 
         Qt::KeyboardModifiers modifiers = QApplication::keyboardModifiers();
         int troopsToAdd = 0;
-
+        int troops = 0;
+        switch (selected_vertex->city->getLevel()) {
+        case 3:
+            troops = std::numeric_limits<int>::max();
+            break;
+        case 2:
+            troops = 50;
+            break;
+        default:
+            troops = 10;
+            break;
+        }
+        troops = std::min(armyManager.totalTroops, troops - selected_vertex->newRecruits);
+        if(troops == 0){
+            CustomMessageBox::showMessage("Cant add more soldiers on this territory", this);
+            selected_vertex = nullptr;
+            return;
+        }
         if (modifiers == (Qt::ControlModifier | Qt::ShiftModifier)) {
-            troopsToAdd = std::min(100, armyManager.totalTroops);
+            troopsToAdd = std::min(100, troops);
         } else if (modifiers == Qt::ShiftModifier) {
-            troopsToAdd = std::min(10, armyManager.totalTroops);
+            troopsToAdd = std::min(10, troops);
         } else if (modifiers == Qt::ControlModifier) {
-            troopsToAdd = std::min(1, armyManager.totalTroops);
+            troopsToAdd = std::min(1, troops);
         } else {
-            bool ok;
-            int troops = 0;
-            switch (selected_vertex->city->getLevel()) {
-            case 3:
-                troops = std::numeric_limits<int>::max();
-                break;
-            case 2:
-                troops = 50;
-                break;
-            default:
-                troops = 10;
-                break;
-            }
-            troops = std::min(armyManager.totalTroops, troops - selected_vertex->newRecruits);
             std::string message = "Enter the number of soldiers up to " + std::to_string(troops) + " to place:";
             /*troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
                                                tr(message.c_str()), 0, 0, troops, 1, &ok);
@@ -641,23 +644,45 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer) {
             layer->setTroopCount(layer->getTroopCount() + troopsToAdd);
             int pid = gameManager->ClientId;
             int source = selected_vertex->id();
-
-            Action newAction(ActionType::PLACE_ARMY, pid, source, 0, troopsToAdd);
-            gameManager->addAction(newAction);
+            bool found = false;
+            for(auto& action : gameManager->actionBuffer){
+                if(action.sourceVertexId == source && action.type == ActionType::PLACE_ARMY){
+                    QString moveDescription = QString("Placed %1 troops on %2").arg(action.soldiers).arg(
+                        QString::fromStdString(selected_vertex->label()));
+                    action.soldiers += troopsToAdd;
+                    auto items = moveList->findItems(moveDescription, Qt::MatchExactly);
+                    if (!items.isEmpty()) {
+                        QListWidgetItem* itemToRemove = items.first();
+                        moveList->removeItemWidget(itemToRemove);
+                        delete itemToRemove;
+                    }
+                    moveDescription = QString("Placed %1 troops on %2").arg(action.soldiers).arg(
+                        QString::fromStdString(selected_vertex->label()));
+                    QListWidgetItem* newItem = new QListWidgetItem(moveDescription);
+                    newItem->setData(Qt::UserRole, QVariant::fromValue(selected_vertex->id()));
+                    newItem->setData(Qt::UserRole + 1, QVariant(action.soldiers));
+                    newItem->setData(Qt::UserRole + 2, "Place");
+                    newItem->setData(Qt::UserRole + 3, action.id);
+                    moveList->addItem(newItem);
+                    found = true;
+                }
+            }
+            if(!found){
+                Action newAction(ActionType::PLACE_ARMY, pid, source, 0, troopsToAdd);
+                gameManager->addAction(newAction);
+                QString moveDescription = QString("Placed %1 troops on %2").arg(troopsToAdd).arg(
+                    QString::fromStdString(selected_vertex->label()));
+                QListWidgetItem* item = new QListWidgetItem(moveDescription);
+                item->setData(Qt::UserRole, QVariant::fromValue(selected_vertex->id()));
+                item->setData(Qt::UserRole + 1, QVariant(troopsToAdd));
+                item->setData(Qt::UserRole + 2, "Place");
+                item->setData(Qt::UserRole + 3, newAction.id);
+                moveList->addItem(item);
+            }
             armyManager.decreaseAvailableTroops(troopsToAdd);
             selected_vertex->newRecruits += troopsToAdd;
             selected_vertex->army.setSoldiers(selected_vertex->army.getSoldiers() + troopsToAdd);
-
-            QString moveDescription = QString("Placed %1 troops on %2").arg(troopsToAdd).arg(QString::fromStdString(selected_vertex->label()));
-            QListWidgetItem* item = new QListWidgetItem(moveDescription);
-            item->setData(Qt::UserRole, QVariant::fromValue(selected_vertex->id()));
-            item->setData(Qt::UserRole + 1, QVariant(troopsToAdd));
-            item->setData(Qt::UserRole + 2, "Place");
-            item->setData(Qt::UserRole + 3, newAction.id);
-
             characterWidget->setArmyText(armyManager.totalTroops,armyManager.maxTroops);
-
-            moveList->addItem(item);
         }
     }
 }
@@ -750,6 +775,7 @@ void ClientWindow::showPauseMenu() {
     overlay->setObjectName("PauseMenuOverlay");
     overlay->setStyleSheet("background-color: rgba(0, 0, 0, 180);");
     overlay->setGeometry(this->rect());
+
     overlay->setAttribute(Qt::WA_TransparentForMouseEvents, false); // Sprečava da overlay bude transparentan za mišićne događaje
     overlay->setFocusPolicy(Qt::StrongFocus); // Omogućava da overlay primi fokus
 
@@ -890,7 +916,6 @@ void ClientWindow::showDisconnectPauseMenu() {
     menuWidget->move((width() - menuWidget->width()) / 2, (height() - menuWidget->height()) / 2);
 
     QVBoxLayout *layout = new QVBoxLayout(menuWidget);
-
     layout->setContentsMargins(60, 20, 60, 150);
     layout->setSpacing(20);
 
@@ -921,23 +946,24 @@ void ClientWindow::showDisconnectPauseMenu() {
         "QPushButton:pressed { "
         "   background-color: #2E4600; "
         "} ";
+
     saveButton->setStyleSheet(buttonStyle);
     quitButton->setStyleSheet(buttonStyle);
     quitButton->setStyleSheet(
-        "QPushButton { "
-        "   background-color: #8B0000;"
-        "   border-radius: 10px; "
-        "   border: 2px solid #FFD700; "
-        "   color: white; "
-        "   padding: 10px;"
-        "   border-image: none;"
-        "} "
-        "QPushButton:hover { "
-        "   background-color: #B22222; "
-        "} "
-        "QPushButton:pressed { "
-        "   background-color: #5A0000; "
-        "} ");
+                  "QPushButton { "
+                  "   background-color: #8B0000;"
+                  "   border-radius: 10px; "
+                  "   border: 2px solid #FFD700; "
+                  "   color: white; "
+                  "   padding: 10px;"
+                  "   border-image: none;"
+                  "} "
+                  "QPushButton:hover { "
+                  "   background-color: #B22222; "
+                  "} "
+                  "QPushButton:pressed { "
+                  "   background-color: #5A0000; "
+                  "} ");
 
     layout->addWidget(saveButton);
     layout->addWidget(quitButton);

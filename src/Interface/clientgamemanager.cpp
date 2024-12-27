@@ -666,15 +666,16 @@ void ClientGameManager::loadGame() {
     //     QMessageBox::critical(nullptr, "Load Failed", "Selected file does not exist:\n" + filePath);
     //     return;
     // }
+    if(loadGamePath != "base.json"){
+        QJsonObject graphData = fileManager.loadFromFile(fullPath);
+        if (graphData.isEmpty()) {
+            qWarning() << "Failed to load game state. File might be corrupt.";
+            CustomMessageBox::showMessage("Failed to load game state. File might be corrupt.");
+            return;
+        }
 
-    QJsonObject graphData = fileManager.loadFromFile(fullPath);
-    if (graphData.isEmpty()) {
-        qWarning() << "Failed to load game state. File might be corrupt.";
-        CustomMessageBox::showMessage("Failed to load game state. File might be corrupt.");
-        return;
+        emit gameDataLoaded(graphData);
     }
-
-    emit gameDataLoaded(graphData);
 
     // clientGraph->deserialize(graphData);
 

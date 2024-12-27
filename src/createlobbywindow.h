@@ -52,6 +52,11 @@ private:
     ArmyType ARMY1;
     ArmyType ARMY2;
 
+    bool isFileClicked = false;
+    bool isGameLoaded = false;
+    bool isArmySelected = false;
+    bool isGameStarted = false;
+
 signals:
     void backToLobby();
 
