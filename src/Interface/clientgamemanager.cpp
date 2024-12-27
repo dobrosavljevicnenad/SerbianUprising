@@ -1,6 +1,4 @@
 #include "clientgamemanager.h"
-#include <qaudiooutput.h>
-#include <qmediaplayer.h>
 
 ClientGameManager::ClientGameManager(QGraphicsScene* scene,QObject* parent)
     : QObject(parent),scene(scene),clientGraph(new graph::Graph()), armyManager(*new AddArmyManager(clientGraph.get()))
@@ -196,7 +194,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
 
         if (graphData.contains("events") && graphData["events"].isArray()) {
             QJsonArray eventsArray = graphData["events"].toArray();
-            eventHandle.deserializeEvents(eventsArray);
+            eventHandle.deserializeEvents(eventsArray,ClientId);
         }
 
         if(!init)
@@ -245,7 +243,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
                     }
                 }
             } else {
-                qWarning() << "Vertex not found for layer ID:" << layer->getId();
+                qWarning() << "Vertex not found for layer ID: " << layer->getId();
             }
         }
         nodeInfoWidget->updateLayerToVertex(layerToVertex);
@@ -259,7 +257,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     armyManager.addTerritory(player);
     armyManager.calculateTotalTroops();
     characterWidget->setArmyText(armyManager.totalTroops,armyManager.maxTroops);
-    eventHandle.processEvents(ClientId, gameYear.getCurrentDateString(), *clientGraph);
+    eventHandle.processEvents(ClientId, gameYear.toJsonDateString(), *clientGraph);
 }
 
 QVector<QStringList> ClientGameManager::generateBattleResults() {
@@ -594,7 +592,7 @@ void ClientGameManager::saveGame() {
         );
 
     if (filePath.isEmpty()) {
-        QMessageBox::warning(nullptr, "Save Cancelled", "No file selected. Save operation cancelled.");
+        CustomMessageBox::showMessage("No file selected. Save operation cancelled.");
         return;
     }
 
@@ -625,7 +623,7 @@ void ClientGameManager::loadGame() {
     QJsonObject graphData = fileManager.loadFromFile(fullPath);
     if (graphData.isEmpty()) {
         qWarning() << "Failed to load game state. File might be corrupt.";
-        QMessageBox::critical(nullptr, "Load Failed", "Failed to load game state. File might be corrupt.");
+        CustomMessageBox::showMessage("Failed to load game state. File might be corrupt.");
         return;
     }
 

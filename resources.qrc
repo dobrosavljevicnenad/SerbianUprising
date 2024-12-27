@@ -165,5 +165,25 @@
         <file>resources/arrow.png</file>
         <file>resources/pasha.png</file>
         <file>resources/karadjordje.png</file>
+        <file>resources/a_sick_man_of_europe.png</file>
+        <file>resources/Images/varvarin.png</file>
+        <file>resources/Images/tabanovce.png</file>
+        <file>resources/Images/supplies.png</file>
+        <file>resources/Images/spies.png</file>
+        <file>resources/Images/serbian_goverment.png</file>
+        <file>resources/Images/serbian_constitution.png</file>
+        <file>resources/Images/sabotage.png</file>
+        <file>resources/Images/rebels.png</file>
+        <file>resources/Images/prvi_srpski_ustanak.png</file>
+        <file>resources/Images/party.png</file>
+        <file>resources/Images/otomans.png</file>
+        <file>resources/Images/misar.png</file>
+        <file>resources/Images/local_uprising.png</file>
+        <file>resources/Images/janicari.png</file>
+        <file>resources/Images/garison.png</file>
+        <file>resources/Images/famine.png</file>
+        <file>resources/Images/deligrad.png</file>
+        <file>resources/Images/bosna.png</file>
+        <file>resources/Images/Beograd_siege.png</file>
     </qresource>
 </RCC>

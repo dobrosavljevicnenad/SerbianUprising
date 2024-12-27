@@ -1,4 +1,5 @@
 #include "event.h"
+#include <qscrollarea.h>
 
 
 Event::Event(unsigned int id, EventType type, const QString& title, const QString& imagePath,
@@ -23,6 +24,7 @@ QString Event::getDate() const {return date;}
 
 
 bool Event::canTrigger(int clientId, const QString& currentYear, const graph::Graph& clientGraph) const {
+    clientId=clientId;
     switch (type) {
     case EventType::RANDOM:
         return true;
@@ -49,68 +51,107 @@ bool Event::canTrigger(int clientId, const QString& currentYear, const graph::Gr
 
 void Event::showEventWindow() {
     infoWindow = new QWidget;
-    infoWindow->setWindowTitle("Event Details");
-    infoWindow->setMinimumSize(600,400);
-    infoWindow->setStyleSheet(
-        "background-color: #f0e6d2;"
-        "border: 4px solid #4e3629;"
-        "border-radius: 15px;"
-        );
+    infoWindow->setWindowFlags(Qt::FramelessWindowHint);
+    infoWindow->setMinimumSize(900, 900);
 
-    QVBoxLayout * layout = new QVBoxLayout(infoWindow);
-
-    QString eventType;
-    switch(type){
-        case EventType::RANDOM:
-            eventType = "Random Event";
-            break;
-        case EventType::HISTORIC:
-            eventType = "Historic Event";
-            break;
-        case EventType:: MISSION:
-            eventType = "Mission Event";
-            break;
+    if (clientId == 1) {
+        infoWindow->setStyleSheet(
+            "background-color: rgba(74, 47, 47,190); "
+            "border-radius: 10px; "
+            "border-width: 10px;"
+            "border-image: url(:/resources/border1.png) 60 stretch;"
+            );
+    } else {
+        infoWindow->setStyleSheet(
+            "background-color: rgba(3, 66, 5,190); "
+            "border-radius: 10px; "
+            "border-width: 10px;"
+            "border-image: url(:/resources/border1.png) 60 stretch;"
+            );
     }
 
-    typeLabel = new QLabel("<h1 style='color: #d7a13d; font-family: \"SimSun\", serif; font-size: 26px;'>"
-    "Karadjordje zauzima Cetinje</h1>", infoWindow);
-    typeLabel->setAlignment(Qt::AlignCenter);
-    typeLabel->setStyleSheet("border: none");
-    layout->addWidget(typeLabel);
+    QVBoxLayout* mainLayout = new QVBoxLayout(infoWindow);
 
-    QLabel *imageLabel = new QLabel(infoWindow);
-    QPixmap label_image(image_path);
-    label_image = label_image.scaled(infoWindow->width(),100,Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
-    imageLabel->setPixmap(label_image);
+    QLabel* titleLabel = new QLabel(title, infoWindow);
+    titleLabel->setAlignment(Qt::AlignCenter);
+    titleLabel->setFixedSize(820, 100);
+    QFont titleFont = titleLabel->font();
+    titleFont.setBold(true);
+    titleFont.setPointSize(30);
+    titleLabel->setFont(titleFont);
+    titleLabel->setStyleSheet("color: #FFD700; background-color: transparent; border-image: none;");
+    mainLayout->addWidget(titleLabel, 0, Qt::AlignCenter);
+
+    QLabel* imageLabel = new QLabel(infoWindow);
+    imageLabel->setFixedSize(820, 450);
+    imageLabel->setStyleSheet("margin: 10px;border-image:none;");
     imageLabel->setAlignment(Qt::AlignCenter);
-    imageLabel->setStyleSheet("margin-bottom: 15px");
-    layout->addWidget(imageLabel);
+    imageLabel->setScaledContents(true);
 
-    outcomeLabel = new QLabel(QString("<p style='color: #6b3f3d; font-size: 16px;'>%1</p>")
-                                  .arg(QString::fromStdString("cao")), infoWindow);
+    QPixmap labelImage(image_path);
+    labelImage = labelImage.scaled(imageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    imageLabel->setPixmap(labelImage);
+    mainLayout->addWidget(imageLabel, 0, Qt::AlignCenter);
 
-    layout->addWidget(outcomeLabel);
+    QHBoxLayout* descriptionOutcomeLayout = new QHBoxLayout;
 
-    QPushButton *closeButton = new QPushButton("X",infoWindow);
-    layout->addWidget(closeButton);
-    closeButton->setFixedSize(70,50);
-    closeButton->setStyleSheet(        "background-color: #ff6347;"
-                               "border: 1px solid #8b4513;"
-                               "border-radius: 5px;"
-                               "text-align: center;"
-                               "font-size: 14px; padding: 8px;");
+    QLabel* descriptionLabel = new QLabel(description, infoWindow);
+    descriptionLabel->setWordWrap(true);
+    descriptionLabel->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    descriptionLabel->setStyleSheet(
+        "font-size: 12pt; "
+        "color: #D4AF37; "
+        "padding: 10px; "
+        "background-color: rgba(0, 0, 0, 128); "
+        "border-radius: 5px;"
+        "border: 1px solid #A0522D;"
+        "border-image:none;"
+        );
+    descriptionLabel->setFixedSize(656, 200);
+    descriptionOutcomeLayout->addWidget(descriptionLabel, 4);
 
+    QLabel* outcomeLabel = new QLabel("Outcome", infoWindow);
+    outcomeLabel->setAlignment(Qt::AlignLeft | Qt::AlignTop);
+    outcomeLabel->setStyleSheet(
+        "font-size: 12pt; "
+        "color: #FFFFFF; "
+        "padding: 10px; "
+        "background-color: rgba(0, 0, 0, 128); "
+        "border-radius: 5px; "
+        "border: 1px solid #A0522D;"
+        "border-image:none;"
 
-    gainLabel = new QLabel(QString("<p style='color: #006400;'>Outcome Gain: %1</p>").arg(23), infoWindow);
-    gainLabel->setStyleSheet("boder : none;");
-    layout->addWidget(gainLabel);
+        );
+    outcomeLabel->setFixedSize(164, 200);
+    descriptionOutcomeLayout->addWidget(outcomeLabel, 1);
 
-    territoryCountLabel = new QLabel(QString("<p style='color: #4b0082;'>Territories Affected: %1</p>").arg(territoryAffect.size()), infoWindow);
-    layout->addWidget(territoryCountLabel);
+    mainLayout->addLayout(descriptionOutcomeLayout);
 
-    QObject::connect(closeButton, &QPushButton::clicked,infoWindow,&QWidget::close);
+    QPushButton* actionButton = new QPushButton(buttonText, infoWindow);
+    actionButton->setFixedSize(820, 50);
+    actionButton->setStyleSheet(
+        "QPushButton { "
+        "   background-color: #8B0000; "
+        "   border-radius: 10px; "
+        "   color: white;   "
+        "   border: 2px solid #5A0000; "
+        "   font-size: 12pt; "
+        "   padding: 5px;   "
+        "   border-image: none; "
+        "} "
+        "QPushButton:hover { "
+        "   background-color: #B22222; "
+        "} "
+        "QPushButton:pressed { "
+        "   background-color: #5A0000; "
+        "} "
+        );
+    QObject::connect(actionButton, &QPushButton::clicked, infoWindow, &QWidget::close);
+
+    mainLayout->addWidget(actionButton, 0, Qt::AlignCenter);
 
     infoWindow->show();
+
 }
 
 EventType Event::stringToEventType(const std::string& str) {

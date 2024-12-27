@@ -12,6 +12,7 @@
 #include "./Interface/infowidget.h"
 #include "Interface/Items/zoomablegraphicsview.h"
 #include "Interface/Items/characterwidget.h"
+#include "Interface/Items/CustomMessageBox.h"
 
 #include <string>
 class ClientWindow : public QMainWindow {

@@ -41,8 +41,9 @@ public:
     unsigned int id;
     QString getDate() const;
     EventType getType() const;
-    void showEventWindow()const;
+    void showEventWindow();
     bool canTrigger(int clientId, const QString &currentYear, const graph::Graph &clientGraph) const;
+
     /*
       "id" : 2 ,
       "type": "HISTORIC",
@@ -57,6 +58,7 @@ public:
       "date": "1-1-1804"
      */
 private:
+    int clientId;
     EventType type;
     QString title;
     QString image_path;
@@ -69,12 +71,8 @@ private:
     QString date;
 
     //widgets
-    QWidget *infoWindow;
-    QLabel *typeLabel;
-    QLabel *outcomeLabel;
-    QLabel *gainLabel;
-    QLabel *territoryCountLabel;
-    QLabel *dateLabel;
+    QWidget *infoWindow = nullptr;
+
 };
 
 

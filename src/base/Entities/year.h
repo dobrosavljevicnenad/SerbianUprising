@@ -9,6 +9,7 @@ public:
     explicit Year(const QDate& startDate = QDate(1804, 1, 1));
     void advanceThreeMonths();
     QString getCurrentDateString() const;
+    QString toJsonDateString() const;
 
 private:
     QDate currentDate;

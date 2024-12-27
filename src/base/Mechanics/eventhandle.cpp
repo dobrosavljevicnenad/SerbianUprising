@@ -2,11 +2,14 @@
 
 EventHandle::EventHandle() {}
 
-void EventHandle::deserializeEvents(const QJsonArray& eventsJson) {
+void EventHandle::deserializeEvents(const QJsonArray& eventsJson, unsigned clientId) {
     unsigned int idCounter = 0;
     for (const QJsonValue& value : eventsJson) {
         if (value.isObject()) {
             QJsonObject eventJson = value.toObject();
+            unsigned id = eventJson["id"].toInt();
+
+            if (clientId != 0 && clientId != id) continue;
 
             EventType type = Event::stringToEventType(eventJson["type"].toString().toStdString());
             QString title = eventJson["title"].toString();
@@ -45,6 +48,7 @@ const QVector<QPair<Event, bool>>& EventHandle::getEvents() const {
 }
 
 void EventHandle::processEvents(int clientId, const QString& currentYear, const graph::Graph& clientGraph) {
+    qDebug() << currentYear;
     QVector<Event> triggerableEvents;
     for (const auto& eventPair : events) {
         const Event& event = eventPair.first;
@@ -54,9 +58,12 @@ void EventHandle::processEvents(int clientId, const QString& currentYear, const 
     }
 
     QVector<Event> randomEvents;
+
     for (const auto& event : triggerableEvents) {
         if (event.getType() == EventType::RANDOM) {
-            randomEvents.append(event);
+            if (shouldSpawnEvent(20)) {
+                randomEvents.append(event);
+            }
         }
     }
 
@@ -65,10 +72,15 @@ void EventHandle::processEvents(int clientId, const QString& currentYear, const 
         randomEvents[randomIndex].showEventWindow();
     }
 
-    for (const auto& event : triggerableEvents) {
+    for (auto& event : triggerableEvents) {
         if (event.getType() != EventType::RANDOM) {
             event.showEventWindow();
             markEventOccurred(event.id);
         }
     }
+}
+
+bool EventHandle::shouldSpawnEvent(int probability) const {
+    int randomValue = QRandomGenerator::global()->bounded(100);
+    return randomValue < probability;
 }

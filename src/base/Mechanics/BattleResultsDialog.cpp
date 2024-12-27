@@ -1,8 +1,9 @@
 #include "BattleResultsDialog.h"
-#include <iostream>
+#include <qapplication.h>
 
 BattleResultsDialog::BattleResultsDialog(const std::vector<Results> battleResults, QWidget *parent)
     : QDialog(parent), battleResults(battleResults) {
+
     gridLayout = new QGridLayout(this);
     setLayout(gridLayout);
 
@@ -14,7 +15,6 @@ BattleResultsDialog::BattleResultsDialog(const std::vector<Results> battleResult
     closeButton->setStyleSheet(getButtonStyle());
     connect(closeButton, &QPushButton::clicked, this, &QDialog::reject);
     closeButton->setFixedSize(100, 40);
-    closeButton->move(this->width() - closeButton->width() - 25, 10);
 
     containerLayout = new QGridLayout(tablesContainer);
     tablesContainer->setLayout(containerLayout);
@@ -23,6 +23,22 @@ BattleResultsDialog::BattleResultsDialog(const std::vector<Results> battleResult
     setObjectName("BattleResultsDialog");
     setBackgroundImage(":/resources/Images/Board.png");
     resize(1084, 905);
+    closeButton->move(10, 10);
+
+    QScreen *screen = QGuiApplication::primaryScreen();
+    if (screen) {
+        QRect availableGeometry = screen->availableGeometry();
+        resize(availableGeometry.size());
+        showMaximized();
+        int ax = availableGeometry.width()*265/1084;
+        int ay = availableGeometry.height()*255/905;
+        int aw = availableGeometry.width()*606/1084;
+        int ah = availableGeometry.height()*262/905;
+        qDebug() << ax<<ay<<aw<<ah;
+        tablesContainer->setGeometry(ax,ay,aw,ah);
+        closeButton->move(10, 10);
+    }
+    setFixedSize(size());
 }
 QString BattleResultsDialog::getButtonStyle(){
     return QString(
@@ -142,7 +158,6 @@ void BattleResultsDialog::setResults(const QVector<QStringList> &results) {
 
         table->resizeColumnsToContents();
         table->resizeRowsToContents();
-
         int totalWidth = 5;
         for (int colIdx = 0; colIdx < table->columnCount(); ++colIdx) {
             totalWidth += table->columnWidth(colIdx);

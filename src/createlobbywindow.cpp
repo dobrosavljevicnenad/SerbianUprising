@@ -3,8 +3,7 @@
 #include "lobbywindow.h"
 #include <QHeaderView>
 #include <QFileInfoList>
-#include <QMessageBox>
-
+#include "Interface/Items/CustomMessageBox.h"
 CreateLobbyWindow::CreateLobbyWindow(QWidget *parent)
     : QWidget(parent), connectionManager(new ConnectionManager(this))
 {
@@ -92,7 +91,7 @@ void CreateLobbyWindow::setupUI() {
     QVBoxLayout *rightLayout = new QVBoxLayout();
 
     QWidget *rightBox = new QWidget();
-    rightBox->setFixedSize(500, 580);
+    rightBox->setFixedSize(500, 600);
     rightBox->setStyleSheet(R"(
         background-color: rgba(255, 228, 196, 180);
         border: 2px solid rgba(255, 215, 0, 150);
@@ -109,6 +108,10 @@ void CreateLobbyWindow::setupUI() {
     player1ArmyLabel->setStyleSheet("background-color: rgba(139, 69, 19, 180); font: 18px 'Serif'; color: white;");
     player1ArmyLabel->setAlignment(Qt::AlignLeft);
 
+    ip = new QLabel("IP: ");
+    ip->setStyleSheet("font: bold 20px 'Serif'; color: brown;");
+    ip->setAlignment(Qt::AlignLeft);
+
     QLabel *player2Label = new QLabel("PLAYER 2");
     player2Label->setStyleSheet("font: bold 20px 'Serif'; color: brown;");
     player2Label->setAlignment(Qt::AlignCenter);
@@ -119,10 +122,12 @@ void CreateLobbyWindow::setupUI() {
 
     rightBoxLayout->addWidget(player1Label);
     rightBoxLayout->addWidget(player1ArmyLabel);
+    rightBoxLayout->addSpacing(10);
+    rightBoxLayout->addWidget(ip);
     rightBoxLayout->addSpacing(20);
     rightBoxLayout->addWidget(player2Label);
     rightBoxLayout->addWidget(player2ArmyLabel);
-    rightBoxLayout->addSpacing(40);
+    rightBoxLayout->addSpacing(30);
 
     loadButton = new QPushButton("LOAD GAME");
     startButton = new QPushButton("START GAME");
@@ -187,16 +192,19 @@ void CreateLobbyWindow::setupUI() {
     connect(armyComboBox, &QComboBox::currentTextChanged, this, &CreateLobbyWindow::updateArmySelection);
     connect(startButton, &QPushButton::clicked, [this]() {
         int armyId = armyComboBox->currentIndex() + 1;
-        QMessageBox::information(this, "Server Info", "Server IP: " + connectionManager->getLocalIpAddress());
+        QString localIp = connectionManager->getLocalIpAddress();
+        CustomMessageBox::showMessage(QString("Server IP: %1").arg(localIp), this);
         if (!connectionManager->initializeServer()) {
-            QMessageBox::warning(this, "Error", "Failed to start the server.");
+            CustomMessageBox::showMessage("Error: Failed to start the server.", this);
             return;
         }
 
         if (!connectionManager->initializeClient()) {
-            QMessageBox::warning(this, "Error", "Failed to connect the host client.");
+            CustomMessageBox::showMessage("Error: Failed to connect the host client.", this);
             return;
         }
+
+        ip->setText("IP: " + localIp);
 
         if (connectionManager) {
             connect(connectionManager, &ConnectionManager::gameStarted, this, &CreateLobbyWindow::handleGameStart);
@@ -289,14 +297,14 @@ void CreateLobbyWindow::onFileClicked(int row, int column) {
     QTableWidgetItem *item = savedGamesTable->item(row, column);
     if (item) {
         selectedFile = item->text();
-        QMessageBox::information(this, "File Clicked", QString("Kliknuo si na \"%1\"").arg(selectedFile));
+        CustomMessageBox::showMessage(QString("Kliknuo si na \"%1\"").arg(selectedFile),this);
     }
 }
 
 void CreateLobbyWindow::onLoadGameClicked() {
     if (selectedFile.isEmpty()) {
-        QMessageBox::warning(this, "No File Selected", "Niste izabrali nijedan fajl!");
+        CustomMessageBox::showMessage("Niste izabrali nijedan fajl!", this);
     } else {
-        QMessageBox::information(this, "Load Game", QString("Loaded map: \"%1\"").arg(selectedFile));
+        CustomMessageBox::showMessage(QString("Load Game: Loaded map: \"%1\"").arg(selectedFile),this);
     }
 }

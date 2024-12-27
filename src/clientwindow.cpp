@@ -1,14 +1,14 @@
 #include "clientwindow.h"
 #include <QVBoxLayout>
 #include <QGraphicsProxyWidget>
-#include <QInputDialog>
-#include <QMessageBox>
 #include <QGraphicsView>
 #include<QListWidget>
 #include<QDebug>
 #include <qapplication.h>
 #include <qgraphicseffect.h>
 #include <QKeyEvent>
+#include "Interface/Items/CustomInputDialog.h"
+#include "Interface/Items/AttackTransferDialog.h"
 
 ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *parent)
     : QMainWindow(parent),
@@ -370,7 +370,7 @@ void ClientWindow::onEndTurnClicked() {
         return;
     }
     if(gameManager->getArmyManager().totalTroops != 0){
-        QMessageBox::warning(nullptr, "Army", "Deploy all army first!");
+        CustomMessageBox::showMessage("Deploy all army first!", this);
         return;
     }
     QVector<Action> actions = gameManager->actionBuffer;
@@ -448,7 +448,7 @@ void ClientWindow::onLayerClicked(MapLayer* layer) {
     } else if (activeButton == infoButton) {
         handleInfomation(layer);
     } else {
-        QMessageBox::warning(this, tr("Unknown Action"), tr("This action is not supported."));
+        CustomMessageBox::showMessage("This action is not supported.", this);
     }
 
 }
@@ -461,7 +461,7 @@ void ClientWindow::handleInfomation(MapLayer* layer){
         nodeInfoWidget->move(globalPos);
         nodeInfoWidget->show();
     } else {
-        QMessageBox::information(this, "Info", "No layer selected!");
+        CustomMessageBox::showMessage("Info: No layer selected!", this);
     }
 }
 
@@ -484,7 +484,7 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
 
     } else {
         if(selectedLayer == layer) {
-            QMessageBox::warning(this, tr("Error"), tr("You selected the same layer. Select another layer."));
+            CustomMessageBox::showMessage("Error: You selected the same layer. Select another layer.", this);
             selectedLayer = nullptr;
             gameManager->clearTemporaryArrows();
             return ;
@@ -504,7 +504,8 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
         }
 
         if (!isNeighbor) {
-            QMessageBox::warning(this, tr("Error"), tr("You must select a neighboring node."));
+            CustomMessageBox::showMessage("Error: You must select a neighboring node.", this);
+
             selectedLayer = nullptr;
             gameManager->clearTemporaryArrows();
             return;
@@ -512,16 +513,30 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
 
         if (connectingEdge->type() == graph::EdgeType::Sea &&
             selected_vertex->player.getPlayerId() != vertex->player.getPlayerId()) {
-            QMessageBox::warning(this, tr("Error"), tr("Cannot move across sea to a different player's territory."));
+            CustomMessageBox::showMessage("Error: Cannot move across sea to a different player's territory.", this);
             return;
         }
 
-        bool ok;
         int maxTroops = selected_vertex->army.getSoldiers();
-
-        int troopsToTransfer = QInputDialog::getInt(this, tr("Transfer Troops"), tr("Enter the number of soldiers to transfer:"), 0, 0, maxTroops, 1, &ok);
-        if (!ok || troopsToTransfer == 0) {
-            QMessageBox::warning(this, tr("Error"), tr("Transferring 0 troops is not allowed."));
+        int troopsToTransfer = 0;
+        AttackTransferDialog dialog(
+            QString::fromStdString(selected_vertex->label()),
+            QString::fromStdString(vertex->label()),
+            selected_vertex->army.getSoldiers(),
+            vertex->army.getSoldiers(),
+            selected_vertex->map_layer->get_m_originalPixmap(),
+            vertex->map_layer->get_m_originalPixmap()
+            );
+        if (dialog.exec() == QDialog::Accepted){
+             troopsToTransfer = dialog.getSelectedArmies();
+            if (troopsToTransfer == 0) {
+                CustomMessageBox::showMessage("Error: Transferring 0 troops is not allowed.", this);
+                selectedLayer = nullptr;
+                gameManager->clearTemporaryArrows();
+                return;
+            }
+        }
+        else{
             selectedLayer = nullptr;
             gameManager->clearTemporaryArrows();
             return;
@@ -567,7 +582,7 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer) {
         AddArmyManager& armyManager = gameManager->getArmyManager();
 
         if (armyManager.totalTroops == 0) {
-            QMessageBox::warning(this, tr("Error"), tr("Not enough available soldiers"));
+            CustomMessageBox::showMessage("Error: Not enough available soldiers.", this);
             selectedLayer = nullptr;
             return;
         }
@@ -596,12 +611,23 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer) {
                 break;
             }
             troops = std::min(armyManager.totalTroops, troops - selected_vertex->newRecruits);
-            std::string message = "Enter the number of soldiers up to " + std::to_string(troops) + " to place of total " +
-                                  std::to_string(armyManager.totalTroops) + " new free soldiers: ";
-            troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
+            std::string message = "Enter the number of soldiers up to " + std::to_string(troops) + " to place:";
+            /*troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
                                                tr(message.c_str()), 0, 0, troops, 1, &ok);
             if (!ok || troopsToAdd <= 0) {
                 selectedLayer = nullptr;
+                return;
+            }*/
+            CustomInputDialog dialog("Place Army", QString::fromStdString(message), nullptr, troops);
+            if(dialog.exec() == QDialog::Accepted){
+                troopsToAdd = dialog.getInputInt();
+                if(troopsToAdd <= 0){
+                    selected_vertex = nullptr;
+                    return;
+                }
+            }
+            else{
+                selected_vertex = nullptr;
                 return;
             }
         }
@@ -807,17 +833,17 @@ void ClientWindow::showPauseMenu() {
     connect(saveButton, &QPushButton::clicked, this, [this]() {
         if (gameManager) {
             gameManager->saveGame();
-            QMessageBox::information(this, "Save Game", "Game saved successfully!");
+            CustomMessageBox::showMessage("Game saved successfully!", this);
         }
     });
     connect(loadGame, &QPushButton::clicked, this, [this](){
         if (gameManager){
             gameManager->loadGame();
-            QMessageBox::information(this, "Load Game", "Game loaded successfully!");
+            CustomMessageBox::showMessage("Game loaded successfully!", this);
         }
     });
-    connect(optionsButton, &QPushButton::clicked, this, []() {
-        QMessageBox::information(nullptr, "Options", "Options menu under construction.");
+    connect(optionsButton, &QPushButton::clicked, this, [this]() {
+        CustomMessageBox::showMessage("Options menu under construction.", this);
     });
 
     overlay->show();
@@ -915,7 +941,7 @@ void ClientWindow::showDisconnectPauseMenu() {
     connect(saveButton, &QPushButton::clicked, this, [this]() {
         if (gameManager) {
             gameManager->saveGame();
-            QMessageBox::information(this, "Save Game", "Game saved successfully!");
+            CustomMessageBox::showMessage("Game saved successfully!", this);
         }
     });
 

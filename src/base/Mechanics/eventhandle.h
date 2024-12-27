@@ -13,7 +13,7 @@ class EventHandle {
 public:
     EventHandle();
 
-    void deserializeEvents(const QJsonArray& eventsJson);
+    void deserializeEvents(const QJsonArray& eventsJson,unsigned clientId);
 
 
     const QVector<QPair<Event, bool>>& getEvents() const;
@@ -27,6 +27,8 @@ public:
 private:
     unsigned clientId;
     QVector<QPair<Event, bool>> events;
+    bool shouldSpawnEvent(int probability) const;
+
 };
 
 #endif // EVENTHANDLE_H

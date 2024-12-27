@@ -14,11 +14,9 @@
 #include <QDir>
 #include <QFileInfoList>
 #include <QRegularExpression>
-#include <QMessageBox>
 #include <map>
 #include <qlabel.h>
 #include <qlistwidget.h>
-#include <qmediaplayer.h>
 #include <qpushbutton.h>
 #include "../base/Mechanics/addarmymanager.h"
 #include "Items/customarrowitem.h"
@@ -35,6 +33,9 @@
 #include "../base/Mechanics/eventhandle.h"
 #include "map.h"
 #include "filemanager.h"
+#include <qaudiooutput.h>
+#include <qmediaplayer.h>
+#include "Items/CustomMessageBox.h"
 
 
 class ClientGameManager : public QObject{
