@@ -3,8 +3,8 @@
 #include <QVBoxLayout>
 #include <QPushButton>
 #include <QFormLayout>
-#include "Interface/Items/CustomMessageBox.h"
-#include "Interface/Items/CustomInputDialog.h"
+#include "Interface/Items/custommessagebox.h"
+#include "Interface/Items/custominputdialog.h"
 
 LobbyWindow::LobbyWindow(QWidget *parent)
     : QWidget(parent), connectionManager(new ConnectionManager(this)) {

@@ -7,8 +7,8 @@
 #include <qapplication.h>
 #include <qgraphicseffect.h>
 #include <QKeyEvent>
-#include "Interface/Items/CustomInputDialog.h"
-#include "Interface/Items/AttackTransferDialog.h"
+#include "Interface/Items/custominputdialog.h"
+#include "Interface/Items/attacktransferdialog.h"
 
 ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *parent)
     : QMainWindow(parent),
@@ -527,6 +527,7 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
             selected_vertex->map_layer->get_m_originalPixmap(),
             vertex->map_layer->get_m_originalPixmap()
             );
+
         if (dialog.exec() == QDialog::Accepted){
              troopsToTransfer = dialog.getSelectedArmies();
             if (troopsToTransfer == 0) {

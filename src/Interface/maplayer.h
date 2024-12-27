@@ -3,7 +3,7 @@
 #ifndef MAPLAYER_H
 #define MAPLAYER_H
 
-#include "../base/Entities/Army.h"
+#include "../base/Entities/army.h"
 
 #include <QGraphicsPixmapItem>
 #include <QGraphicsTextItem>

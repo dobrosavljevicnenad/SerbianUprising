@@ -22,10 +22,10 @@
 #include "Items/customarrowitem.h"
 #include "infowidget.h"
 #include "mapscene.h"
-#include "../base/Mechanics/Action.h"
+#include "../base/Mechanics/action.h"
 #include "../base/Entities/player.h"
-#include "../base/Mechanics/Results.h"
-#include "../base/Mechanics/BattleResultsDialog.h"
+#include "../base/Mechanics/results.h"
+#include "../base/Mechanics/battleresultsdialog.h"
 #include "../base/Entities/year.h"
 #include "../base/Entities/region.h"
 #include "../base/Entities/city.h"
@@ -35,7 +35,7 @@
 #include "filemanager.h"
 #include <qaudiooutput.h>
 #include <qmediaplayer.h>
-#include "Items/CustomMessageBox.h"
+#include "Items/custommessagebox.h"
 
 
 class ClientGameManager : public QObject{
@@ -113,7 +113,11 @@ private:
     FileManager fileManager;
     QMediaPlayer *musicPlayer;
     QAudioOutput *audioOutput;
+    QList<QUrl> playlist;
+    int currentSongIndex;
 
+    void playNextSong(QMediaPlayer* player, QList<QUrl>& playlist, int& currentIndex);
+    void playNextSongWrapper();
 
 private://UI
     QLabel* headerLabel;

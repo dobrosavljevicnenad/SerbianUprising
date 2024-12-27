@@ -3,7 +3,7 @@
 
 #include <string>
 #include"../graph/graph.hpp"
-#include "../Entities/Army.h"
+#include "../Entities/army.h"
 #include <vector>
 #include <QWidget>
 #include <QVBoxLayout>

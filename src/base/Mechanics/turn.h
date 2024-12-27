@@ -1,9 +1,9 @@
 #ifndef TURN_H
 #define TURN_H
 
-#include "Action.h"
+#include "action.h"
 #include "../graph/graph.hpp"
-#include "MoveArmy.h"
+#include "movearmy.h"
 #include <QObject>
 #include <vector>
 #include <string>

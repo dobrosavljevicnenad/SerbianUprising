@@ -8,7 +8,7 @@
 #include <vector>
 #include <QMap>
 #include "../Interface/servergamemanager.h"
-#include "../base/Mechanics/Action.h"
+#include "../base/Mechanics/action.h"
 
 class Server : public QObject
 {

@@ -3,7 +3,7 @@
 #include "lobbywindow.h"
 #include <QHeaderView>
 #include <QFileInfoList>
-#include "Interface/Items/CustomMessageBox.h"
+#include "Interface/Items/custommessagebox.h"
 CreateLobbyWindow::CreateLobbyWindow(QWidget *parent)
     : QWidget(parent), connectionManager(new ConnectionManager(this))
 {

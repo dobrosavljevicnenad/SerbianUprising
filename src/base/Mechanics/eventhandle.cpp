@@ -17,9 +17,19 @@ void EventHandle::deserializeEvents(const QJsonArray& eventsJson, unsigned clien
             QString description = eventJson["description"].toString();
             QString buttonText = eventJson["button"].toString();
             QVector<QString> territoryTrigger;
+            if (eventJson.contains("territory_trigger") && eventJson["territory_trigger"].isArray()) {
+                for (const QJsonValue& value : eventJson["territory_trigger"].toArray()) {
+                    territoryTrigger.append(value.toString());
+                }
+            }
             QString trigger = eventJson["trigger"].toString();
             int triggerAmount = eventJson["trigger_amount"].toInt();
             QVector<QString> territoryAffect;
+            if (eventJson.contains("territory_affect") && eventJson["territory_affect"].isArray()) {
+                for (const QJsonValue& value : eventJson["territory_affect"].toArray()) {
+                    territoryAffect.append(value.toString());
+                }
+            }
             QString date = eventJson["date"].toString();
 
             Event event(idCounter++, type, title, imagePath, description, buttonText,

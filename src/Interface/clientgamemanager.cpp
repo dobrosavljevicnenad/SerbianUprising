@@ -164,29 +164,57 @@ void ClientGameManager::setScene(MapScene *newScene) {
     scene = newScene;
 }
 
+void ClientGameManager::playNextSong(QMediaPlayer* player, QList<QUrl>& playlist, int& currentIndex) {
+    if (playlist.isEmpty()) return;
+
+    currentIndex = (currentIndex + 1) % playlist.size();
+    player->setSource(playlist[currentIndex]);
+    player->play();
+}
+
+void ClientGameManager::playNextSongWrapper() {
+    playNextSong(musicPlayer, playlist, currentSongIndex);
+}
+
 void ClientGameManager::setId(int id) {
     ClientId = id;
     player = Player();
     player.setPlayerId(ClientId);
     ClientId == 1 ? player.setArmyType(ArmyType::HAJDUK) : player.setArmyType(ArmyType::JANISSARY);
-    if(ClientId == 1){
-        musicPlayer = new QMediaPlayer(this);
-        audioOutput = new QAudioOutput(this);
-        musicPlayer->setAudioOutput(audioOutput);
-        musicPlayer->setSource(QUrl::fromLocalFile("../../resources/music/Janissary.mp3"));
-        audioOutput->setVolume(0.5);
-        musicPlayer->play();
-    }
-    if(ClientId == 2){
-        musicPlayer = new QMediaPlayer(this);
-        audioOutput = new QAudioOutput(this);
-        musicPlayer->setAudioOutput(audioOutput);
-        musicPlayer->setSource(QUrl::fromLocalFile("../../resources/music/Hajduk.mp3"));
-        audioOutput->setVolume(0.5);
-        musicPlayer->play();
-    }
-}
 
+    QString folderPath = (ClientId == 1)
+                             ? "../../resources/music/serbishen"
+                             : "../../resources/music/turkish";
+
+    musicPlayer = new QMediaPlayer(this);
+    audioOutput = new QAudioOutput(this);
+    musicPlayer->setAudioOutput(audioOutput);
+    audioOutput->setVolume(0.5);
+
+    QDir musicDir(folderPath);
+    QStringList musicFiles = musicDir.entryList(QStringList() << "*.mp3", QDir::Files);
+    if (musicFiles.isEmpty()) {
+        qWarning() << "Folder is empty: " << folderPath;
+        return;
+    }
+
+    playlist.clear();
+    for (const QString& musicFile : musicFiles) {
+        playlist.append(QUrl::fromLocalFile(musicDir.absoluteFilePath(musicFile)));
+    }
+
+    currentSongIndex = 0;
+    if (!playlist.isEmpty()) {
+        musicPlayer->setSource(playlist[currentSongIndex]);
+        musicPlayer->play();
+    }
+
+    connect(musicPlayer, &QMediaPlayer::mediaStatusChanged, this, [this](QMediaPlayer::MediaStatus status) {
+        if (status == QMediaPlayer::EndOfMedia) {
+            playNextSongWrapper();
+        }
+    });
+}
 void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     if (data.contains("graph") && data["graph"].isObject()) {
         QJsonObject graphData = data["graph"].toObject();
@@ -645,7 +673,7 @@ void ClientGameManager::loadGame() {
 void ClientGameManager::processLoadData(const QJsonObject &gameData) {
     qDebug() << "Processing loaded game data:" << gameData;
 
-    clientGraph->deserialize(gameData);
+    // clientGraph->deserialize(gameData);
 
     // for (auto &layer : layers) {
     //     graph::Vertex *vertex = clientGraph->get_vertex_by_id(layer->getId() + 1);
@@ -655,7 +683,7 @@ void ClientGameManager::processLoadData(const QJsonObject &gameData) {
     //     }
     // }
 
-    updateGraphics();
+    // updateGraphics();
     qDebug() << "Game data successfully processed and applied.";
 }
 

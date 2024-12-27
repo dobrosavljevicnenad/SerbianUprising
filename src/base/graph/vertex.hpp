@@ -3,13 +3,12 @@
 #include <string>
 #include<QPointF>
 #include "../../Interface/maplayer.h"
-#include "../Entities/Army.h"
-#include "../Mechanics/Battle.h"
-#include "../Mechanics/Strength.h"
-#include "../Entities/mergeArmies.h"
+#include "../Entities/army.h"
+#include "../Mechanics/battle.h"
+#include "../Mechanics/strength.h"
 #include "../Entities/player.h"
-#include "../Entities/Terrain.h"
-#include "../Entities/Culture.h"
+#include "../Entities/terrain.h"
+#include "../Entities/culture.h"
 #include "../Entities/city.h"
 #include "../Entities/region.h"
 
