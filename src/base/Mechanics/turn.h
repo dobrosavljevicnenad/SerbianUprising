@@ -47,6 +47,7 @@ private:
     void executeMoveAction(const Action& action);                 // Handle move actions
     void executeAttackAction(const int playerId, const Action& action); // Handle attack actions
     void executePlaceAction(const Action& action);
+    void executeEventAction(const Action& action);
 private slots:
     void onBattleFinished(Results results);
     void onBattleCanceled();

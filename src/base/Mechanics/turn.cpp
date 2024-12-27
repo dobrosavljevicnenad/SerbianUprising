@@ -16,6 +16,10 @@ void Turn::addAction(int playerId, const Action& action) {
 void Turn::executeTurn() {
     bool battleMusic = false;
 
+    if (battleMusic) {
+        playBattleMusic();
+    }
+
     auto& buffer = getPlayerBuffer(1);
     auto& buffer2 = getPlayerBuffer(2);
 
@@ -30,6 +34,17 @@ void Turn::executeTurn() {
             executePlaceAction(action);
         }
     }
+    for (const auto& action : buffer) {
+        if (action.type == ActionType::EVENT_ATTACK){
+            executeEventAction(action);
+        }
+    }
+
+    for (const auto& action : buffer2) {
+        if (action.type == ActionType::EVENT_ATTACK){
+            executeEventAction(action);
+        }
+    }
 
     // Execute actions for both players
     for (const auto& action : getPlayerBuffer(1)) {
@@ -41,10 +56,7 @@ void Turn::executeTurn() {
     }
 
     std::time_t start_music = std::time(0);
-    // Play battle music if necessary
-    if (battleMusic) {
-        playBattleMusic();
-    }
+
     // Execute actions for both players
     executePlayerAttacks(1);
 
@@ -137,6 +149,11 @@ void Turn::executePlaceAction(const Action& action) {
     int soldiers = source->army.getSoldiers();
     source->army.setSoldiers(soldiers+action.soldiers);
     source->newRecruits = 0;
+}
+
+void Turn::executeEventAction(const Action &action)
+{
+
 }
 
 void Turn::executeMoveAction(const Action& action) {

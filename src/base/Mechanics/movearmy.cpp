@@ -46,6 +46,38 @@ bool MoveArmy::executeAttack(int playerId, std::vector<Vertex*> sources, Vertex*
     return true;
 }
 
+bool MoveArmy::executeEventAttack(int playerId, Vertex* target, unsigned soldiersToMove)
+{
+    while (playerId == 2 && !player1Attacks.empty()) {
+        QCoreApplication::processEvents();
+    }
+    while (std::find(contested.begin(), contested.end(), target->id()) != contested.end()) {
+        QCoreApplication::processEvents();
+    }
+    ArmyType source = ArmyType::HAJDUK;
+    if(target->id() == 1)
+        source = ArmyType::JANISSARY;
+
+    Army sentArmy(0, source);
+
+    sentArmy.setSoldiers(soldiersToMove);
+
+    contested.push_back(target->id());
+    if(playerId == 1)
+        player1Attacks.push_back(1);
+
+    unsigned sent = sentArmy.getSoldiers();
+    int riverAdvantage = 0;
+    std::vector<graph::Vertex*> sources;
+    std::vector<unsigned> stm;
+
+    BattleArmiesWorker* battleWorker = new BattleArmiesWorker(*this, playerId, sentArmy, *target, sources, stm, sent, riverAdvantage);
+    connect(battleWorker, &BattleArmiesWorker::battleFinished, this, &MoveArmy::onBattleFinished);
+
+    battleWorker->start();
+    return true;
+}
+
 bool MoveArmy::validateAttack(std::vector<Vertex*> sources, Vertex* target, std::vector<unsigned> soldiersToMove) const {
     for (size_t i = 0; i < sources.size(); i++) {
         if (!areNeighbors(sources[i], target)) {
