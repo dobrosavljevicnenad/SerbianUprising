@@ -35,6 +35,8 @@ private:
 signals:
     void init_serializedGraphReady(const QJsonObject &serializedGraph);
     void serializedGraphReady2(const QJsonObject &serializedGraph, const QJsonObject Results);
+    void loadGame_serializedGraphReady(QJsonObject& serializedGraph);
+
 };
 
 #endif // SERVERGAMEMANAGER_H
