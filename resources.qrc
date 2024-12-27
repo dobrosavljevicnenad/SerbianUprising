@@ -185,5 +185,8 @@
         <file>resources/Images/deligrad.png</file>
         <file>resources/Images/bosna.png</file>
         <file>resources/Images/Beograd_siege.png</file>
+        <file>resources/Images/surge_of_conscription.png</file>
+        <file>resources/Images/plague.png</file>
+        <file>resources/Images/hero.png</file>
     </qresource>
 </RCC>
