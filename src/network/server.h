@@ -39,7 +39,7 @@ signals:
 public slots:
     void onGameStartRequested();
     void handleSerializedGraph_init(const QJsonObject &serializedGraph);
-    void handleSerializedGraph(const QJsonObject &serializedGraph, const QJsonObject& results);
+    void handleSerializedGraph(const QJsonObject &serializedGraph, const QJsonObject& results, const QJsonObject& events);
     void handleSerializedGraph_loadGame(QJsonObject& serializedGraph);
 
 private slots:

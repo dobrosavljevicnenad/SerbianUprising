@@ -186,10 +186,11 @@ void Server::handleSerializedGraph_init(const QJsonObject &serializedGraph) {
     sendData(serializedData);
 }
 
-void Server::handleSerializedGraph(const QJsonObject& serializedGraph, const QJsonObject& results) {
+void Server::handleSerializedGraph(const QJsonObject& serializedGraph, const QJsonObject& results, const QJsonObject& events) {
     QJsonObject dataToSend;
     dataToSend["graph"] = serializedGraph;
     dataToSend["results"] = results;
+    dataToSend["events"] = events;
 
     QString serializedData = QString(QJsonDocument(dataToSend).toJson(QJsonDocument::Compact));
     sendData(serializedData);

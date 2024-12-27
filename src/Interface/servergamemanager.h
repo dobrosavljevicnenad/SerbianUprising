@@ -38,7 +38,7 @@ private:
 
 signals:
     void init_serializedGraphReady(const QJsonObject &serializedGraph);
-    void serializedGraphReady2(const QJsonObject &serializedGraph, const QJsonObject Results);
+    void serializedGraphReady2(const QJsonObject &serializedGraph, const QJsonObject Results,const QJsonObject events);
     void loadGame_serializedGraphReady(QJsonObject& serializedGraph);
 
 };

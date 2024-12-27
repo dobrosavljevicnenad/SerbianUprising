@@ -62,14 +62,17 @@ void ServerGameManager::executeActions(const std::vector<Action> &actions1, int 
     turn.battlesResults.clear();
     turn.executeTurn();
     eventHandle.processEvents(gameYear.toJsonDateString(), *graph);
-    turn.executeTurn();
+    //turn.executeTurn();
+    QJsonObject events = eventHandle.serializeProcessedEvents();
 
     QJsonObject serialized_graph = graph->serialize(rootObj);
 
+
     auto battleResults =turn.battlesResults;
+
     QJsonObject Results = turn.serializeResultsVector(battleResults);
 
-    emit serializedGraphReady2(serialized_graph,Results);
+    emit serializedGraphReady2(serialized_graph,Results,events);
 }
 
 void ServerGameManager::processLoadGame(QJsonObject& gameData){

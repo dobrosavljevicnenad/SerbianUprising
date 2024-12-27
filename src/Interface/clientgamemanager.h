@@ -135,6 +135,7 @@ private://UI
     CharacterWidget *characterWidget;
 
 public:
+    bool naval = true;
     EventHandle eventHandle;
     unsigned TurnId = 1;
     int ClientId;

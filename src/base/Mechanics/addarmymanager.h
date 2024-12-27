@@ -1,6 +1,7 @@
 #ifndef ADDARMYMANAGER_H
 #define ADDARMYMANAGER_H
 #include "../graph/graph.hpp"
+#include <cmath>
 class AddArmyManager
 {
 public:
@@ -16,6 +17,7 @@ public:
     int totalTroops = 5;
     int maxTroops = 5;
     void updateRegionOwnership(unsigned clientId, const QVector<Region*>& regions);
+    void addBonus(int bonus);
 
 private:
 
@@ -26,6 +28,8 @@ private:
     int cityCount;
     int territoryBonus = 1;
     int cityBonus = 5;
+    double eventBonus = 100;
+
 };
 
 #endif // ADDARMYMANAGER_H
