@@ -3,6 +3,8 @@
 
 #include "../base/Mechanics/turn.h"
 #include "../base/graph/graph.hpp"
+#include "../base/Entities/year.h"
+#include "../base/Mechanics/eventhandle.h"
 
 #include<QGraphicsScene>
 #include<iostream>
@@ -31,6 +33,8 @@ public:
 private:
     std::unique_ptr<graph::Graph> graph;
     Turn turn;
+    Year gameYear;
+    EventHandle eventHandle;
 
 signals:
     void init_serializedGraphReady(const QJsonObject &serializedGraph);

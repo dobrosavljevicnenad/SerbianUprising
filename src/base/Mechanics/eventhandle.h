@@ -22,13 +22,21 @@ public:
 
     void addEvent(const Event &event);
     void markEventOccurred(unsigned int eventId);
-    void processEvents(int clientId, const QString& currentYear, const graph::Graph& clientGraph);
+    void processEvents(const QString& currentYear, const graph::Graph& clientGraph);
 
 private:
     unsigned clientId;
     QVector<QPair<Event, bool>> events;
     bool shouldSpawnEvent(int probability) const;
 
+    void processRandomEvent(const Event &event);
+    void processPlaceTrigger(const Event &event, const graph::Graph &clientGraph);
+    void processAttackTrigger(const Event &event, const graph::Graph &clientGraph);
+    void processMoraleTrigger(const Event &event);
+    void processRecruitmentsTrigger(const Event &event, const graph::Graph &clientGraph);
+    void processNavalTrigger(const Event &event);
+    void processIntroTrigger(const Event &event);
+    void processEndTrigger(const Event &event);
 };
 
 #endif // EVENTHANDLE_H

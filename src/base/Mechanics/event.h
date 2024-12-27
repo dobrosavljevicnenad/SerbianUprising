@@ -29,7 +29,7 @@ class Event {
 public:
     Event();
 
-    Event(unsigned int id, EventType type, const QString& title, const QString& imagePath,
+    Event(unsigned int id,int clientId, EventType type, const QString& title, const QString& imagePath,
           const QString& description, const QString& buttonText,
           const QVector<QString>& territoryTrigger, const QString& trigger,
           int triggerAmount, const QVector<QString>& territoryAffect,
@@ -39,11 +39,11 @@ public:
     std::string eventTypeToString(EventType type);
 
     unsigned int id;
-    QString title;
+
     QString getDate() const;
     EventType getType() const;
     void showEventWindow();
-    bool canTrigger(int clientId, const QString &currentYear, const graph::Graph &clientGraph) const;
+    bool canTrigger(const QString &currentYear, const graph::Graph &clientGraph) const;
 
     /*
       "id" : 2 ,
@@ -58,14 +58,15 @@ public:
       "territory_affect": [""],
       "date": "1-1-1804"
      */
-private:
+public:
+    QString title;
+    QString trigger;
     int clientId;
     EventType type;
     QString image_path;
     QString description;
     QString buttonText;
     QVector<QString> territoryTrigger;//ili vertexa videcu
-    QString trigger;
     int triggerAmount;
     QVector<QString> territoryAffect;
     QString date;

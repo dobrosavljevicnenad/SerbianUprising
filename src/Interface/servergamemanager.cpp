@@ -27,6 +27,11 @@ void ServerGameManager::initializeGame() {
 
     rootObj = doc.object();
     graph->deserialize(rootObj);
+
+    if (rootObj.contains("events") && rootObj["events"].isArray()) {
+        QJsonArray eventsArray = rootObj["events"].toArray();
+        eventHandle.deserializeEvents(eventsArray, 0);
+    }
 }
 
 void ServerGameManager::startGame() {
@@ -38,7 +43,7 @@ void ServerGameManager::startGame() {
 }
 
 void ServerGameManager::executeActions(const std::vector<Action> &actions1, int p1_id, const std::vector<Action> &actions2, int p2_id){
-
+    gameYear.advanceThreeMonths();
     for (const Action& action : actions1) {
         try {
             turn.addAction(p1_id, action);
@@ -56,6 +61,9 @@ void ServerGameManager::executeActions(const std::vector<Action> &actions1, int 
     }
     turn.battlesResults.clear();
     turn.executeTurn();
+    eventHandle.processEvents(gameYear.toJsonDateString(), *graph);
+    turn.executeTurn();
+
     QJsonObject serialized_graph = graph->serialize(rootObj);
 
     auto battleResults =turn.battlesResults;
