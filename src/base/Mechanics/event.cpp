@@ -2,11 +2,11 @@
 #include <qscrollarea.h>
 
 
-Event::Event(unsigned int id, EventType type, const QString& title, const QString& imagePath,
+Event::Event(unsigned int id,int clientId, EventType type, const QString& title, const QString& imagePath,
              const QString& description, const QString& buttonText,
              const QVector<QString>& territoryTrigger, const QString& trigger,
              int triggerAmount, const QVector<QString>& territoryAffect, const QString& date)
-    :id(id), type(type),
+    :id(id),clientId(clientId), type(type),
     title(title),
     image_path(imagePath),
     description(description),
@@ -23,8 +23,7 @@ QString Event::getDate() const {return date;}
 
 
 
-bool Event::canTrigger(int clientId, const QString& currentYear, const graph::Graph& clientGraph) const {
-    clientId=clientId;
+bool Event::canTrigger(const QString& currentYear, const graph::Graph& clientGraph) const {
     switch (type) {
     case EventType::RANDOM:
         return true;

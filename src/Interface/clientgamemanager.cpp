@@ -290,7 +290,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     armyManager.addTerritory(player);
     armyManager.calculateTotalTroops();
     characterWidget->setArmyText(armyManager.totalTroops,armyManager.maxTroops);
-    eventHandle.processEvents(ClientId, gameYear.toJsonDateString(), *clientGraph);
+    //eventHandle.processEvents(ClientId, gameYear.toJsonDateString(), *clientGraph);
 }
 
 QVector<QStringList> ClientGameManager::generateBattleResults() {
