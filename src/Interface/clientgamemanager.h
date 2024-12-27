@@ -112,7 +112,11 @@ private:
     FileManager fileManager;
     QMediaPlayer *musicPlayer;
     QAudioOutput *audioOutput;
+    QList<QUrl> playlist;
+    int currentSongIndex;
 
+    void playNextSong(QMediaPlayer* player, QList<QUrl>& playlist, int& currentIndex);
+    void playNextSongWrapper();
 
 private://UI
     QLabel* headerLabel;

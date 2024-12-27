@@ -1,8 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/music/Volley.mp3</file>
-        <file>resources/music/Janissary.mp3</file>
-        <file>resources/music/Hajduk.mp3</file>
         <file>resources/pozadina.png</file>
         <file>resources/button.png</file>
         <file>resources/out.png</file>
@@ -165,5 +163,17 @@
         <file>resources/arrow.png</file>
         <file>resources/pasha.png</file>
         <file>resources/karadjordje.png</file>
+        <file>resources/music/turkish/The Seljuks - Epic Music.mp3</file>
+        <file>resources/music/turkish/The Fall of Constantinople - Epic Music.mp3</file>
+        <file>resources/music/turkish/Ottoman Turkish War Song Mehter 2.mp3</file>
+        <file>resources/music/turkish/Ottoman Turkish War Song Mehter.mp3</file>
+        <file>resources/music/turkish/Ottoman Empire (12991922) Military March Ceddin Deden.mp3</file>
+        <file>resources/music/turkish/Janissary.mp3</file>
+        <file>resources/music/turkish/Čudna Jada Od Mostara Grada - Bosnian Song.mp3</file>
+        <file>resources/music/serbishen/Warriors of Merope - Epic Slavic Music of the Balkans [gnyRMvuujPA].mp3</file>
+        <file>resources/music/serbishen/Mali Radojica - Epic Slavic Music of Serbia.mp3</file>
+        <file>resources/music/serbishen/Hajduks of Raška - Epic Slavic Music of Serbia.mp3</file>
+        <file>resources/music/serbishen/Hajduk.mp3</file>
+        <file>resources/music/serbishen/Belisarius - Epic Byzantine Music.mp3</file>
     </qresource>
 </RCC>

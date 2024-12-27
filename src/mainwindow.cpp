@@ -34,6 +34,8 @@ MainWindow::MainWindow(QWidget *parent)
             gameMenu->musicPlayer = nullptr;
         }
     });
+
+    setWindowFlags(windowFlags() | Qt::WindowMaximizeButtonHint);
 }
 
 MainWindow::~MainWindow() {
