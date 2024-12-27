@@ -175,5 +175,6 @@
         <file>resources/music/serbishen/Hajduks of Raška - Epic Slavic Music of Serbia.mp3</file>
         <file>resources/music/serbishen/Hajduk.mp3</file>
         <file>resources/music/serbishen/Belisarius - Epic Byzantine Music.mp3</file>
+        <file>resources/bigButton.png</file>
     </qresource>
 </RCC>
