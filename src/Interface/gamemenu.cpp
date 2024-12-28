@@ -13,6 +13,8 @@ GameMenu::GameMenu(QWidget *parent) : QWidget(parent) {
 
     setupUI();
 
+    resizeEvent(new QResizeEvent(this->size(), this->size()));
+
     musicPlayer = new QMediaPlayer(this);
     audioOutput = new QAudioOutput(this);
     musicPlayer->setAudioOutput(audioOutput);
@@ -143,49 +145,83 @@ void GameMenu::resizeEvent(QResizeEvent *event) {
     double scaleY = static_cast<double>(screenHeight) / baseHeight;
     double scale = qMin(scaleX, scaleY);
 
-    int buttonFrameWidth = 450*scale;
-    int buttonFrameHeight = 350*scale;
-
-    if (buttonFrame) {
-        buttonFrame->setFixedSize(buttonFrameWidth, buttonFrameHeight);
-    }
-
-    int buttonWidth = 400*scale;
-    int buttonHeight = 100*scale;
+    int buttonWidth = static_cast<int>(400 * scale);
+    int buttonHeight = static_cast<int>(100 * scale);
 
     QSize buttonSize(buttonWidth, buttonHeight);
-    newGameButton->setFixedSize(buttonSize);
-    settingsButton->setFixedSize(buttonSize);
-    exitButton->setFixedSize(buttonSize);
+    newGameButton->setMinimumSize(buttonSize);
+    newGameButton->setMaximumSize(buttonSize);
+    settingsButton->setMinimumSize(buttonSize);
+    settingsButton->setMaximumSize(buttonSize);
+    exitButton->setMinimumSize(buttonSize);
+    exitButton->setMaximumSize(buttonSize);
 
     int fontSize = qMin(static_cast<int>(20*scale), 30);
-    QString buttonStyle = QString(R"(
-        QPushButton {
-            border: none;
-            background: transparent;
-            background-image: url(:/resources/button.png);
-            background-position: center;
-            background-repeat: no-repeat;
-            color: white;
-            font: bold %1px "Serif";
-            text-align: center;
-        }
-        QPushButton:hover {
-            background-image: url(:/resources/button.png);
-            color: #FFD700;
-            font-size: %2px;
-        }
-        QPushButton:pressed {
-            background-image: url(:/resources/button.png);
-            color: #FFA500;
-        }
-    )").arg(fontSize).arg(fontSize + 2);
+
+    QString buttonStyle;
+    if (isFullScreenMode) {
+        buttonStyle = QString(R"(
+            QPushButton {
+                border: none;
+                background: transparent;
+                background-image: url(:/resources/bigButton.png);
+                background-position: center;
+                background-repeat: no-repeat;
+                color: white;
+                font: bold %1px "Serif";
+                text-align: center;
+            }
+            QPushButton:hover {
+                background-image: url(:/resources/bigButton.png);
+                color: #FFD700;
+                font-size: %2px;
+            }
+            QPushButton:pressed {
+                background-image: url(:/resources/bigButton.png);
+                color: #FFA500;
+            }
+        )").arg(fontSize).arg(fontSize + 2);
+    } else {
+        buttonStyle = QString(R"(
+            QPushButton {
+                border: none;
+                background: transparent;
+                background-image: url(:/resources/button.png);
+                background-position: center;
+                background-repeat: no-repeat;
+                color: white;
+                font: bold %1px "Serif";
+                text-align: center;
+            }
+            QPushButton:hover {
+                background-image: url(:/resources/button.png);
+                color: #FFD700;
+                font-size: %2px;
+            }
+            QPushButton:pressed {
+                background-image: url(:/resources/button.png);
+                color: #FFA500;
+            }
+        )").arg(fontSize).arg(fontSize + 2);
+    }
 
     newGameButton->setStyleSheet(buttonStyle);
     settingsButton->setStyleSheet(buttonStyle);
     exitButton->setStyleSheet(buttonStyle);
 
-    stackedWidget->layout()->setContentsMargins(10*scale, 70*scale, 10*scale, 10*scale);
+    int buttonFrameWidth = static_cast<int>(450 * scale);
+    int buttonFrameHeight = static_cast<int>(350 * scale);
+    if (buttonFrame) {
+        buttonFrame->setMinimumSize(buttonFrameWidth, buttonFrameHeight);
+        buttonFrame->setMaximumSize(buttonFrameWidth, buttonFrameHeight);
+    }
+
+    stackedWidget->layout()->setContentsMargins(
+        static_cast<int>(10 * scale),
+        static_cast<int>(70 * scale),
+        static_cast<int>(10 * scale),
+        static_cast<int>(10 * scale)
+    );
 }
 
 void GameMenu::setBackgroundImage() {
@@ -198,10 +234,12 @@ void GameMenu::setBackgroundImage() {
 }
 
 void GameMenu::fullScreenClicked() {
-    if (window()->isFullScreen()) {
+    if (window()->windowState() & Qt::WindowMaximized) {
         window()->showNormal();
+        isFullScreenMode = false;
     } else {
-        window()->showFullScreen();
+        window()->showMaximized();
+        isFullScreenMode = true;
     }
 }
 
