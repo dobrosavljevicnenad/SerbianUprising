@@ -1828,7 +1828,7 @@
       "description": "The year is 1804. The Ottoman Empire, the guardian of centuries-old traditions and vast dominions, now faces challenges in maintaining order across its extensive lands. In the Balkans, where the Empire has brought stability and governance for generations, unrest stirs among certain factions. Fueled by misguided ambitions and foreign influences, rebellion threatens the harmony of the region. The Serbian people, once loyal subjects, now rise against the authority of the Sultan. It is your duty to restore order, protect the sovereignty of the Empire, and ensure the continued prosperity of the lands under Ottoman rule. Will you quell this insurrection and reassert the strength of the Crescent?",
       "button" : "Quell the Rebellion" ,
       "territory_trigger": [""],
-      "trigger": "Intro",
+      "trigger": "intro",
       "trigger_amount": 0,
       "territory_affect": [""],
       "date": "01-01-1804"
@@ -1869,7 +1869,7 @@
       "territory_trigger": [""],
       "trigger": "place",
       "trigger_amount": 50,
-      "territory_affect": [""],
+      "territory_affect": ["Silistra","Burgas","Plevna","Nikopoli"],
       "date": "01-07-1806"
     },
     {
@@ -2028,8 +2028,6 @@
       "territory_affect": [""],
       "date": "01-01-1812"
     },
-
-
     {
       "id" : 2,
       "type" : "RANDOM",
@@ -2051,8 +2049,8 @@
       "description":"To counter the growing threat from its enemies, the Sultan has ordered a significant increase in conscription. While this will bolster the army's numbers, it could also strain the empire's resources and lead to social unrest among the peasantry.",
       "button" :"Manage the Conscription",
       "territory_trigger": [""],
-      "trigger" : "place",
-      "trigger_amount" : 50,
+      "trigger" : "recruitments",
+      "trigger_amount" : 5,
       "territory_affect" : ["Beograd"],
       "date" : "23-01-1807"
     },
@@ -2116,8 +2114,8 @@
       "description":"",
       "button" :"Manage the Conscription",
       "territory_trigger": [""],
-      "trigger" : "place",
-      "trigger_amount" : 50,
+      "trigger" : "recruitments",
+      "trigger_amount" : 5,
       "territory_affect" : [""],
       "date" : "15-6-1807"
     },

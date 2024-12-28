@@ -28,10 +28,10 @@ private slots:
     void onTableCellClicked(int tableIndex, Results results);
 
 private:
-    const std::vector<Results> battleResults;  // Store battle results
-    QGridLayout *gridLayout;                   // Main grid layout for dialog
-    QGridLayout *containerLayout;              // Layout for tables inside the container
-    QWidget *tablesContainer;                  // Container widget for tables
+    const std::vector<Results> battleResults;
+    QGridLayout *gridLayout;
+    QGridLayout *containerLayout;
+    QWidget *tablesContainer;
     QString getButtonStyle();
     QPushButton *closeButton;
     graph::Graph *m_graph;

@@ -55,7 +55,7 @@ bool MoveArmy::executeEventAttack(int playerId, Vertex* target, unsigned soldier
         QCoreApplication::processEvents();
     }
     ArmyType source = ArmyType::HAJDUK;
-    if(target->id() == 1)
+    if(target->player.getPlayerId() == 1)
         source = ArmyType::JANISSARY;
 
     Army sentArmy(0, source);
@@ -135,7 +135,6 @@ void MoveArmy::onBattleFinished(int playerId, bool success, Army sentArmy, std::
                 }
             }
         }
-        //TODO: refresh(LayerOf(target));
     } else {
         std::cerr << "Battle failed.\n";
     }

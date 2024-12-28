@@ -36,17 +36,16 @@ void Turn::executeTurn() {
     }
     for (const auto& action : buffer) {
         if (action.type == ActionType::EVENT_ATTACK){
-            executeEventAction(action);
+            executeEventAction(1, action);
         }
     }
 
     for (const auto& action : buffer2) {
         if (action.type == ActionType::EVENT_ATTACK){
-            executeEventAction(action);
+            executeEventAction(2, action);
         }
     }
 
-    // Execute actions for both players
     for (const auto& action : getPlayerBuffer(1)) {
         executePlayerMoves(action, battleMusic);
     }
@@ -57,13 +56,12 @@ void Turn::executeTurn() {
 
     std::time_t start_music = std::time(0);
 
-    // Execute actions for both players
     executePlayerAttacks(1);
 
     executePlayerAttacks(2);
 
     while (numBattles > 0) {
-        QCoreApplication::processEvents(); // Ovo će omogućiti da se signali/slotovi procesuiraju dok čekate
+        QCoreApplication::processEvents();
     }
     for(auto res : battlesResults){
         res.printResults();
@@ -80,6 +78,10 @@ void Turn::executePlayerMoves(const Action& action, bool& battleMusic) {
         break;
     case ActionType::ATTACK:
         battleMusic = true;
+        break;
+    case ActionType::PLACE_ARMY:
+        break;
+    case ActionType::EVENT_ATTACK:
         break;
     default:
         std::cerr << "Unknown action type!\n";
@@ -116,6 +118,11 @@ void Turn::executePlayerAttacks(int playerId) {
             break;
         case ActionType::MOVE_ARMY:
             break;
+        case ActionType::PLACE_ARMY:
+            break;
+        case ActionType::EVENT_ATTACK:
+            numBattles++;
+            break;
         default:
             std::cerr << "Unknown action type!\n";
             break;
@@ -123,7 +130,7 @@ void Turn::executePlayerAttacks(int playerId) {
         it = buffer.erase(it);
     }
 
-    buffer.clear(); // Clear the buffer after executing all actions
+    buffer.clear();
 }
 
 std::vector<Action>& Turn::getPlayerBuffer(int playerId) {
@@ -151,9 +158,13 @@ void Turn::executePlaceAction(const Action& action) {
     source->newRecruits = 0;
 }
 
-void Turn::executeEventAction(const Action &action)
+void Turn::executeEventAction(const int playerId, const Action &action)
 {
-
+    Vertex* target = m_graph.get_vertex_by_id(action.targetVertexId);
+    auto& buffer = getPlayerBuffer(playerId);
+    if (!moveArmy.executeEventAttack(playerId, target, action.soldiers)) {
+        std::cerr << "Attack action failed for Player " << action.playerId << ".\n";
+    }
 }
 
 void Turn::executeMoveAction(const Action& action) {
@@ -180,7 +191,7 @@ void Turn::executeAttackAction(const int playerId, const Action& action) {
             } else {
                 std::cerr << "Error: Source vertex not found!" << std::endl;
             }
-            it = buffer.erase(it); // Remove the attack action from the buffer
+            it = buffer.erase(it);
         } else {
             ++it;
         }

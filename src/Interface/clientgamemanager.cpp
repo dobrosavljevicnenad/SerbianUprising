@@ -233,7 +233,21 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
         clientGraph->deserialize(graphData);
         init = false;
     }
-    if (data.contains("results") && data["results"].isObject()) {
+    if (data.contains("events") && data["events"].isObject() && init) {
+        QJsonObject eventsObject = data["events"].toObject();
+        if (eventsObject.contains("events") && eventsObject["events"].isArray()) {
+            QJsonArray eventsArray = eventsObject["events"].toArray();
+            for (const QJsonValue& eventValue : eventsArray) {
+                if (eventValue.isObject()) {
+                    QJsonObject eventObj = eventValue.toObject();
+                    QString title = eventObj["title"].toString();
+                    int clientId = eventObj["id"].toInt();
+                    eventHandle.processSpecificEvent(clientId, title, armyManager, naval);
+                }
+            }
+        }
+    }
+    if (data.contains("results") && data["results"].isObject() && init) {
         QJsonObject resultsObject = data["results"].toObject();
         if (resultsObject.contains("results") && resultsObject["results"].isArray()) {
             QJsonArray resultsArray = resultsObject["results"].toArray();
@@ -290,7 +304,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     armyManager.addTerritory(player);
     armyManager.calculateTotalTroops();
     characterWidget->setArmyText(armyManager.totalTroops,armyManager.maxTroops);
-    //eventHandle.processEvents(ClientId, gameYear.toJsonDateString(), *clientGraph);
+    eventHandle.processIntroEvents();
 }
 
 QVector<QStringList> ClientGameManager::generateBattleResults() {
@@ -652,15 +666,16 @@ void ClientGameManager::loadGame() {
     //     QMessageBox::critical(nullptr, "Load Failed", "Selected file does not exist:\n" + filePath);
     //     return;
     // }
+    if(loadGamePath != "base.json"){
+        QJsonObject graphData = fileManager.loadFromFile(fullPath);
+        if (graphData.isEmpty()) {
+            qWarning() << "Failed to load game state. File might be corrupt.";
+            CustomMessageBox::showMessage("Failed to load game state. File might be corrupt.");
+            return;
+        }
 
-    QJsonObject graphData = fileManager.loadFromFile(fullPath);
-    if (graphData.isEmpty()) {
-        qWarning() << "Failed to load game state. File might be corrupt.";
-        CustomMessageBox::showMessage("Failed to load game state. File might be corrupt.");
-        return;
+        emit gameDataLoaded(graphData);
     }
-
-    emit gameDataLoaded(graphData);
 
     // clientGraph->deserialize(graphData);
 

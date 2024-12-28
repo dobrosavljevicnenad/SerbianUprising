@@ -118,6 +118,9 @@ BattleReplayDialog::BattleReplayDialog(QWidget *parent, int tableIndex, Results 
     attackerTable->setRowHeight(2, 22);
     defenderTable->move(10, 10);
     attackerTable->move(874, 10);
+    defenderTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+    attackerTable->setEditTriggers(QAbstractItemView::NoEditTriggers);
+
     //----------------------------------------------------------------------------
     QVBoxLayout *layout = new QVBoxLayout(this);
     replayButton = new QPushButton("Replay", this);

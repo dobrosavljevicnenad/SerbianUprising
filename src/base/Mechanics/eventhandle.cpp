@@ -40,6 +40,25 @@ void EventHandle::deserializeEvents(const QJsonArray& eventsJson, unsigned clien
     }
 }
 
+QJsonObject EventHandle::serializeProcessedEvents() {
+    QJsonObject rootObject;
+    QJsonArray eventsArray;
+
+    for (const Event& event : processedEventsBuffer) {
+        QJsonObject eventJson;
+        eventJson["id"] = static_cast<int>(event.clientId);
+        eventJson["title"] = event.title;
+
+        eventsArray.append(eventJson);
+    }
+
+    processedEventsBuffer.clear();
+
+    rootObject["events"] = eventsArray;
+    return rootObject;
+}
+
+
 void EventHandle::addEvent(const Event& event) {
     events.append(QPair<Event, bool>(event, false));
 }
@@ -55,6 +74,43 @@ void EventHandle::markEventOccurred(unsigned int eventId) {
 
 const QVector<QPair<Event, bool>>& EventHandle::getEvents() const {
     return events;
+}
+
+void EventHandle::processIntroEvents() {
+    for (auto& eventPair : events) {
+        Event& event = eventPair.first;
+        if (event.trigger == "intro" && !eventPair.second) {
+            event.showEventWindow();
+            markEventOccurred(event.id);
+        }
+    }
+}
+
+void EventHandle::processSpecificEvent(int clientId, const QString& title,  AddArmyManager& armyManager, bool& naval ) {
+    for (auto& eventPair : events) {
+        Event& event = eventPair.first;
+        if (event.clientId == clientId && event.title == title && !eventPair.second) {
+
+            if(event.type != EventType::RANDOM){
+                markEventOccurred(event.id);
+            }
+
+            qDebug() << "Displaying Event:" << event.title;
+
+            if (event.trigger == "recruitments") {
+                processRecruitmentsTrigger(event, &armyManager);
+                event.showEventWindow();
+            } else if (event.trigger == "naval") {
+                processNavalTrigger(naval,event);
+                event.showEventWindow();
+            } else {
+                event.showEventWindow();
+                qDebug() << "Event displayed but no specific action for trigger:" << event.trigger;
+            }
+            return;
+        }
+    }
+    qWarning() << "No matching event found for ClientId:" << clientId << "Title:" << title;
 }
 
 void EventHandle::processEvents(const QString& currentYear, const graph::Graph& clientGraph, Turn* turn) {
@@ -77,22 +133,26 @@ void EventHandle::processEvents(const QString& currentYear, const graph::Graph& 
     if (!randomEvents.isEmpty()) {
         int randomIndex = QRandomGenerator::global()->bounded(randomEvents.size());
         Event& randomEvent = randomEvents[randomIndex];
-        processRandomEvent(randomEvent);
+        nonRandomEvents.append(randomEvent);
     }
 
     for (const Event& event : nonRandomEvents) {
         QString trigger = event.trigger;
 
         if (trigger == "place") {
-            processPlaceTrigger(event, clientGraph, turn);
+            processPlaceTrigger(event, clientGraph,turn);
+            processedEventsBuffer.append(event);
             markEventOccurred(event.id);
         } else if (trigger == "attack") {
-            processAttackTrigger(event, clientGraph, turn);
+            processAttackTrigger(event, clientGraph,turn);
+            processedEventsBuffer.append(event);
             markEventOccurred(event.id);
         } else if (trigger == "morale") {
             processMoraleTrigger(event);
+            processedEventsBuffer.append(event);
             markEventOccurred(event.id);
         } else if (trigger == "recruitments" || trigger == "naval" || trigger == "intro" || trigger == "end") {
+            processedEventsBuffer.append(event);
             markEventOccurred(event.id);
         } else {
             qWarning() << "Unknown trigger type:" << trigger;
@@ -104,8 +164,15 @@ void EventHandle::processPlaceTrigger(const Event& event, const graph::Graph& cl
     for (const QString& label : event.territoryAffect) {
         auto vertex = clientGraph.get_vertex_by_label(label);
         if (vertex) {
-            Action newAction(ActionType::PLACE_ARMY, clientId, vertex->id(), vertex->id(), event.triggerAmount);
-            turn->addAction(clientId, newAction);
+            ActionType actionType = ActionType::EVENT_ATTACK;
+            if(event.clientId == vertex->player.getPlayerId()){
+                actionType = ActionType::PLACE_ARMY;
+                qDebug() << "EventId:" << event.clientId<<"\nVertexId:" <<vertex->player.getPlayerId()<<"\nlabel:"<<vertex->label();
+
+            }
+
+            Action newAction(actionType, event.clientId, vertex->id(), vertex->id(), event.triggerAmount);
+            turn->addAction(event.clientId, newAction);
             qDebug() << "Updated army strength in territory:" << label;
         }
     }
@@ -115,8 +182,11 @@ void EventHandle::processAttackTrigger(const Event& event, const graph::Graph& c
     for (const QString& label : event.territoryAffect) {
         auto vertex = clientGraph.get_vertex_by_label(label);
         if (vertex) {
-            Action newAction(ActionType::EVENT_ATTACK, clientId, vertex->id(), vertex->id(), event.triggerAmount);
-            turn->addAction(clientId, newAction);
+            ActionType actionType = ActionType::EVENT_ATTACK;
+            if(event.clientId == vertex->player.getPlayerId())
+                actionType = ActionType::PLACE_ARMY;
+            Action newAction(actionType, event.clientId, vertex->id(), vertex->id(), event.triggerAmount);
+            turn->addAction(event.clientId, newAction);
             qDebug() << "Marked territory as under attack:" << label;
         }
     }
@@ -131,32 +201,18 @@ void EventHandle::processMoraleTrigger(const Event& event) {
     qDebug() << "Global morale updated by:" << moraleChange;
 }
 
-void EventHandle::processRecruitmentsTrigger(const Event& event, const graph::Graph& clientGraph) {
-    for (const QString& label : event.territoryAffect) {
-        auto vertex = clientGraph.get_vertex_by_label(label);
-        if (vertex) {
-
-            qDebug() << "Recruited units in territory:" << label;
-        }
-    }
+void EventHandle::processRecruitmentsTrigger(const Event& event, AddArmyManager* armyManager) {
+    armyManager->addBonus(event.triggerAmount);
 }
 
-void EventHandle::processNavalTrigger(const Event& event) {
-    qDebug() << "Naval strength updated by:";
-}
-
-void EventHandle::processIntroTrigger(const Event& event) {
-    qDebug() << "Game intro event triggered:" << event.title;
-    //(event);
+void EventHandle::processNavalTrigger(bool& naval, const Event& event) {
+    naval = (event.triggerAmount != 0);
+    qDebug() << "Naval strength updated to:" << naval;
 }
 
 void EventHandle::processEndTrigger(const Event& event) {
     qDebug() << "Game end event triggered:" << event.title;
     //triggerGameEndSequence(event);
-}
-
-void EventHandle::processRandomEvent(const Event& event) {
-    qDebug() << "Random event triggered:" << event.title;
 }
 
 bool EventHandle::shouldSpawnEvent(int probability) const {
