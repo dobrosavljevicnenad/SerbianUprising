@@ -77,11 +77,11 @@ CharacterWidget::CharacterWidget(unsigned clientId, QWidget *parent) : QWidget(p
         );
 }
 
-void CharacterWidget::updateTerritoryInfo(const QString &territoryName, int troopsCount) {
+void CharacterWidget::updateTerritoryInfo(const QString &territoryName, QString troopsCount) {
     territory->setText(QString("Territory: %1").arg(territoryName));
     territoryArmy->setText(QString("Troops: %1").arg(troopsCount));
 }
 void CharacterWidget::setArmyText(int troopsCount1, int troopsCount2) {
-    army->setText(QString("%1/%2 armies left").arg(troopsCount1)
-                                                .arg(troopsCount2));
+    army->setText(QString("%1/%2 total armies left").arg(troopsCount1)
+                                                    .arg(troopsCount2));
 }

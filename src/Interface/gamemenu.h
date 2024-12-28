@@ -40,6 +40,7 @@ private:
     QPushButton *settingsButton;
     QPushButton *exitButton;
     QPushButton *fullScreenButton;
+    QLabel *logoLabel;
     bool isFullScreenMode = false;
     QPushButton *muteButton;
     QStackedWidget *stackedWidget;

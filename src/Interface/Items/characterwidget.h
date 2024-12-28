@@ -16,7 +16,7 @@ public:
     void setupPortrait(QLabel *portraitLabel, const QString &imagePath);
     void setArmyText(int troopsCount1, int troopsCount2);
 public slots:
-    void updateTerritoryInfo(const QString &territoryName, int troopsCount);
+    void updateTerritoryInfo(const QString &territoryName, QString troopsCount);
 private:
     unsigned clientId;
     QLabel *territory;

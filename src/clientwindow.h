@@ -29,7 +29,9 @@ public:
     void initrepositionFixedWidgets();
     void checkServerClosed();
     void freezeUI();
-    void showDisconnectPauseMenu();
+    void showDisconnectPauseMenu(const QString header);
+    void processEndTrigger();
+
 protected:
     void keyPressEvent(QKeyEvent *event) override;
 

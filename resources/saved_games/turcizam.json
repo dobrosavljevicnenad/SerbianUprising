@@ -1,0 +1,851 @@
+{
+    "vertices": [
+        {
+            "army_type": "JANISSARY",
+            "id": 121,
+            "label": "Gelibolu",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 120,
+            "label": "Kratovo",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 119,
+            "label": "Skopje",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 118,
+            "label": "Kastoria",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "HAJDUK",
+            "id": 117,
+            "label": "Skodra",
+            "num_of_soldiers": 161,
+            "player_id": 1
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 116,
+            "label": "Shtip",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 115,
+            "label": "Veles",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 114,
+            "label": "Prilep",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 113,
+            "label": "Kichevo",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 112,
+            "label": "Lezhe",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 111,
+            "label": "Kostendil",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 110,
+            "label": "BlagoevGrad",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "HAJDUK",
+            "id": 109,
+            "label": "Pazardzhik",
+            "num_of_soldiers": 37,
+            "player_id": 1
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 108,
+            "label": "Plovdiv",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 107,
+            "label": "Haskovo",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 106,
+            "label": "Stara_Zagora",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 105,
+            "label": "Plevna",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "HAJDUK",
+            "id": 104,
+            "label": "Sofija",
+            "num_of_soldiers": 0,
+            "player_id": 1
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 103,
+            "label": "Sliven",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 102,
+            "label": "Veliko_Tarnovo",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 101,
+            "label": "Shumen",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 100,
+            "label": "Ruse",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 99,
+            "label": "Nikopoli",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 98,
+            "label": "Oryahovo",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 97,
+            "label": "Lom",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 96,
+            "label": "Vidin",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 95,
+            "label": "Calafat",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 94,
+            "label": "Giurgiu",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 93,
+            "label": "TurnuMagurele",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 92,
+            "label": "Pitesti",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 91,
+            "label": "Ployeshti",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 90,
+            "label": "Bucharest",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 89,
+            "label": "Calarasi",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 88,
+            "label": "Slatina",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 87,
+            "label": "Kraiova",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 86,
+            "label": "TurnuSeverin",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 85,
+            "label": "Negol",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 84,
+            "label": "Bran",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 83,
+            "label": "Focsani",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 82,
+            "label": "Braila",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 81,
+            "label": "Babadag",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 80,
+            "label": "Silistra",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 79,
+            "label": "Constanta",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 78,
+            "label": "Kavarna",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 77,
+            "label": "Varna",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 76,
+            "label": "Burgas",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 75,
+            "label": "Elhovo",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "HAJDUK",
+            "id": 74,
+            "label": "Edirne",
+            "num_of_soldiers": 0,
+            "player_id": 1
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 73,
+            "label": "Kirkareli",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 72,
+            "label": "Istanbul",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "HAJDUK",
+            "id": 71,
+            "label": "Corlu",
+            "num_of_soldiers": 418,
+            "player_id": 1
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 70,
+            "label": "Daddia",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "HAJDUK",
+            "id": 69,
+            "label": "KrumovGrad",
+            "num_of_soldiers": 0,
+            "player_id": 1
+        },
+        {
+            "army_type": "HAJDUK",
+            "id": 68,
+            "label": "Rhodope",
+            "num_of_soldiers": 10,
+            "player_id": 1
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 67,
+            "label": "Sandaski",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 66,
+            "label": "Kiklis",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 65,
+            "label": "Alexandropoli",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 64,
+            "label": "Xanthi",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 63,
+            "label": "Kavala",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 62,
+            "label": "Serres",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 61,
+            "label": "Monastir",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 60,
+            "label": "Edessa",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "HAJDUK",
+            "id": 29,
+            "label": "Krusevac",
+            "num_of_soldiers": 20,
+            "player_id": 1
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 28,
+            "label": "Raska",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 27,
+            "label": "Uzice",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 26,
+            "label": "Valjevo",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 25,
+            "label": "Smederevo",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 24,
+            "label": "Beograd",
+            "num_of_soldiers": 60,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 23,
+            "label": "Sabac",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 22,
+            "label": "Bijeljina",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 21,
+            "label": "Shamac",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 20,
+            "label": "Brod",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 19,
+            "label": "Ves",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 18,
+            "label": "Doboj",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 17,
+            "label": "Novi_Pazar",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 16,
+            "label": "Sjenica",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 15,
+            "label": "Visegrad",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 14,
+            "label": "Srebrenica",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 1,
+            "label": "Kladusa",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 2,
+            "label": "Bihac",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 3,
+            "label": "Novi_Grad",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 4,
+            "label": "Gradiska",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 5,
+            "label": "Sanski_Most",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 6,
+            "label": "Jajce",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 7,
+            "label": "Bugojno",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 8,
+            "label": "Banja_Luka",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 9,
+            "label": "Travnik",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 10,
+            "label": "Sarajevo",
+            "num_of_soldiers": 350,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 11,
+            "label": "Focha",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 12,
+            "label": "Tuzla",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 13,
+            "label": "Zvornik",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 30,
+            "label": "Nis",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "HAJDUK",
+            "id": 31,
+            "label": "Vranje",
+            "num_of_soldiers": 0,
+            "player_id": 1
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 32,
+            "label": "Pristina",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 33,
+            "label": "Kumanovo",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 34,
+            "label": "Prizren",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "HAJDUK",
+            "id": 35,
+            "label": "Kragujevac",
+            "num_of_soldiers": 3,
+            "player_id": 1
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 36,
+            "label": "Negotin",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 37,
+            "label": "Zajecar",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 38,
+            "label": "Kladovo",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 39,
+            "label": "Grahovo",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 40,
+            "label": "Livno",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 41,
+            "label": "Mostar",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 42,
+            "label": "Trebinje",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "HAJDUK",
+            "id": 43,
+            "label": "Cetinje",
+            "num_of_soldiers": 0,
+            "player_id": 1
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 44,
+            "label": "Djakovica",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 45,
+            "label": "Janina",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 46,
+            "label": "Sarande",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 47,
+            "label": "Prikhala",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 48,
+            "label": "Larissa",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 49,
+            "label": "Olympus",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 50,
+            "label": "Ossa",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 51,
+            "label": "Rapsani",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 52,
+            "label": "Vlore",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 53,
+            "label": "Ohrid",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 54,
+            "label": "Tirane",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 55,
+            "label": "Durres",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 56,
+            "label": "Khaterini",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 57,
+            "label": "Delta",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 58,
+            "label": "Solun",
+            "num_of_soldiers": 2301,
+            "player_id": 2
+        },
+        {
+            "army_type": "JANISSARY",
+            "id": 59,
+            "label": "Chalkidiki",
+            "num_of_soldiers": 10,
+            "player_id": 2
+        }
+    ]
+}
