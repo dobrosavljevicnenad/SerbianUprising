@@ -44,7 +44,7 @@ void GameMenu::setupUI() {
 
     logoLabel = new QLabel(this);
     QPixmap logoPixmap(":/resources/Images/logo.png");
-    logoPixmap = logoPixmap.scaled(500, 400, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    logoPixmap = logoPixmap.scaled(600, 450, Qt::KeepAspectRatio, Qt::SmoothTransformation);
     logoLabel->setPixmap(logoPixmap);
     logoLabel->setAlignment(Qt::AlignCenter);
 
@@ -112,6 +112,7 @@ void GameMenu::setupUI() {
 
     menuLayout->addWidget(logoLabel, 0, Qt::AlignCenter);
     menuLayout->addSpacing(0); // Reduce spacing here
+    buttonLayout->setContentsMargins(0, 0, 0, 0);
     menuLayout->addWidget(buttonFrame, 0, Qt::AlignCenter);
     mainMenu->setLayout(menuLayout);
     stackedWidget->addWidget(mainMenu);
@@ -162,51 +163,28 @@ void GameMenu::resizeEvent(QResizeEvent *event) {
 
 
     QString buttonStyle;
-    if (isFullScreenMode) {
-        buttonStyle = QString(R"(
-            QPushButton {
-                border: none;
-                background: transparent;
-                background-image: url(:/resources/Images/bigButton.png);
-                background-position: center;
-                background-repeat: no-repeat;
-                color: white;
-                font: bold %1px "Serif";
-                text-align: center;
-            }
-            QPushButton:hover {
-                background-image: url(:/resources/Images/bigButton.png);
-                color: #FFD700;
-                font-size: %2px;
-            }
-            QPushButton:pressed {
-                background-image: url(:/resources/Images/bigButton.png);
-                color: #FFA500;
-            }
-        )").arg(fontSize).arg(fontSize + 2);
-    } else {
-        buttonStyle = QString(R"(
-            QPushButton {
-                border: none;
-                background: transparent;
-                background-image: url(:/resources/Images/button.png);
-                background-position: center;
-                background-repeat: no-repeat;
-                color: white;
-                font: bold %1px "Serif";
-                text-align: center;
-            }
-            QPushButton:hover {
-                background-image: url(:/resources/Images/button.png);
-                color: #FFD700;
-                font-size: %2px;
-            }
-            QPushButton:pressed {
-                background-image: url(:/resources/Images/button.png);
-                color: #FFA500;
-            }
-        )").arg(fontSize).arg(fontSize + 2);
-    }
+
+    buttonStyle = QString(R"(
+        QPushButton {
+            border: none;
+            background: transparent;
+            background-image: url(:/resources/Images/button.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            font: bold %1px "Serif";
+            text-align: center;
+        }
+        QPushButton:hover {
+            background-image: url(:/resources/Images/button.png);
+            color: #FFD700;
+            font-size: %2px;
+        }
+        QPushButton:pressed {
+            background-image: url(:/resources/Images/button.png);
+            color: #FFA500;
+        }
+    )").arg(fontSize).arg(fontSize + 2);
     newGameButton->setStyleSheet(buttonStyle);
     settingsButton->setStyleSheet(buttonStyle);
     exitButton->setStyleSheet(buttonStyle);
@@ -224,15 +202,6 @@ void GameMenu::resizeEvent(QResizeEvent *event) {
         static_cast<int>(10 * scale),
         static_cast<int>(10 * scale)
         );
-
-    if (logoLabel) {
-        int logoWidth = static_cast<int>(500 * scale);
-        int logoHeight = static_cast<int>(400 * scale);
-        QPixmap logoPixmap(":/resources/Images/logo.png");
-        logoPixmap = logoPixmap.scaled(logoWidth, logoHeight, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
-        logoLabel->setPixmap(logoPixmap);
-        logoLabel->setFixedSize(logoWidth, logoHeight);
-    }
 }
 
 
