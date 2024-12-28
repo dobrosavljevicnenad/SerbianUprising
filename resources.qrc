@@ -1,9 +1,6 @@
 <RCC>
     <qresource prefix="/">
         <file>resources/music/Volley.mp3</file>
-        <file>resources/pozadina.png</file>
-        <file>resources/button.png</file>
-        <file>resources/out.png</file>
         <file>resources/Images/Board.png</file>
         <file>resources/Images/Explosion.png</file>
         <file>resources/Images/MapFields.png</file>
@@ -154,16 +151,7 @@
         <file>resources/Project/Zajecar.png</file>
         <file>resources/Project/Zvornik.png</file>
         <file>resources/init.json</file>
-        <file>resources/border1.png</file>
-        <file>resources/mountain.png</file>
-        <file>resources/hills.png</file>
-        <file>resources/forest.png</file>
-        <file>resources/field.png</file>
         <file>resources/Images/FogOfWar.png</file>
-        <file>resources/arrow.png</file>
-        <file>resources/pasha.png</file>
-        <file>resources/karadjordje.png</file>
-        <file>resources/a_sick_man_of_europe.png</file>
         <file>resources/Images/varvarin.png</file>
         <file>resources/Images/tabanovce.png</file>
         <file>resources/Images/supplies.png</file>
@@ -235,9 +223,19 @@
         <file>resources/music/serbishen/Hajduks of Raška - Epic Slavic Music of Serbia.mp3</file>
         <file>resources/music/serbishen/Hajduk.mp3</file>
         <file>resources/music/serbishen/Belisarius - Epic Byzantine Music.mp3</file>
-        <file>resources/bigButton.png</file>
         <file>resources/Images/crushed_rebbelion.png</file>
         <file>resources/Images/pocetna.png</file>
         <file>resources/Images/logo.png</file>
+        <file>resources/Images/arrow.png</file>
+        <file>resources/Images/a_sick_man_of_europe.png</file>
+        <file>resources/Images/bigButton.png</file>
+        <file>resources/Images/button.png</file>
+        <file>resources/Images/border1.png</file>
+        <file>resources/Images/field.png</file>
+        <file>resources/Images/forest.png</file>
+        <file>resources/Images/hills.png</file>
+        <file>resources/Images/karadjordje.png</file>
+        <file>resources/Images/pasha.png</file>
+        <file>resources/Images/pozadina.png</file>
     </qresource>
 </RCC>

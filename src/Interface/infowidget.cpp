@@ -109,7 +109,7 @@ void NodeInfoWidget::updateNodeInfo(MapLayer* layer) {
     if(vertex->army.armyType()== ArmyType::HAJDUK){
         setStyleSheet(
             "NodeInfoWidget { "
-            "   border-image: url(:/resources/border1.png) 30 stretch; "
+            "   border-image: url(:/resources/Images/border1.png) 30 stretch; "
             "   border-width: 4px; "
             "   background-color: rgba(74, 47, 47,180); "
             "   color: white; "
@@ -117,7 +117,7 @@ void NodeInfoWidget::updateNodeInfo(MapLayer* layer) {
     }else{
         setStyleSheet(
             "NodeInfoWidget { "
-            "   border-image: url(:/resources/border1.png) 30 stretch; "
+            "   border-image: url(:/resources/Images/border1.png) 30 stretch; "
             "   border-width: 4px; "
             "   background-color: rgba(3, 66, 5,180); "
             "   color: white; "
@@ -127,19 +127,19 @@ void NodeInfoWidget::updateNodeInfo(MapLayer* layer) {
     imageLabel->setPixmap(pixmap.scaled(imageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
 
     if (vertex->terrain.getTerrain() == TerrainType::HILL) {
-        QPixmap hillPixmap(":/resources/hills.png");
+        QPixmap hillPixmap(":/resources/Images/hills.png");
         backgroundImageLabel->setPixmap(hillPixmap.scaled(backgroundImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
     else if (vertex->terrain.getTerrain() == TerrainType::FIELD) {
-        QPixmap fieldPixmap(":/resources/field.png");
+        QPixmap fieldPixmap(":/resources/Images/field.png");
         backgroundImageLabel->setPixmap(fieldPixmap.scaled(backgroundImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
     else if (vertex->terrain.getTerrain() == TerrainType::FOREST) {
-        QPixmap forestPixmap(":/resources/forest.png");
+        QPixmap forestPixmap(":/resources/Images/forest.png");
         backgroundImageLabel->setPixmap(forestPixmap.scaled(backgroundImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
     else {
-        QPixmap mountainPixmap(":/resources/mountain.png");
+        QPixmap mountainPixmap(":/resources/Images/mountain.png");
         backgroundImageLabel->setPixmap(mountainPixmap.scaled(backgroundImageLabel->size(), Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
 

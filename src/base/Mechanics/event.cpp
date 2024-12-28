@@ -64,14 +64,14 @@ void Event::showEventWindow() {
             "background-color: rgba(74, 47, 47,190); "
             "border-radius: 10px; "
             "border-width: 10px;"
-            "border-image: url(:/resources/border1.png) 60 stretch;"
+            "border-image: url(:/resources/Images/border1.png) 60 stretch;"
             );
     } else {
         infoWindow->setStyleSheet(
             "background-color: rgba(3, 66, 5,190); "
             "border-radius: 10px; "
             "border-width: 10px;"
-            "border-image: url(:/resources/border1.png) 60 stretch;"
+            "border-image: url(:/resources/Images/border1.png) 60 stretch;"
             );
     }
 
