@@ -433,6 +433,7 @@ void ClientWindow::onMoveClicked(QListWidgetItem* item) {
             QVariant data = item->data(Qt::UserRole + 3);
             int actionId = data.toInt();
             gameManager->removePlaceAction(actionId);
+            characterWidget->setArmyText(armyManager.totalTroops,armyManager.maxTroops);
         }
 
         delete moveList->takeItem(moveList->row(item));

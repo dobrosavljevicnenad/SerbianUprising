@@ -94,7 +94,7 @@ signals:
     void endTurnActionsReady(const QVector<Action>& actions, int id);
     void gameYearUpdated(QString gameYear);
     void gameDataLoaded(const QJsonObject& graphData);
-    void updateCharacterWidget(const QString &territoryName, int troops);
+    void updateCharacterWidget(const QString &territoryName, QString troops);
 
 
 

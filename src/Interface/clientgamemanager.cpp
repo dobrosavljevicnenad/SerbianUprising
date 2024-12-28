@@ -328,7 +328,7 @@ void ClientGameManager::onLayerHovered(MapLayer *layer) {
     if (layer) {
         emit updateCharacterWidget(
             layer->labelName,
-            layer->getTroopCount()
+            layer->troopText->toPlainText()
             );
     } else {
         emit updateCharacterWidget(

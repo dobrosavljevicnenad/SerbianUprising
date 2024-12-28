@@ -97,6 +97,8 @@ void EventHandle::processSpecificEvent(int clientId, const QString& title,  AddA
 
             qDebug() << "Displaying Event:" << event.title;
 
+            event.updateOutcomeLabel();
+
             if (event.trigger == "recruitments") {
                 processRecruitmentsTrigger(event, &armyManager);
                 event.showEventWindow();

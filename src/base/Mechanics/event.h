@@ -73,7 +73,8 @@ public:
 
     //widgets
     QWidget *infoWindow = nullptr;
-
+    QLabel* outcomeLabel;
+    void updateOutcomeLabel();
 };
 
 
