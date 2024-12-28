@@ -25,8 +25,8 @@ int Strength::getBoost(ArmyType type) const {
     return (type == ArmyType::HAJDUK) ? m_boostHajduk : m_boostJanissary;
 }
 
-int Strength::baseMorale() {
-    return s_baseMorale;
+int Strength::baseMorale(ArmyType type) {
+    return (type == ArmyType::HAJDUK) ? s_baseMoraleHajduk : s_baseMoraleJanissary;
 }
 
 int Strength::baseStrength() {

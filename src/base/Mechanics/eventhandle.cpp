@@ -115,7 +115,7 @@ void EventHandle::processSpecificEvent(int clientId, const QString& title,  AddA
     qWarning() << "No matching event found for ClientId:" << clientId << "Title:" << title;
 }
 
-void EventHandle::processEvents(const QString& currentYear, const graph::Graph& clientGraph) {
+void EventHandle::processEvents(const QString& currentYear, const graph::Graph& clientGraph, Turn* turn) {
     QVector<Event> randomEvents;
     QVector<Event> nonRandomEvents;
 
@@ -142,11 +142,11 @@ void EventHandle::processEvents(const QString& currentYear, const graph::Graph& 
         QString trigger = event.trigger;
 
         if (trigger == "place") {
-            processPlaceTrigger(event, clientGraph);
+            processPlaceTrigger(event, clientGraph,turn);
             processedEventsBuffer.append(event);
             markEventOccurred(event.id);
         } else if (trigger == "attack") {
-            processAttackTrigger(event, clientGraph);
+            processAttackTrigger(event, clientGraph,turn);
             processedEventsBuffer.append(event);
             markEventOccurred(event.id);
         } else if (trigger == "morale") {
@@ -162,19 +162,33 @@ void EventHandle::processEvents(const QString& currentYear, const graph::Graph& 
     }
 }
 
-void EventHandle::processPlaceTrigger(const Event& event, const graph::Graph& clientGraph) {
+void EventHandle::processPlaceTrigger(const Event& event, const graph::Graph& clientGraph, Turn* turn) {
     for (const QString& label : event.territoryAffect) {
         auto vertex = clientGraph.get_vertex_by_label(label);
         if (vertex) {
+            ActionType actionType = ActionType::EVENT_ATTACK;
+            if(event.clientId == vertex->player.getPlayerId()){
+                actionType = ActionType::PLACE_ARMY;
+                qDebug() << "EventId:" << event.clientId<<"\nVertexId:" <<vertex->player.getPlayerId()<<"\nlabel:"<<vertex->label();
+
+            }
+
+            Action newAction(actionType, event.clientId, vertex->id(), vertex->id(), event.triggerAmount);
+            turn->addAction(event.clientId, newAction);
             qDebug() << "Updated army strength in territory:" << label;
         }
     }
 }
 
-void EventHandle::processAttackTrigger(const Event& event, const graph::Graph& clientGraph) {
+void EventHandle::processAttackTrigger(const Event& event, const graph::Graph& clientGraph,Turn* turn) {
     for (const QString& label : event.territoryAffect) {
         auto vertex = clientGraph.get_vertex_by_label(label);
         if (vertex) {
+            ActionType actionType = ActionType::EVENT_ATTACK;
+            if(event.clientId == vertex->player.getPlayerId())
+                actionType = ActionType::PLACE_ARMY;
+            Action newAction(actionType, event.clientId, vertex->id(), vertex->id(), event.triggerAmount);
+            turn->addAction(event.clientId, newAction);
             qDebug() << "Marked territory as under attack:" << label;
         }
     }
@@ -182,7 +196,10 @@ void EventHandle::processAttackTrigger(const Event& event, const graph::Graph& c
 
 void EventHandle::processMoraleTrigger(const Event& event) {
     int moraleChange = event.triggerAmount;
-    //updateGlobalMorale(moraleChange);
+    if(clientId == 1)
+        Strength::instance().setBoost(ArmyType::HAJDUK, moraleChange);
+    else if(clientId == 2)
+        Strength::instance().setBoost(ArmyType::JANISSARY, moraleChange);
     qDebug() << "Global morale updated by:" << moraleChange;
 }
 

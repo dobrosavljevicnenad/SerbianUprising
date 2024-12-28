@@ -17,6 +17,8 @@ public:
     explicit MoveArmy(Graph& graph);
 
     bool executeAttack(int playerId, std::vector<Vertex*> sources, Vertex* target, std::vector<unsigned> soldiersToMove);
+    bool executeEventAttack(int playerId, Vertex* target, unsigned soldiersToMove);
+
     bool executeMerge(Vertex* source, Vertex* target, unsigned soldiers);
     Graph& getGraph() const;
 

@@ -75,14 +75,13 @@ void BattleResultsDialog::setResults(const QVector<QStringList> &results) {
 
     int row = 0;
     int col = 0;
-    const int maxColumns = 4; // Limit the number of tables per row
+    const int maxColumns = 4;
 
     for (int i = 0; i < results.size(); ++i) {
         QTableWidget *table = new QTableWidget(tablesContainer);
         table->setColumnCount(2);
         table->setRowCount(3);
 
-        // Connect table cell click to show detailed battle information
         connect(table, &QTableWidget::cellClicked, this, [this, i](int row, int col) {
             onTableCellClicked(i, battleResults[i]);
         });
@@ -97,7 +96,6 @@ void BattleResultsDialog::setResults(const QVector<QStringList> &results) {
                              "border: 2px solid black; }";
         table->setStyleSheet(tableStyle);
 
-        // Set background color based on the winner type (Hajduk or Janissary)
         QString winnerType = results[i][5];
         QColor backgroundColor;
 
@@ -125,7 +123,6 @@ void BattleResultsDialog::setResults(const QVector<QStringList> &results) {
 
         table->setSpan(0, 0, 1, 2);
 
-        // Populate table with data
         QTableWidgetItem *vertexIDItem = new QTableWidgetItem(results[i][0]);
         vertexIDItem->setTextAlignment(Qt::AlignCenter);
         vertexIDItem->setFont(QFont("Arial", 11, QFont::Bold));

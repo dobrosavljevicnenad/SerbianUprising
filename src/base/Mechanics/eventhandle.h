@@ -9,7 +9,7 @@
 #include <QVector>
 #include <QPair>
 #include <QRandomGenerator>
-
+#include "turn.h"
 class EventHandle {
 public:
     EventHandle();
@@ -23,7 +23,7 @@ public:
 
     void addEvent(const Event &event);
     void markEventOccurred(unsigned int eventId);
-    void processEvents(const QString& currentYear, const graph::Graph& clientGraph);
+    void processEvents(const QString& currentYear, const graph::Graph& clientGraph, Turn *turn);
 
     QJsonObject serializeProcessedEvents();
     void processSpecificEvent(int clientId, const QString &title,AddArmyManager& armyManager, bool& naval);
@@ -36,8 +36,8 @@ private:
     bool shouldSpawnEvent(int probability) const;
 
     void processRandomEvent(const Event &event);
-    void processPlaceTrigger(const Event &event, const graph::Graph &clientGraph);
-    void processAttackTrigger(const Event &event, const graph::Graph &clientGraph);
+    void processPlaceTrigger(const Event &event, const graph::Graph &clientGraph, Turn *turn);
+    void processAttackTrigger(const Event &event, const graph::Graph &clientGraph, Turn *turn);
     void processMoraleTrigger(const Event &event);
     void processRecruitmentsTrigger(const Event &event, AddArmyManager* armyManager);
     void processNavalTrigger(bool& naval, const Event& event);

@@ -38,14 +38,30 @@ void BattleArmiesWorker::handleBattleOutcome(Army& winner) {
     if (m_target->army.getSoldiers() == 0) {
         std::cout << "Defender army defeated!\n";
         m_target->army = winner;
+        if(winner.armyType() == ArmyType::HAJDUK){
+            m_moveArmy.getGraph().get_vertex_by_id(m_target->id())->player.setArmyType(ArmyType::HAJDUK);
+            m_moveArmy.getGraph().get_vertex_by_id(m_target->id())->player.setPlayerId(1);
+        }
+        else{
+            m_moveArmy.getGraph().get_vertex_by_id(m_target->id())->player.setArmyType(ArmyType::JANISSARY);
+            m_moveArmy.getGraph().get_vertex_by_id(m_target->id())->player.setPlayerId(2);
+        }
+
         emit battleFinished(true, playerId, m_sentArmy, m_sources, m_soldiersToMove, m_target, m_sent, results);
         return;
     }
 
-    // Dodatna logika za upravljanje spajanjem nakon borbe
     if (winner.armyType() == m_sentArmy.armyType()) {
         updateNeighboringArmy();
         m_target->army = winner;
+        if(winner.armyType() == ArmyType::HAJDUK){
+            m_moveArmy.getGraph().get_vertex_by_id(m_target->id())->player.setArmyType(ArmyType::HAJDUK);
+            m_moveArmy.getGraph().get_vertex_by_id(m_target->id())->player.setPlayerId(1);
+        }
+        else{
+            m_moveArmy.getGraph().get_vertex_by_id(m_target->id())->player.setArmyType(ArmyType::JANISSARY);
+            m_moveArmy.getGraph().get_vertex_by_id(m_target->id())->player.setPlayerId(2);
+        }
     }
 
     emit battleFinished(true, playerId, m_sentArmy, m_sources, m_soldiersToMove, m_target, m_sent, results);

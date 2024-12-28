@@ -40,11 +40,15 @@ private:
     QPushButton *settingsButton;
     QPushButton *exitButton;
     QPushButton *fullScreenButton;
+    bool isFullScreenMode = false;
     QPushButton *muteButton;
     QStackedWidget *stackedWidget;
     QFrame *buttonFrame;
 
     LobbyWindow *lobbyWindow;
+
+    QLabel *backgroundLabel; // Za dinamičko menjanje pozadine
+    QVBoxLayout *stackedWidgetLayout;
 
     void setupUI();
     void setBackgroundImage();
