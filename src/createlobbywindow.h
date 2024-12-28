@@ -13,7 +13,6 @@
 #include "Interface/servergamemanager.h"
 #include "Interface/clientgamemanager.h"
 
-
 class CreateLobbyWindow : public QWidget
 {
     Q_OBJECT
@@ -40,6 +39,14 @@ private:
     QPushButton *loadButton;
     QPushButton *startButton;
     QPushButton *exitButton;
+
+    QVBoxLayout *outerLayout;
+    QHBoxLayout *mainLayout;
+    QVBoxLayout *leftLayout;
+    QVBoxLayout *rightLayout;
+
+    QWidget *rightBox;
+    QWidget *armyBox;
 
     ServerGameManager* serverManager;
     ClientGameManager* clientManager;

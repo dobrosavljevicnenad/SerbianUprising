@@ -266,7 +266,7 @@ QPixmap BattleReplayDialog::getSoldierImage(ArmyType armyType) {
     case ArmyType::JANISSARY:
         return QPixmap(":/resources/Images/SoldierJannisaryStanding.png");
     default:
-        return QPixmap(":/resources/OtherSoldier.png");
+        return QPixmap(":/resources/Images/OtherSoldier.png");
     }
 }
 QPixmap BattleReplayDialog::getSoldierFallenImage(ArmyType armyType) {
@@ -276,7 +276,7 @@ QPixmap BattleReplayDialog::getSoldierFallenImage(ArmyType armyType) {
     case ArmyType::JANISSARY:
         return QPixmap(":/resources/Images/SoldierJannisaryFallen.png");
     default:
-        return QPixmap(":/resources/OtherSoldier.png");
+        return QPixmap(":/resources/Images/OtherSoldier.png");
     }
 }
 QPixmap BattleReplayDialog::getSoldierFiringImage(ArmyType armyType) {
@@ -286,7 +286,7 @@ QPixmap BattleReplayDialog::getSoldierFiringImage(ArmyType armyType) {
     case ArmyType::JANISSARY:
         return QPixmap(":/resources/Images/SoldierJannisaryFiring.png");
     default:
-        return QPixmap(":/resources/OtherSoldier.png");
+        return QPixmap(":/resources/Images/OtherSoldier.png");
     }
 }
 QPixmap BattleReplayDialog::getSoldierStandingImage(ArmyType armyType) {
@@ -296,7 +296,7 @@ QPixmap BattleReplayDialog::getSoldierStandingImage(ArmyType armyType) {
     case ArmyType::JANISSARY:
         return QPixmap(":/resources/Images/SoldierJannisaryStanding.png");
     default:
-        return QPixmap(":/resources/OtherSoldier.png");
+        return QPixmap(":/resources/Images/OtherSoldier.png");
     }
 }
 QString BattleReplayDialog::getTerrainImage(TerrainType terrainType) {
@@ -310,7 +310,7 @@ QString BattleReplayDialog::getTerrainImage(TerrainType terrainType) {
     case TerrainType::FOREST:
         return QString(":/resources/Images/MapForest.png");
     default:
-        return QString(":/resources/OtherMap.png");
+        return QString(":/resources/Images/OtherMap.png");
     }
 }
 QString BattleReplayDialog::getButtonStyle(){

@@ -29,7 +29,7 @@ void LobbyWindow::setupUI(){
     buttonFrame->setMinimumHeight(350);
     buttonFrame->setStyleSheet(R"(
         background-color: qlineargradient(
-            spread:pad, x1:0, y1:0, x2:1, y2:1,
+            spread:pad, x1:0, y1:0, x2:1, y2:X1,
             stop:0 rgba(255, 228, 196, 200),
             stop:1 rgba(139, 69, 19, 220)
         );
@@ -45,7 +45,7 @@ void LobbyWindow::setupUI(){
         QPushButton {
             border: none;
             background: transparent;
-            background-image: url(:/resources/button.png);
+            background-image: url(:/resources/Images/button.png);
             background-position: center;
             background-repeat: no-repeat;
             color: white;
@@ -53,12 +53,12 @@ void LobbyWindow::setupUI(){
             text-align: center;
         }
         QPushButton:hover {
-            background-image: url(:/resources/button.png);
+            background-image: url(:/resources/Images/button.png);
             color: #FFD700;
             font-size: 22px;
         }
         QPushButton:pressed {
-            background-image: url(:/resources/button.png);
+            background-image: url(:/resources/Images/button.png);
             color: #FFA500;
         }
     )";
@@ -89,7 +89,7 @@ void LobbyWindow::setupUI(){
 }
 
 void LobbyWindow::setBackgroundImage() {
-    QPixmap backgroundPixmap(":/resources/pozadina.png");
+    QPixmap backgroundPixmap(":/resources/Images/pozadina.png");
     backgroundPixmap = backgroundPixmap.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Window, QBrush(backgroundPixmap));
@@ -203,7 +203,7 @@ void LobbyWindow::resizeEvent(QResizeEvent *event) {
             QPushButton {
                 border: none;
                 background: transparent;
-                background-image: url(:/resources/bigButton.png);
+                background-image: url(:/resources/Images/bigButton.png);
                 background-position: center;
                 background-repeat: no-repeat;
                 color: white;
@@ -211,12 +211,12 @@ void LobbyWindow::resizeEvent(QResizeEvent *event) {
                 text-align: center;
             }
             QPushButton:hover {
-                background-image: url(:/resources/bigButton.png);
+                background-image: url(:/resources/Images/bigButton.png);
                 color: #FFD700;
                 font-size: %2px;
             }
             QPushButton:pressed {
-                background-image: url(:/resources/bigButton.png);
+                background-image: url(:/resources/Images/bigButton.png);
                 color: #FFA500;
             }
         )").arg(fontSize).arg(fontSize + 2);
@@ -225,7 +225,7 @@ void LobbyWindow::resizeEvent(QResizeEvent *event) {
             QPushButton {
                 border: none;
                 background: transparent;
-                background-image: url(:/resources/button.png);
+                background-image: url(:/resources/Images/button.png);
                 background-position: center;
                 background-repeat: no-repeat;
                 color: white;
@@ -233,12 +233,12 @@ void LobbyWindow::resizeEvent(QResizeEvent *event) {
                 text-align: center;
             }
             QPushButton:hover {
-                background-image: url(:/resources/button.png);
+                background-image: url(:/resources/Images/button.png);
                 color: #FFD700;
                 font-size: %2px;
             }
             QPushButton:pressed {
-                background-image: url(:/resources/button.png);
+                background-image: url(:/resources/Images/button.png);
                 color: #FFA500;
             }
         )").arg(fontSize).arg(fontSize + 2);

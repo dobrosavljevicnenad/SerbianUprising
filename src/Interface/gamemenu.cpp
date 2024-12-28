@@ -66,7 +66,7 @@ void GameMenu::setupUI() {
     QPushButton {
         border: none;
         background: transparent;
-        background-image: url(:/resources/button.png);
+        background-image: url(:/resources/Images/button.png);
         background-position: center;
         background-repeat: no-repeat;
         color: white;
@@ -74,12 +74,12 @@ void GameMenu::setupUI() {
         text-align: center;
     }
     QPushButton:hover {
-        background-image: url(:/resources/button.png);
+        background-image: url(:/resources/Images/button.png);
         color: #FFD700;
         font-size: 22px;
     }
     QPushButton:pressed {
-        background-image: url(:/resources/button.png);
+        background-image: url(:/resources/Images/button.png);
         color: #FFA500;
     }
 )";
@@ -164,7 +164,7 @@ void GameMenu::resizeEvent(QResizeEvent *event) {
             QPushButton {
                 border: none;
                 background: transparent;
-                background-image: url(:/resources/bigButton.png);
+                background-image: url(:/resources/Images/bigButton.png);
                 background-position: center;
                 background-repeat: no-repeat;
                 color: white;
@@ -172,12 +172,12 @@ void GameMenu::resizeEvent(QResizeEvent *event) {
                 text-align: center;
             }
             QPushButton:hover {
-                background-image: url(:/resources/bigButton.png);
+                background-image: url(:/resources/Images/bigButton.png);
                 color: #FFD700;
                 font-size: %2px;
             }
             QPushButton:pressed {
-                background-image: url(:/resources/bigButton.png);
+                background-image: url(:/resources/Images/bigButton.png);
                 color: #FFA500;
             }
         )").arg(fontSize).arg(fontSize + 2);
@@ -186,7 +186,7 @@ void GameMenu::resizeEvent(QResizeEvent *event) {
             QPushButton {
                 border: none;
                 background: transparent;
-                background-image: url(:/resources/button.png);
+                background-image: url(:/resources/Images/button.png);
                 background-position: center;
                 background-repeat: no-repeat;
                 color: white;
@@ -194,12 +194,12 @@ void GameMenu::resizeEvent(QResizeEvent *event) {
                 text-align: center;
             }
             QPushButton:hover {
-                background-image: url(:/resources/button.png);
+                background-image: url(:/resources/Images/button.png);
                 color: #FFD700;
                 font-size: %2px;
             }
             QPushButton:pressed {
-                background-image: url(:/resources/button.png);
+                background-image: url(:/resources/Images/button.png);
                 color: #FFA500;
             }
         )").arg(fontSize).arg(fontSize + 2);
@@ -225,7 +225,7 @@ void GameMenu::resizeEvent(QResizeEvent *event) {
 }
 
 void GameMenu::setBackgroundImage() {
-    QPixmap backgroundPixmap(":/resources/pozadina.png");
+    QPixmap backgroundPixmap(":/resources/Images/pozadina.png");
     backgroundPixmap = backgroundPixmap.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Window, QBrush(backgroundPixmap));
@@ -303,7 +303,7 @@ QWidget *GameMenu::createSettingsMenu() {
         QPushButton {
             border: none;
             background: transparent;
-            background-image: url(:/resources/button.png);
+            background-image: url(:/resources/Images/button.png);
             background-position: center;
             background-repeat: no-repeat;
             color: white;
@@ -311,12 +311,12 @@ QWidget *GameMenu::createSettingsMenu() {
             text-align: center;
         }
         QPushButton:hover {
-            background-image: url(:/resources/button.png);
+            background-image: url(:/resources/Images/button.png);
             color: #FFD700;
             font-size: 22px;
         }
         QPushButton:pressed {
-            background-image: url(:/resources/button.png);
+            background-image: url(:/resources/Images/button.png);
             color: #FFA500;
         }
     )");

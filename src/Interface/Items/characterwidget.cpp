@@ -47,9 +47,9 @@ CharacterWidget::CharacterWidget(unsigned clientId, QWidget *parent) : QWidget(p
     QLabel *portrait = new QLabel(this);
     QPixmap pixmap;
     if (clientId == 1) {
-        pixmap = QPixmap(":/resources/karadjordje.png");
+        pixmap = QPixmap(":/resources/Images/karadjordje.png");
     } else {
-        pixmap = QPixmap(":/resources/pasha.png");
+        pixmap = QPixmap(":/resources/Images/pasha.png");
     }
     portrait->setPixmap(pixmap.scaled(220, 220, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     portrait->setFrameStyle(QFrame::Box);
@@ -73,7 +73,7 @@ CharacterWidget::CharacterWidget(unsigned clientId, QWidget *parent) : QWidget(p
     setStyleSheet(
         "background-color: rgba(0, 43, 54, 180); "
         "border-radius: 10px; "
-        "border-image: url(:/resources/border1.png) 30 stretch;"
+        "border-image: url(:/resources/Images/border1.png) 30 stretch;"
         );
 }
 

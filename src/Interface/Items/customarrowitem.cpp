@@ -1,7 +1,7 @@
 #include "customarrowitem.h"
 
 CustomArrowItem::CustomArrowItem(const QPointF& from, const QPointF& to, int actionId, QColor color, QGraphicsItem* parent)
-    : QGraphicsLineItem(QLineF(from, to), parent), actionId(actionId), arrowPixmap(":/resources/arrow.png"), arrowColor(color) {
+    : QGraphicsLineItem(QLineF(from, to), parent), actionId(actionId), arrowPixmap(":/resources/Images/arrow.png"), arrowColor(color) {
     if (arrowPixmap.isNull()) {
         qDebug() << "Failed to load arrow image!";
     } else {

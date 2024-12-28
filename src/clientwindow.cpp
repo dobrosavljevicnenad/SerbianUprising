@@ -80,12 +80,12 @@ void ClientWindow::setupUI() {
     if(gameManager->ClientId == 1){
         layoutContainer->setStyleSheet("background-color: rgba(74, 47, 47,190);"
                                        "border-radius: 0px;"
-                                       "border-image: url(:/resources/border1.png) 30 stretch;");
+                                       "border-image: url(:/resources/Images/border1.png) 30 stretch;");
     }
     else{
         layoutContainer->setStyleSheet("background-color: rgba(3, 66, 5,190);"
                                        "border-radius: 0px;"
-                                       "border-image: url(:/resources/border1.png) 30 stretch;");
+                                       "border-image: url(:/resources/Images/border1.png) 30 stretch;");
     }
     QVBoxLayout *mainLayout = new QVBoxLayout();
 
@@ -235,7 +235,7 @@ void ClientWindow::setupUI() {
         mapModeContainer->setStyleSheet(
             "background-color: rgba(74, 47, 47,190); "
             "border-radius: 10px;"
-            "border-image: url(:/resources/border1.png) 10 stretch;"
+            "border-image: url(:/resources/Images/border1.png) 10 stretch;"
             "padding: 5px;"
             );
     }
@@ -243,7 +243,7 @@ void ClientWindow::setupUI() {
         mapModeContainer->setStyleSheet(
             "background-color: rgba(3, 66, 5,190); "
             "border-radius: 10px;"
-            "border-image: url(:/resources/border1.png) 10 stretch;"
+            "border-image: url(:/resources/Images/border1.png) 10 stretch;"
             "padding: 5px;"
             );
     }
@@ -325,7 +325,7 @@ void ClientWindow::setupUI() {
             layoutContainer->setFixedSize(250, 520);
             layoutContainer->setStyleSheet("background-color: rgba(0, 0, 0, 128);"
                                            "border-radius: 15px;"
-                                           "border-image: url(:/resources/border1.png) 30 stretch;");
+                                           "border-image: url(:/resources/Images/border1.png) 30 stretch;");
             toggleButton->setText("⮝");
         }
         isExpanded = !isExpanded;
@@ -783,14 +783,14 @@ void ClientWindow::showPauseMenu() {
     if (gameManager->ClientId == 1) {
         menuWidget->setStyleSheet(
             "background-color: rgba(74, 47, 47, 220); "
-            "border-image: url(:/resources/border1.png) 40  stretch; "
+            "border-image: url(:/resources/Images/border1.png) 40  stretch; "
             "border-width: 20px; "
             "padding: 10px; "
             );
     } else {
         menuWidget->setStyleSheet(
             "background-color: rgba(3, 66, 5, 220); "
-            "border-image: url(:/resources/border1.png) 40  stretch; "
+            "border-image: url(:/resources/Images/border1.png) 40  stretch; "
             "border-width: 20px; "
             "padding: 10px; "
             );
@@ -900,14 +900,14 @@ void ClientWindow::showDisconnectPauseMenu() {
     if (gameManager->ClientId == 1) {
         menuWidget->setStyleSheet(
             "background-color: rgba(74, 47, 47, 220); "
-            "border-image: url(:/resources/border1.png) 40  stretch; "
+            "border-image: url(:/resources/Images/border1.png) 40  stretch; "
             "border-width: 20px; "
             "padding: 10px; "
             );
     } else {
         menuWidget->setStyleSheet(
             "background-color: rgba(3, 66, 5, 220); "
-            "border-image: url(:/resources/border1.png) 40  stretch; "
+            "border-image: url(:/resources/Images/border1.png) 40  stretch; "
             "border-width: 20px; "
             "padding: 10px; "
             );

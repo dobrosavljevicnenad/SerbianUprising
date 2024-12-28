@@ -26,6 +26,7 @@ void CreateLobbyWindow::setupUI() {
 
     setBackgroundImage();
 
+    QVBoxLayout *outerLayout = new QVBoxLayout(this);
     QHBoxLayout *mainLayout = new QHBoxLayout(this);
 
     QVBoxLayout *leftLayout = new QVBoxLayout();
@@ -146,7 +147,7 @@ void CreateLobbyWindow::setupUI() {
         QPushButton {
             border: none;
             background: transparent;
-            background-image: url(:/resources/button.png);
+            background-image: url(:/resources/Images/button.png);
             background-position: center;
             background-repeat: no-repeat;
             color: white;
@@ -186,13 +187,17 @@ void CreateLobbyWindow::setupUI() {
     rightLayout->setContentsMargins(100, 70, 50, 50);
     rightLayout->setAlignment(Qt::AlignTop);
 
+    mainLayout->addStretch();
     mainLayout->addLayout(leftLayout);
     mainLayout->addSpacing(70);
     mainLayout->addLayout(rightLayout);
-
     mainLayout->addStretch();
 
-    setLayout(mainLayout);
+    outerLayout->addStretch();
+    outerLayout->addLayout(mainLayout);
+    outerLayout->addStretch();
+
+    this->setLayout(outerLayout);
 
     armyComboBox->setCurrentText("Select Army");
     // updateArmySelection("Select Army");
@@ -282,7 +287,7 @@ void CreateLobbyWindow::loadSavedGames() {
 }
 
 void CreateLobbyWindow::setBackgroundImage() {
-    QPixmap backgroundPixmap(":/resources/pozadina.png");
+    QPixmap backgroundPixmap(":/resources/Images/pozadina.png");
     backgroundPixmap = backgroundPixmap.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Window, QBrush(backgroundPixmap));
