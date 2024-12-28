@@ -105,6 +105,9 @@ void EventHandle::processSpecificEvent(int clientId, const QString& title,  AddA
             } else if (event.trigger == "naval") {
                 processNavalTrigger(naval,event);
                 event.showEventWindow();
+            } else if (event.trigger == "end") {
+                isEnd = true;
+                event.showEventWindow();
             } else {
                 event.showEventWindow();
                 qDebug() << "Event displayed but no specific action for trigger:" << event.trigger;

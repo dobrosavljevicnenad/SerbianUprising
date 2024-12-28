@@ -29,6 +29,15 @@ bool Event::canTrigger(const QString& currentYear, const graph::Graph& clientGra
         return true;
 
     case EventType::MISSION:
+        if(this->trigger == "end" && (title == "Uprising Quelled" || title == "A Nation in Chains")){
+            for(auto vertex : clientGraph.vertices){
+                if(vertex.second->army.armyType() == ArmyType::HAJDUK){
+                    return false;
+                }
+            }
+            return true;
+        }
+
         for (const QString& label : territoryTrigger) {
             auto vertex = clientGraph.get_vertex_by_label(label);
             if (vertex->army.armyType() != ArmyType::HAJDUK) {

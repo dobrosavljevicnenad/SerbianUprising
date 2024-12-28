@@ -202,7 +202,7 @@ void CreateLobbyWindow::setupUI() {
     connect(startButton, &QPushButton::clicked, [this]() {
         if(isArmySelected){
             isGameStarted = true;
-            int armyId = armyComboBox->currentIndex() + 1;
+            int armyId = armyComboBox->currentIndex();
             QString localIp = connectionManager->getLocalIpAddress();
             CustomMessageBox::showMessage(QString("Server IP: %1").arg(localIp), this);
             if (!connectionManager->initializeServer()) {
@@ -282,7 +282,7 @@ void CreateLobbyWindow::loadSavedGames() {
 }
 
 void CreateLobbyWindow::setBackgroundImage() {
-    QPixmap backgroundPixmap(":/resources/pozadina.png");
+    QPixmap backgroundPixmap(":/resources/Images/pocetna.png");
     backgroundPixmap = backgroundPixmap.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Window, QBrush(backgroundPixmap));

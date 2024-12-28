@@ -17,12 +17,19 @@ LobbyWindow::~LobbyWindow() {
     delete connectionManager;
 }
 
-void LobbyWindow::setupUI(){
+void LobbyWindow::setupUI() {
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
     setBackgroundImage();
 
     mainLayout->setContentsMargins(10, 70, 10, 10);
+
+    // Logo Section
+    QLabel *logoLabel = new QLabel(this);
+    QPixmap logoPixmap(":/resources/Images/logo.png");
+    logoPixmap = logoPixmap.scaled(400, 400, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    logoLabel->setPixmap(logoPixmap);
+    logoLabel->setAlignment(Qt::AlignCenter);
 
     buttonFrame = new QFrame(this);
     buttonFrame->setMinimumWidth(450);
@@ -82,6 +89,8 @@ void LobbyWindow::setupUI(){
 
     mainLayout->setContentsMargins(0, 0, 0, 0);
     mainLayout->addStretch();
+    mainLayout->addWidget(logoLabel, 0, Qt::AlignCenter); // Add the logo
+    mainLayout->addSpacing(20); // Add space between the logo and the menu
     mainLayout->addWidget(buttonFrame, 0, Qt::AlignCenter);
     mainLayout->addStretch();
 
@@ -89,7 +98,7 @@ void LobbyWindow::setupUI(){
 }
 
 void LobbyWindow::setBackgroundImage() {
-    QPixmap backgroundPixmap(":/resources/pozadina.png");
+    QPixmap backgroundPixmap(":/resources/Images/pocetna.png");
     backgroundPixmap = backgroundPixmap.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Window, QBrush(backgroundPixmap));

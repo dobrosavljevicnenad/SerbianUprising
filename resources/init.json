@@ -2218,8 +2218,8 @@
       "description":"Following early victories, Serbian leaders began reorganizing their territories. Administrative structures were established to manage resources and governance, bringing order to liberated regions. This pivotal moment laid the foundation for a stronger resistance and united the Serbian people under a common cause.",
       "button" :"Shape the Future",
       "territory_trigger": ["Beograd"],
-      "trigger" : "place",
-      "trigger_amount" : 25,
+      "trigger" : "morale",
+      "trigger_amount" : 5,
       "territory_affect" : [""],
       "date" : "01-01-1806"
     },
@@ -2231,8 +2231,8 @@
       "description":"With the uprising gaining momentum, Serbian leaders issued a call to arms, rallying villagers and townsfolk to join the fight. Smederevo became a hotspot for recruitment, as ordinary citizens transformed into soldiers to defend their homeland.",
       "button" :"Answer the Call",
       "territory_trigger": ["Smederevo"],
-      "trigger" : "place",
-      "trigger_amount" : 50,
+      "trigger" : "recruitments",
+      "trigger_amount" : 5,
       "territory_affect" : [""],
       "date" : "01-07-1806"
     },
@@ -2247,7 +2247,7 @@
       "trigger" : "morale",
       "trigger_amount" : -5,
       "territory_affect" : [""],
-      "date" : "01-07-1806"
+      "date" : "01-01-1807"
     },
     {
       "id" : 1,
@@ -2312,7 +2312,7 @@
       "trigger": "attack",
       "trigger_amount": 300,
       "territory_affect" : ["Babadag"],
-      "date" : "01-01-1807"
+      "date" : "01-10-1806"
     },
     {
       "id" : 1,
@@ -2480,8 +2480,34 @@
         "territory_trigger": ["Istanbul"],
         "trigger": "end",
         "trigger_amount": 0,
-        "territory_affect": [],
+        "territory_affect": [""],
         "date": "01-01-1815"
+    },
+    {
+        "id": 2,
+        "type": "MISSION",
+        "title": "Uprising Quelled",
+        "image_path": ":resources/Images/crushed_rebbelion.png",
+        "description": "The Serbian rebellion has been decisively crushed. Ottoman forces have reestablished control over the entire Serbian Pashaluk. Rebel leaders have been captured or forced into exile, restoring the Sultan's authority and sending a clear message against future revolts.",
+        "button": "Reassert Ottoman Rule",
+        "territory_trigger": [""],
+        "trigger": "end",
+        "trigger_amount": 0,
+        "territory_affect": [""],
+        "date": "01-01-1813"
+    },
+    {
+        "id": 1,
+        "type": "MISSION",
+        "title": "A Nation in Chains",
+        "image_path": ":resources/Images/crushed_rebbelion.png",
+        "description": "The dream of Serbian independence has been shattered as Ottoman forces overwhelm the rebellion. With Belgrade reclaimed and rebel leaders scattered, the hope of freedom fades. Yet, amidst the ashes of defeat, a spark of resistance endures, waiting for the right moment to reignite.",
+        "button": "Endure and Persevere",
+        "territory_trigger": [""],
+        "trigger": "end",
+        "trigger_amount": 0,
+        "territory_affect": [""],
+        "date": "01-01-1813"
     }
   ]
 }

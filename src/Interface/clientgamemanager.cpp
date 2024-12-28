@@ -304,6 +304,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     armyManager.addTerritory(player);
     armyManager.calculateTotalTroops();
     characterWidget->setArmyText(armyManager.totalTroops,armyManager.maxTroops);
+
     eventHandle.processIntroEvents();
 }
 

@@ -28,6 +28,8 @@ public:
     QJsonObject serializeProcessedEvents();
     void processSpecificEvent(int clientId, const QString &title,AddArmyManager& armyManager, bool& naval);
     void processIntroEvents();
+
+    bool isEnd = false;
 private:
     unsigned clientId;
     QVector<QPair<Event, bool>> events;
