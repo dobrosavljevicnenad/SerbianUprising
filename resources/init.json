@@ -2349,7 +2349,7 @@
       "button" :"Strengthen Alliances",
       "territory_trigger": ["Skodra"],
       "trigger" : "place",
-      "trigger_amount" : 50,
+      "trigger_amount" : 30,
       "territory_affect" : ["Skodra"],
       "date" : "01-07-1808"
     },
@@ -2362,7 +2362,7 @@
         "button": "Support the Movement",
         "territory_trigger": ["Sabac", "Uzice", "Negotin", "Valjevo", "Raska", "Krusevac", "Kragujevac", "Beograd", "Smederevo", "Zajecar", "Kladovo"],
         "trigger": "attack",
-        "trigger_amount": 35,
+        "trigger_amount": 30,
         "territory_affect": ["Kladusa","Novi_Grad","Sanski_Most","Grahovo","Banja_Luka","Gradiska","Ves","Brod","Shamac", "Bugojno","Srebrenica","Zvornik","Bijeljina"],
         "date": "01-07-1806"
     },
@@ -2375,7 +2375,7 @@
         "button": "Begin the Campaign",
         "territory_trigger": ["Sabac", "Uzice", "Negotin", "Valjevo", "Raska", "Krusevac", "Kragujevac","Beograd", "Smederevo", "Zajecar", "Kladovo","Kladusa", "Bihac", "Novi_Grad", "Sanski_Most", "Grahovo", "Livno", "Jajce","Travnik", "Banja_Luka", "Gradiska", "Ves", "Brod", "Doboj", "Shamac", "Tuzla","Sarajevo", "Bugojno", "Visegrad", "Sjenica", "Srebrenica", "Novi_Pazar","Zvornik", "Bijeljina","Mostar", "Trebinje", "Focha", "Cetinje","Djakovica", "Pristina", "Prizren"],
         "trigger": "attack",
-        "trigger_amount": 35,
+        "trigger_amount": 30,
         "territory_affect": ["TurnuSeverin", "TurnuMagurele", "Bran", "Focsani", "Braila", "Calafat", "Calarasi", "Slatina", "Giurgiu", "Bucharest", "Ployeshti", "Pitesti", "Kraiova", "Negol"],
         "date": "01-07-1808"
     },
@@ -2388,7 +2388,7 @@
         "button": "Embrace the Alliance",
         "territory_trigger": ["Nis", "Vranje", "Sofija", "Kostendil", "Vidin", "Lom", "Oryahovo","TurnuSeverin", "TurnuMagurele", "Bran", "Focsani", "Braila", "Calafat", "Calarasi", "Slatina", "Giurgiu", "Bucharest", "Ployeshti", "Pitesti", "Kraiova", "Negol"],
         "trigger": "attack",
-        "trigger_amount": 60,
+        "trigger_amount": 30,
         "territory_affect": ["Serres","Chalkidiki","Delta","Edessa","Khaterini","Kastoria","Olympus","Rapsani","Ossa","Larissa","Prikhala","Janina"],
         "date": "01-04-1810"
     },
@@ -2466,8 +2466,8 @@
         "button": "Reclaim Control",
         "territory_trigger": ["Sabac", "Uzice", "Negotin", "Valjevo", "Raska", "Krusevac", "Kragujevac", "Beograd", "Smederevo", "Zajecar", "Kladovo", "Kladusa", "Bihac", "Novi_Grad", "Sanski_Most", "Grahovo", "Livno", "Jajce", "Travnik", "Banja_Luka", "Gradiska", "Ves", "Brod", "Doboj", "Shamac", "Tuzla", "Sarajevo", "Bugojno", "Visegrad", "Sjenica", "Srebrenica", "Novi_Pazar", "Zvornik", "Bijeljina", "Mostar", "Trebinje", "Focha", "Cetinje", "Larissa", "Vlore", "Prikhala", "Sarande", "Janina", "Olympus", "Kastoria", "Ossa", "Rapsani", "Khaterini", "Edessa", "Kiklis", "Solun", "Chalkidiki", "Serres", "Delta", "Kavala", "BlagoevGrad", "Sandaski", "Durres", "Tirane", "Lezhe", "Skodra", "Djakovica", "Pristina", "Prizren", "Kumanovo", "Skopje", "Kratovo", "Shtip", "Veles", "Monastir", "Ohrid", "Kichevo", "Prilep", "Nis", "Vranje", "Sofija", "Kostendil", "Vidin", "Lom", "Oryahovo"],
         "trigger": "place",
-        "trigger_amount": 500,
-        "territory_affect": ["Istanbul", "Edirne", "Plovdiv"],
+        "trigger_amount": 1000,
+        "territory_affect": ["Gelibolu", "Edirne"],
         "date": "01-07-1812"
     },
     {
