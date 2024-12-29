@@ -199,9 +199,9 @@ void EventHandle::processAttackTrigger(const Event& event, const graph::Graph& c
 
 void EventHandle::processMoraleTrigger(const Event& event) {
     int moraleChange = event.triggerAmount;
-    if(clientId == 1)
+    if(event.clientId == 1)
         Strength::instance().setBoost(ArmyType::HAJDUK, moraleChange);
-    else if(clientId == 2)
+    else if(event.clientId == 2)
         Strength::instance().setBoost(ArmyType::JANISSARY, moraleChange);
     qDebug() << "Global morale updated by:" << moraleChange;
 }
