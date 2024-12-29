@@ -12,6 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     stackedWidget(new QStackedWidget(this))  {
     QPixmap pixmap(":/resources/Images/logo.png");
     this->setWindowIcon(QIcon(pixmap));
+    this->setWindowTitle("Ustanak");
     ui->setupUi(this);
 
     stackedWidget->addWidget(gameMenu);
@@ -45,10 +46,12 @@ MainWindow::~MainWindow() {
 
 void MainWindow::showGameMenu() {
     stackedWidget->setCurrentWidget(gameMenu);
+    this->setWindowTitle("Ustanak");
 }
 
 void MainWindow::showLobbyWindow() {
     stackedWidget->setCurrentWidget(lobbyWindow);
+    this->setWindowTitle("Ustanak");
 }
 
 void MainWindow::showCreateLobbyWindow() {
@@ -58,4 +61,5 @@ void MainWindow::showCreateLobbyWindow() {
         gameMenu->musicPlayer = nullptr;
     }
     stackedWidget->setCurrentWidget(createLobbyWindow);
+    this->setWindowTitle("Ustanak");
 }
