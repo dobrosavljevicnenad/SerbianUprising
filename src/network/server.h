@@ -55,14 +55,14 @@ private:
 
     // Member Variables
     QTcpServer *m_server = nullptr;
-    QTcpSocket *m_clientSocket = nullptr; // Host
-    QTcpSocket *m_secondPlayerSocket = nullptr; // Second Player
-    bool m_waitingForSecondPlayer = false; // Indicates if waiting for second player
-    ServerGameManager* serverGameManager = nullptr; // Game manager instance
+    QTcpSocket *m_clientSocket = nullptr;
+    QTcpSocket *m_secondPlayerSocket = nullptr;
+    bool m_waitingForSecondPlayer = false;
+    ServerGameManager* serverGameManager = nullptr;
 
     // Gameplay Variables
     int turnCounter = 0;
-    QMap<int, QVector<Action>> endTurnActions; // Stores actions grouped by client ID
+    QMap<int, QVector<Action>> endTurnActions;
     std::vector<Action> actionsPlayer1;
     std::vector<Action> actionsPlayer2;
 };

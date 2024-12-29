@@ -112,7 +112,7 @@ void Server::onClientDisconnected() {
         m_clientSocket->disconnectFromHost();
         emit gameOver("Host left, game over.");
     } else if (m_secondPlayerSocket && sender() == m_secondPlayerSocket) {
-        broadcast("CLIENT_SHUTDOWN"); // ovde treba Client_shutdown (ali
+        broadcast("CLIENT_SHUTDOWN");
         qDebug() << "Second player disconnected!";
         m_secondPlayerSocket = nullptr;
         m_waitingForSecondPlayer = true;
@@ -131,7 +131,7 @@ void Server::setupPlayerSocket(QTcpSocket* socket, const QString& playerName, co
 }
 
 void Server::broadcast(const QString &message) {
-    QString serializedMessage = message + "\n\n"; // Separator
+    QString serializedMessage = message + "\n\n";
     if (m_secondPlayerSocket && m_secondPlayerSocket->state() == QAbstractSocket::ConnectedState) {
         m_secondPlayerSocket->write(serializedMessage.toUtf8());
         m_secondPlayerSocket->flush();
@@ -143,7 +143,7 @@ void Server::broadcast(const QString &message) {
 }
 
 void Server::sendData(const QString &data) {
-    QString serializedData = data + "\n\n"; // Separator
+    QString serializedData = data + "\n\n";
     if (m_clientSocket) m_clientSocket->write(serializedData.toUtf8());
     if (m_secondPlayerSocket) m_secondPlayerSocket->write(serializedData.toUtf8());
 }

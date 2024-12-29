@@ -4,7 +4,7 @@
 #define BATTLE_H
 
 #include "../Entities/army.h"
-#include "results.h"
+#include "Items/results.h"
 #include <ctime>
 #include <iostream>
 #include <cstdlib>

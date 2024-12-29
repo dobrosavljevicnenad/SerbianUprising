@@ -65,7 +65,7 @@ CustomInputDialog::CustomInputDialog(const QString& title, const QString& labelT
             int value = inputLineEdit->text().toInt(&ok);
             if (ok && value > maxTroops) {
                 qDebug() << "Entered value exceeds maxTroops!";
-                inputLineEdit->setText(QString::number(maxTroops)); // Set the value to maxTroops if exceeds
+                inputLineEdit->setText(QString::number(maxTroops));
             }
         }
     });

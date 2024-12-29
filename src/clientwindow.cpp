@@ -27,11 +27,10 @@ ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *paren
                               defaultButton,nodeInfoWidget,characterWidget);
     connect(gameManager, &ClientGameManager::gameYearUpdated, this, &ClientWindow::updateYearLabel);
 
-    // Dodajte u konstruktor ClientWindow-a nakon connectSignals()
     QTimer* serverCheckTimer = new QTimer(this);
     connect(serverCheckTimer, &QTimer::timeout, this, &ClientWindow::checkServerClosed);
     connect(serverCheckTimer, &QTimer::timeout, this, &ClientWindow::processEndTrigger);
-    serverCheckTimer->start(100); // Proverava svakih 100ms
+    serverCheckTimer->start(100);
 }
 
 ClientWindow::~ClientWindow() {
@@ -54,7 +53,6 @@ void ClientWindow::processEndTrigger() {
     }
 }
 
-// Funkcija za zamrzavanje UI-a
 void ClientWindow::freezeUI() {
     QList<QWidget*> layoutWidgets = {
         headerLabel, infoButton, moveButton, armyButton, endTurnButton,
@@ -63,7 +61,7 @@ void ClientWindow::freezeUI() {
     };
 
     for (auto* widget : layoutWidgets) {
-        widget->setEnabled(false); // Onemogućava interakciju
+        widget->setEnabled(false);
     }
 }
 
@@ -630,12 +628,6 @@ void ClientWindow::handlePlaceArmy(MapLayer* layer) {
             troopsToAdd = std::min(1, troops);
         } else {
             std::string message = "Enter the number of soldiers up to " + std::to_string(troops) + " to place:";
-            /*troopsToAdd = QInputDialog::getInt(this, tr("Place Army"),
-                                               tr(message.c_str()), 0, 0, troops, 1, &ok);
-            if (!ok || troopsToAdd <= 0) {
-                selectedLayer = nullptr;
-                return;
-            }*/
             CustomInputDialog dialog("Place Army", QString::fromStdString(message), nullptr, troops);
             if(dialog.exec() == QDialog::Accepted){
                 troopsToAdd = dialog.getInputInt();

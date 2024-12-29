@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../base/graph/graph.hpp"
-#include "maplayer.h"
+#include "../../base/graph/graph.hpp"
+#include "../maplayer.h"
 #include <QGraphicsScene>
 #include <map>
 #include <QMap>

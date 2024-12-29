@@ -37,11 +37,11 @@ void ClientGameManager::initializeGraphics(QJsonObject graphData) {
     MapLayer *relief = new MapLayer("relief",":/resources/Project/reljef.png", false);
 
 
-    MapLayer *s1 = new MapLayer("s1",":/resources/Project/S1.png", false);
+    s1 = new MapLayer("s1",":/resources/Project/S1.png", false);
     s1->setColor(QColor(237,188,41,255));
     MapLayer *s2 = new MapLayer("s2",":/resources/Project/S2.png", false);
     s2->setColor(QColor(237,188,41,255));
-    MapLayer *s3 = new MapLayer("s3",":/resources/Project/S3.png", false);
+    s3 = new MapLayer("s3",":/resources/Project/S3.png", false);
     s3->setColor(QColor(159,124,165,255));
     MapLayer *s4 = new MapLayer("s4",":/resources/Project/S4.png", false);
     s4->setColor(QColor(126, 149, 104, 255));
@@ -176,6 +176,22 @@ void ClientGameManager::playNextSongWrapper() {
     playNextSong(musicPlayer, playlist, currentSongIndex);
 }
 
+void ClientGameManager::colorS1andS2() {
+    int currentYear = QDate::fromString(year().toJsonDateString(), "dd-MM-yyyy").year();
+
+    if (currentYear > 1805 && currentYear <= 1809) {
+        s1->setColor(QColor(0, 85, 164));
+        s3->setColor(QColor(0, 85, 164));
+    } else if (currentYear > 1809 && currentYear <= 1814) {
+        s3->setColor(QColor(0, 85, 164));
+        s1->setColor(QColor(0, 146, 70));
+    } else {
+        s3->setColor(QColor(159,124,165,255));
+        s1->setColor(QColor(237,188,41,255));
+    }
+}
+
+
 void ClientGameManager::setId(int id) {
     ClientId = id;
     player = Player();
@@ -304,7 +320,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     armyManager.addTerritory(player);
     armyManager.calculateTotalTroops();
     characterWidget->setArmyText(armyManager.totalTroops,armyManager.maxTroops);
-
+    colorS1andS2();
     eventHandle.processIntroEvents();
 }
 
@@ -390,7 +406,7 @@ void ClientGameManager::updateGraphics() {
         if (layerToVertex.find(layer) != layerToVertex.end()) {
             graph::Vertex *vertex = layerToVertex[layer];
             if (vertex) {
-                Army army = vertex->army; // Safely access the `army`
+                Army army = vertex->army;
                 layer->setArmyColor(army.armyType());
                 layer->setTroopCount(army.getSoldiers());
                 layer->setCurrentPlayer(vertex->player.getPlayerId());

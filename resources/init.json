@@ -2410,7 +2410,7 @@
         "type": "MISSION",
         "title": "Proclamation of the Fourth Rome",
         "image_path": ":resources/Images/istanbul_pad.png",
-        "description": "",
+        "description": "With the echoes of the Byzantine Empire and the Ottoman legacy still resounding in Istanbul, the time has come to reclaim the glory of an ancient heritage. The Proclamation of the Fourth Rome is your call to unite past greatness with future ambitions. By claiming Istanbul, the seat of empires, you ignite the flame of a new era. Seize this moment to declare your dominion over history and shape the legacy of the Fourth Rome. Will you answer this historic call?",
         "button": "Claim the Legacy",
         "territory_trigger": ["Istanbul"],
         "trigger": "end",

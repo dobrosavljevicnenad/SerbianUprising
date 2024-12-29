@@ -4,7 +4,6 @@ Terrain::Terrain(TerrainType terrain) : m_terrain(terrain) {
     setDefaultAdvantages(terrain);
 }
 
-// Function to set default advantages for each TerrainType
 void Terrain::setDefaultAdvantages(TerrainType terrain) {
     switch (terrain) {
     case TerrainType::FIELD:

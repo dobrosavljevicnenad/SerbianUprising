@@ -5,7 +5,7 @@
 #include <QVBoxLayout>
 #include <QLabel>
 #include <qpushbutton.h>
-#include "../base/graph/vertex.hpp"
+#include "../../base/graph/vertex.hpp"
 
 class NodeInfoWidget : public QWidget {
     Q_OBJECT

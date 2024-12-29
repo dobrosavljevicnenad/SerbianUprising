@@ -2,8 +2,8 @@
 #define EVENT_H
 
 #include <string>
-#include"../graph/graph.hpp"
-#include "../Entities/army.h"
+#include"../../graph/graph.hpp"
+#include "../../Entities/army.h"
 #include <vector>
 #include <QWidget>
 #include <QVBoxLayout>

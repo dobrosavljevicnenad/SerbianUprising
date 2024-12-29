@@ -9,7 +9,7 @@
 #include "Interface/clientgamemanager.h"
 #include "base/Mechanics/action.h"
 #include "base/Mechanics/addarmymanager.h"
-#include "./Interface/infowidget.h"
+#include "./Interface/Items/infowidget.h"
 #include "Interface/Items/zoomablegraphicsview.h"
 #include "Interface/Items/characterwidget.h"
 #include "Interface/Items/custommessagebox.h"
@@ -58,8 +58,6 @@ private:
     QPushButton* cultureButton;
     QWidget* characterContainer;
     CharacterWidget* characterWidget;
-    //QMediaPlayer* mediaPlayer;
-    //QAudioOutput* audioOutput;
 
     void setupUI();
     void connectSignals();

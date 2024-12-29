@@ -10,7 +10,8 @@ MainWindow::MainWindow(QWidget *parent)
     lobbyWindow(new LobbyWindow(this)),
     createLobbyWindow(new CreateLobbyWindow(this)),
     stackedWidget(new QStackedWidget(this))  {
-
+    QPixmap pixmap(":/resources/Images/logo.png");
+    this->setWindowIcon(QIcon(pixmap));
     ui->setupUi(this);
 
     stackedWidget->addWidget(gameMenu);
@@ -51,8 +52,10 @@ void MainWindow::showLobbyWindow() {
 }
 
 void MainWindow::showCreateLobbyWindow() {
-    gameMenu->musicPlayer->stop();
-    delete gameMenu->musicPlayer;
-    gameMenu->musicPlayer = nullptr;
+    if(gameMenu->musicPlayer != nullptr){
+        gameMenu->musicPlayer->stop();
+        delete gameMenu->musicPlayer;
+        gameMenu->musicPlayer = nullptr;
+    }
     stackedWidget->setCurrentWidget(createLobbyWindow);
 }

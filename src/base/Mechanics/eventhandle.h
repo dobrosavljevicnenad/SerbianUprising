@@ -2,7 +2,7 @@
 #define EVENTHANDLE_H
 
 #include "addarmymanager.h"
-#include "event.h"
+#include "Items/event.h"
 #include <QJsonObject>
 #include <QJsonArray>
 #include <QMap>

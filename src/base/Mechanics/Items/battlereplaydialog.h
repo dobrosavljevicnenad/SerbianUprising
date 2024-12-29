@@ -36,7 +36,7 @@ public slots:
 private:
     QHBoxLayout *topLayout;
     QVBoxLayout *centerTopLayout;
-    int m_tableIndex; // Store the index to fetch corresponding data
+    int m_tableIndex;
     Results results;
     std::vector<QLabel*> defenderImages;
     std::vector<QLabel*> attackerImages;
@@ -49,7 +49,7 @@ private:
     QLabel *remainingDefendersLabel;
     void keyPressEvent(QKeyEvent *event);
     void playBattleMusic();
-    QMediaPlayer m_mediaPlayer;                                   // Media player for playing sounds
+    QMediaPlayer m_mediaPlayer;
     QAudioOutput m_audioOutput;
 };
 

@@ -14,7 +14,7 @@ const std::string& Region::getRegionName() const {
 }
 
 bool Region::addLayer(MapLayer* layer, City* city) {
-    territories.emplace_back(layer, city); // Add the MapLayer and its associated City
+    territories.emplace_back(layer, city);
     return true;
 }
 
