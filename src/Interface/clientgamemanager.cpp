@@ -129,7 +129,7 @@ void ClientGameManager::initializeGraphics(QJsonObject graphData) {
 
     scene->addItem(rivers);
     map = new Map(scene, layerToVertex);
-    if (ClientId == 1 && loadGamePath != nullptr) {
+    if (loadGamePath != nullptr) {
         loadGame();
     }
 }
@@ -334,7 +334,8 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     updateFog();
     armyManager.updateRegionOwnership(ClientId, regions);
     armyManager.addTerritory(player);
-    if(!(ClientId == 2) || TurnId > 4)
+
+    if(!(ClientId == 2) || TurnId >= 5)
         armyManager.calculateTotalTroops();
     characterWidget->setArmyText(armyManager.totalTroops,armyManager.maxTroops);
     colorS1andS2();
