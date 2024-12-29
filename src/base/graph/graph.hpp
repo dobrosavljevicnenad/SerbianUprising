@@ -32,6 +32,7 @@ public:
     QJsonObject serialize(QJsonObject graphJson);
     void deserialize(const QJsonObject &json);
     void save_to_json(const std::string &file_path) const;
+    void save_to_json(const std::string &file_path, const QString &current_year) const;
     void clear();
     graph::Vertex* get_vertex_by_label(const QString& label) const;
 

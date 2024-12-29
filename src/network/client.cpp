@@ -179,6 +179,7 @@ void Client::processJsonMessage(const QString &message) {
         processGameData(jsonObject);
     } else {
         clientGameManager->processDataFromServer(jsonObject);
+        qDebug() << "OVO PROSLEDJUJEM CLIENTGAMEMANAGERU:" << jsonObject;
     }
 }
 

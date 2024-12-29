@@ -244,11 +244,27 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
         if(!init)
             initializeGraphics(graphData);
     }
-    if (data.contains("load")){
+    if (data.contains("load")) {
         QJsonObject graphData = data["load"].toObject();
+        qDebug() << "DATA" << data;
+
+        if (graphData.contains("current_year")) {
+            QString extractedYear = graphData["current_year"].toString();
+            if (!extractedYear.isEmpty()) {
+                gameYear.setCurrentDate(extractedYear);
+                std::cout << "Current year extracted: " << extractedYear.toStdString() << std::endl;
+            } else {
+                qWarning() << "Extracted year is empty.";
+            }
+        } else {
+            qWarning() << "Key 'current_year' not found in JSON.";
+        }
+
         clientGraph->deserialize(graphData);
         init = false;
     }
+
+
     if (data.contains("events") && data["events"].isObject() && init) {
         QJsonObject eventsObject = data["events"].toObject();
         if (eventsObject.contains("events") && eventsObject["events"].isArray()) {
@@ -660,7 +676,7 @@ void ClientGameManager::saveGame() {
         return;
     }
 
-    clientGraph->save_to_json(filePath.toStdString());
+    clientGraph->save_to_json(filePath.toStdString(), gameYear.getCurrentDateString());
 }
 
 void ClientGameManager::loadGame() {

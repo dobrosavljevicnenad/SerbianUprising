@@ -258,6 +258,30 @@ void Graph::save_to_json(const std::string &file_path) const {
     FileManager::saveToFile(QString::fromStdString(file_path), graphJson);
 }
 
+void Graph::save_to_json(const std::string &file_path, const QString &current_year) const {
+    QJsonObject graphJson;
+
+    QJsonArray verticesArray;
+
+    for (const auto& [id, vertex] : vertices) {
+        QJsonObject vertexJson;
+
+        vertexJson["id"] = static_cast<int>(id);
+        vertexJson["label"] = QString::fromStdString(vertex->label());
+        vertexJson["num_of_soldiers"] = vertex->army.getSoldiers();
+        vertexJson["army_type"] = QString::fromStdString(vertex->army.to_string(vertex->army.armyType()));
+        vertexJson["player_id"] = vertex->player.getPlayerId();
+
+        verticesArray.append(vertexJson);
+    }
+
+    graphJson["vertices"] = verticesArray;
+    graphJson["current_year"] = current_year;
+
+    FileManager::saveToFile(QString::fromStdString(file_path), graphJson);
+}
+
+
 }
 
 

@@ -10,6 +10,7 @@ public:
     void advanceThreeMonths();
     QString getCurrentDateString() const;
     QString toJsonDateString() const;
+    void setCurrentDate(const QString &dateString);
 
 private:
     QDate currentDate;
