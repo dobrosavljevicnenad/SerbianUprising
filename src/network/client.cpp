@@ -55,13 +55,6 @@ void Client::disconnectFromServer() {
 
 // -------------------- Send Data --------------------
 
-void Client::sendArmySelection(int armyId) {
-    QByteArray data = "ARMY:" + QByteArray::number(armyId) + "\n";
-    m_socket->write(data);
-    m_socket->flush();
-    qDebug() << "Army selection sent: " << armyId;
-}
-
 void Client::sendData(const QString &data) {
     QByteArray jsonData = data.toUtf8();
     QByteArray header = QByteArray::number(jsonData.size()) + "\n";

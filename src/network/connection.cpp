@@ -5,12 +5,14 @@ ConnectionManager::ConnectionManager(QObject *parent)
 : QObject(parent), clientManager(nullptr),client(new Client(this)) {
 }
 
-bool ConnectionManager::initializeServer() {
+bool ConnectionManager::initializeServer(int clientId) {
     qDebug() << "Player";
     if (!server.startServer(12345)) {
         qWarning() << "Failed to start the server on port 12345.";
         return false;
     }
+
+    server.setPlayerId(clientId);
     qDebug() << "Server initialized.";
     return true;
 }
@@ -37,15 +39,6 @@ bool ConnectionManager::initializeClient() {
 
     connect(client, &Client::gameStarted, this, &ConnectionManager::gameStarted);
     return true;
-}
-
-void ConnectionManager::sendArmySelection(int armyId) {
-    if (client) {
-        client->sendArmySelection(armyId);
-        qDebug() << "Army selection sent to server: " << armyId;
-    } else {
-        qWarning() << "Client is not initialized, unable to send army selection.";
-    }
 }
 
 QString ConnectionManager::getLocalIpAddress() {

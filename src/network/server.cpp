@@ -88,19 +88,6 @@ void Server::onReadyRead() {
         QJsonParseError parseError;
         QJsonDocument jsonDoc = QJsonDocument::fromJson(rawData, &parseError);
 
-        if (rawData.startsWith("ARMY:")) {
-            rawData = rawData.mid(5);
-            bool ok;
-            int armyId = rawData.toInt(&ok);
-            if (ok) {
-                qDebug() << "Received army selection and first player id:" << armyId;
-                firstplayerId = armyId;
-            } else {
-                qWarning() << "Invalid army ID format received:" << rawData;
-            }
-            continue;
-        }
-
         if (parseError.error != QJsonParseError::NoError || !jsonDoc.isObject()) {
             qWarning() << "Invalid JSON received:" << rawData;
             continue;
@@ -165,6 +152,10 @@ void Server::executeActions(const std::vector<Action> &actions) {
     for (const Action &action : actions) {
         // Placeholder for actions
     }
+}
+
+void Server::setPlayerId(int playerId){
+     firstplayerId = playerId;
 }
 
 // Handlers

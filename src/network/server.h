@@ -30,6 +30,7 @@ public:
     void handleEndTurn(const QJsonObject &jsonObject);
     void handleLoadGameRequest(const QJsonObject &jsonObject);
 
+    void setPlayerId(int playerId);
 signals:
     void startGame();
     void dataReceived(const QString &data);

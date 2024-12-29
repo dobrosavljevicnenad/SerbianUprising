@@ -210,7 +210,7 @@ void CreateLobbyWindow::setupUI() {
             int armyId = armyComboBox->currentIndex();
             QString localIp = connectionManager->getLocalIpAddress();
             CustomMessageBox::showMessage(QString("Server IP: %1").arg(localIp), this);
-            if (!connectionManager->initializeServer()) {
+            if (!connectionManager->initializeServer(armyId)) {
                 CustomMessageBox::showMessage("Error: Failed to start the server.", this);
                 return;
             }
@@ -224,8 +224,6 @@ void CreateLobbyWindow::setupUI() {
 
             if (connectionManager) {
                 connect(connectionManager, &ConnectionManager::gameStarted, this, &CreateLobbyWindow::handleGameStart);
-
-                connectionManager->sendArmySelection(armyId);
 
                 qDebug() << "Signals connected successfully.";
             } else {
