@@ -20,7 +20,7 @@ ArmyType Army::armyType() const {
 }
 
 int Army::morale() const {
-    return Strength::instance().getBoost(m_armyType) + Strength::instance().baseMorale(m_armyType);
+    return std::ceil(Strength::instance().getBoost(m_armyType)) + Strength::instance().baseMorale(m_armyType);
 }
 
 int Army::strength() const {

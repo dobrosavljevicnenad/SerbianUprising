@@ -83,8 +83,8 @@ Results Battle::start() {
                 << " retreats. " << (defenderType == ArmyType::HAJDUK ? "Hajduk" : "Janissary")
                 << " wins!" << std::endl;
                 results.setWinner(&m_defender);
-                Strength::instance().setBoost(m_attacker.armyType(),-1);
-                Strength::instance().setBoost(m_defender.armyType(), 1);
+                Strength::instance().setBoost(m_attacker.armyType(), -0.2);
+                Strength::instance().setBoost(m_defender.armyType(), 0.2);
                 return results;
             }
             if (shouldRetreat(m_defender.getSoldiers(), m_attacker.getSoldiers(), false)) {
@@ -93,8 +93,8 @@ Results Battle::start() {
                 << " wins!" << std::endl;
                 results.setWinner(&m_attacker);
 
-                Strength::instance().setBoost(m_defender.armyType(),-1);
-                Strength::instance().setBoost(m_attacker.armyType(), 1);
+                Strength::instance().setBoost(m_defender.armyType(),-0.2);
+                Strength::instance().setBoost(m_attacker.armyType(), 0.2);
                 return results;
             }
         }
@@ -102,9 +102,9 @@ Results Battle::start() {
 
     Army* winner = m_defender.getSoldiers() == 0 ? &m_attacker : &m_defender;
     results.setWinner(winner);
-    Strength::instance().setBoost(winner->armyType(), 1);
+    Strength::instance().setBoost(winner->armyType(), 0.2);
     Army* loser = m_defender.getSoldiers() == 0 ? &m_defender : &m_attacker;
-    Strength::instance().setBoost(loser->armyType(), -1);
+    Strength::instance().setBoost(loser->armyType(), -0.2);
     return results;
 
 }

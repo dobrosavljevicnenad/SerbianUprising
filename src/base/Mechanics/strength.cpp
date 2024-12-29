@@ -5,7 +5,7 @@ Strength& Strength::instance() {
     return instance;
 }
 
-void Strength::setBoost(ArmyType type, int boost) {
+void Strength::setBoost(ArmyType type, float boost) {
     if (type == ArmyType::HAJDUK) {
         m_boostHajduk += boost;
         if (m_boostHajduk < 0)
@@ -21,7 +21,7 @@ void Strength::setBoost(ArmyType type, int boost) {
             m_boostJanissary = 20;
     }
 }
-int Strength::getBoost(ArmyType type) const {
+float Strength::getBoost(ArmyType type) const {
     return (type == ArmyType::HAJDUK) ? m_boostHajduk : m_boostJanissary;
 }
 
