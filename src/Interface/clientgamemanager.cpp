@@ -129,7 +129,7 @@ void ClientGameManager::initializeGraphics(QJsonObject graphData) {
 
     scene->addItem(rivers);
     map = new Map(scene, layerToVertex);
-    if (ClientId == 1 && loadGamePath != nullptr) {
+    if (loadGamePath != nullptr) {
         loadGame();
     }
 }
