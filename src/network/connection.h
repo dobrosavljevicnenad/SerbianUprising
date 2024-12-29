@@ -18,18 +18,18 @@ public:
     explicit ConnectionManager(QObject *parent = nullptr);
 
     // Core initialization methods
-    bool initializeServer();                // Set up the server
-    bool initializeClient();                // Set up the client
-    ClientGameManager* getClientManager();  // Get the initialized ClientGameManager
+    bool initializeServer();
+    bool initializeClient();
+    ClientGameManager* getClientManager();
     void sendArmySelection(int armyId);
     QString getLocalIpAddress();
 
 signals:
-    void gameStarted();                     // Emitted when the game starts
+    void gameStarted();
 
 private:
-    Server server;                          // Server instance
-    Client* client;                          // Client instance
-    ClientGameManager *clientManager;       // Client-side manager
+    Server server;
+    Client* client;
+    ClientGameManager *clientManager;
 };
 #endif // CONNECTION_H

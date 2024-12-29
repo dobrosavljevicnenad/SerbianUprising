@@ -14,7 +14,6 @@
 
 namespace graph {
 
-//using position_t = std::pair<unsigned, unsigned>;
 using nodeID_t = unsigned;
 
 class Vertex {

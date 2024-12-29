@@ -141,7 +141,7 @@ graph::Vertex* Graph::get_vertex_by_label(const QString& label) const {
             return vertexPair.second;
         }
     }
-    return nullptr; // Vraća nullptr ako ne pronađe
+    return nullptr;
 }
 
 QJsonObject Graph::serialize(QJsonObject graphJson){
@@ -257,8 +257,6 @@ void Graph::save_to_json(const std::string &file_path) const {
 
     FileManager::saveToFile(QString::fromStdString(file_path), graphJson);
 }
-
-
 
 }
 

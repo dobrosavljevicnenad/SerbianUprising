@@ -38,7 +38,6 @@ void ServerGameManager::startGame() {
     qDebug() << "Starting game...";
     initializeGame();
     QJsonObject serialized_graph = graph->serialize(rootObj);
-    //graph->print_graph();
     emit init_serializedGraphReady(serialized_graph);
 }
 

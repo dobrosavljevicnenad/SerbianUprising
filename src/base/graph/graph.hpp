@@ -8,13 +8,6 @@
 #include <QJsonArray>
 #include <QJsonObject>
 #include "../../Interface/filemanager.h"
-// #include "../gui/maplayer.h"
-// #include "../base/Army.h"
-// #include "../base/Battle.h"
-// #include "../base/Strength.h"
-// #include "../base/mergeArmies.h"
-// #include "../base/player.h"
-// #include "../base/Territory.h"
 
 namespace graph {
 
@@ -43,11 +36,11 @@ public:
     graph::Vertex* get_vertex_by_label(const QString& label) const;
 
 public:
-    std::unordered_map<nodeID_t, Vertex*> vertices;  // Map of vertex IDs to Vertex pointers
+    std::unordered_map<nodeID_t, Vertex*> vertices;
     std::vector<Edge *> getEdges(const Vertex *vertex) const;
 private:
-    std::unordered_map<Vertex*, std::vector<Edge>> m_adj_list;  // Adjacency list for edges
-    unsigned m_next_id=1;  // Next ID for a new vertex
+    std::unordered_map<Vertex*, std::vector<Edge>> m_adj_list;
+    unsigned m_next_id = 1;
     bool initialized = false;
     bool initializedSer = false;
 };

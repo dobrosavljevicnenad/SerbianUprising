@@ -26,8 +26,6 @@ public:
         ArmyType type = (armyType == "HAJDUK") ? ArmyType::HAJDUK : ArmyType::JANISSARY;
         return Player(playerId, type);
     }
-
-
 };
 
 #endif

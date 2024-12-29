@@ -236,5 +236,6 @@
         <file>resources/music/serbishen/Hajduk.mp3</file>
         <file>resources/music/serbishen/Belisarius - Epic Byzantine Music.mp3</file>
         <file>resources/bigButton.png</file>
+        <file>resources/Images/Logo.png</file>
     </qresource>
 </RCC>

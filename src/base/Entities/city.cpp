@@ -4,7 +4,7 @@ City::City(int level, int battleFactor)
     : level(level), battleFactor(battleFactor) {}
 
 bool City::isCityLayer() const {
-    return level > 0; // If level > 0, it's a city
+    return level > 0;
 }
 
 int City::getBattleFactor() const {

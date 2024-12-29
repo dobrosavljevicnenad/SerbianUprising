@@ -47,7 +47,7 @@ private:
 
     LobbyWindow *lobbyWindow;
 
-    QLabel *backgroundLabel; // Za dinamičko menjanje pozadine
+    QLabel *backgroundLabel;
     QVBoxLayout *stackedWidgetLayout;
 
     void setupUI();

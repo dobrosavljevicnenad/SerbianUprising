@@ -389,7 +389,7 @@ void ClientGameManager::updateGraphics() {
         if (layerToVertex.find(layer) != layerToVertex.end()) {
             graph::Vertex *vertex = layerToVertex[layer];
             if (vertex) {
-                Army army = vertex->army; // Safely access the `army`
+                Army army = vertex->army;
                 layer->setArmyColor(army.armyType());
                 layer->setTroopCount(army.getSoldiers());
                 layer->setCurrentPlayer(vertex->player.getPlayerId());

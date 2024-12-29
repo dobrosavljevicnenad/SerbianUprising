@@ -7,7 +7,7 @@
 #include "city.h"
 #include <vector>
 #include <string>
-#include <utility> // for std::pair
+#include <utility>
 
 class Region {
 public:
@@ -16,10 +16,10 @@ public:
 
     const std::string& getRegionId() const;
     const std::string& getRegionName() const;
-    bool addLayer(MapLayer* layer, City* city); // Updated to include City
+    bool addLayer(MapLayer* layer, City* city);
     int getBattleFactor() const;
     int generateTroops() const;
-    const std::vector<std::pair<MapLayer*, City*>>& getTerritories() const; // Return the updated vector
+    const std::vector<std::pair<MapLayer*, City*>>& getTerritories() const;
     void setCityForLayer(MapLayer* layer, City* city);
 
 private:
@@ -27,7 +27,7 @@ private:
     int troopProductionRate;
     std::string regionId;
     std::string regionName;
-    std::vector<std::pair<MapLayer*, City*>> territories; // Updated to store pairs of MapLayer and City
+    std::vector<std::pair<MapLayer*, City*>> territories;
 };
 
 #endif // REGION_H

@@ -12,7 +12,7 @@
 #include <QTableWidgetItem>
 #include <QColor>
 #include "battlereplaydialog.h"
-#include "../graph/graph.hpp"
+#include "../../graph/graph.hpp"
 #include <iostream>
 #include <QScreen>
 

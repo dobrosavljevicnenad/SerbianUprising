@@ -1,8 +1,8 @@
 #ifndef RESULTS_H
 #define RESULTS_H
 
-#include "../Entities/army.h"
-#include "../Entities/terrain.h"
+#include "../../Entities/army.h"
+#include "../../Entities/terrain.h"
 
 #include <QJsonObject>
 #include <QJsonArray>
