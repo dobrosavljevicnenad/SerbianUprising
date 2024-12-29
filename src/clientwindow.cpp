@@ -531,7 +531,7 @@ void ClientWindow::handleMoveArmy(MapLayer* layer){
             CustomMessageBox::showMessage("Error: Cannot move across sea to a different player's territory.", this);
             return;
         }
-        if (connectingEdge->type() == graph::EdgeType::Sea && gameManager->naval) {
+        if (connectingEdge->type() == graph::EdgeType::Sea && !gameManager->naval) {
             CustomMessageBox::showMessage("British Blockade cannot cross", this);
             return;
         }

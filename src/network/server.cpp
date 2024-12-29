@@ -74,20 +74,26 @@ void Server::onGameStartRequested() {
     serverGameManager->startGame();
 }
 
-void Server::onReadyRead() {
+void Server::onReadyRead(){
     QTcpSocket *socket = qobject_cast<QTcpSocket *>(sender());
     if (!socket) {
         qWarning() << "Invalid sender in onReadyRead";
         return;
     }
 
-    while (socket->bytesAvailable() > 0) {
-        QByteArray rawData = socket->readLine().trimmed();
-        if (rawData.isEmpty()) continue;
+    static QByteArray buffer;
+    buffer.append(socket->readAll());
+
+    QList<QByteArray> messages = buffer.split('\n\n');
+
+    for (int i = 0; i < messages.size() - 1; ++i) {
+        QByteArray rawData = messages[i].trimmed();
+        if (rawData.isEmpty()) {
+            continue;
+        }
 
         QJsonParseError parseError;
         QJsonDocument jsonDoc = QJsonDocument::fromJson(rawData, &parseError);
-
         if (parseError.error != QJsonParseError::NoError || !jsonDoc.isObject()) {
             qWarning() << "Invalid JSON received:" << rawData;
             continue;
@@ -104,7 +110,10 @@ void Server::onReadyRead() {
             qWarning() << "Unknown message type received:" << type;
         }
     }
+
+    buffer = messages.last();
 }
+
 
 void Server::onClientDisconnected() {
     if (m_clientSocket && sender() == m_clientSocket) {

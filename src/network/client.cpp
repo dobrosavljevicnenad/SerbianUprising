@@ -57,16 +57,20 @@ void Client::disconnectFromServer() {
 
 void Client::sendData(const QString &data) {
     QByteArray jsonData = data.toUtf8();
-    QByteArray header = QByteArray::number(jsonData.size()) + "\n";
-    m_socket->write(header + jsonData);
+
+    QByteArray message = jsonData + "\n\n";
+
+    m_socket->write(message);
     m_socket->flush();
 }
 
 void Client::sendEndTurnWithActions(const QVector<Action> &actions, int id) {
     QJsonObject jsonObject = prepareEndTurnMessage(actions, id);
     QString jsonString = QJsonDocument(jsonObject).toJson(QJsonDocument::Compact);
-    qDebug() << "Sending JSON to server:" << jsonString;
-    m_socket->write(jsonString.toUtf8());
+
+    QByteArray toSend = jsonString.toUtf8() + "\n\n";
+    m_socket->write(toSend);
+    m_socket->flush();
 }
 
 QJsonObject Client::prepareEndTurnMessage(const QVector<Action> &actions, int id) const {
