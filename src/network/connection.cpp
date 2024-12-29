@@ -26,9 +26,16 @@ bool ConnectionManager::initializeClient() {
 
     qDebug() << "Local IP address detected:" << localIp;
 
-    if (!client->connectToServer(localIp, 12345)) {
-        qWarning() << "Failed to connect the client to the server.";
-        return false;
+    if(ipAddress == ""){
+        if (!client->connectToServer(localIp, 12345)) {
+            qWarning() << "Failed to connect the client to the server.";
+            return false;
+        }
+    } else  {
+        if (!client->connectToServer(ipAddress, 12345)) {
+            qWarning() << "Failed to connect the client to the server.";
+            return false;
+        }
     }
 
     connect(client, &Client::idReceived, this, [this](int id) {

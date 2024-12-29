@@ -154,13 +154,7 @@ void LobbyWindow::onJoinGame() {
             return;
         }
 
-        if (ipAddress == connectionManager->getLocalIpAddress()) {
-            qDebug() << "Successfully connected to host at IP:" << ipAddress;
-        } else {
-            CustomMessageBox("Connection failed: Could not connect to the host. Please check the IP address and try again.", this);
-            return;
-        }
-
+        connectionManager->ipAddress = ipAddress;
         if (!connectionManager->initializeClient()) {
             CustomMessageBox("Error: Failed to connect to the server.", this);
             return;

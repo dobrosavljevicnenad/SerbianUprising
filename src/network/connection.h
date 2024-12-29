@@ -22,6 +22,9 @@ public:
     ClientGameManager* getClientManager();
     QString getLocalIpAddress();
 
+    QString ipAddress = "";
+
+
 signals:
     void gameStarted();
 
