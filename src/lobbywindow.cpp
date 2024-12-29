@@ -17,24 +17,24 @@ LobbyWindow::~LobbyWindow() {
     delete connectionManager;
 }
 
-void LobbyWindow::setupUI(){
+void LobbyWindow::setupUI() {
     QVBoxLayout *mainLayout = new QVBoxLayout(this);
 
     setBackgroundImage();
 
-    mainLayout->setContentsMargins(10, 70, 10, 10);
+    mainLayout->setContentsMargins(0, 0, 0, 0);
+
+    QLabel *logoLabel = new QLabel(this);
+    QPixmap logoPixmap(":/resources/Images/logo.png");
+    logoPixmap = logoPixmap.scaled(600, 450, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    logoLabel->setPixmap(logoPixmap);
+    logoLabel->setAlignment(Qt::AlignCenter);
 
     buttonFrame = new QFrame(this);
-    buttonFrame->setMinimumWidth(450);
-    buttonFrame->setMinimumHeight(350);
+    buttonFrame->setMinimumWidth(400);
+    buttonFrame->setMinimumHeight(300);
     buttonFrame->setStyleSheet(R"(
-        background-color: qlineargradient(
-            spread:pad, x1:0, y1:0, x2:1, y2:1,
-            stop:0 rgba(255, 228, 196, 200),
-            stop:1 rgba(139, 69, 19, 220)
-        );
-        border-radius: 10px;
-        border: 2px solid rgba(255, 215, 0, 150);
+        background-color: transparent;
     )");
 
     backButton = new QPushButton("BACK");
@@ -45,7 +45,7 @@ void LobbyWindow::setupUI(){
         QPushButton {
             border: none;
             background: transparent;
-            background-image: url(:/resources/button.png);
+            background-image: url(:/resources/Images/button.png);
             background-position: center;
             background-repeat: no-repeat;
             color: white;
@@ -53,12 +53,12 @@ void LobbyWindow::setupUI(){
             text-align: center;
         }
         QPushButton:hover {
-            background-image: url(:/resources/button.png);
+            background-image: url(:/resources/Images/button.png);
             color: #FFD700;
             font-size: 22px;
         }
         QPushButton:pressed {
-            background-image: url(:/resources/button.png);
+            background-image: url(:/resources/Images/button.png);
             color: #FFA500;
         }
     )";
@@ -72,24 +72,30 @@ void LobbyWindow::setupUI(){
     joinLobbyButton->setFixedSize(400, 100);
 
     QVBoxLayout *buttonLayout = new QVBoxLayout(buttonFrame);
-    buttonLayout->setContentsMargins(0, 0, 0, 0);
-    buttonLayout->setSpacing(10);
+    buttonLayout->setContentsMargins(0, 0, 0, 55);
+    buttonLayout->setSpacing(0);
     buttonLayout->addStretch();
     buttonLayout->addWidget(createLobbyButton, 0, Qt::AlignCenter);
     buttonLayout->addWidget(joinLobbyButton, 0, Qt::AlignCenter);
     buttonLayout->addWidget(backButton, 0, Qt::AlignCenter);
     buttonLayout->addStretch();
 
-    mainLayout->setContentsMargins(0, 0, 0, 0);
-    mainLayout->addStretch();
-    mainLayout->addWidget(buttonFrame, 0, Qt::AlignCenter);
-    mainLayout->addStretch();
+    QWidget *mainMenu = new QWidget(this);
+    QVBoxLayout *menuLayout = new QVBoxLayout(mainMenu);
+
+    menuLayout->addWidget(logoLabel, 0, Qt::AlignCenter);
+    menuLayout->addSpacing(0);
+    menuLayout->addWidget(buttonFrame, 0, Qt::AlignCenter);
+    mainMenu->setLayout(menuLayout);
+
+    mainLayout->addWidget(mainMenu);
 
     this->setLayout(mainLayout);
 }
 
+
 void LobbyWindow::setBackgroundImage() {
-    QPixmap backgroundPixmap(":/resources/pozadina.png");
+    QPixmap backgroundPixmap(":/resources/Images/pocetna.png");
     backgroundPixmap = backgroundPixmap.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Window, QBrush(backgroundPixmap));
@@ -183,8 +189,8 @@ void LobbyWindow::resizeEvent(QResizeEvent *event) {
     int screenWidth = event->size().width();
     int screenHeight = event->size().height();
 
-    const int baseWidth = 960;
-    const int baseHeight = 540;
+    const int baseWidth = 1024;
+    const int baseHeight = 768;
 
     double scaleX = static_cast<double>(screenWidth) / baseWidth;
     double scaleY = static_cast<double>(screenHeight) / baseHeight;
@@ -198,51 +204,29 @@ void LobbyWindow::resizeEvent(QResizeEvent *event) {
 
     int fontSize = qMin(static_cast<int>(20 * scale), 30);
     QString buttonStyle;
-    if (window()->windowState() & Qt::WindowMaximized) {
-        buttonStyle = QString(R"(
-            QPushButton {
-                border: none;
-                background: transparent;
-                background-image: url(:/resources/bigButton.png);
-                background-position: center;
-                background-repeat: no-repeat;
-                color: white;
-                font: bold %1px "Serif";
-                text-align: center;
-            }
-            QPushButton:hover {
-                background-image: url(:/resources/bigButton.png);
-                color: #FFD700;
-                font-size: %2px;
-            }
-            QPushButton:pressed {
-                background-image: url(:/resources/bigButton.png);
-                color: #FFA500;
-            }
-        )").arg(fontSize).arg(fontSize + 2);
-    } else {
-        buttonStyle = QString(R"(
-            QPushButton {
-                border: none;
-                background: transparent;
-                background-image: url(:/resources/button.png);
-                background-position: center;
-                background-repeat: no-repeat;
-                color: white;
-                font: bold %1px "Serif";
-                text-align: center;
-            }
-            QPushButton:hover {
-                background-image: url(:/resources/button.png);
-                color: #FFD700;
-                font-size: %2px;
-            }
-            QPushButton:pressed {
-                background-image: url(:/resources/button.png);
-                color: #FFA500;
-            }
-        )").arg(fontSize).arg(fontSize + 2);
-    }
+
+    buttonStyle = QString(R"(
+        QPushButton {
+            border: none;
+            background: transparent;
+            background-image: url(:/resources/Images/button.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            font: bold %1px "Serif";
+            text-align: center;
+        }
+        QPushButton:hover {
+            background-image: url(:/resources/Images/button.png);
+            color: #FFD700;
+            font-size: %2px;
+        }
+        QPushButton:pressed {
+            background-image: url(:/resources/Images/button.png);
+            color: #FFA500;
+        }
+    )").arg(fontSize).arg(fontSize + 2);
+
 
     backButton->setStyleSheet(buttonStyle);
     createLobbyButton->setStyleSheet(buttonStyle);

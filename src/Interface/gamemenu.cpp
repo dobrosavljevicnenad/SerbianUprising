@@ -12,7 +12,6 @@
 GameMenu::GameMenu(QWidget *parent) : QWidget(parent) {
 
     setupUI();
-
     resizeEvent(new QResizeEvent(this->size(), this->size()));
 
     musicPlayer = new QMediaPlayer(this);
@@ -39,21 +38,21 @@ GameMenu::~GameMenu() {}
 void GameMenu::setupUI() {
     QVBoxLayout *layout = new QVBoxLayout(this);
 
-    layout->setContentsMargins(10, 70, 10, 10);
+    layout->setContentsMargins(0, 0, 0, 0);
 
     setBackgroundImage();
 
+    logoLabel = new QLabel(this);
+    QPixmap logoPixmap(":/resources/Images/logo.png");
+    logoPixmap = logoPixmap.scaled(600, 450, Qt::KeepAspectRatio, Qt::SmoothTransformation);
+    logoLabel->setPixmap(logoPixmap);
+    logoLabel->setAlignment(Qt::AlignCenter);
+
     buttonFrame = new QFrame(this);
-    buttonFrame->setMinimumWidth(450);
-    buttonFrame->setMinimumHeight(350);
+    buttonFrame->setMinimumWidth(400);
+    buttonFrame->setMinimumHeight(300);
     buttonFrame->setStyleSheet(R"(
-        background-color: qlineargradient(
-            spread:pad, x1:0, y1:0, x2:1, y2:1,
-            stop:0 rgba(255, 228, 196, 200),
-            stop:1 rgba(139, 69, 19, 220)
-        );
-        border-radius: 10px;
-        border: 2px solid rgba(255, 215, 0, 150);
+        background-color: transparent;
     )");
 
     newGameButton = new QPushButton("NEW GAME", this);
@@ -66,7 +65,7 @@ void GameMenu::setupUI() {
     QPushButton {
         border: none;
         background: transparent;
-        background-image: url(:/resources/button.png);
+        background-image: url(:/resources/Images/button.png);
         background-position: center;
         background-repeat: no-repeat;
         color: white;
@@ -74,12 +73,12 @@ void GameMenu::setupUI() {
         text-align: center;
     }
     QPushButton:hover {
-        background-image: url(:/resources/button.png);
+        background-image: url(:/resources/Images/button.png);
         color: #FFD700;
         font-size: 22px;
     }
     QPushButton:pressed {
-        background-image: url(:/resources/button.png);
+        background-image: url(:/resources/Images/button.png);
         color: #FFA500;
     }
 )";
@@ -87,7 +86,6 @@ void GameMenu::setupUI() {
     newGameButton->setStyleSheet(buttonStyle);
     settingsButton->setStyleSheet(buttonStyle);
     exitButton->setStyleSheet(buttonStyle);
-
 
     newGameButton->setFixedSize(400, 100);
     settingsButton->setFixedSize(400, 100);
@@ -99,10 +97,9 @@ void GameMenu::setupUI() {
     muteButton->setStyleSheet("font-size: 14px; background-color: #FFB300; color: white; border-radius: 5px;}"
                               "QPushButton::hover {font-size: 20px; padding: 7px;}");
 
-
     QVBoxLayout *buttonLayout = new QVBoxLayout(buttonFrame);
     buttonLayout->setContentsMargins(0, 0, 0, 0);
-    buttonLayout->setSpacing(10);
+    buttonLayout->setSpacing(5);
     buttonLayout->addStretch();
     buttonLayout->addWidget(newGameButton, 0, Qt::AlignCenter);
     buttonLayout->addWidget(settingsButton, 0, Qt::AlignCenter);
@@ -112,6 +109,10 @@ void GameMenu::setupUI() {
     stackedWidget = new QStackedWidget(this);
     QWidget *mainMenu = new QWidget(this);
     QVBoxLayout *menuLayout = new QVBoxLayout(mainMenu);
+
+    menuLayout->addWidget(logoLabel, 0, Qt::AlignCenter);
+    menuLayout->addSpacing(0); // Reduce spacing here
+    buttonLayout->setContentsMargins(0, 0, 0, 0);
     menuLayout->addWidget(buttonFrame, 0, Qt::AlignCenter);
     mainMenu->setLayout(menuLayout);
     stackedWidget->addWidget(mainMenu);
@@ -128,15 +129,16 @@ void GameMenu::setupUI() {
     layout->addLayout(bottomLayout);
 
     setLayout(layout);
-
 }
+
+
 
 void GameMenu::resizeEvent(QResizeEvent *event) {
     QWidget::resizeEvent(event);
     setBackgroundImage();
 
-    const int baseWidth = 800;
-    const int baseHeight = 600;
+    const int baseWidth = 1024;
+    const int baseHeight = 768;
 
     int screenWidth = event->size().width();
     int screenHeight = event->size().height();
@@ -145,6 +147,7 @@ void GameMenu::resizeEvent(QResizeEvent *event) {
     double scaleY = static_cast<double>(screenHeight) / baseHeight;
     double scale = qMin(scaleX, scaleY);
 
+    // Resize buttons
     int buttonWidth = static_cast<int>(400 * scale);
     int buttonHeight = static_cast<int>(100 * scale);
 
@@ -156,55 +159,32 @@ void GameMenu::resizeEvent(QResizeEvent *event) {
     exitButton->setMinimumSize(buttonSize);
     exitButton->setMaximumSize(buttonSize);
 
-    int fontSize = qMin(static_cast<int>(20*scale), 30);
+    int fontSize = qMin(static_cast<int>(20 * scale), 30);
+
 
     QString buttonStyle;
-    if (isFullScreenMode) {
-        buttonStyle = QString(R"(
-            QPushButton {
-                border: none;
-                background: transparent;
-                background-image: url(:/resources/bigButton.png);
-                background-position: center;
-                background-repeat: no-repeat;
-                color: white;
-                font: bold %1px "Serif";
-                text-align: center;
-            }
-            QPushButton:hover {
-                background-image: url(:/resources/bigButton.png);
-                color: #FFD700;
-                font-size: %2px;
-            }
-            QPushButton:pressed {
-                background-image: url(:/resources/bigButton.png);
-                color: #FFA500;
-            }
-        )").arg(fontSize).arg(fontSize + 2);
-    } else {
-        buttonStyle = QString(R"(
-            QPushButton {
-                border: none;
-                background: transparent;
-                background-image: url(:/resources/button.png);
-                background-position: center;
-                background-repeat: no-repeat;
-                color: white;
-                font: bold %1px "Serif";
-                text-align: center;
-            }
-            QPushButton:hover {
-                background-image: url(:/resources/button.png);
-                color: #FFD700;
-                font-size: %2px;
-            }
-            QPushButton:pressed {
-                background-image: url(:/resources/button.png);
-                color: #FFA500;
-            }
-        )").arg(fontSize).arg(fontSize + 2);
-    }
 
+    buttonStyle = QString(R"(
+        QPushButton {
+            border: none;
+            background: transparent;
+            background-image: url(:/resources/Images/button.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            font: bold %1px "Serif";
+            text-align: center;
+        }
+        QPushButton:hover {
+            background-image: url(:/resources/Images/button.png);
+            color: #FFD700;
+            font-size: %2px;
+        }
+        QPushButton:pressed {
+            background-image: url(:/resources/Images/button.png);
+            color: #FFA500;
+        }
+    )").arg(fontSize).arg(fontSize + 2);
     newGameButton->setStyleSheet(buttonStyle);
     settingsButton->setStyleSheet(buttonStyle);
     exitButton->setStyleSheet(buttonStyle);
@@ -218,14 +198,15 @@ void GameMenu::resizeEvent(QResizeEvent *event) {
 
     stackedWidget->layout()->setContentsMargins(
         static_cast<int>(10 * scale),
-        static_cast<int>(70 * scale),
+        static_cast<int>(50 * scale),
         static_cast<int>(10 * scale),
         static_cast<int>(10 * scale)
-    );
+        );
 }
 
+
 void GameMenu::setBackgroundImage() {
-    QPixmap backgroundPixmap(":/resources/pozadina.png");
+    QPixmap backgroundPixmap(":/resources/Images/pocetna.png");
     backgroundPixmap = backgroundPixmap.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Window, QBrush(backgroundPixmap));
@@ -303,7 +284,7 @@ QWidget *GameMenu::createSettingsMenu() {
         QPushButton {
             border: none;
             background: transparent;
-            background-image: url(:/resources/button.png);
+            background-image: url(:/resources/Images/button.png);
             background-position: center;
             background-repeat: no-repeat;
             color: white;
@@ -311,12 +292,12 @@ QWidget *GameMenu::createSettingsMenu() {
             text-align: center;
         }
         QPushButton:hover {
-            background-image: url(:/resources/button.png);
+            background-image: url(:/resources/Images/button.png);
             color: #FFD700;
             font-size: 22px;
         }
         QPushButton:pressed {
-            background-image: url(:/resources/button.png);
+            background-image: url(:/resources/Images/button.png);
             color: #FFA500;
         }
     )");

@@ -1824,7 +1824,7 @@
       "id" : 2 ,
       "type": "HISTORIC",
       "title": "A Sick Man of Europe",
-      "image_path": ":/resources/a_sick_man_of_europe.png",
+      "image_path": ":/resources/Images/a_sick_man_of_europe.png",
       "description": "The year is 1804. The Ottoman Empire, the guardian of centuries-old traditions and vast dominions, now faces challenges in maintaining order across its extensive lands. In the Balkans, where the Empire has brought stability and governance for generations, unrest stirs among certain factions. Fueled by misguided ambitions and foreign influences, rebellion threatens the harmony of the region. The Serbian people, once loyal subjects, now rise against the authority of the Sultan. It is your duty to restore order, protect the sovereignty of the Empire, and ensure the continued prosperity of the lands under Ottoman rule. Will you quell this insurrection and reassert the strength of the Crescent?",
       "button" : "Quell the Rebellion" ,
       "territory_trigger": [""],
@@ -2202,7 +2202,7 @@
       "type" : "MISSION",
       "title": "Thunder of Misar",
       "image_path" : ":resources/Images/misar.png",
-      "description":"The plains of Misar trembled as Serbian forces unleashed Napoleon's artillery to devastating effect, turning the tide of battle against the Ottoman army. In a masterful display of strategy and firepower, the Serbian troops shattered enemy lines, securing a monumental victory. The echoes of this triumph resonate across Belgrade, Šabac, Kragujevac, and Užice, inspiring a renewed push for liberation.",
+      "description":"The plains of Misar shook under the thunder of Ottoman artillery, supplied by Napoleon, as the Serbian forces faced overwhelming odds. Yet, through exceptional strategy and unyielding courage, the Serbian army triumphed against a formidable foe. This decisive victory sent shockwaves across Belgrade, Šabac, Kragujevac, and Užice, reigniting the hope for liberation.",
       "button" :"Sound the Cannons",
       "territory_trigger": ["Sabac"],
       "trigger" : "recruitments",
@@ -2218,8 +2218,8 @@
       "description":"Following early victories, Serbian leaders began reorganizing their territories. Administrative structures were established to manage resources and governance, bringing order to liberated regions. This pivotal moment laid the foundation for a stronger resistance and united the Serbian people under a common cause.",
       "button" :"Shape the Future",
       "territory_trigger": ["Beograd"],
-      "trigger" : "place",
-      "trigger_amount" : 25,
+      "trigger" : "morale",
+      "trigger_amount" : 5,
       "territory_affect" : [""],
       "date" : "01-01-1806"
     },
@@ -2231,8 +2231,8 @@
       "description":"With the uprising gaining momentum, Serbian leaders issued a call to arms, rallying villagers and townsfolk to join the fight. Smederevo became a hotspot for recruitment, as ordinary citizens transformed into soldiers to defend their homeland.",
       "button" :"Answer the Call",
       "territory_trigger": ["Smederevo"],
-      "trigger" : "place",
-      "trigger_amount" : 50,
+      "trigger" : "recruitments",
+      "trigger_amount" : 5,
       "territory_affect" : [""],
       "date" : "01-07-1806"
     },
@@ -2247,7 +2247,7 @@
       "trigger" : "morale",
       "trigger_amount" : -5,
       "territory_affect" : [""],
-      "date" : "01-07-1806"
+      "date" : "01-01-1807"
     },
     {
       "id" : 1,
@@ -2312,7 +2312,7 @@
       "trigger": "attack",
       "trigger_amount": 300,
       "territory_affect" : ["Babadag"],
-      "date" : "01-01-1807"
+      "date" : "01-10-1806"
     },
     {
       "id" : 1,
@@ -2362,8 +2362,8 @@
         "button": "Support the Movement",
         "territory_trigger": ["Sabac", "Uzice", "Negotin", "Valjevo", "Raska", "Krusevac", "Kragujevac", "Beograd", "Smederevo", "Zajecar", "Kladovo"],
         "trigger": "attack",
-        "trigger_amount": 50,
-        "territory_affect": ["Kladusa","Novi_Grad","Sanski_Most","Grahovo","Livno","Banja_Luka","Gradiska","Ves","Brod","Shamac", "Bugojno","Srebrenica","Zvornik","Bijeljina"],
+        "trigger_amount": 35,
+        "territory_affect": ["Kladusa","Novi_Grad","Sanski_Most","Grahovo","Banja_Luka","Gradiska","Ves","Brod","Shamac", "Bugojno","Srebrenica","Zvornik","Bijeljina"],
         "date": "01-07-1806"
     },
     {
@@ -2375,7 +2375,7 @@
         "button": "Begin the Campaign",
         "territory_trigger": ["Sabac", "Uzice", "Negotin", "Valjevo", "Raska", "Krusevac", "Kragujevac","Beograd", "Smederevo", "Zajecar", "Kladovo","Kladusa", "Bihac", "Novi_Grad", "Sanski_Most", "Grahovo", "Livno", "Jajce","Travnik", "Banja_Luka", "Gradiska", "Ves", "Brod", "Doboj", "Shamac", "Tuzla","Sarajevo", "Bugojno", "Visegrad", "Sjenica", "Srebrenica", "Novi_Pazar","Zvornik", "Bijeljina","Mostar", "Trebinje", "Focha", "Cetinje","Djakovica", "Pristina", "Prizren"],
         "trigger": "attack",
-        "trigger_amount": 50,
+        "trigger_amount": 35,
         "territory_affect": ["TurnuSeverin", "TurnuMagurele", "Bran", "Focsani", "Braila", "Calafat", "Calarasi", "Slatina", "Giurgiu", "Bucharest", "Ployeshti", "Pitesti", "Kraiova", "Negol"],
         "date": "01-07-1808"
     },
@@ -2388,7 +2388,7 @@
         "button": "Embrace the Alliance",
         "territory_trigger": ["Nis", "Vranje", "Sofija", "Kostendil", "Vidin", "Lom", "Oryahovo","TurnuSeverin", "TurnuMagurele", "Bran", "Focsani", "Braila", "Calafat", "Calarasi", "Slatina", "Giurgiu", "Bucharest", "Ployeshti", "Pitesti", "Kraiova", "Negol"],
         "trigger": "attack",
-        "trigger_amount": 80,
+        "trigger_amount": 60,
         "territory_affect": ["Serres","Chalkidiki","Delta","Edessa","Khaterini","Kastoria","Olympus","Rapsani","Ossa","Larissa","Prikhala","Janina"],
         "date": "01-04-1810"
     },
@@ -2427,7 +2427,7 @@
         "button": "Quell the Uprising",
         "territory_trigger": ["Sabac", "Uzice", "Negotin", "Valjevo", "Raska", "Krusevac", "Kragujevac", "Beograd", "Smederevo", "Zajecar", "Kladovo"],
         "trigger": "place",
-        "trigger_amount": 50,
+        "trigger_amount": 80,
         "territory_affect": ["Sarajevo", "Tuzla", "Travnik", "Doboj","Jajce"],
         "date": "01-07-1806"
     },
@@ -2440,7 +2440,7 @@
         "button": "Strengthen the Frontier",
         "territory_trigger": ["Sabac", "Uzice", "Negotin", "Valjevo", "Raska", "Krusevac", "Kragujevac", "Beograd", "Smederevo", "Zajecar", "Kladovo", "Kladusa", "Bihac", "Novi_Grad", "Sanski_Most", "Grahovo", "Livno", "Jajce", "Travnik", "Banja_Luka", "Gradiska", "Ves", "Brod", "Doboj", "Shamac", "Tuzla", "Sarajevo", "Bugojno", "Visegrad", "Sjenica", "Srebrenica", "Novi_Pazar", "Zvornik", "Bijeljina", "Mostar", "Trebinje", "Focha", "Cetinje", "Djakovica", "Pristina", "Prizren"],
         "trigger": "place",
-        "trigger_amount": 90,
+        "trigger_amount": 120,
         "territory_affect": ["Vidin", "Lom", "Oryahovo", "Nikopoli", "Braila"],
         "date": "01-07-1808"
     },
@@ -2480,8 +2480,34 @@
         "territory_trigger": ["Istanbul"],
         "trigger": "end",
         "trigger_amount": 0,
-        "territory_affect": [],
+        "territory_affect": [""],
         "date": "01-01-1815"
+    },
+    {
+        "id": 2,
+        "type": "MISSION",
+        "title": "Uprising Quelled",
+        "image_path": ":resources/Images/crushed_rebbelion.png",
+        "description": "The Serbian rebellion has been decisively crushed. Ottoman forces have reestablished control over the entire Serbian Pashaluk. Rebel leaders have been captured or forced into exile, restoring the Sultan's authority and sending a clear message against future revolts.",
+        "button": "Reassert Ottoman Rule",
+        "territory_trigger": [""],
+        "trigger": "end",
+        "trigger_amount": 0,
+        "territory_affect": [""],
+        "date": "01-01-1813"
+    },
+    {
+        "id": 1,
+        "type": "MISSION",
+        "title": "A Nation in Chains",
+        "image_path": ":resources/Images/crushed_rebbelion.png",
+        "description": "The dream of Serbian independence has been shattered as Ottoman forces overwhelm the rebellion. With Belgrade reclaimed and rebel leaders scattered, the hope of freedom fades. Yet, amidst the ashes of defeat, a spark of resistance endures, waiting for the right moment to reignite.",
+        "button": "Endure and Persevere",
+        "territory_trigger": [""],
+        "trigger": "end",
+        "trigger_amount": 0,
+        "territory_affect": [""],
+        "date": "01-01-1813"
     }
   ]
 }

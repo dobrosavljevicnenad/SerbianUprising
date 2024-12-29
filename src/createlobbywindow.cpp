@@ -26,15 +26,16 @@ void CreateLobbyWindow::setupUI() {
 
     setBackgroundImage();
 
-    QHBoxLayout *mainLayout = new QHBoxLayout(this);
+    outerLayout = new QVBoxLayout(this);
+    mainLayout = new QHBoxLayout(this);
 
-    QVBoxLayout *leftLayout = new QVBoxLayout();
+    leftLayout = new QVBoxLayout();
     savedGamesTable = new QTableWidget(this);
     savedGamesTable->setColumnCount(1);
     savedGamesTable->setHorizontalHeaderLabels({"Saved Games"});
     savedGamesTable->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-    savedGamesTable->setFixedWidth(300);
-    savedGamesTable->setFixedHeight(450);
+    savedGamesTable->setMinimumWidth(300);
+    savedGamesTable->setMinimumHeight(450);
     savedGamesTable->setStyleSheet(R"(
         QTableWidget {
             background-color: rgba(255, 228, 196, 180);
@@ -51,15 +52,17 @@ void CreateLobbyWindow::setupUI() {
 
     connect(savedGamesTable, &QTableWidget::cellClicked, this, &CreateLobbyWindow::onFileClicked);
 
-    QWidget *armyBox = new QWidget();
+    armyBox = new QWidget();
     armyBox->setStyleSheet(R"(
         background-color: rgba(255, 228, 196, 180);
         border: 2px solid rgba(255, 215, 0, 150);
         border-radius: 10px;
     )");
-    armyBox->setFixedSize(300, 120);
+    armyBox->setMinimumWidth(300);
+    armyBox->setMinimumHeight(120);
 
-    QVBoxLayout *armyBoxLayout = new QVBoxLayout(armyBox);
+
+    armyBoxLayout = new QVBoxLayout(armyBox);
 
     QLabel *armyLabel = new QLabel("Choose Army:");
     armyLabel->setStyleSheet("font: bold 18px 'Serif'; color: brown;");
@@ -67,7 +70,7 @@ void CreateLobbyWindow::setupUI() {
     armyComboBox = new QComboBox(this);
     armyComboBox->addItem("Select Army");
     armyComboBox->addItems({"Hajduk", "Janissary"});
-    armyComboBox->setFixedWidth(250);
+    armyComboBox->setMinimumWidth(250);
     armyComboBox->setStyleSheet(R"(
         QComboBox {
             background-color: rgba(139, 69, 19, 180);
@@ -97,17 +100,18 @@ void CreateLobbyWindow::setupUI() {
     leftLayout->addStretch();
     leftLayout->setContentsMargins(100, 70, 50, 50);
 
-    QVBoxLayout *rightLayout = new QVBoxLayout();
+    rightLayout = new QVBoxLayout();
 
-    QWidget *rightBox = new QWidget();
-    rightBox->setFixedSize(500, 600);
+    rightBox = new QWidget();
+    rightBox->setMinimumWidth(500);
+    rightBox->setMinimumHeight(600);
     rightBox->setStyleSheet(R"(
         background-color: rgba(255, 228, 196, 180);
         border: 2px solid rgba(255, 215, 0, 150);
         border-radius: 10px;
     )");
 
-    QVBoxLayout *rightBoxLayout = new QVBoxLayout(rightBox);
+    rightBoxLayout = new QVBoxLayout(rightBox);
 
     QLabel *player1Label = new QLabel("PLAYER 1");
     player1Label->setStyleSheet("font: bold 20px 'Serif'; color: brown;");
@@ -146,7 +150,7 @@ void CreateLobbyWindow::setupUI() {
         QPushButton {
             border: none;
             background: transparent;
-            background-image: url(:/resources/button.png);
+            background-image: url(:/resources/Images/button.png);
             background-position: center;
             background-repeat: no-repeat;
             color: white;
@@ -171,7 +175,7 @@ void CreateLobbyWindow::setupUI() {
 
     connect(loadButton, &QPushButton::clicked, this, &CreateLobbyWindow::onLoadGameClicked);
 
-    QVBoxLayout *buttonLayout = new QVBoxLayout();
+    buttonLayout = new QVBoxLayout();
     buttonLayout->addWidget(loadButton);
     buttonLayout->addWidget(startButton);
     buttonLayout->addWidget(exitButton);
@@ -186,13 +190,17 @@ void CreateLobbyWindow::setupUI() {
     rightLayout->setContentsMargins(100, 70, 50, 50);
     rightLayout->setAlignment(Qt::AlignTop);
 
+    mainLayout->addStretch();
     mainLayout->addLayout(leftLayout);
     mainLayout->addSpacing(70);
     mainLayout->addLayout(rightLayout);
-
     mainLayout->addStretch();
 
-    setLayout(mainLayout);
+    outerLayout->addStretch();
+    outerLayout->addLayout(mainLayout);
+    outerLayout->addStretch();
+
+    this->setLayout(outerLayout);
 
     armyComboBox->setCurrentText("Select Army");
     // updateArmySelection("Select Army");
@@ -202,7 +210,7 @@ void CreateLobbyWindow::setupUI() {
     connect(startButton, &QPushButton::clicked, [this]() {
         if(isArmySelected){
             isGameStarted = true;
-            int armyId = armyComboBox->currentIndex() + 1;
+            int armyId = armyComboBox->currentIndex();
             QString localIp = connectionManager->getLocalIpAddress();
             CustomMessageBox::showMessage(QString("Server IP: %1").arg(localIp), this);
             if (!connectionManager->initializeServer()) {
@@ -282,7 +290,7 @@ void CreateLobbyWindow::loadSavedGames() {
 }
 
 void CreateLobbyWindow::setBackgroundImage() {
-    QPixmap backgroundPixmap(":/resources/pozadina.png");
+    QPixmap backgroundPixmap(":/resources/Images/pocetna.png");
     backgroundPixmap = backgroundPixmap.scaled(this->size(), Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
     QPalette palette;
     palette.setBrush(QPalette::Window, QBrush(backgroundPixmap));
@@ -290,10 +298,6 @@ void CreateLobbyWindow::setBackgroundImage() {
     this->setAutoFillBackground(true);
 }
 
-void CreateLobbyWindow::resizeEvent(QResizeEvent *event) {
-    QWidget::resizeEvent(event);
-    setBackgroundImage();
-}
 
 void CreateLobbyWindow::handleGameStart() {
     clientManager = connectionManager->getClientManager();
@@ -359,3 +363,102 @@ void CreateLobbyWindow::onLoadGameClicked() {
     }
 }
 
+
+void CreateLobbyWindow::resizeEvent(QResizeEvent *event) {
+    QWidget::resizeEvent(event);
+
+    int screenWidth = event->size().width();
+    int screenHeight = event->size().height();
+
+    const int baseWidth = 1280;
+    const int baseHeight = 720;
+
+    double scaleX = static_cast<double>(screenWidth) / baseWidth;
+    double scaleY = static_cast<double>(screenHeight) / baseHeight;
+    double scale = qMin(scaleX, scaleY);
+
+    if(loadButton != nullptr){
+        loadButton->setFixedSize(400 * scale, 100 * scale);
+    }
+    if(startButton != nullptr){
+        startButton->setFixedSize(400 * scale, 100 * scale);
+    }
+    if(exitButton != nullptr){
+        exitButton->setFixedSize(400 * scale, 100 * scale);
+    }
+    if(savedGamesTable != nullptr){
+        savedGamesTable->setFixedSize(300 * scale, 450 * scale);
+    }
+
+    if(armyComboBox != nullptr){
+        armyComboBox->setFixedWidth(250 * scale);
+    }
+
+    if(armyBox != nullptr){
+        armyBox->setFixedSize(300 * scale, 120 * scale);
+    }
+
+    if(rightBox != nullptr){
+        rightBox->setFixedSize(500 * scale, 600 * scale);
+    }
+
+
+    int labelFontSize = qMin(static_cast<int>(20 * scale), 30);
+    player1ArmyLabel->setStyleSheet(QString("background-color: rgba(139, 69, 19, 180); font: %1px 'Serif'; color: white;").arg(labelFontSize));
+    player2ArmyLabel->setStyleSheet(QString("background-color: rgba(139, 69, 19, 180); font: %1px 'Serif'; color: white;").arg(labelFontSize));
+    ip->setStyleSheet(QString("font: bold %1px 'Serif'; color: brown;").arg(labelFontSize));
+
+    int buttonFontSize = qMin(static_cast<int>(20 * scale), 30);
+    QString buttonStyle;
+    if (window()->windowState() & Qt::WindowMaximized) {
+        buttonStyle = QString(R"(
+            QPushButton {
+                border: none;
+                background: transparent;
+                background-image: url(:/resources/Images/bigButton.png);
+                background-position: center;
+                background-repeat: no-repeat;
+                color: white;
+                font: bold %1px "Serif";
+                text-align: center;
+            }
+            QPushButton:hover {
+                background-image: url(:/resources/Images/bigButton.png);
+                color: #FFD700;
+                font-size: %2px;
+            }
+            QPushButton:pressed {
+                background-image: url(:/resources/Images/bigButton.png);
+                color: #FFA500;
+            }
+        )").arg(buttonFontSize).arg(buttonFontSize + 2);
+    } else {
+        buttonStyle = QString(R"(
+            QPushButton {
+                border: none;
+                background: transparent;
+                background-image: url(:/resources/Images/button.png);
+                background-position: center;
+                background-repeat: no-repeat;
+                color: white;
+                font: bold %1px "Serif";
+                text-align: center;
+            }
+            QPushButton:hover {
+                background-image: url(:/resources/Images/button.png);
+                color: #FFD700;
+                font-size: %2px;
+            }
+            QPushButton:pressed {
+                background-image: url(:/resources/Images/button.png);
+                color: #FFA500;
+            }
+        )").arg(buttonFontSize).arg(buttonFontSize + 2);
+    }
+
+    loadButton->setStyleSheet(buttonStyle);
+    startButton->setStyleSheet(buttonStyle);
+    exitButton->setStyleSheet(buttonStyle);
+
+    setBackgroundImage();
+}

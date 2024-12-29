@@ -47,9 +47,9 @@ CharacterWidget::CharacterWidget(unsigned clientId, QWidget *parent) : QWidget(p
     QLabel *portrait = new QLabel(this);
     QPixmap pixmap;
     if (clientId == 1) {
-        pixmap = QPixmap(":/resources/karadjordje.png");
+        pixmap = QPixmap(":/resources/Images/karadjordje.png");
     } else {
-        pixmap = QPixmap(":/resources/pasha.png");
+        pixmap = QPixmap(":/resources/Images/pasha.png");
     }
     portrait->setPixmap(pixmap.scaled(220, 220, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     portrait->setFrameStyle(QFrame::Box);
@@ -73,15 +73,15 @@ CharacterWidget::CharacterWidget(unsigned clientId, QWidget *parent) : QWidget(p
     setStyleSheet(
         "background-color: rgba(0, 43, 54, 180); "
         "border-radius: 10px; "
-        "border-image: url(:/resources/border1.png) 30 stretch;"
+        "border-image: url(:/resources/Images/border1.png) 30 stretch;"
         );
 }
 
-void CharacterWidget::updateTerritoryInfo(const QString &territoryName, int troopsCount) {
+void CharacterWidget::updateTerritoryInfo(const QString &territoryName, QString troopsCount) {
     territory->setText(QString("Territory: %1").arg(territoryName));
     territoryArmy->setText(QString("Troops: %1").arg(troopsCount));
 }
 void CharacterWidget::setArmyText(int troopsCount1, int troopsCount2) {
-    army->setText(QString("%1/%2 armies left").arg(troopsCount1)
-                                                .arg(troopsCount2));
+    army->setText(QString("%1/%2 total armies left").arg(troopsCount1)
+                                                    .arg(troopsCount2));
 }

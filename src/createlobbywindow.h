@@ -13,7 +13,6 @@
 #include "Interface/servergamemanager.h"
 #include "Interface/clientgamemanager.h"
 
-
 class CreateLobbyWindow : public QWidget
 {
     Q_OBJECT
@@ -24,13 +23,6 @@ public:
 
     void handleGameStart();
 
-private:
-    void setupUI();
-    void loadSavedGames();
-    void setupConnections();
-    void setBackgroundImage();
-    void setupMusic();
-
     QLabel *player1ArmyLabel;
     QLabel *player2ArmyLabel;
     QLabel *ip;
@@ -40,6 +32,24 @@ private:
     QPushButton *loadButton;
     QPushButton *startButton;
     QPushButton *exitButton;
+
+    QVBoxLayout *outerLayout;
+    QHBoxLayout *mainLayout;
+    QVBoxLayout *leftLayout;
+    QVBoxLayout *rightLayout;
+    QVBoxLayout *armyBoxLayout;
+    QVBoxLayout *rightBoxLayout;
+    QVBoxLayout *buttonLayout;
+
+    QWidget *rightBox;
+    QWidget *armyBox;
+
+private:
+    void setupUI();
+    void loadSavedGames();
+    void setupConnections();
+    void setBackgroundImage();
+    void setupMusic();
 
     ServerGameManager* serverManager;
     ClientGameManager* clientManager;

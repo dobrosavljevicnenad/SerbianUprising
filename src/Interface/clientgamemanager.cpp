@@ -304,6 +304,7 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     armyManager.addTerritory(player);
     armyManager.calculateTotalTroops();
     characterWidget->setArmyText(armyManager.totalTroops,armyManager.maxTroops);
+
     eventHandle.processIntroEvents();
 }
 
@@ -328,7 +329,7 @@ void ClientGameManager::onLayerHovered(MapLayer *layer) {
     if (layer) {
         emit updateCharacterWidget(
             layer->labelName,
-            layer->getTroopCount()
+            layer->troopText->toPlainText()
             );
     } else {
         emit updateCharacterWidget(

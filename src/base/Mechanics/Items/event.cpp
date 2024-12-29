@@ -15,7 +15,7 @@ Event::Event(unsigned int id,int clientId, EventType type, const QString& title,
     trigger(trigger),
     triggerAmount(triggerAmount),
     territoryAffect(territoryAffect),
-    date(date) {}
+    date(date), outcomeLabel( new QLabel("Outcome", infoWindow)) {}
 
 EventType Event::getType() const{return type;}
 
@@ -29,6 +29,15 @@ bool Event::canTrigger(const QString& currentYear, const graph::Graph& clientGra
         return true;
 
     case EventType::MISSION:
+        if(this->trigger == "end" && (title == "Uprising Quelled" || title == "A Nation in Chains")){
+            for(auto vertex : clientGraph.vertices){
+                if(vertex.second->army.armyType() == ArmyType::HAJDUK){
+                    return false;
+                }
+            }
+            return true;
+        }
+
         for (const QString& label : territoryTrigger) {
             auto vertex = clientGraph.get_vertex_by_label(label);
             if (vertex->army.armyType() != ArmyType::HAJDUK) {
@@ -55,14 +64,14 @@ void Event::showEventWindow() {
             "background-color: rgba(74, 47, 47,190); "
             "border-radius: 10px; "
             "border-width: 10px;"
-            "border-image: url(:/resources/border1.png) 60 stretch;"
+            "border-image: url(:/resources/Images/border1.png) 60 stretch;"
             );
     } else {
         infoWindow->setStyleSheet(
             "background-color: rgba(3, 66, 5,190); "
             "border-radius: 10px; "
             "border-width: 10px;"
-            "border-image: url(:/resources/border1.png) 60 stretch;"
+            "border-image: url(:/resources/Images/border1.png) 60 stretch;"
             );
     }
 
@@ -106,10 +115,9 @@ void Event::showEventWindow() {
     descriptionLabel->setFixedSize(656, 200);
     descriptionOutcomeLayout->addWidget(descriptionLabel, 4);
 
-    QLabel* outcomeLabel = new QLabel("Outcome", infoWindow);
     outcomeLabel->setAlignment(Qt::AlignLeft | Qt::AlignTop);
     outcomeLabel->setStyleSheet(
-        "font-size: 12pt; "
+        "font-size: 10pt; "
         "color: #FFFFFF; "
         "padding: 10px; "
         "background-color: rgba(0, 0, 0, 128); "
@@ -119,6 +127,8 @@ void Event::showEventWindow() {
 
         );
     outcomeLabel->setFixedSize(164, 200);
+    outcomeLabel->setWordWrap(true);
+
     descriptionOutcomeLayout->addWidget(outcomeLabel, 1);
 
     mainLayout->addLayout(descriptionOutcomeLayout);
@@ -148,6 +158,43 @@ void Event::showEventWindow() {
 
     infoWindow->show();
 
+}
+
+void Event::updateOutcomeLabel() {
+
+    QString outcomeText;
+
+    if (trigger == "place") {
+        outcomeText = QString("Place %1 on territories:\n%2")
+        .arg(triggerAmount)
+            .arg(territoryAffect.join(", "));
+    } else if (trigger == "attack") {
+        outcomeText = QString("Attack %1 on territories:\n%2")
+        .arg(triggerAmount)
+            .arg(territoryAffect.join(", "));
+    } else if (trigger == "recruitments") {
+        int eventBonus = triggerAmount;
+        if (eventBonus > 0) {
+            outcomeText = QString("Army pool increased by %1").arg(eventBonus);
+        } else {
+            outcomeText = QString("Army pool decreased by %1").arg(-eventBonus);
+        }
+
+    } else if (trigger == "naval") {
+        outcomeText = triggerAmount
+                            ? "Blockade lifted. Can sea travel."
+                            : "Under blockade. Cannot sea travel.";
+    } else if (trigger == "morale") {
+        if (triggerAmount > 0) {
+            outcomeText = QString("Morale increased by %1").arg(triggerAmount);
+        } else {
+            outcomeText = QString("Morale decreased by %1").arg(-triggerAmount);
+        }
+    } else {
+        outcomeText = "No specific outcome for this event.";
+    }
+
+    outcomeLabel->setText(outcomeText);
 }
 
 EventType Event::stringToEventType(const std::string& str) {
