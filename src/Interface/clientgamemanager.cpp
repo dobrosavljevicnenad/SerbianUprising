@@ -334,7 +334,8 @@ void ClientGameManager::processDataFromServer(const QJsonObject& data) {
     updateFog();
     armyManager.updateRegionOwnership(ClientId, regions);
     armyManager.addTerritory(player);
-    armyManager.calculateTotalTroops();
+    if(!(ClientId == 2) && TurnId < 5)
+        armyManager.calculateTotalTroops();
     characterWidget->setArmyText(armyManager.totalTroops,armyManager.maxTroops);
     colorS1andS2();
     eventHandle.processIntroEvents();
