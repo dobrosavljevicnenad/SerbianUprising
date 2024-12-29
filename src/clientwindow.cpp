@@ -434,6 +434,13 @@ void ClientWindow::onMoveClicked(QListWidgetItem* item) {
         }
 
         if (layer) {
+            for(auto& action : gameManager->actionBuffer){
+                if(action.sourceVertexId == gameManager->layerToVertex[layer]->id() &&
+                    (action.type == ActionType::MOVE_ARMY || action.type == ActionType::ATTACK)){
+                    CustomMessageBox::showMessage("You must first remove all move actions from this territory", this);
+                    return;
+                }
+            }
             AddArmyManager& armyManager = gameManager->getArmyManager();
             armyManager.decreaseAvailableTroops(-troopsToRemove);
             gameManager->layerToVertex[layer]->newRecruits -= troopsToRemove;
