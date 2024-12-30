@@ -21,7 +21,7 @@ public:
 private:
     Strength() = default;
 
-    float m_boostHajduk = 10;
+    float m_boostHajduk = 20;
     float m_boostJanissary = 10;
     static const int s_baseMoraleHajduk = 0;
     static const int s_baseMoraleJanissary = 0;

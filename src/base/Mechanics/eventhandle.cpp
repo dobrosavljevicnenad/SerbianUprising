@@ -172,8 +172,9 @@ void EventHandle::processPlaceTrigger(const Event& event, const graph::Graph& cl
             ActionType actionType = ActionType::EVENT_ATTACK;
             if(event.clientId == vertex->player.getPlayerId()){
                 actionType = ActionType::PLACE_ARMY;
-                qDebug() << "EventId:" << event.clientId<<"\nVertexId:" <<vertex->player.getPlayerId()<<"\nlabel:"<<vertex->label();
-
+                qDebug() << "EventId:" << event.clientId
+                         << "\nVertexId:" << vertex->player.getPlayerId()
+                         << "\nlabel:" << QString::fromStdString(vertex->label());
             }
 
             Action newAction(actionType, event.clientId, vertex->id(), vertex->id(), event.triggerAmount);
