@@ -13,14 +13,12 @@
 
 ---
 
-# Gameplay
+## Gameplay
 
 In **Ustanak**, each territory on the map is populated with a specific number of troops, and players must strategically manage their armies to conquer or defend regions. The ultimate goal is to control all territories or achieve other victory conditions set at the start of the game. Success relies on a combination of military strength, strategic troop placement, and effective management of your armies, recruits and events.
 
 
----
-
-## How to Play
+### How to Play
 
 1. **Select a Territory**  
    Choose a territory under your control to take action.
@@ -101,7 +99,7 @@ Before building the project, ensure you have the following tools and libraries i
 
 ---
 
-##Team members:
+## Team members:
  - <a href="https://gitlab.com/nikolalabus.labus02">Nikola Labus 094/2020</a>
  - <a href="https://gitlab.com/dobrosavljevicnenad">Nenad Dobrosavljevic 088/2020</a>
  - <a href="https://gitlab.com/krki77">Nikola Krstajic 174/2020</a>
