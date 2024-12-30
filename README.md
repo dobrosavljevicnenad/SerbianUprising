@@ -65,7 +65,7 @@ Before building the project, ensure you have the following tools and libraries i
 
 2. Clone the repository:
 ```bash
-   git clone https://gitlab.com/matf-bg-ac-rs/course-rs/projects-2024-2025/Ustanak.git\
+   git clone https://gitlab.com/matf-bg-ac-rs/course-rs/projects-2024-2025/Ustanak.git
    cd ./Ustanak
 ```
 3. Open Qt Creator and load the project:
@@ -83,17 +83,17 @@ Before building the project, ensure you have the following tools and libraries i
 ```
 2. Clone the repository:
 ```bash
-    git clone https://gitlab.com/matf-bg-ac-rs/course-rs/projects-2024-2025/Ustanak.git\
+    git clone https://gitlab.com/matf-bg-ac-rs/course-rs/projects-2024-2025/Ustanak.git
     cd ./Ustanak
 ```
 3. Build the project:
 ```bash
-    cmake -G Ninja -B build/ -S ./\
+    cmake -G Ninja -B build/ -S ./
     ninja -C build/
 ```
 4. Run the game:
 ```bash
-    cd build/\
+    cd build/
     ./Ustanak
 ```
 
