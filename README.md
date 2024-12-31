@@ -10,9 +10,9 @@
 </p>
 
 <p align="center">
-  <img src="resources/Images/image3.png" alt="Battle replay" width="30%">
-  <img src="resources/Images/image4.png" alt="Battle resoults" width="30%">
-  <img src="resources/Images/image4.png" alt="Event" width="30%">
+  <img src="resources/Images/image3.png" alt="Battle replay" width="29%">
+  <img src="resources/Images/image4.png" alt="Battle resoults" width="31%">
+  <img src="resources/Images/image5.png" alt="Event" width="30%">
 </p>
 
 ## Features
