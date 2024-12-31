@@ -4,6 +4,17 @@
 
 ---
 
+<p align="center">
+  <img src="resources/Images/image1.png" alt="Main menu" width="45%">
+  <img src="resources/Images/image2.png" alt="Gameplay" width="45%">
+</p>
+
+<p align="center">
+  <img src="resources/Images/image3.png" alt="Battle replay" width="30%">
+  <img src="resources/Images/image4.png" alt="Battle resoults" width="30%">
+  <img src="resources/Images/image4.png" alt="Event" width="30%">
+</p>
+
 ## Features
 
 - Historical Setting: Experience the challenges and strategies of the First Serbian Uprising. Fight to liberate territories from Ottoman control or defend the empire's stronghold.
