@@ -13,7 +13,6 @@
   <img src="resources/Images/image3.png" alt="Battle replay" width="28%">
   <img src="resources/Images/image4.png" alt="Battle results" width="30%">
   <img src="resources/Images/image5.png" alt="Event" width="32%">
->>>>>>> ed0e801386852a6f1202d70fbf6f74b1b8e161f1
 </p>
 
 ## Features
