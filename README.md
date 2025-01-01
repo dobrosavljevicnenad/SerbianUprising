@@ -11,7 +11,7 @@
 
 <p align="center">
   <img src="resources/Images/image3.png" alt="Battle replay" width="30%">
-  <img src="resources/Images/image4.png" alt="Battle resoults" width="30%">
+  <img src="resources/Images/image4.png" alt="Battle results" width="30%">
   <img src="resources/Images/image4.png" alt="Event" width="30%">
 </p>
 

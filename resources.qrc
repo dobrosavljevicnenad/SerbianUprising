@@ -237,5 +237,19 @@
         <file>resources/Images/karadjordje.png</file>
         <file>resources/Images/pasha.png</file>
         <file>resources/Images/pozadina.png</file>
+        <file>resources/Images/recruitment6.png</file>
+        <file>resources/Images/recruitment5.png</file>
+        <file>resources/Images/recruitment4.png</file>
+        <file>resources/Images/recruitment3.png</file>
+        <file>resources/Images/recruitment2.png</file>
+        <file>resources/Images/recruitment1.png</file>
+        <file>resources/Images/army_movement4.png</file>
+        <file>resources/Images/army_movement3.png</file>
+        <file>resources/Images/army_movement2.png</file>
+        <file>resources/Images/army_movement1.png</file>
+        <file>resources/Images/events1.png</file>
+        <file>resources/Images/events2.png</file>
+        <file>resources/Images/image3.png</file>
+        <file>resources/Images/image4.png</file>
     </qresource>
 </RCC>

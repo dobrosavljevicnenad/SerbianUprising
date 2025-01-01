@@ -8,6 +8,7 @@
 #include <QDialog>
 #include <QScrollArea>
 #include <QComboBox>
+#include "Items/tutorialwindow.h"
 
 GameMenu::GameMenu(QWidget *parent) : QWidget(parent) {
 
@@ -276,8 +277,34 @@ QWidget *GameMenu::createSettingsMenu() {
             break;
         }
     });
+    QPushButton *tutorialButton = new QPushButton("Tutorial", settingsMenu);
+    tutorialButton->setFixedSize(400, 100);
+    tutorialButton->setStyleSheet(R"(
+        QPushButton {
+            border: none;
+            background: transparent;
+            background-image: url(:/resources/Images/button.png);
+            background-position: center;
+            background-repeat: no-repeat;
+            color: white;
+            font: bold 20px "Serif";
+            text-align: center;
+        }
+        QPushButton:hover {
+            background-image: url(:/resources/Images/button.png);
+            color: #FFD700;
+            font-size: 22px;
+        }
+        QPushButton:pressed {
+            background-image: url(:/resources/Images/button.png);
+            color: #FFA500;
+        }
+    )");
 
-
+    connect(tutorialButton, &QPushButton::clicked, this, [this](){
+        TutorialWindow *tutorialWindow = new TutorialWindow();
+        tutorialWindow->show();
+    });
     QPushButton *back = new QPushButton("Back", settingsMenu);
     back->setFixedSize(400, 100);
     back->setStyleSheet(R"(
@@ -324,7 +351,7 @@ QWidget *GameMenu::createSettingsMenu() {
     frameLayout->addWidget(screenLabel);
     frameLayout->addWidget(display);
     frameLayout->addSpacing(10);
-    frameLayout->addSpacing(20);
+    frameLayout->addWidget(tutorialButton, 0, Qt::AlignCenter);
     frameLayout->addWidget(back, 0, Qt::AlignCenter);
 
     QScrollArea *scrollArea = new QScrollArea(settingsMenu);
@@ -359,8 +386,8 @@ QWidget *GameMenu::createSettingsMenu() {
     layout->addWidget(scrollArea);
     layout->addSpacing(10);
 
-    settingsMenu->setMinimumWidth(400);
-    settingsMenu->setFixedHeight(400);
+    settingsMenu->setMinimumWidth(515);
+    settingsMenu->setFixedHeight(515);
 
     return settingsMenu;
 }

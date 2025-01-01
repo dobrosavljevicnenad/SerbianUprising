@@ -9,6 +9,7 @@
 #include <QKeyEvent>
 #include "Interface/Items/custominputdialog.h"
 #include "Interface/Items/attacktransferdialog.h"
+#include "Interface/Items/tutorialwindow.h"
 
 ClientWindow::ClientWindow(ClientGameManager *existingGameManager,QWidget *parent)
     : QMainWindow(parent),
@@ -822,7 +823,7 @@ void ClientWindow::showPauseMenu() {
 
     QPushButton *continueButton = new QPushButton("Continue Game");
     QPushButton *saveButton = new QPushButton("Save Game");
-    QPushButton *loadGame = new QPushButton("Load Game");
+    QPushButton *tutorialButton = new QPushButton("Tutorial");
     QPushButton *optionsButton = new QPushButton("Options");
     QPushButton *quitButton = new QPushButton("Quit Game");
 
@@ -843,7 +844,7 @@ void ClientWindow::showPauseMenu() {
         "} ";
     continueButton->setStyleSheet(buttonStyle);
     saveButton->setStyleSheet(buttonStyle);
-    loadGame->setStyleSheet(buttonStyle);
+    tutorialButton->setStyleSheet(buttonStyle);
     optionsButton->setStyleSheet(buttonStyle);
     quitButton->setStyleSheet(buttonStyle);
     quitButton->setStyleSheet(
@@ -864,7 +865,7 @@ void ClientWindow::showPauseMenu() {
 
     layout->addWidget(continueButton);
     layout->addWidget(saveButton);
-    layout->addWidget(loadGame);
+    layout->addWidget(tutorialButton);
     layout->addWidget(optionsButton);
     layout->addWidget(quitButton);
 
@@ -876,10 +877,10 @@ void ClientWindow::showPauseMenu() {
             CustomMessageBox::showMessage("Game saved successfully!", this);
         }
     });
-    connect(loadGame, &QPushButton::clicked, this, [this](){
+    connect(tutorialButton, &QPushButton::clicked, this, [this](){
         if (gameManager){
-            gameManager->loadGame();
-            CustomMessageBox::showMessage("Game loaded successfully!", this);
+            TutorialWindow *tutorialWindow = new TutorialWindow();
+            tutorialWindow->show();
         }
     });
     connect(optionsButton, &QPushButton::clicked, this, [this]() {
